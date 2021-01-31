@@ -2,16 +2,34 @@ package internet.software.architectures.team31.isapharmacy.domain;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 public class Medicine {
 
 	private Long id;
+	
+	@NotBlank(message = "Medicine name is mandatory")
 	private String name;	
+	
+	@NotEmpty(message = "Medicine type is mandatory")
 	private MedicineType type;
+	
+	@NotEmpty(message = "Medicine shape is mandatory")
 	private MedicineShape shape;
+	
+	@NotBlank(message = "Medicine composition is mandatory")
 	private String composition;
+	
+	@NotBlank(message = "Medicine manufacturer is mandatory")
 	private String manufacturer;
+	
+	@NotEmpty(message = "Issuing mode for medicine is mandatory")
 	private IssuingMode issuing;
+	
+	@NotEmpty(message = "Medicine must have at least one replacement medicine")
 	private List<String> replacementMedicineCodes;
+	
 	private String additionalNotes;
 	
 	public Medicine() {

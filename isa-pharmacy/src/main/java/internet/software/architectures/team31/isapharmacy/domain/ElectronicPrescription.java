@@ -3,14 +3,25 @@ package internet.software.architectures.team31.isapharmacy.domain;
 import java.time.Instant;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import internet.software.architectures.team31.isapharmacy.dto.ElectronicPrescribingMedicineDto;
 
 public class ElectronicPrescription {
 	
 	private Long id;
+	
+	@NotBlank(message = "Patient name is mandatory")
 	private String patientName;
+	
+	@NotBlank(message = "Patient surname is mandatory")
 	private String patientSurname;
+	
+	@NotEmpty(message = "Issue date may not be empty")
 	private Instant issueDate;
+	
+	@NotEmpty(message = "At least one medicine must be prescribed")
 	private List<ElectronicPrescribingMedicineDto> prescribedMedicines;
 	
 	public ElectronicPrescription() {
