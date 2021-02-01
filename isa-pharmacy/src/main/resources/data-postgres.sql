@@ -1,1 +1,2 @@
 insert into medicine (name, type, shape, composition, manufacturer, issuing) values ('Paracetamol', 3, 2, '500mg paracetamol', 'M.D. NINI D.O.O. NIŠ - Republika Srbija', 1);
+insert into users (name,surname,uidn,username,password,email,phone_number,type,penalty,authentication_token) values ('Petar','Petrovic','12387612387','pera','1111','pera@gmail.com','06123871','Patient',0,'PetarNOW');

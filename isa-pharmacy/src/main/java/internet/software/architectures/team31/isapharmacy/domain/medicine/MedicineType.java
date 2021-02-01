@@ -1,4 +1,4 @@
-package internet.software.architectures.team31.isapharmacy.domain;
+package internet.software.architectures.team31.isapharmacy.domain.medicine;
 
 public enum MedicineType {
 	HERBAL,
