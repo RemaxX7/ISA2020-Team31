@@ -14,8 +14,7 @@ import internet.software.architectures.team31.isapharmacy.domain.medicine.Medici
 @DiscriminatorValue("Patient")
 public class Patient extends User{
 	
-	@Column(nullable = false)
-	@NotEmpty(message = "penalty is mandatory")
+	@Column
 	private Integer penalty;
 	@Column(name="authentication_token",unique=true,nullable = false)
 	@NotBlank(message = "authenticationToken is mandatory")
