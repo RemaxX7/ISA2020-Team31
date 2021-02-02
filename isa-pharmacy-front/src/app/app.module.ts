@@ -13,12 +13,30 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DermatologistComponent } from './dermatologist/dermatologist.component';
+import { DermatologistProfileComponent } from './dermatologist-profile/dermatologist-profile.component';
+import { EmployeePasswordChangeComponent } from './employee-password-change/employee-password-change.component';
+import { PharmacistComponent } from './pharmacist/pharmacist.component';
+import { PharmacistProfileComponent } from './pharmacist-profile/pharmacist-profile.component';
+import { PharmacistPasswordChangeComponent } from './pharmacist-password-change/pharmacist-password-change.component';
+import { MedicineDispensingComponent } from './medicine-dispensing/medicine-dispensing.component';
+import { DermatologistPatientSearchComponent } from './dermatologist-patient-search/dermatologist-patient-search.component';
+import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DermatologistComponent,
+    DermatologistProfileComponent,
+    EmployeePasswordChangeComponent,
+    PharmacistComponent,
+    PharmacistProfileComponent,
+    PharmacistPasswordChangeComponent,
+    MedicineDispensingComponent,
+    DermatologistPatientSearchComponent,
+    PharmacistPatientSearchComponent
   ],
   imports: [
     BrowserModule,

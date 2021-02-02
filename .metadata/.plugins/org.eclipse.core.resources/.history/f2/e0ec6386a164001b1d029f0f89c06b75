@@ -1,0 +1,154 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+@Entity
+public class Patient {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@NotBlank(message = "Name is mandatory")
+	@Column(nullable = false)
+	private String name;
+	@NotBlank(message = "Surname is mandatory")
+	@Column(nullable = false)
+	private String surname;
+	@NotBlank(message = "Uidn is mandatory")
+	@Column(nullable = false)
+	private String uidn;
+	@NotBlank(message = "Username is mandatory")
+	@Column(nullable = false)
+	private String username;
+	@NotBlank(message = "Password is mandatory")
+	@Column(nullable = false)
+	private String password;
+	@NotBlank(message = "Email is mandatory")
+	@Column(nullable = false)
+	private String email;
+	@NotBlank(message = "Phone number is mandatory")
+	@Column(name="phonenumber", nullable = false)
+	private String phoneNumber;
+	@Column(nullable = false)
+	@NotEmpty(message = "penalty is mandatory")
+	private Integer penalty;
+	@Column(name="authenticationtoken",nullable = false)
+	@NotBlank(message = "authenticationToken is mandatory")
+	private String authenticationToken;
+	@Column
+	@ElementCollection(targetClass=Medicine.class)
+	private List<Medicine> boughtMedicineList;
+	@Column
+	@ElementCollection(targetClass=Medicine.class)
+	private List<Medicine> allergies;
+	public Patient(Long id, @NotBlank(message = "Name is mandatory") String name,
+			@NotBlank(message = "Surname is mandatory") String surname,
+			@NotBlank(message = "Uidn is mandatory") String uidn,
+			@NotBlank(message = "Username is mandatory") String username,
+			@NotBlank(message = "Password is mandatory") String password,
+			@NotBlank(message = "Email is mandatory") String email,
+			@NotBlank(message = "Phone number is mandatory") String phoneNumber,
+			@NotEmpty(message = "penalty is mandatory") Integer penalty,
+			@NotBlank(message = "authenticationToken is mandatory") String authenticationToken,
+			List<Medicine> boughtMedicineList, List<Medicine> allergies) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.uidn = uidn;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.penalty = penalty;
+		this.authenticationToken = authenticationToken;
+		this.boughtMedicineList = boughtMedicineList;
+		this.allergies = allergies;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	public String getUidn() {
+		return uidn;
+	}
+	public void setUidn(String uidn) {
+		this.uidn = uidn;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public Integer getPenalty() {
+		return penalty;
+	}
+	public void setPenalty(Integer penalty) {
+		this.penalty = penalty;
+	}
+	public String getAuthenticationToken() {
+		return authenticationToken;
+	}
+	public void setAuthenticationToken(String authenticationToken) {
+		this.authenticationToken = authenticationToken;
+	}
+	public List<Medicine> getBoughtMedicineList() {
+		return boughtMedicineList;
+	}
+	public void setBoughtMedicineList(List<Medicine> boughtMedicineList) {
+		this.boughtMedicineList = boughtMedicineList;
+	}
+	public List<Medicine> getAllergies() {
+		return allergies;
+	}
+	public void setAllergies(List<Medicine> allergies) {
+		this.allergies = allergies;
+	}
+	
+	
+
+	
+	
+}

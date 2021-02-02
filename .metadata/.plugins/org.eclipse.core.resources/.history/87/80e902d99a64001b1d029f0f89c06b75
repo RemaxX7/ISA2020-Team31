@@ -1,0 +1,18 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import javax.validation.constraints.NotBlank;
+
+public abstract class User {
+	@NotBlank(message = "Name is mandatory")
+	private String name;
+	@NotBlank(message = "Surname is mandatory")
+	private String surname;
+	@NotBlank(message = "Uidn is mandatory")
+	private Long uidn;
+	@NotBlank(message = "Username is mandatory")
+	private String username;
+	@NotBlank(message = "Password is mandatory")
+	private String password;
+	@NotBlank(message = "Email is mandatory")
+	private String email;
+}

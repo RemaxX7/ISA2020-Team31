@@ -1,0 +1,17 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+
+public class Employee extends User{
+	
+	@Column(name="examined_patients_list")
+	@ElementCollection(targetClass=Patient.class)
+	private List<Patient> examinedPatientsList;
+	
+	private EmployeeType employeeType;
+}

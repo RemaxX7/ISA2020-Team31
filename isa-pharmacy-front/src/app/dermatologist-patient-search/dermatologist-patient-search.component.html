@@ -1,0 +1,44 @@
+<header>
+    <div class="header">
+      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
+         <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
+         <li><a href="">Start appointment</a></li>
+         <li><a href="">Work calendar</a></li>
+         <li><a href="">Schedule leave</a></li>
+         <li><a href="">Schedule appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
+         <li id="log"><a href="">Log out</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="profilediv">
+    <div class="userinfo">
+        <input style="width: 100%;" id="myInput" type="text" onkeyup="myFunction()" placeholder="Patient names...">
+        <!--ovde ide foreach pacijent sa tim id unesenim ispisati ime prezime... umesto zakucanih podataka-->
+        <div class="founddiv">
+            <table id="myTable">
+                <tr>
+                    <th onclick="sortTable(1)">Name and surname</th>
+                    <th onclick="sortTable(2)">ID</th>
+                    <th onclick="sortTable(3)">Checkup date</th>
+                </tr>
+                <tbody id="tableinfo">
+                    <tr>
+                        <td>Marko Rakic</td>
+                        <td>187263</td>
+                        <td>19.01.2021</td>
+                    </tr>
+                    <tr>
+                        <td>Aleksa Rakic</td>
+                        <td>876238</td>
+                        <td>19.01.2021</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

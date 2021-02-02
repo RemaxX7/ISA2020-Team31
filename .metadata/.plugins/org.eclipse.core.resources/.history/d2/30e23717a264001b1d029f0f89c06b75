@@ -1,0 +1,10 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="users")
+public abstract class User {
+	
+}

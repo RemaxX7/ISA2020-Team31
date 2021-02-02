@@ -1,0 +1,10 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+public class Patient extends User{
+	
+	private Integer penalty;
+	
+	private String authenticationToken;
+	
+	private List<Medicine> boughtMedicineList;
+}

@@ -1,0 +1,21 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+
+public class Patient extends User{
+	
+	private Long id;
+	
+	@Column(nullable = false)
+	private Integer penalty;
+	@NotBlank(message = "Authentication token is mandatory")
+	@Column(nullable = false)
+	private String authenticationToken;
+	
+	private List<Medicine> boughtMedicineList;
+}
