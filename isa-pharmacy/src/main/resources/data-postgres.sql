@@ -1,1 +1,5 @@
-insert into medicine (name, type, shape, composition, manufacturer, issuing) values ('Paracetamol', 3, 2, '500mg paracetamol', 'M.D. NINI D.O.O. NIŠ - Republika Srbija', 1);
+INSERT INTO USERS (name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type) VALUES ('Nikola', 'Nikolic', '1234567891234', 'nikolaUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'usernikola@email.com', '555-555-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient');
+INSERT INTO USERS (name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, employee_type) VALUES ('Dragan', 'Draganic', '1234537891234', 'draganUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'userdragan@email.com', '555-555-554', true, '2017-10-01 21:58:58.508-07', 'Employee', 1);
+
+INSERT INTO AUTHORITY (name) VALUES ('ROLE_USER');
+INSERT INTO AUTHORITY (name) VALUES ('ROLE_ADMIN');
