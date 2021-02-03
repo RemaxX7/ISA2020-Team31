@@ -1,0 +1,42 @@
+<header>
+    <div class="header">
+      <a routerLink="/pharmacist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
+         <li><a href="" routerLink="/pharmacist-patient-search">Patient list</a></li>
+            <li><a href="">Start appointment</a></li>
+            <li><a href="">Work calendar</a></li>
+            <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
+            <li><a href="">Schedule leave</a></li>
+            <li><a href="">Schedule appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
+            <li id="log"><a href="">Log out</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="profilediv">
+    <div class="userinfo">
+        <textarea name="reservationID" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Enter reservation id..."></textarea><br>
+        <button>Search active reservations</button>
+        <!--ovde ide foreach pacijent sa tim id unesenim ispisati ime prezime... umesto zakucanih podataka.Ovo je placeholder.-->
+        <div class="founddiv">
+            <table>
+                <th>Name</th>
+                <th>ID</th>
+                <th></th>
+                <tr>
+                    <td>Marko</td>
+                    <td>187263</td>
+                    <td>
+                        <input type="submit" name="" value="Finalize dispensing">
+                    </td>
+                </tr>
+            </table>
+            <!--Ako ne nadje nijedan alert -> nije pronadjena rezervacija-->
+        </div>
+    </div>
+    
+    
+</div>

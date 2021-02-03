@@ -1,0 +1,44 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+@Entity
+@Table(name="users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
+public abstract class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@NotBlank(message = "Name is mandatory")
+	@Column(nullable = false)
+	private String name;
+	@NotBlank(message = "Surname is mandatory")
+	@Column(nullable = false)
+	private String surname;
+	@NotBlank(message = "Uidn is mandatory")
+	@Column(nullable = false)
+	private String uidn;
+	@NotBlank(message = "Username is mandatory")
+	@Column(nullable = false)
+	private String username;
+	@NotBlank(message = "Password is mandatory")
+	@Column(nullable = false)
+	private String password;
+	@NotBlank(message = "Email is mandatory")
+	@Column(nullable = false)
+	private String email;
+	@NotBlank(message = "Phone number is mandatory")
+	@Column(name="phonenumber", nullable = false)
+	private String phoneNumber;
+}

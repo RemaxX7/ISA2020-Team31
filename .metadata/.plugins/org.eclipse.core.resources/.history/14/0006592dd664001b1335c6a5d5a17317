@@ -1,0 +1,11 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import java.util.List;
+
+public class Employee {
+	
+	
+	private List<Patient> examinedPatientList;
+	
+	private EmployeeType employeeType;
+}

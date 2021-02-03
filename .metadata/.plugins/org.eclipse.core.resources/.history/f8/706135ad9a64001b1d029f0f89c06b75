@@ -1,0 +1,31 @@
+package internet.software.architectures.team31.isapharmacy.domain.users;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+
+public class Patient extends User{
+	
+	private Long id;
+	
+	private Integer penalty;
+	
+	private String authenticationToken;
+	
+	private List<Medicine> boughtMedicineList;
+
+	public Patient(Long id, Integer penalty, String authenticationToken, List<Medicine> boughtMedicineList) {
+		super();
+		this.id = id;
+		this.penalty = penalty;
+		this.authenticationToken = authenticationToken;
+		this.boughtMedicineList = boughtMedicineList;
+	}
+
+	public Patient() {
+		
+	}
+}

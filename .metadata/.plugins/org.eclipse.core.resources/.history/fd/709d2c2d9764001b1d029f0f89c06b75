@@ -1,0 +1,16 @@
+package internet.software.architectures.team31.isapharmacy.domain;
+
+public abstract class User {
+	
+	private Long id;
+	
+	private String name;
+	
+	private String surname;
+	
+	private Long uidn;
+	
+	private String username;
+	
+	private String password;
+}
