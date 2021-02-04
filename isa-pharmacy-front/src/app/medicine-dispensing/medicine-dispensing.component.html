@@ -18,17 +18,26 @@
   </header>
   <div class="profilediv">
     <div class="userinfo">
-        <textarea name="reservationID" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Enter reservation id..."></textarea><br>
-        <button>Search active reservations</button>
+        <input style="width: 100%;" id="myInput" type="text" (keyup.enter)="MyFunction()" placeholder="Search active reservations...">
         <!--ovde ide foreach pacijent sa tim id unesenim ispisati ime prezime... umesto zakucanih podataka.Ovo je placeholder.-->
         <div class="founddiv">
-            <table>
+            <table id="myTable">
                 <th>Name</th>
+                <th>Surname</th>
                 <th>ID</th>
                 <th></th>
                 <tr>
                     <td>Marko</td>
+                    <td>Rakic</td>
                     <td>187263</td>
+                    <td>
+                        <input type="submit" name="" value="Finalize dispensing">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Aleksa</td>
+                    <td>Popov</td>
+                    <td>685112</td>
                     <td>
                         <input type="submit" name="" value="Finalize dispensing">
                     </td>

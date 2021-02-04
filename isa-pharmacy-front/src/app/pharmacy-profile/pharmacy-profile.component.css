@@ -1,0 +1,55 @@
+/*Main div */
+.main{   
+    margin: 1em auto; 
+    padding:10px;
+    width:80%;
+    font-size: 1rem;
+}
+
+.info{
+    text-align: left;
+    font-weight:500;
+    
+}
+h1{
+    font-weight: bold;
+}
+
+/*Star rating*/
+ngb-rating {
+    font-size: 2rem;
+    color:rgb(255,215,0);
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    color: #d3d3d3;
+  }
+  .full {
+    color:rgb(255,215,0);
+  }
+  .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color:rgb(255,215,0);
+  }
+
+  /*Table*/
+  table{
+      width: 100%;
+      margin: 10px;
+      text-align: center;
+  }
+  tr{
+      padding: 10px;
+  }
+
+  td button{
+      margin-top: 8px;
+  }
+
+
+
