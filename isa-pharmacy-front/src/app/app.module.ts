@@ -25,8 +25,6 @@ import { DermatologistPatientSearchComponent } from './dermatologist-patient-sea
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NewPharmacistConsultationDialogComponent } from './dialog/new-pharmacist-consultation-dialog/new-pharmacist-consultation-dialog.component';
-
 
 
 @NgModule({
@@ -41,8 +39,7 @@ import { NewPharmacistConsultationDialogComponent } from './dialog/new-pharmacis
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
     PharmacistPatientSearchComponent,
-    PharmacyProfileComponent,
-    NewPharmacistConsultationDialogComponent
+    PharmacyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +60,6 @@ import { NewPharmacistConsultationDialogComponent } from './dialog/new-pharmacis
   ],
   providers: [],
   entryComponents:[
-    NewPharmacistConsultationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

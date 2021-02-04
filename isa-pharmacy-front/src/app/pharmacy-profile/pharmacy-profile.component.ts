@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NewPharmacistConsultationDialogComponent } from '../dialog/new-pharmacist-consultation-dialog/new-pharmacist-consultation-dialog.component';
 import { Address } from '../model/address.model';
 import { City } from '../model/city.model';
 import { Dermatologist } from '../model/dermatologist.model';
@@ -40,9 +39,7 @@ export class PharmacyProfileComponent implements OnInit {
   }
 
   ScheduleConsultation(pharmacistId:number){
-      const dialogRef = this.dialog.open(NewPharmacistConsultationDialogComponent,{data:{
-        pharmacistId:pharmacistId
-      }});
+    
     
   }
 
