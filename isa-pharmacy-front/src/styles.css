@@ -9,6 +9,12 @@ body {
     font-size: 18px;
 }
 
+.container {
+    width: 80%;
+    margin: 1em auto; 
+    text-align: center;
+}
+
 .header{
     width: 90%;
     margin: 1em auto; 
@@ -62,8 +68,8 @@ header  nav ul li a:hover {
     float: left;
     display: table-row;   /* Nasledi od display:table da budu iste visine i da popune glavni div kako treba */
     flex: 0 0 25%;
-  padding: 1em;
-  border: solid;
+    padding: 1em;
+    border: solid;
 }
 .userinfo {
 	height: 520px;

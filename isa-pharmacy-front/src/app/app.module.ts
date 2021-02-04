@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 import { DermatologistComponent } from './dermatologist/dermatologist.component';
 import { DermatologistProfileComponent } from './dermatologist-profile/dermatologist-profile.component';
 import { EmployeePasswordChangeComponent } from './employee-password-change/employee-password-change.component';
@@ -22,6 +23,9 @@ import { PharmacistPasswordChangeComponent } from './pharmacist-password-change/
 import { MedicineDispensingComponent } from './medicine-dispensing/medicine-dispensing.component';
 import { DermatologistPatientSearchComponent } from './dermatologist-patient-search/dermatologist-patient-search.component';
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
+import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NewPharmacistConsultationDialogComponent } from './dialog/new-pharmacist-consultation-dialog/new-pharmacist-consultation-dialog.component';
 
 
 
@@ -36,7 +40,9 @@ import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/ph
     PharmacistPasswordChangeComponent,
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
-    PharmacistPatientSearchComponent
+    PharmacistPatientSearchComponent,
+    PharmacyProfileComponent,
+    NewPharmacistConsultationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,9 +57,14 @@ import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/ph
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    NgbModule
   ],
   providers: [],
+  entryComponents:[
+    NewPharmacistConsultationDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
