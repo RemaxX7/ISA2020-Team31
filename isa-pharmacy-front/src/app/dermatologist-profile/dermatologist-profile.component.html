@@ -19,16 +19,16 @@
     <div class="profilediv">
         <div class="sidemenu">
             <a href="" routerLink="/dermatologist-profile">Lični podaci</a>
-              <a href="" routerLink="/employee-password-change">Promena lozinke</a>
+            <a href="" routerLink="/employee-password-change">Promena lozinke</a>
+            <a href="" routerLink="/dermatologist-work-cal">Radni kalendar</a>
         </div>
-
+        
         <div class="userinfo">
-            <textarea name="username" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Username"></textarea><br>
-            <textarea name="name" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Name"></textarea><br>
-            <textarea name="surname" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Surname"></textarea><br>
-            <textarea name="pharmID" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Id"></textarea><br>
+            <textarea name="email" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Username">{{dermatologist.Email}}</textarea><br>
+            <textarea name="name" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Name">{{dermatologist.Name}}</textarea><br>
+            <textarea name="surname" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Surname">{{dermatologist.Surname}}</textarea><br>
+            <textarea name="dermID" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Id">{{dermatologist.Id}}</textarea><br>
             <button>Confirm edit</button>
-            
         </div>
     </div>
   </body>
