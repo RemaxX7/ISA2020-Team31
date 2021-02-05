@@ -1,5 +1,7 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import {EmployeeService} from 'src/app/service/employee-service'
+import { Dermatologist } from '../model/dermatologist.model';
 
 @Component({
   selector: 'app-dermatologist-patient-search',
@@ -8,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DermatologistPatientSearchComponent implements OnInit {
 
-  constructor() { }
+  users:Dermatologist[]=[]
+  constructor(private service:EmployeeService ) {}
 
   ngOnInit(): void {
+    this.FillPatients();
+  }
+  async FillPatients(){
+    await this.service.getAllUsers().then(
+      data=>this.users=data
+      
+    )
+    console.log(this.users);
   }
   MyFunction(){
     var input, filter, table, tr, td, i,td1;

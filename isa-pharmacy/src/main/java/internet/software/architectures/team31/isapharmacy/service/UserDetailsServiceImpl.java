@@ -1,5 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +25,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		} else {
 			return user;
 		}
+	}
+	public List<User> getAllUsers() {
+		List<User> userList =  userRepository.findAll();
+		return userList;
 	}
 
 }

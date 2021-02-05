@@ -6,6 +6,7 @@
 body {
     margin: 0;
     font-family: 'Nunito', 'sans-serif';
+    background: url('15873122_1777922559125071_970589778874056324_n.png');
     font-size: 18px;
 }
 
@@ -51,18 +52,15 @@ header  nav ul li a:hover {
 .profilediv {
 	margin: 2em auto; /* Da odvoji i centrira glavni div */
 	width: 800px;
-	height: 400px;
 	display: flex; /* Flexbox - preko ovoga lepo poredamo divove */
 }
 .founddiv {
 	margin: 2em auto; 
-	width: 600px;
-	height: 300px;
+	width: 60%;
 	display: flex; 
 }
 .sidemenu {
     width: 150px;
-    height: 520px;
     background-color: #111;
     padding: 8px 0;
     float: left;
@@ -72,7 +70,6 @@ header  nav ul li a:hover {
     border: solid;
 }
 .userinfo {
-	height: 520px;
 	flex: 1;
 	padding: 1em;
 	border: solid;

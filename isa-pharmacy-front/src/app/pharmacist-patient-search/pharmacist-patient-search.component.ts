@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Pharmacist } from '../model/pharmacist.model';
+import { EmployeeService } from '../service/employee-service';
 
 @Component({
   selector: 'app-pharmacist-patient-search',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PharmacistPatientSearchComponent implements OnInit {
 
-  constructor() { }
+  users:Pharmacist[]=[]
+  constructor(private service:EmployeeService) { }
 
   ngOnInit(): void {
+    
+    this.FillPatients();
+  }
+  async FillPatients(){
+    await this.service.getAllUsers().then(
+      data=>this.users=data
+      
+    )
+    console.log(this.users);
   }
   MyFunction(){
     var input, filter, table, tr, td, i,td1;

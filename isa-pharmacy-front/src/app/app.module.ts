@@ -25,6 +25,7 @@ import { DermatologistPatientSearchComponent } from './dermatologist-patient-sea
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PharmacistWorkCalendarComponent } from './pharmacist-work-calendar/pharmacist-work-calendar.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
     PharmacistPatientSearchComponent,
-    PharmacyProfileComponent
+    PharmacyProfileComponent,
+    PharmacistWorkCalendarComponent
   ],
   imports: [
     BrowserModule,
