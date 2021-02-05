@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,8 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 		}
 		
 		MedicineReservation reservation = new MedicineReservation(dto);
+		reservation.setCode(String.valueOf(LocalDateTime.now().hashCode()) + "_" + reservation.getId());
+		//TODO: Send reservation code to Patient by email
 		reservation.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		reservation.setPatient(patient);
 		reservation.setMedicineReservationItems(dto.getMedicineReservationItems().stream()
