@@ -8,14 +8,14 @@ public class MedicineReservationCreateDTO {
 	private Long patientId;
 	private Long pharmacyId;
 	private LocalDate pickUpDate;
-	private List<MedicineReservationItemDTO> medicineReservationItems;
+	private List<MedicineReservationItemCreateDTO> medicineReservationItems;
 	
 	public MedicineReservationCreateDTO() {
 		super();
 	}
 
 	public MedicineReservationCreateDTO(Long patientId, Long pharmacyId, LocalDate pickUpDate,
-			List<MedicineReservationItemDTO> medicineReservationItems) {
+			List<MedicineReservationItemCreateDTO> medicineReservationItems) {
 		super();
 		this.patientId = patientId;
 		this.pharmacyId = pharmacyId;
@@ -47,11 +47,11 @@ public class MedicineReservationCreateDTO {
 		this.pickUpDate = pickUpDate;
 	}
 
-	public List<MedicineReservationItemDTO> getMedicineReservationItems() {
+	public List<MedicineReservationItemCreateDTO> getMedicineReservationItems() {
 		return medicineReservationItems;
 	}
 
-	public void setMedicineReservationItems(List<MedicineReservationItemDTO> medicineReservationItems) {
+	public void setMedicineReservationItems(List<MedicineReservationItemCreateDTO> medicineReservationItems) {
 		this.medicineReservationItems = medicineReservationItems;
 	}
 }

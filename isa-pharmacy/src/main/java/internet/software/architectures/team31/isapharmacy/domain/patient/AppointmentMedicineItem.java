@@ -18,7 +18,7 @@ public class AppointmentMedicineItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "id", unique=true, nullable=false)
+	@Column(name= "id", unique = true, nullable = false)
 	private Long id;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Medicine medicine;

@@ -32,6 +32,8 @@ public abstract class Appointment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	protected Long id;
+	@Column(name = "appointment_status")
+	protected AppointmentStatus appointmentStatus;
 	@Embedded
 	protected DateRange dateRange;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -43,23 +45,40 @@ public abstract class Appointment {
 	@Column(name = "report")
 	protected String report;
 	@Column(name = "appointment_medicine_items")
-	@ElementCollection(targetClass=AppointmentMedicineItem.class)
-	protected List<AppointmentMedicineItem> appointmentMedicineList;
+	@ElementCollection(targetClass = AppointmentMedicineItem.class)
+	protected List<AppointmentMedicineItem> appointmentMedicineItems;
 	
 	public Appointment() {
 		super();
 	}
 
-	public Appointment(Long id, DateRange dateRange, Patient patient, Pharmacy pharmacy,
-			Double price, String report, List<AppointmentMedicineItem> appointmentMedicineList) {
+	public Appointment(Long id, AppointmentStatus appointmentStatus, DateRange dateRange, Patient patient, Pharmacy pharmacy,
+			Double price, String report, List<AppointmentMedicineItem> appointmentMedicineItems) {
 		super();
 		this.id = id;
+		this.appointmentStatus = appointmentStatus;
 		this.dateRange = dateRange;
 		this.patient = patient;
 		this.pharmacy = pharmacy;
 		this.price = price;
 		this.report = report;
-		this.appointmentMedicineList = appointmentMedicineList;
+		this.appointmentMedicineItems = appointmentMedicineItems;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public AppointmentStatus getAppointmentStatus() {
+		return appointmentStatus;
+	}
+
+	public void setAppointmentStatus(AppointmentStatus appointmentStatus) {
+		this.appointmentStatus = appointmentStatus;
 	}
 
 	public DateRange getDateRange() {
@@ -68,6 +87,14 @@ public abstract class Appointment {
 
 	public void setDateRange(DateRange dateRange) {
 		this.dateRange = dateRange;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public Pharmacy getPharmacy() {
@@ -86,22 +113,6 @@ public abstract class Appointment {
 		this.price = price;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
 	public String getReport() {
 		return report;
 	}
@@ -110,11 +121,11 @@ public abstract class Appointment {
 		this.report = report;
 	}
 
-	public List<AppointmentMedicineItem> getAppointmentMedicineList() {
-		return appointmentMedicineList;
+	public List<AppointmentMedicineItem> getAppointmentMedicineItems() {
+		return appointmentMedicineItems;
 	}
 
-	public void setAppointmentMedicineList(List<AppointmentMedicineItem> appointmentMedicineList) {
-		this.appointmentMedicineList = appointmentMedicineList;
+	public void setAppointmentMedicineItems(List<AppointmentMedicineItem> appointmentMedicineItems) {
+		this.appointmentMedicineItems = appointmentMedicineItems;
 	}
 }

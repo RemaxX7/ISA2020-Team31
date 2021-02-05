@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
+import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
+import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 
 @Entity
 @DiscriminatorValue("Counseling")
@@ -22,6 +24,12 @@ public class Counseling extends Appointment {
 	public Counseling(Pharmacist pharmacist) {
 		super();
 		this.pharmacist = pharmacist;
+	}
+	
+	public Counseling(CounselingCreateDTO dto) {
+		super();
+		this.dateRange = new DateRange(dto.getStartDateTime(), dto.getEndDateTime());
+		this.price = dto.getPrice();
 	}
 
 	public Pharmacist getPharmacist() {
