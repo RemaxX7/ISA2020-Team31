@@ -30,7 +30,6 @@ public class EmployeeComplaint extends Complaint {
 		this.complaintText = dto.getComplaintText();
 	}
 	
-
 	public Employee getEmployee() {
 		return employee;
 	}

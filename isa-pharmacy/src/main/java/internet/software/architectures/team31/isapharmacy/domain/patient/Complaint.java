@@ -17,9 +17,9 @@ import javax.persistence.Table;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 
 @Entity
-@Table(name="complaints")
+@Table(name = "complaints")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Complaint {
 
 	@Id
