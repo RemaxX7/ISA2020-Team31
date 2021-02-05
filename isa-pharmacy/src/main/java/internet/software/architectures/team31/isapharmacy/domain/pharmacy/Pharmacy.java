@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "pharmacies")
@@ -13,16 +14,20 @@ public class Pharmacy {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", unique=true, nullable=false)
 	private Long id;
+	
+	@NotBlank(message = "Pharmacy name is mandatory")
+	@Column(nullable = false)
+	private String name;
 
 	public Pharmacy() {
 		super();
 	}
 
-	public Pharmacy(Long id) {
+	public Pharmacy(Long id, @NotBlank(message = "Pharmacy name is mandatory") String name) {
 		super();
 		this.id = id;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -32,6 +37,13 @@ public class Pharmacy {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}	
 	
-	//TODO: implement the rest of the class
 }

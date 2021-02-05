@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
+import internet.software.architectures.team31.isapharmacy.dto.JwtAuthenticationRequest;
 import internet.software.architectures.team31.isapharmacy.dto.UserTokenState;
 import internet.software.architectures.team31.isapharmacy.security.TokenUtils;
-import internet.software.architectures.team31.isapharmacy.security.auth.JwtAuthenticationRequest;
 import internet.software.architectures.team31.isapharmacy.service.UserDetailsServiceImpl;
 
 @RestController

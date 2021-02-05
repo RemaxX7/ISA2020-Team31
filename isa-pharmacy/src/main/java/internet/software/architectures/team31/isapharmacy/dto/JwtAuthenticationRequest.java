@@ -1,4 +1,4 @@
-package internet.software.architectures.team31.isapharmacy.security.auth;
+package internet.software.architectures.team31.isapharmacy.dto;
 
 public class JwtAuthenticationRequest {
 
