@@ -36,7 +36,7 @@ public class PharmacyComplaintServiceImpl implements PharmacyComplaintService {
 
 	@Override
 	public PharmacyComplaint save(PharmacyComplaintCreateDTO dto) throws InvalidComplaintException {
-		if(!appointmentService.hasPatientVisitedPharmacy(dto.getPatientId(), dto.getPharmacyId()) ||
+		if(!appointmentService.hasPatientVisitedPharmacy(dto.getPatientId(), dto.getPharmacyId()) &&
 				!medicineReservationService.hasPatientPurchasedMedicineFromPharmacy(dto.getPatientId(), dto.getPharmacyId())) {
 			//TODO: Add check for e-prescriptions
 			throw new InvalidComplaintException("You cannot make a complaint for this pharmacy.");
