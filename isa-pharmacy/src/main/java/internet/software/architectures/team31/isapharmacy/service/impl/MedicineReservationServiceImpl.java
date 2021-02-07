@@ -72,6 +72,12 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	public Collection<MedicineReservation> findAllByPatientId(Long id) {
 		return medicineReservationRepository.findAllByPatientId(id);
 	}
+	
+	@Override
+	public Collection<MedicineReservation> findAllByPatientIdAndMedicineReservationStatus(Long patientId,
+			MedicineReservationStatus status) {
+		return medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patientId, status);
+	}
 
 	@Override
 	public MedicineReservation findById(Long id) {
@@ -81,5 +87,18 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	@Override
 	public boolean hasPatientPurchasedMedicineFromPharmacy(Long patientId, Long pharmacyId) {
 		return medicineReservationRepository.findOneByPatientIdAndPharmacyIdAndMedicineReservationStatus(patientId, pharmacyId, MedicineReservationStatus.FINISHED) != null;
+	}
+
+	@Override
+	public boolean hasPatientPurchasedMedicine(Long patientId, Long medicineId) {
+		Collection<MedicineReservation> reservations = medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patientId, MedicineReservationStatus.FINISHED);
+		for(MedicineReservation reservation : reservations) {
+			for(MedicineReservationItem item: reservation.getMedicineReservationItems()) {
+				if(item.getMedicine().getId() == medicineId) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

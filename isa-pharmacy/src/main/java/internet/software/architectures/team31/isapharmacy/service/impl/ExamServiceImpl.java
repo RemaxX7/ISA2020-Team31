@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
@@ -87,6 +88,11 @@ public class ExamServiceImpl implements ExamService {
 		return examRepository.findAllByAppointmentStatus(status);
 	}
 
+	@Override
+	public Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
+		return examRepository.findAllByPatientIdAndAppointmentStatus(patientId, status);
+	}
+	
 	@Override
 	public Exam findById(Long id) {
 		return examRepository.findById(id).orElse(null);

@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
-import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
-import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
@@ -84,6 +83,11 @@ public class CounselingServiceImpl implements CounselingService {
 	@Override
 	public Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status) {
 		return counselingRepository.findAllByAppointmentStatus(status);
+	}
+	
+	@Override
+	public Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
+		return counselingRepository.findAllByPatientIdAndAppointmentStatus(patientId, status);
 	}
 
 	@Override

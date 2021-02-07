@@ -58,6 +58,7 @@ public class PharmacyComplaintServiceImpl implements PharmacyComplaintService {
 		ComplaintReply reply = new ComplaintReply(dto);
 		reply.setAdmin((SystemAdmin) userService.findById(dto.getAdminId()));
 		complaint.setReply(reply);
+		//TODO:Sent reply to patient
 		return pharmacyComplaintRepository.save(complaint).getReply();
 	}
 	

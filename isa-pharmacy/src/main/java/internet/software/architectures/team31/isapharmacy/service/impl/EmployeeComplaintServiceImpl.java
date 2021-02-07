@@ -34,8 +34,8 @@ public class EmployeeComplaintServiceImpl implements EmployeeComplaintService {
 	
 	@Override
 	public EmployeeComplaint save(EmployeeComplaintCreateDTO dto) throws InvalidComplaintException {
-		if(examService.hasPatientVisitedDermatologist(dto.getPatientId(), dto.getEmployeeId()) ||
-				counselingService.hasPatientVisitedPharmacist(dto.getPatientId(), dto.getEmployeeId())) {
+		if(!examService.hasPatientVisitedDermatologist(dto.getPatientId(), dto.getEmployeeId()) &&
+				!counselingService.hasPatientVisitedPharmacist(dto.getPatientId(), dto.getEmployeeId())) {
 			throw new InvalidComplaintException("You cannot make a complaint for this employee.");
 		}
 		

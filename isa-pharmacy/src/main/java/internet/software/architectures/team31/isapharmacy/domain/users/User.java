@@ -122,11 +122,11 @@ public abstract class User implements UserDetails {
 	}
 
 	public String getUsername() {
-		return username;
+		return email;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.email = username;
 	}
 
 	public String getPassword() {
