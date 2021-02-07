@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:'medicine-dispensing',component:MedicineDispensingComponent},
   {path:'dermatologist-patient-search',component:DermatologistPatientSearchComponent},
   {path:'pharmacist-patient-search',component:PharmacistPatientSearchComponent},
-  { path: 'pharmacy-profile', component: PharmacyProfileComponent }
+  {path: 'pharmacy-profile', component: PharmacyProfileComponent },
 ];
 
 @NgModule({

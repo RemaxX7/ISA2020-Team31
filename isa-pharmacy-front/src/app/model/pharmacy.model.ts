@@ -1,7 +1,7 @@
 import { Address } from "./address.model";
 
 export class Pharmacy {
-    Name:string;
-    Address:Address;
-    Rate:number;
+    name:string;
+    address:Address=new Address;
+    rate:number;
 }

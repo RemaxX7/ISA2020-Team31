@@ -1,19 +1,19 @@
 <header>
-    <div class="header">
-      <a routerLink="/" class="logo">Pharmacy</a>
-      <nav>
-        <ul>
-          <li><a href="#" routerLink="/pharmacy-profile">Pharmacy profile</a></li> 
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <div class="header">
+    <a routerLink="/" class="logo">Pharmacy</a>
+    <nav>
+      <ul>
+        <li><a href="#" routerLink="/pharmacy-profile">Pharmacy profile</a></li> 
+      </ul>
+    </nav>
+  </div>
+</header>
   <div class="contener">
       <div class="main">
         <div class="info">
-            <h1> {{pharmacy.Name}} </h1>
-            <p> Address: {{pharmacy.Address.Street}} {{pharmacy.Address.Number}} , {{pharmacy.Address.City.Name}}</p>
-            <p>Rate: {{pharmacy.Rate}}</p>
+            <h1> {{pharmacy.name}} </h1>
+            <p> Address: {{pharmacy.address.street}} {{pharmacy.address.number}} , {{pharmacy.address.city.name}}</p>
+            <p>Rate: {{pharmacy.rate}}</p>
 
             <ng-template #t let-fill="fill">
               <span class="star" [class.full]="fill === 100">
@@ -29,19 +29,23 @@
               <table class="table table-hover" >
                 <thead>
                   <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
                   <th scope="col">Email</th>
                   <th scope="col">Available appointments</th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let d of dermatologists">
                     <td>
-                      {{d.Name}}
+                      {{d.name}}
                     </td>
                     <td>
-                      {{d.Email}}
+                      {{d.surname}}
                     </td>
                     <td>
-                      <button mat-raised-button (click)="CheckAvailableAppointments(d.Id)"> Check</button>
+                      {{d.email}}
+                    </td>
+                    <td>
+                      <button mat-raised-button (click)="CheckAvailableAppointments(d.id)"> Check</button>
                     </td>
                   </tr>
                 </tbody>
@@ -51,19 +55,23 @@
               <table class="table table-hover">
                 <thead>
                   <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
                   <th scope="col">Email</th>
                   <th scope="col">Consultation</th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let p of pharmacists">
                     <td>
-                      {{p.Name}}
+                      {{p.name}}
                     </td>
                     <td>
-                      {{p.Email}}
+                      {{p.surname}}
                     </td>
                     <td>
-                      <button mat-raised-button (click)="ScheduleConsultation(p.Id)"> Schedule Consultation</button>
+                      {{p.email}}
+                    </td>
+                    <td>
+                      <button mat-raised-button (click)="ScheduleConsultation(p.id)"> Schedule Consultation</button>
                     </td>
                   </tr>
                 </tbody>
@@ -80,13 +88,13 @@
                 <tbody>
                   <tr *ngFor="let m of medicines">
                     <td>
-                      {{m.Name}}
+                      {{m.name}}
                     </td>
                     <td>
-                      {{m.Manufacturer}}
+                      {{m.manufacturer}}
                     </td>
                     <td>
-                      <button mat-raised-button (click)="ReserveMedication(m.Id)"> Reserve Medication</button>
+                      <button mat-raised-button (click)="ReserveMedication(m.id)"> Reserve Medication</button>
                     </td>
                   </tr>
                 </tbody>

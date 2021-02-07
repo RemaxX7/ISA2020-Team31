@@ -31,19 +31,19 @@ public class Pharmacy {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Address address;
 	
-	@Column(name="grade")
-	private Integer rate;
+	@Column(name="rate")
+	private Float rate;
 	
 	public Pharmacy() {
 		super();
 	}
 
-	public Pharmacy(Long id, String name, Address address, Integer grade) {
+	public Pharmacy(Long id, String name, Address address, Float rate) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
-		this.rate = grade;
+		this.rate = rate;
 	}
 
 	public Long getId() {
@@ -70,11 +70,11 @@ public class Pharmacy {
 		this.address = address;
 	}
 
-	public Integer getRate() {
+	public Float getRate() {
 		return rate;
 	}
 
-	public void setRate(Integer rate) {
+	public void setRate(Float rate) {
 		this.rate = rate;
 	}
 

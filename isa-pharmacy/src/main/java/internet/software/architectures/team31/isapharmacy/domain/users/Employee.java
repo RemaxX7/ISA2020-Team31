@@ -14,14 +14,17 @@ public abstract class Employee extends User {
 	@Column(name="examined_patients_list")
 	@ElementCollection(targetClass=Patient.class)
 	private List<Patient> examinedPatientsList;
+	
+	private Float rate;
 
 	public Employee() {
 		super();
 	}
 	
-	public Employee(List<Patient> examinedPatientsList) {
+	public Employee(List<Patient> examinedPatientsList,Float rate) {
 		super();
 		this.examinedPatientsList = examinedPatientsList;
+		this.rate=rate;
 	}
 
 	public List<Patient> getExaminedPatientsList() {
@@ -31,4 +34,13 @@ public abstract class Employee extends User {
 	public void setExaminedPatientsList(List<Patient> examinedPatientsList) {
 		this.examinedPatientsList = examinedPatientsList;
 	}
+
+	public Float getRate() {
+		return rate;
+	}
+
+	public void setRate(Float rate) {
+		this.rate = rate;
+	}
+	
 }
