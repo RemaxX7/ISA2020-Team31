@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Address {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -83,5 +83,10 @@ public class Address {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+	
+	@Override
+	public String toString() {
+		return this.street + " " + this.number + ", " + this.city.getName();
 	}
 }

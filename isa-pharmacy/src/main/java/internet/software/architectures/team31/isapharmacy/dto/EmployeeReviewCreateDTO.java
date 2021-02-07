@@ -2,7 +2,6 @@ package internet.software.architectures.team31.isapharmacy.dto;
 
 public class EmployeeReviewCreateDTO {
 
-	private Long patientId;
 	private Long employeeId;
 	private Integer score;
 	
@@ -10,19 +9,10 @@ public class EmployeeReviewCreateDTO {
 		super();
 	}
 
-	public EmployeeReviewCreateDTO(Long patientId, Long employeeId, Integer score) {
+	public EmployeeReviewCreateDTO(Long employeeId, Integer score) {
 		super();
-		this.patientId = patientId;
 		this.employeeId = employeeId;
 		this.score = score;
-	}
-
-	public Long getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(Long patientId) {
-		this.patientId = patientId;
 	}
 
 	public Long getEmployeeId() {

@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.EmployeeReview;
@@ -31,20 +32,21 @@ public class EmployeeReviewServiceImpl implements EmployeeReviewService {
 
 	@Override
 	public EmployeeReview save(EmployeeReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(dto.getScore() < 1 || dto.getScore() > 5) {
 			throw new InvalidScoreException("Review score cannot be less than 1, or greater than 5.");
 		}
-		if(!examService.hasPatientVisitedDermatologist(dto.getPatientId(), dto.getEmployeeId()) &&
-				!counselingService.hasPatientVisitedPharmacist(dto.getPatientId(), dto.getEmployeeId())) {
+		if(!examService.hasPatientVisitedDermatologist(patient.getId(), dto.getEmployeeId()) &&
+				!counselingService.hasPatientVisitedPharmacist(patient.getId(), dto.getEmployeeId())) {
 			throw new InvalidReviewException("You cannot review this employee.");
 		}
-		if(hasPatientReviewedEmployee(dto.getPatientId(), dto.getEmployeeId())) {
+		if(hasPatientReviewedEmployee(patient.getId(), dto.getEmployeeId())) {
 			return update(dto);
 		}
 		
 		EmployeeReview review = new EmployeeReview(dto);
 		review.setEmployee((Employee) userService.findById(dto.getEmployeeId()));
-		review.setPatient((Patient) userService.findById(dto.getPatientId()));
+		review.setPatient(patient);
 		return employeeReviewRepository.save(review);
 	}
 
@@ -68,7 +70,8 @@ public class EmployeeReviewServiceImpl implements EmployeeReviewService {
 	}
 	
 	private EmployeeReview update(EmployeeReviewCreateDTO dto) {
-		EmployeeReview review = employeeReviewRepository.findOneByPatientIdAndEmployeeId(dto.getPatientId(), dto.getEmployeeId());
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		EmployeeReview review = employeeReviewRepository.findOneByPatientIdAndEmployeeId(patient.getId(), dto.getEmployeeId());
 		review.setScore(dto.getScore());
 		return employeeReviewRepository.save(review);
 	}

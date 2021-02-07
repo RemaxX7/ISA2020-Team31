@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
@@ -17,6 +18,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CancelAppoin
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
+import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
@@ -29,6 +31,8 @@ public class CounselingServiceImpl implements CounselingService {
 	private PharmacyService pharmacyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public Counseling save(CounselingCreateDTO dto) {
@@ -40,7 +44,7 @@ public class CounselingServiceImpl implements CounselingService {
 
 	@Override
 	public Counseling schedule(AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
-		Patient patient = (Patient) userService.findById(dto.getPatientId());
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(patient.getPenalty() >= 3) {
 			throw new PenaltyException("Cannot schedule counseling. Maximum number of penalties exceeded.");
 		}
@@ -49,7 +53,9 @@ public class CounselingServiceImpl implements CounselingService {
 		if(counseling.getAppointmentStatus() != AppointmentStatus.FREE) {
 			throw new AppointmentNotFreeException("Appointment term is not available.");
 		}
-		counseling.setPatient((Patient) userService.findById(dto.getPatientId()));
+		
+		counseling.setPatient(patient);
+		sendCounselingEmail(counseling);
 		return counselingRepository.save(counseling);
 	}
 
@@ -98,5 +104,18 @@ public class CounselingServiceImpl implements CounselingService {
 	@Override
 	public boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId) {
 		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED) != null;
+	}
+	
+	private void sendCounselingEmail(Counseling counseling) {
+		emailService.sendEmail(counseling.getPatient().getEmail(), "Counseling appointment confirmation", getCounselingEmailText(counseling));
+	}
+	
+	private String getCounselingEmailText(Counseling counseling) {
+		StringBuilder text = new StringBuilder("Hello, " + counseling.getPatient().getName() + ". Your pharmacist counseling appointment with "
+				+ counseling.getPharmacist().getFullName() + " has been scheduled.");
+		text.append("Pharmacy: " + counseling.getPharmacy().getName() + "\r\n");
+		text.append("Address: " + counseling.getPharmacy().getAddress() + "\r\n");
+		text.append("Date and time: " + counseling.getDateRange().getStartDateTime() + " - " + counseling.getDateRange().getEndDateTime() + "\r\n");
+		return text.toString();
 	}
 }

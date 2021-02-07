@@ -27,6 +27,8 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import internet.software.architectures.team31.isapharmacy.domain.location.Address;
 
 @Entity
@@ -111,6 +113,11 @@ public abstract class User implements UserDetails {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	
+	@JsonIgnore
+	public String getFullName() {
+		return name + " " + surname;
 	}
 
 	public String getUidn() {

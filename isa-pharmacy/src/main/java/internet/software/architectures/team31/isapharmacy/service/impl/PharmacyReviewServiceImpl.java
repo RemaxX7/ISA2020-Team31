@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.PharmacyReview;
@@ -33,21 +34,22 @@ public class PharmacyReviewServiceImpl implements PharmacyReviewService {
 
 	@Override
 	public PharmacyReview save(PharmacyReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(dto.getScore() < 1 || dto.getScore() > 5) {
 			throw new InvalidScoreException("Review score cannot be less than 1, or greater than 5.");
 		}
-		if(!appointmentService.hasPatientVisitedPharmacy(dto.getPatientId(), dto.getPharmacyId()) &&
-				!medicineReservationService.hasPatientPurchasedMedicineFromPharmacy(dto.getPatientId(), dto.getPharmacyId())) {
+		if(!appointmentService.hasPatientVisitedPharmacy(patient.getId(), dto.getPharmacyId()) &&
+				!medicineReservationService.hasPatientPurchasedMedicineFromPharmacy(patient.getId(), dto.getPharmacyId())) {
 			//TODO: Add check for e-prescriptions
 			throw new InvalidReviewException("You cannot review this pharmacy.");
 		}
-		if(hasPatientReviewedPharmacy(dto.getPatientId(), dto.getPharmacyId())) {
+		if(hasPatientReviewedPharmacy(patient.getId(), dto.getPharmacyId())) {
 			return update(dto);
 		}
 		
 		PharmacyReview review = new PharmacyReview(dto);
 		review.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
-		review.setPatient((Patient) userService.findById(dto.getPatientId()));
+		review.setPatient(patient);
 		return pharmacyReviewRepository.save(review);
 	}
 	
@@ -71,7 +73,8 @@ public class PharmacyReviewServiceImpl implements PharmacyReviewService {
 	}
 	
 	private PharmacyReview update(PharmacyReviewCreateDTO dto) {
-		PharmacyReview review = pharmacyReviewRepository.findOneByPatientIdAndPharmacyId(dto.getPatientId(), dto.getPharmacyId());
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		PharmacyReview review = pharmacyReviewRepository.findOneByPatientIdAndPharmacyId(patient.getId(), dto.getPharmacyId());
 		review.setScore(dto.getScore());
 		return pharmacyReviewRepository.save(review);
 	}

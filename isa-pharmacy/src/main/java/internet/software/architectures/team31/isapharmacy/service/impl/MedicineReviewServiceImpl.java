@@ -3,9 +3,9 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import internet.software.architectures.team31.isapharmacy.domain.patient.EmployeeReview;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReview;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineReviewCreateDTO;
@@ -31,20 +31,21 @@ public class MedicineReviewServiceImpl implements MedicineReviewService {
 	
 	@Override
 	public MedicineReview save(MedicineReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(dto.getScore() < 1 || dto.getScore() > 5) {
 			throw new InvalidScoreException("Review score cannot be less than 1, or greater than 5.");
 		}
-		if(!medicineReservationService.hasPatientPurchasedMedicine(dto.getPatientId(), dto.getMedicineId())) {
+		if(!medicineReservationService.hasPatientPurchasedMedicine(patient.getId(), dto.getMedicineId())) {
 			//TODO: Add check for e-prescriptions
 			throw new InvalidReviewException("You cannot review this medicine.");
 		}
-		if(hasPatientReviewedMedicine(dto.getPatientId(), dto.getMedicineId())) {
+		if(hasPatientReviewedMedicine(patient.getId(), dto.getMedicineId())) {
 			return update(dto);
 		}
 		
 		MedicineReview review = new MedicineReview(dto);
 		review.setMedicine(medicineService.findById(dto.getMedicineId()));
-		review.setPatient((Patient) userService.findById(dto.getPatientId()));
+		review.setPatient(patient);
 		return medicineReviewRepository.save(review);
 	}
 	
@@ -68,7 +69,8 @@ public class MedicineReviewServiceImpl implements MedicineReviewService {
 	}
 	
 	private MedicineReview update(MedicineReviewCreateDTO dto) {
-		MedicineReview review = medicineReviewRepository.findOneByPatientIdAndMedicineId(dto.getPatientId(), dto.getMedicineId());
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		MedicineReview review = medicineReviewRepository.findOneByPatientIdAndMedicineId(patient.getId(), dto.getMedicineId());
 		review.setScore(dto.getScore());
 		return medicineReviewRepository.save(review);
 	}
