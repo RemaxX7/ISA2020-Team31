@@ -1,0 +1,35 @@
+<header>
+    <div class="header">
+      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
+         <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
+         <li><a href="">Start appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
+         <li><a href="">Schedule leave</a></li>
+         <li><a href="">Schedule appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
+         <li id="log"><a href="">Log out</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="profilediv">
+    <div class="userinfo">
+        <table >
+        <tr><td >Unesite podatke o pacijentu sa uidn: {{pat.uidn}}</td><td><textarea name="report" id="" cols="60" rows="10" ></textarea></td></tr>
+        <tr ><td>Izaberite terapiju</td><td ><select name="" id="" >
+            <option value="volvo"></option>
+            
+        </select></td></tr>
+        <tr><td>Zakazite dodatan pregled</td><td><select name="" id="">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </select></td></tr>
+        <button>Zavrsi pregled</button>
+    </table>
+    </div>
+</div>

@@ -26,6 +26,8 @@
                     <th (click)="sortTable(2)">Surname</th>
                     <th (click)="sortTable(3)">Uidn</th>
                     <th (click)="sortTable(4)">Username</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tbody id="tableinfo">
                     <tr *ngFor="let u of users">
@@ -33,6 +35,8 @@
                         <td>{{u.surname}}</td>
                         <td>{{u.uidn}}</td>
                         <td>{{u.username}}</td>
+                        <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.uidn]" >Start appointment</a></td>
+                        <td><a href="">Penalize</a></td>
                     </tr>
                 </tbody>
             </table>

@@ -35,10 +35,10 @@
                 <tbody>
                   <tr *ngFor="let d of dermatologists">
                     <td>
-                      {{d.Name}}
+                      {{d.name}}
                     </td>
                     <td>
-                      {{d.Email}}
+                      {{d.email}}
                     </td>
                     <td>
                       <button mat-raised-button (click)="CheckAvailableAppointments(d.Id)"> Check</button>
@@ -57,10 +57,10 @@
                 <tbody>
                   <tr *ngFor="let p of pharmacists">
                     <td>
-                      {{p.Name}}
+                      {{p.name}}
                     </td>
                     <td>
-                      {{p.Email}}
+                      {{p.nmail}}
                     </td>
                     <td>
                       <button mat-raised-button (click)="ScheduleConsultation(p.Id)"> Schedule Consultation</button>

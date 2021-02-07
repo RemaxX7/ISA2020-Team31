@@ -15,6 +15,7 @@ export class DermatologistPatientSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.FillPatients();
+
   }
   async FillPatients(){
     await this.service.getAllUsers().then(

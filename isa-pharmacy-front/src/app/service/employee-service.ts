@@ -13,5 +13,11 @@ import { Observable } from 'rxjs';
     getAllUsers(): Promise<any>{
       return this._http.get(this._APIUrl + '/all' ).toPromise();
     }
-  
+    getAllCalendarEntries(forDays):Promise<any>{
+      return this._http.get(this._APIUrl + '/pharmacistCalendarEntries').toPromise();
+    }
+    getById(id): Promise<any>{
+      console.log(id);
+      return this._http.get(this._APIUrl + '/getbyid/' + id).toPromise();
+    }
   }
