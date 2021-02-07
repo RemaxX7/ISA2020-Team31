@@ -70,7 +70,6 @@ public abstract class User implements UserDetails {
 	@Column(name="phone_number",nullable=false)
 	private String phoneNumber;
 	
-	@NotEmpty(message = "Address is mandatory")
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Address address;
 	

@@ -20,7 +20,7 @@
         <table >
         <tr><td >Unesite podatke o pacijentu sa uidn: {{pat.uidn}}</td><td><textarea name="report" id="" cols="60" rows="10" ></textarea></td></tr>
         <tr ><td>Izaberite terapiju</td><td ><select name="" id="" >
-            <option value="volvo"></option>
+            <option value="volvo" *ngFor="let med of medicine">{{med.name}}</option>
             
         </select></td></tr>
         <tr><td>Zakazite dodatan pregled</td><td><select name="" id="">

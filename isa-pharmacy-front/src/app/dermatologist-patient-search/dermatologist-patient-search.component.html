@@ -36,7 +36,7 @@
                         <td>{{u.uidn}}</td>
                         <td>{{u.username}}</td>
                         <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.uidn]" >Start appointment</a></td>
-                        <td><a href="">Penalize</a></td>
+                        <td><a href="#" [routerLink]="['/dermatologist--patient-search']" (click)="PenalizePatient(u.uidn)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

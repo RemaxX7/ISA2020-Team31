@@ -22,13 +22,17 @@ import internet.software.architectures.team31.isapharmacy.exception.AppointmentN
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
+import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "api/appointments/exams")
+@RequestMapping(value = "auth/appointments/exams")
 public class ExamController {
 
 	@Autowired
 	private ExamService examService;
+	@Autowired
+	private PatientServiceImpl patientService;
+	
 	
 	@PostMapping(value = "/save")
 	public ResponseEntity<Exam> save(@RequestBody ExamCreateDTO dto) {
@@ -64,5 +68,9 @@ public class ExamController {
 		dto.setEndDateTime(LocalDateTime.now().plusHours(12).plusMinutes(30));
 		dto.setPharmacyId(1L);
 		return new ResponseEntity<>(examService.save(dto), HttpStatus.OK);		
+	}
+	@GetMapping(value = "/penalize/{id}")
+	public ResponseEntity<Exam>penalize(@PathVariable String id){
+		return new ResponseEntity<>(patientService.penalize(id),HttpStatus.OK);
 	}
 }

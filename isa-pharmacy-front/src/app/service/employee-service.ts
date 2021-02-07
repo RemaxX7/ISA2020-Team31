@@ -11,13 +11,15 @@ import { Observable } from 'rxjs';
     constructor(private _http : HttpClient) { }
     
     getAllUsers(): Promise<any>{
-      return this._http.get(this._APIUrl + '/all' ).toPromise();
+      return this._http.get("http://localhost:8080/auth/search/patients/all").toPromise();
     }
     getAllCalendarEntries(forDays):Promise<any>{
       return this._http.get(this._APIUrl + '/pharmacistCalendarEntries').toPromise();
     }
     getById(id): Promise<any>{
-      console.log(id);
       return this._http.get(this._APIUrl + '/getbyid/' + id).toPromise();
+    }
+    penalizePatient(uidn):Promise<any>{
+      return this._http.get("http://localhost:8080/auth/appointments/exams/penalize/" + uidn).toPromise();
     }
   }

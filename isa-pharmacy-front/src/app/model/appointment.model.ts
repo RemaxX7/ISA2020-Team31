@@ -3,5 +3,6 @@ export class Appointment {
     patientSurname:string;
     duration:number;
     date:string;
+    id:number;
 	
 }
