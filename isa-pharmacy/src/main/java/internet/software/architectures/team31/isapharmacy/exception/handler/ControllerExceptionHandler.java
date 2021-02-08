@@ -70,4 +70,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 	public ResponseEntity<Object> handleAccountException(AccountException exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(value = Exception.class)
+	public ResponseEntity<Object> handleException(Exception exception) {
+		return new ResponseEntity<>("An error has occured.", HttpStatus.BAD_REQUEST);
+	}
 }

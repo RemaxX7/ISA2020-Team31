@@ -1,7 +1,11 @@
 mat-form-field {
-    margin: 10px;
+    margin: 0px 5px 0px 5px;
 }
 
 agm-map {
-    height: 300px;
+    height: 350px;
+}
+
+button {
+    margin: 10px;
 }

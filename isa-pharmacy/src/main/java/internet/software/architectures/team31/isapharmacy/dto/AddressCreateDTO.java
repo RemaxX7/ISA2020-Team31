@@ -6,21 +6,18 @@ public class AddressCreateDTO {
 	private String number;
 	private Double latitude;
 	private Double longitude;
-	private Long countryId;
 	private Long cityId;
 	
 	public AddressCreateDTO() {
 		super();
 	}
 
-	public AddressCreateDTO(String street, String number, Double latitude, Double longitude, Long countryId,
-			Long cityId) {
+	public AddressCreateDTO(String street, String number, Double latitude, Double longitude, Long cityId) {
 		super();
 		this.street = street;
 		this.number = number;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.countryId = countryId;
 		this.cityId = cityId;
 	}
 
@@ -54,14 +51,6 @@ public class AddressCreateDTO {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
-	}
-
-	public Long getCountryId() {
-		return countryId;
-	}
-
-	public void setCountryId(Long countryId) {
-		this.countryId = countryId;
 	}
 
 	public Long getCityId() {

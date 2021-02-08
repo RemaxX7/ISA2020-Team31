@@ -3,6 +3,5 @@ export class Address {
     number: string;
     latitude: number;
     longitude: number;
-    countryId: number;
     cityId: number;
 }

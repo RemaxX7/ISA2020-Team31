@@ -6,6 +6,7 @@ import { Address } from '../shared/Location/address.model';
 import { Country } from '../shared/Location/country.model';
 import { City } from '../shared/Location/city.model';
 import { LocationService } from '../shared/Location/location.service';
+import { PasswordValidator } from './password-validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,15 +15,14 @@ import { LocationService } from '../shared/Location/location.service';
 })
 export class SignUpComponent implements OnInit {
 
-  myForm :FormGroup;
+  public myForm :FormGroup;
 
   latitude = 44.0165;
   longitude = 21.0059;
+  locationChosen = false;
 
   constructor(private fb: FormBuilder, private userService:UserService, private locationService:LocationService) { }
- 
-  User:User=new User();
-  Address:Address=new Address();
+
   countries:Country[]=[];
   cities:City[]=[];
   selectedCity:City=new City();
@@ -33,14 +33,21 @@ export class SignUpComponent implements OnInit {
       surname: ['', [Validators.required]],
       username: ['', [Validators.required]],
       uidn: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      passwordControl: ['', [Validators.required]],
+      email: [null, Validators.compose([
+        Validators.email,
+        Validators.required])
+     ],
+      password: ['', [Validators.minLength(8)]],
+      passwordControl: ['', [Validators.minLength(8)]],
       phoneNumber: ['', [Validators.required]],
       city: ['', [Validators.required]],
       country: ['',[Validators.required]],
       street: ['', [Validators.required]],
-      number: ['', [Validators.required]]
+      number: ['', [Validators.required]],
+      latitude: ['', [Validators.required]],
+      longitude: ['', [Validators.required]]
+    }, {
+      validator: PasswordValidator.passwordMatchValidator
     })
     this.FillCountries();
   }
@@ -62,5 +69,40 @@ export class SignUpComponent implements OnInit {
     SelectCity(event: any) {
       this.selectedCity = event.value;
       console.log(event.value);
+    }
+
+    GetCoordinates(event: any) {
+      this.latitude = event.coords.lat;
+      this.longitude = event.coords.lng;
+      this.locationChosen = true;
+      this.myForm.controls['longitude'].setValue(event.coords.lng);
+      this.myForm.controls['latitude'].setValue(event.coords.lat);
+    }
+
+    Register() {
+      var address = new Address();
+      address.cityId = this.myForm.controls['city'].value.id;
+      address.street = this.myForm.controls['street'].value;
+      address.number = this.myForm.controls['number'].value;
+      address.longitude = this.myForm.controls['longitude'].value;
+      address.latitude = this.myForm.controls['latitude'].value;
+      
+      var user = new User();
+      user.name = this.myForm.controls['name'].value;
+      user.surname = this.myForm.controls['surname'].value;
+      user.username = this.myForm.controls['username'].value;
+      user.uidn = this.myForm.controls['uidn'].value;
+      user.email = this.myForm.controls['email'].value;
+      user.password = this.myForm.controls['password'].value;
+      user.phoneNumber = this.myForm.controls['phoneNumber'].value;
+      user.address = address;
+      
+      this.userService.register(user).subscribe(data => {
+        alert(data);
+          },
+          err =>{
+            alert(err.error);
+          }
+          );
     }
 }
