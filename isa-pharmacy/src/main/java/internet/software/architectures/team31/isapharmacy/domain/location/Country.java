@@ -14,7 +14,7 @@ public class Country {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = "Country code is mandatory")
-	@Column(nullable = false, unique = true)
+	@Column(name="code" ,nullable = false, unique = true)
 	private String code;
 	@NotBlank(message = "Country name is mandatory")
 	@Column(nullable = false)

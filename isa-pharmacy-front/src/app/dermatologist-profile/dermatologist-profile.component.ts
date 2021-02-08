@@ -16,10 +16,10 @@ export class DermatologistProfileComponent implements OnInit {
     this.Test();
   }
   Test(){
-    this.dermatologist.Name ="Marko";
-    this.dermatologist.Email = "mr98@gmail.com";
-    this.dermatologist.Id = 11111;
-    this.dermatologist.Surname = "Rakic";
+    this.dermatologist.name ="Marko";
+    this.dermatologist.email = "mr98@gmail.com";
+    this.dermatologist.id = 11111;
+    this.dermatologist.surname = "Rakic";
     this.dermatologists.push(this.dermatologist);
   }
 }

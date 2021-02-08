@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule ,FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input'
-import { MatSelectModule } from '@angular/material/select'
-import { MatButtonModule } from '@angular/material/button'
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -25,7 +25,9 @@ import { DermatologistPatientSearchComponent } from './dermatologist-patient-sea
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
+import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
     PharmacistPatientSearchComponent,
-    PharmacyProfileComponent
+    PharmacyProfileComponent,
+    PharmacistListComponent,
+    DermatologistListComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -56,6 +62,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
+    MatTableModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA24VE6O4XCe1Xzr1azrrsI3gqurHNDbHE',
+      libraries: ['places']
+    }),
     NgbModule
   ],
   providers: [],
