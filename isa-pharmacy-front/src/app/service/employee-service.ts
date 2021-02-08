@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AppointmentReportPharmacistComponent } from '../appointment-report-pharmacist/appointment-report-pharmacist.component';
+import { Appointment } from '../model/appointment.model';
 
 @Injectable({
     providedIn: 'root'
@@ -21,5 +23,14 @@ import { Observable } from 'rxjs';
     }
     penalizePatient(uidn):Promise<any>{
       return this._http.get("http://localhost:8080/auth/appointments/exams/penalize/" + uidn).toPromise();
+    }
+    penalizePatientPharmacist(uidn):Promise<any>{
+      return this._http.get("http://localhost:8080/auth/appointments/counselings/pharmacistpenalize/" + uidn).toPromise();
+    }
+    sendAppointmentDTO(val:Appointment):Observable<any>{
+      return this._http.post("http://localhost:8080/auth/appointments/exams/finalizeappointment",val);
+    }
+    sendAppointmentDTOPharmacist(val:Appointment):Observable<any>{
+      return this._http.post("http://localhost:8080/auth/appointments/exams/finalizeappointmentpharmacist",val);
     }
   }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AppointmentReportPharmacistComponent } from './appointment-report-pharmacist/appointment-report-pharmacist.component';
 import { AppointmentReportComponent } from './appointment-report/appointment-report.component';
 import { DermatologistPatientSearchComponent } from './dermatologist-patient-search/dermatologist-patient-search.component';
 import { DermatologistProfileComponent } from './dermatologist-profile/dermatologist-profile.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'pharmacy-profile', component: PharmacyProfileComponent },
   {path: 'pharmacist-work-cal',component:PharmacistWorkCalendarComponent},
   {path: 'dermatologist-work-cal',component:DermatologistWorkCalendarComponent},
-  {path: 'dermatologist-appointment-report/:uidn',component:AppointmentReportComponent}
+  {path: 'dermatologist-appointment-report/:uidn',component:AppointmentReportComponent},
+  {path: 'pharmacist-appointment-report/:uidn',component:AppointmentReportPharmacistComponent}
 ];
 
 @NgModule({

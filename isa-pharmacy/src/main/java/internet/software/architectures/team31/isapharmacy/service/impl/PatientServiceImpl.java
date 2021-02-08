@@ -26,8 +26,11 @@ public class PatientServiceImpl implements PatientService{
 	@Autowired
 	private ExamServiceImpl examService;
 	@Autowired
+	private CounselingServiceImpl counsService;
+	@Autowired
 	private ExamRepository examRepository;
-	
+	@Autowired
+	private CounselingRepository counsRepository;
 	@Override
 	public Patient findByUidn(String uidn) {
 		return patientRepository.findByUidn(uidn);
@@ -50,5 +53,20 @@ public class PatientServiceImpl implements PatientService{
 	@Override
 	public List<Patient> findAll() {
 		return patientRepository.findAll();
+	}
+	@Override
+	public Counseling pharmacistPenalize(String uidn) {
+		List<Counseling> counseling = (List<Counseling>) counsService.findAll();
+		for (Counseling coun : counseling) {
+			if(coun.getPatient().getUidn().equals(uidn)) {
+				coun.setAppointmentStatus(AppointmentStatus.UNATTENDED);
+				Patient patient = findByUidn(coun.getPatient().getUidn());
+				int penalty = patient.getPenalty();
+				patient.setPenalty(++penalty);
+				patientRepository.save(patient);
+				return counsRepository.save(coun);
+			}
+		}
+		return null;
 	}
 }

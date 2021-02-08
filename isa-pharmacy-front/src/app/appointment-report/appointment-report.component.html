@@ -15,21 +15,24 @@
       </nav>
     </div>
   </header>
+  <form [formGroup]="myForm">
   <div class="profilediv">
     <div class="userinfo">
         <table >
-        <tr><td >Unesite podatke o pacijentu sa uidn: {{pat.uidn}}</td><td><textarea name="report" id="" cols="60" rows="10" ></textarea></td></tr>
-        <tr ><td>Izaberite terapiju</td><td ><select name="" id="" >
-            <option value="volvo" *ngFor="let med of medicine">{{med.name}}</option>
-            
-        </select></td></tr>
+        <tr><td >Unesite podatke o pregledu za uidn: {{pat.uidn}}</td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
+        <tr ><td>Izaberite terapiju</td><td ><mat-form-field >
+          <mat-select name="" id="" #mySelect formControlName="medicine" [(value)]="medicineSelect">
+            <mat-option *ngFor="let med of medicine" [value]="med.name" >{{med.name}}</mat-option>
+        </mat-select></mat-form-field></td>
+        <td><button (click)="CallComposition(mySelect.value)">Specifikacija</button></td><td><button>Dostupnost</button></td></tr>
         <tr><td>Zakazite dodatan pregled</td><td><select name="" id="">
-            <option value="volvo">Volvo</option>
+            <option value="volvo" >Volvo</option>
             <option value="saab">Saab</option>
             <option value="mercedes">Mercedes</option>
             <option value="audi">Audi</option>
         </select></td></tr>
-        <button>Zavrsi pregled</button>
+        <button (click)="FinalizeDTO()">Zavrsi pregled</button>
     </table>
     </div>
 </div>
+</form>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NumberLiteralType } from 'typescript';
 import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
@@ -9,11 +8,11 @@ import { EmployeeService } from '../service/employee-service';
 import { MedicineService } from '../service/medicine-service';
 
 @Component({
-  selector: 'app-appointment-report',
-  templateUrl: './appointment-report.component.html',
-  styleUrls: ['./appointment-report.component.css']
+  selector: 'app-appointment-report-pharmacist',
+  templateUrl: './appointment-report-pharmacist.component.html',
+  styleUrls: ['./appointment-report-pharmacist.component.css']
 })
-export class AppointmentReportComponent implements OnInit {
+export class AppointmentReportPharmacistComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService) { }
   pat:Dermatologist = new Dermatologist();
@@ -34,11 +33,11 @@ export class AppointmentReportComponent implements OnInit {
     })
 
   }
-  FinalizeDTO(){
+  FinalizeDTOPharmacist(){
     this.appointment.report=this.myForm.get('area').value;
     this.appointment.uidn=this.pat.uidn;
     this.appointment.medicine.push(this.medicineSelect);
-    this.service.sendAppointmentDTO(this.appointment).subscribe(res=>{
+    this.service.sendAppointmentDTOPharmacist(this.appointment).subscribe(res=>{
       console.log(res);
       alert("Uspesno zavrsen pregled"),
       err =>{

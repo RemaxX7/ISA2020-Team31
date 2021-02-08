@@ -1,5 +1,6 @@
 export class Medicine {
-    Id:number;
-    Name:string;
-    Manufacturer:string;
+    id:number;
+    name:string;
+    composition:string;
+    manufacturer:string;
 }

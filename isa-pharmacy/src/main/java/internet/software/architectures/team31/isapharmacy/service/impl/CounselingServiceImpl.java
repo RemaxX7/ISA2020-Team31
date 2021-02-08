@@ -1,17 +1,22 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
@@ -30,6 +35,8 @@ public class CounselingServiceImpl implements CounselingService {
 	private PharmacyService pharmacyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MedicineServiceImpl medicineService;
 
 	@Override
 	public Counseling save(CounselingCreateDTO dto) {
@@ -94,5 +101,27 @@ public class CounselingServiceImpl implements CounselingService {
 	@Override
 	public boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId) {
 		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED) != null;
+	}
+
+	@Override
+	public Counseling finalizeExam(AppointmentFinalizationDTO dto) {
+		List<Counseling> counseling = (List<Counseling>) findAll();
+		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
+		List<Medicine>medicineList = new ArrayList<Medicine>();
+		for (String med : dto.getMedicine()) {
+			medicineList.add(medicineService.findByName(med));
+		}
+		for (Counseling couns : counseling) {
+			if(couns.getPatient().getUidn().equals(dto.getUidn())) {
+				for (Medicine medicine : medicineList) {
+					itemList.add(new AppointmentMedicineItem(medicine,3));
+				}
+				couns.setAppointmentStatus(AppointmentStatus.FINISHED);
+				couns.setReport(dto.getReport());
+				couns.setAppointmentMedicineItems(itemList);
+				return counselingRepository.save(couns);
+			}
+		}
+		return null;
 	}
 }

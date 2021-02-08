@@ -40,4 +40,19 @@ public class MedicineServiceImpl implements MedicineService {
 		}
 		return medicineList;
 	}
+	
+	public Medicine findCompositionForMedicine(String name) {
+		List<Medicine> medicines = findAll();
+		for (Medicine med : medicines) {
+			if(med.getName().toLowerCase().equals(name)) {
+				return med;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Medicine findByName(String name) {
+		return medicineRepository.findByName(name);
+	}
 }

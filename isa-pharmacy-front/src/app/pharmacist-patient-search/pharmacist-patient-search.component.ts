@@ -23,6 +23,11 @@ export class PharmacistPatientSearchComponent implements OnInit {
     )
     console.log(this.users);
   }
+  PenalizePatient(uidn){
+    this.service.penalizePatientPharmacist(uidn);
+    alert("Korisnik je kaznjen jednim negativnim bodom");
+    //this.Reload();
+  }
   MyFunction(){
     var input, filter, table, tr, td, i,td1;
     input = document.getElementById("myInput");

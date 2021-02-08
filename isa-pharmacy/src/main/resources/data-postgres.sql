@@ -12,8 +12,9 @@ INSERT INTO AUTHORITY (name) VALUES ('ROLE_USER');
 INSERT INTO AUTHORITY (name) VALUES ('ROLE_ADMIN');
 
 INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (1,'Paracetamol',3,2,'paracetamol 200g','SlaFarm',1);
-INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (2,'Andol',2,1,'paracetamol 200g','SlaFarm',1);
-INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (3,'Fenidol',1,3,'paracetamol 200g','SlaFarm',1);
+INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (2,'Andol',2,1,'andol 200g','SlaFarm',1);
+INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (3,'Fenidol',1,3,'fenidol 200g','SlaFarm',1);
 
 INSERT INTO appointments (id,appointment_status,patient_id,type) values (1,1,1,'Exam');
 INSERT INTO appointments (id,appointment_status,patient_id,type) values (2,1,4,'Exam');
+INSERT INTO appointments (id,appointment_status,patient_id,type) values (3,1,1,'Counseling');

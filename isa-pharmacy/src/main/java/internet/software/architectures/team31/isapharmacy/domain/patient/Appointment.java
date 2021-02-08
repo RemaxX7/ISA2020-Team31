@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
@@ -44,6 +45,7 @@ public abstract class Appointment {
 	protected Double price;
 	@Column(name = "report")
 	protected String report;
+	@OneToMany(cascade = {CascadeType.ALL})
 	@Column(name = "appointment_medicine_items")
 	@ElementCollection(targetClass = AppointmentMedicineItem.class)
 	protected List<AppointmentMedicineItem> appointmentMedicineItems;

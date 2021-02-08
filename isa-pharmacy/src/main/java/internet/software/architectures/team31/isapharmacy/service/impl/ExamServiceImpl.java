@@ -1,17 +1,22 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
-import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
@@ -29,6 +34,8 @@ public class ExamServiceImpl implements ExamService {
 	private PharmacyService pharmacyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MedicineServiceImpl medicineService;
 
 	@Override
 	public Exam save(ExamCreateDTO dto) {
@@ -95,5 +102,27 @@ public class ExamServiceImpl implements ExamService {
 	@Override
 	public boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId) {
 		return examRepository.findOneByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED) != null;
+	}
+
+	@Override
+	public Exam finalizeExam(AppointmentFinalizationDTO dto) {
+		List<Exam> exam = (List<Exam>) findAll();
+		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
+		List<Medicine>medicineList = new ArrayList<Medicine>();
+		for (String med : dto.getMedicine()) {
+			medicineList.add(medicineService.findByName(med));
+		}
+		for (Exam ex : exam) {
+			if(ex.getPatient().getUidn().equals(dto.getUidn())) {
+				for (Medicine medicine : medicineList) {
+					itemList.add(new AppointmentMedicineItem(medicine,3));
+				}
+				ex.setAppointmentStatus(AppointmentStatus.FINISHED);
+				ex.setReport(dto.getReport());
+				ex.setAppointmentMedicineItems(itemList);
+				return examRepository.save(ex);
+			}
+		}
+		return null;
 	}
 }

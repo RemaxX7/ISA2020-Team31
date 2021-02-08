@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
-import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
@@ -72,5 +73,9 @@ public class ExamController {
 	@GetMapping(value = "/penalize/{id}")
 	public ResponseEntity<Exam>penalize(@PathVariable String id){
 		return new ResponseEntity<>(patientService.penalize(id),HttpStatus.OK);
+	}
+	@PostMapping(value = "/finalizeappointment")
+	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
+		return new ResponseEntity<>(examService.finalizeExam(dto),HttpStatus.OK);
 	}
 }

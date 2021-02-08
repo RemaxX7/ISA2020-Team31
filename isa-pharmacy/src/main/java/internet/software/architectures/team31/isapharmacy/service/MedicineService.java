@@ -8,4 +8,5 @@ public interface MedicineService {
 
 	Medicine findById(Long id);
 	List<Medicine> findAll();
+	Medicine findByName(String name);
 }

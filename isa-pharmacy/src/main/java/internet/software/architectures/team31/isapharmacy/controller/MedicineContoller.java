@@ -21,8 +21,6 @@ public class MedicineContoller {
 	@Autowired
 	private MedicineServiceImpl medicineService;
 	
-	@Autowired
-	private PatientServiceImpl patientService;
 	
 	@GetMapping(value = "/medicineforpatient/{uidn}")
 	public ResponseEntity<Collection<Medicine>> findAllMedicineForPatient(@PathVariable String uidn) {
@@ -31,5 +29,9 @@ public class MedicineContoller {
 	@GetMapping(value = "/all")
 	public ResponseEntity<Collection<Medicine>> findAllMedicine(){
 		return new ResponseEntity<>(medicineService.findAll(),HttpStatus.OK);
+	}
+	@GetMapping(value = "/composition/{name}")
+	public ResponseEntity<Medicine> findCompositionForMedicine(@PathVariable String name){
+		return new ResponseEntity<>(medicineService.findCompositionForMedicine(name),HttpStatus.OK);
 	}
 }

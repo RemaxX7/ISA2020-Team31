@@ -15,19 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
+import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "api/appointments/counselings")
+@RequestMapping(value = "auth/appointments/counselings")
 public class CounselingController {
 
 	@Autowired
 	private CounselingService counselingService;
+	@Autowired
+	private PatientServiceImpl patientService;
 	
 	@PostMapping(value = "/save")
 	public ResponseEntity<Counseling> save(@RequestBody CounselingCreateDTO dto) {
@@ -52,5 +57,13 @@ public class CounselingController {
 	@PutMapping(value = "/cancel/{id}")
 	public ResponseEntity<Counseling> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
+	}
+	@GetMapping(value = "/pharmacistpenalize/{id}")
+	public ResponseEntity<Counseling>penalize(@PathVariable String id){
+		return new ResponseEntity<>(patientService.pharmacistPenalize(id),HttpStatus.OK);
+	}
+	@PostMapping(value = "/finalizeappointmentpharmacist")
+	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
+		return new ResponseEntity<>(counselingService.finalizeExam(dto),HttpStatus.OK);
 	}
 }
