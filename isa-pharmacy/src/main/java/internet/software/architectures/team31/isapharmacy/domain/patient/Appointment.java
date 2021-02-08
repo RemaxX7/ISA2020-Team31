@@ -25,7 +25,7 @@ import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 @Entity
 @Table(name = "appointments")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Appointment {
 
 	@Id

@@ -4,18 +4,21 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
-import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
+import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
@@ -29,6 +32,8 @@ public class ExamServiceImpl implements ExamService {
 	private PharmacyService pharmacyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public Exam save(ExamCreateDTO dto) {
@@ -40,8 +45,7 @@ public class ExamServiceImpl implements ExamService {
 	
 	@Override
 	public Exam schedule(AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
-		Patient patient = (Patient) userService.findById(dto.getPatientId());
-		
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(patient.getPenalty() >= 3) {
 			throw new PenaltyException("Cannot schedule an exam. Maximum number of penalties exceeded.");
 		}
@@ -52,6 +56,7 @@ public class ExamServiceImpl implements ExamService {
 		}
 		
 		exam.setPatient(patient);
+		sendExamEmail(exam);
 		return examRepository.save(exam);
 	}
 
@@ -88,6 +93,11 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
+	public Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
+		return examRepository.findAllByPatientIdAndAppointmentStatus(patientId, status);
+	}
+	
+	@Override
 	public Exam findById(Long id) {
 		return examRepository.findById(id).orElse(null);
 	}
@@ -95,5 +105,18 @@ public class ExamServiceImpl implements ExamService {
 	@Override
 	public boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId) {
 		return examRepository.findOneByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED) != null;
+	}
+	
+	private void sendExamEmail(Exam exam) {
+		emailService.sendEmail(exam.getPatient().getEmail(), "Dermatologist appointment confirmation", getExamEmailText(exam));
+	}
+	
+	private String getExamEmailText(Exam exam) {
+		StringBuilder text = new StringBuilder("Hello, " + exam.getPatient().getName() + ". Your dermatologist exam appointment with "
+				+ exam.getDermatologist().getFullName() + " has been scheduled.");
+		text.append("Pharmacy: " + exam.getPharmacy().getName() + "\r\n");
+		text.append("Address: " + exam.getPharmacy().getAddress() + "\r\n");
+		text.append("Date and time: " + exam.getDateRange().getStartDateTime() + " - " + exam.getDateRange().getEndDateTime() + "\r\n");
+		return text.toString();
 	}
 }

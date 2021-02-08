@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -28,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -44,8 +46,7 @@ import { AgmCoreModule } from '@agm/core';
     PharmacyProfileComponent,
     PharmacistListComponent,
     DermatologistListComponent,
-    
-    
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -63,8 +64,9 @@ import { AgmCoreModule } from '@agm/core';
     MatDialogModule,
     MatTabsModule,
     MatTableModule,
+    MatGridListModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyA24VE6O4XCe1Xzr1azrrsI3gqurHNDbHE',
+      apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']
     }),
     NgbModule

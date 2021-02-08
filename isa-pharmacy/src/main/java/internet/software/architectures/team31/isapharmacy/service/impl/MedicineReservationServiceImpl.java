@@ -16,6 +16,7 @@ import internet.software.architectures.team31.isapharmacy.dto.MedicineReservatio
 import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.MedicineReservationRepository;
+import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
@@ -32,6 +33,8 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	private UserService userService;
 	@Autowired
 	private MedicineService medicineService;
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public MedicineReservation save(MedicineReservationCreateDTO dto) throws PenaltyException {
@@ -42,12 +45,12 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 		
 		MedicineReservation reservation = new MedicineReservation(dto);
 		reservation.setCode(String.valueOf(LocalDateTime.now().hashCode()) + "_" + reservation.getId());
-		//TODO: Send reservation code to Patient by email
 		reservation.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		reservation.setPatient(patient);
 		reservation.setMedicineReservationItems(dto.getMedicineReservationItems().stream()
 			    .map(item -> new MedicineReservationItem(medicineService.findById(item.getMedicineId()), item.getQuantity()))
 			    .collect(Collectors.toList()));
+		sendReservationEmail(reservation);
 		return medicineReservationRepository.save(reservation);
 	}
 
@@ -72,6 +75,12 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	public Collection<MedicineReservation> findAllByPatientId(Long id) {
 		return medicineReservationRepository.findAllByPatientId(id);
 	}
+	
+	@Override
+	public Collection<MedicineReservation> findAllByPatientIdAndMedicineReservationStatus(Long patientId,
+			MedicineReservationStatus status) {
+		return medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patientId, status);
+	}
 
 	@Override
 	public MedicineReservation findById(Long id) {
@@ -81,5 +90,36 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	@Override
 	public boolean hasPatientPurchasedMedicineFromPharmacy(Long patientId, Long pharmacyId) {
 		return medicineReservationRepository.findOneByPatientIdAndPharmacyIdAndMedicineReservationStatus(patientId, pharmacyId, MedicineReservationStatus.FINISHED) != null;
+	}
+
+	@Override
+	public boolean hasPatientPurchasedMedicine(Long patientId, Long medicineId) {
+		Collection<MedicineReservation> reservations = medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patientId, MedicineReservationStatus.FINISHED);
+		for(MedicineReservation reservation : reservations) {
+			for(MedicineReservationItem item: reservation.getMedicineReservationItems()) {
+				if(item.getMedicine().getId() == medicineId) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private void sendReservationEmail(MedicineReservation reservation) {
+		emailService.sendEmail(reservation.getPatient().getEmail(), "Medicine reservation confirmation", getReservationEmailText(reservation));
+	}
+	
+	private String getReservationEmailText(MedicineReservation reservation) {
+		StringBuilder text = new StringBuilder("Hello, " + reservation.getPatient().getName() + ". Your medicine reservation pick-up code is: " + reservation.getCode() + "\r\n");
+		text.append("Pharmacy: " + reservation.getPharmacy().getName() + "\r\n");
+		text.append("Address: " + reservation.getPharmacy().getAddress());
+		text.append("Pick-up date: " + reservation.getPickUpDate() + "\r\n");
+		text.append("Medicine reservation: \r\n");
+		
+		for(MedicineReservationItem item: reservation.getMedicineReservationItems()) {
+			text.append(item.getQuantity() + " x " + item.getMedicine().getName() + "\r\n");
+		}
+		
+		return text.toString();
 	}
 }

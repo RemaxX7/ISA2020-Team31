@@ -2,7 +2,6 @@ package internet.software.architectures.team31.isapharmacy.dto;
 
 public class PharmacyComplaintCreateDTO {
 
-	private Long patientId;
 	private Long pharmacyId;
 	private String complaintText;
 	
@@ -10,19 +9,10 @@ public class PharmacyComplaintCreateDTO {
 		super();
 	}
 
-	public PharmacyComplaintCreateDTO(Long patientId, Long pharmacyId, String complaintText) {
+	public PharmacyComplaintCreateDTO(Long pharmacyId, String complaintText) {
 		super();
-		this.patientId = patientId;
 		this.pharmacyId = pharmacyId;
 		this.complaintText = complaintText;
-	}
-
-	public Long getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(Long patientId) {
-		this.patientId = patientId;
 	}
 
 	public Long getPharmacyId() {
