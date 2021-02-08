@@ -25,6 +25,8 @@ import { DermatologistPatientSearchComponent } from './dermatologist-patient-sea
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
     PharmacistPatientSearchComponent,
-    PharmacyProfileComponent
+    PharmacyProfileComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
-    NgbModule
+    NgbModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg'
+    })
   ],
   providers: [],
   entryComponents:[

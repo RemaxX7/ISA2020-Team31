@@ -1,0 +1,77 @@
+
+<div class="formBox">
+    <h1><b>Patient registration</b></h1>
+<form [formGroup]="myForm" autocomplete="off">
+    <hr>
+    <mat-grid-list cols="2">
+        <mat-grid-tile>
+            <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field>
+                <input matInput placeholder="Surname" formControlName="surname">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Uidn" formControlName="uidn">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Phone number" formControlName="phoneNumber">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="password" matInput placeholder="Confirm password" formControlName="passwordControl">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <mat-select placeholder="Country" (selectionChange)="FillCities($event)" formControlName="country">
+                <mat-option *ngFor="let country of countries" [value]="country">
+                {{country.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="City" (selectionChange)="SelectCity($event)" formControlName="city">
+                <mat-option *ngFor="let city of cities" [value]="city">
+                {{city.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Street" formControlName="street">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Confirm password" formControlName="passwordControl">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <agm-map [latitude]="latitude" [longitude]="longitude">
+
+    </agm-map>
+    <button mat-raised-button [disabled]="myForm.invalid" (click)="Register()">Register</button>
+</form>
+</div>
