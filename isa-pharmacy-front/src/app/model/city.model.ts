@@ -1,6 +1,6 @@
 import { Country } from "./country.model";
 
 export class City {
-    Country:Country;
-	Name:String;
+    country:Country=new Country;
+	name:String;
 }

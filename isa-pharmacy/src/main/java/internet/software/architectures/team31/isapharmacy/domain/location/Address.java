@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import internet.software.architectures.team31.isapharmacy.dto.AddressCreateDTO;
 
 @Entity
-@Table(name = "addresses")
+@Table(name="address")
 public class Address {
 	
 	@Id
