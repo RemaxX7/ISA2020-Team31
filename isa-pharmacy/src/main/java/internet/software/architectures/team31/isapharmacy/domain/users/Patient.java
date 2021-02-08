@@ -12,7 +12,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import internet.software.architectures.team31.isapharmacy.domain.location.Address;
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
 @Entity
 @DiscriminatorValue("Patient")
 public class Patient extends User {
@@ -27,6 +29,33 @@ public class Patient extends User {
 	@Column
 	@ElementCollection(targetClass=Medicine.class)
 	private List<Medicine> allergies;
+	@Column(name = "activation_token")
+	private String activationToken;
+	
+	public Patient() {
+		super();
+	}
+
+	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken) {
+		super();
+		this.penalty = penalty;
+		this.boughtMedicineList = boughtMedicineList;
+		this.allergies = allergies;
+		this.activationToken = activationToken;
+	}
+
+	public Patient(PatientRegisterDTO dto) {
+		super();
+		this.name = dto.getName(); 
+		this.surname = dto.getSurname();
+		this.username = dto.getUsername();
+		this.uidn = dto.getUidn();
+		this.email = dto.getEmail();
+		this.password = dto.getPassword();
+		this.phoneNumber = dto.getPhoneNumber();
+		this.address = new Address(dto.getAddress());
+		this.penalty = 0;
+	}
 
 	public Integer getPenalty() {
 		return penalty;
@@ -50,6 +79,14 @@ public class Patient extends User {
 
 	public void setAllergies(List<Medicine> allergies) {
 		this.allergies = allergies;
+	}
+	
+	public String getActivationToken() {
+		return activationToken;
+	}
+	
+	public void setActivationToken(String activationToken) {
+		this.activationToken = activationToken;
 	}
 
 	@Override

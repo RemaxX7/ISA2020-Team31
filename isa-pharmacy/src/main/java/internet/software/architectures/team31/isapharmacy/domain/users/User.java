@@ -22,7 +22,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,39 +42,39 @@ public abstract class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", unique=true, nullable=false)
-	private Long id;
+	protected Long id;
 	
 	@NotBlank(message = "Name is mandatory")
 	@Column(nullable = false)
-	private String name;
+	protected String name;
 	
 	@NotBlank(message = "Surname is mandatory")
 	@Column(nullable = false)
-	private String surname;
+	protected String surname;
 	
 	@NotBlank(message = "Uidn is mandatory")
 	@Column(unique=true, nullable=false)
-	private String uidn;
+	protected String uidn;
 	
 	@NotBlank(message = "Username is mandatory")
 	@Column(nullable = false)
-	private String username;
+	protected String username;
 	
 	@NotBlank(message = "Password is mandatory")
 	@Column(nullable = false)
-	private String password;
+	protected String password;
 	
 	@NotBlank(message = "Email is mandatory")
 	@Column(unique=true, nullable=false)
-	private String email;
+	protected String email;
 	
 	@NotBlank(message = "Phone number is mandatory")
 	@Column(name="phone_number",nullable=false)
-	private String phoneNumber;
+	protected String phoneNumber;
 	
-	@NotEmpty(message = "Address is mandatory")
+	//@NotNull(message = "Address is mandatory")
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Address address;
+	protected Address address;
 	
 	@Column(name = "enabled")
     protected boolean enabled;
