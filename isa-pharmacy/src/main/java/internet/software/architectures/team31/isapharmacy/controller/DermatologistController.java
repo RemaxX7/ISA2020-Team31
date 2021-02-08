@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
+import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.service.DermatologistService;
 
 @RestController
@@ -24,5 +25,10 @@ public class DermatologistController {
 	@GetMapping("/all/{pharmacyId}")
 	public ResponseEntity<List<Dermatologist>> findAllByPharmacy(@PathVariable Long pharmacyId) {
 		return new ResponseEntity<List<Dermatologist>>(this.dermatologistService.findAllByPharmacy(pharmacyId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<Dermatologist>> findAll(){
+		return new ResponseEntity<List<Dermatologist>>(this.dermatologistService.findAll(), HttpStatus.OK);
 	}
 }

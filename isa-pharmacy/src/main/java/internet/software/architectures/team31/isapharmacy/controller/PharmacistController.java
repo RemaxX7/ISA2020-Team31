@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,11 @@ public class PharmacistController {
 	
 	@GetMapping("/all/{pharmacyId}")
 	public ResponseEntity<Collection<Pharmacist>> findAllByPharmacyId(@PathVariable Long pharmacyId) {
-		return new ResponseEntity<>(this.pharmacistService.findAllByPharmacyId(pharmacyId), HttpStatus.OK);
+		return new ResponseEntity<Collection<Pharmacist>>(this.pharmacistService.findAllByPharmacyId(pharmacyId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<Pharmacist>> findAll(){
+		return new ResponseEntity<List<Pharmacist>>(this.pharmacistService.findAll(), HttpStatus.OK);
 	}
 }

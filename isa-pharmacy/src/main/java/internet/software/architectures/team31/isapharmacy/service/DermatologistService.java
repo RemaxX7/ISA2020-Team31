@@ -7,4 +7,5 @@ import internet.software.architectures.team31.isapharmacy.domain.users.Dermatolo
 public interface DermatologistService {
 	
 	List<Dermatologist> findAllByPharmacy(Long id);
+	List<Dermatologist> findAll();
 }

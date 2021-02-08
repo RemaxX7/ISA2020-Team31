@@ -25,6 +25,9 @@ header a {
     font-size: 17px;
 }
 
-
+agm-map {
+    height: 300px;
+    width: 80%;
+}
 
 

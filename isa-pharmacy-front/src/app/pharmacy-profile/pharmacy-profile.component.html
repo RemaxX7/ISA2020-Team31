@@ -22,7 +22,19 @@
               </span>
             </ng-template>
             <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="currentRate" [readonly]="true"></ngb-rating>
-
+            <agm-map 
+                [(latitude)]='lat' 
+                [(longitude)]='long'
+                [fitBounds]="true"       >
+  
+                <agm-marker 
+                    [(latitude)]="lat" 
+                    [(longitude)]="long"
+                    [agmFitBounds]="true"
+                    >    
+                </agm-marker>
+  
+            </agm-map>
         </div>
         <mat-tab-group dynamicHeight mat-stretch-tabs class="mat-elevation-z4">
             <mat-tab label="Dermatologists">

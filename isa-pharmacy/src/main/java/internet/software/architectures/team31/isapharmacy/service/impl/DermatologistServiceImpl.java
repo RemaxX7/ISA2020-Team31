@@ -20,5 +20,9 @@ public class DermatologistServiceImpl implements DermatologistService {
 	public List<Dermatologist> findAllByPharmacy(Long id) {
 		return dermatologistRepository.findAllByPharmacy(id);
 	}
-
+	
+	@Override
+	public List<Dermatologist> findAll(){
+		return dermatologistRepository.findAll();
+	}
 }

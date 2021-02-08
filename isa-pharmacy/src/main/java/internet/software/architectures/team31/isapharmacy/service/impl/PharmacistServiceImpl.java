@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,9 @@ public class PharmacistServiceImpl implements PharmacistService  {
 		return pharmacistRepository.findAllByPharmacyId(id);
 	}
 	
+	@Override
+	public List<Pharmacist> findAll(){
+		return pharmacistRepository.findAll();
+	}
 
 }

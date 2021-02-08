@@ -15,4 +15,9 @@ export class PharmacistService {
   {
     return this._http.get<any>(this._APIUrl+'/all/'+pharmacyId);
   }
+
+  FindAll():Observable<any>
+  {
+    return this._http.get<any>(this._APIUrl+'/all');
+  }
 }

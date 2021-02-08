@@ -20,7 +20,7 @@ public class Pharmacy {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", unique=true, nullable=false)
+	@Column(name="id")
 	private Long id;
 	
 	@Column(name="name")

@@ -12,6 +12,8 @@ import internet.software.architectures.team31.isapharmacy.domain.users.Dermatolo
 
 public interface DermatologistRepository extends JpaRepository<Dermatologist, Long> {
 	@Query(value = "SELECT * FROM"
-			+ " users u  WHERE u.id = (select p.dermatologist_id from users_pharmacies p where p.pharmacies_id=:id)", nativeQuery = true )
+			+ " users u  WHERE u.id IN (select p.dermatologist_id from users_pharmacies p where p.pharmacies_id=:id)", nativeQuery = true )
 	List<Dermatologist> findAllByPharmacy(@Param("id")Long id);
+	
+	List<Dermatologist> findAll();
 }

@@ -10,6 +10,8 @@ import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/ph
 import { PharmacistProfileComponent } from './pharmacist-profile/pharmacist-profile.component';
 import { PharmacistComponent } from './pharmacist/pharmacist.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
+import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
+import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 
 const routes: Routes = [
   {path:'dermatologist',component:DermatologistComponent},
@@ -21,7 +23,9 @@ const routes: Routes = [
   {path:'medicine-dispensing',component:MedicineDispensingComponent},
   {path:'dermatologist-patient-search',component:DermatologistPatientSearchComponent},
   {path:'pharmacist-patient-search',component:PharmacistPatientSearchComponent},
-  {path: 'pharmacy-profile', component: PharmacyProfileComponent },
+  {path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
+  {path:'pharmacist-list', component:PharmacistListComponent},
+  {path:'dermatologist-list', component:DermatologistListComponent}
 ];
 
 @NgModule({

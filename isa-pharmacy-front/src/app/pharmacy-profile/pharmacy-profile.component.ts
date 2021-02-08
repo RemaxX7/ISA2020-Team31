@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
 import { Pharmacist } from '../model/pharmacist.model';
@@ -15,38 +16,43 @@ import { PharmacyService } from '../service/pharmacy.service';
 })
 export class PharmacyProfileComponent implements OnInit {
 
-  constructor(private pharmacyService:PharmacyService,private pharmacistService:PharmacistService,private dermatologistService:DermatologistService) { }
+  constructor(private route: ActivatedRoute,private pharmacyService:PharmacyService,private pharmacistService:PharmacistService,private dermatologistService:DermatologistService) { }
   pharmacy:Pharmacy=new Pharmacy;
   currentRate:number;
   dermatologists:Dermatologist[]=[];
   pharmacists:Pharmacist[]=[];
   medicines:Medicine[]=[];
+  pharmacyId:number;
   
+  
+  lat = 22.2736308;
+  long = 70.7512555;
   
   medicine:Medicine=new Medicine;
-  dermatologist:Dermatologist=new Dermatologist;
-  pharmacist:Pharmacist=new Pharmacist;
 
   ngOnInit(): void {
-    this.GetPharmacy(1);
-    this.GetPharmacists(1);
-    this.GetDermatologists(1);
+    this.pharmacyId=Number(this.route.snapshot.paramMap.get('id'));
+    this.GetPharmacy();
+    this.GetPharmacists();
+    this.GetDermatologists();
     this.Test();
    
     
   }
 
-  async GetPharmacy(pharmacyId:number){
-    await this.pharmacyService.getPharmacy(pharmacyId).then(data=>{
+  async GetPharmacy(){
+    await this.pharmacyService.getPharmacy(this.pharmacyId).then(data=>{
           this.pharmacy=data;
           this.currentRate = this.pharmacy.rate;
+          this.lat=this.pharmacy.address.latitude;
+          this.long=this.pharmacy.address.longitude;
         }
       )
   }
 
- GetPharmacists(pharmacyId:number)
+ GetPharmacists()
   {
-    this.pharmacistService.FindAllByPharmacyId(pharmacyId).subscribe(
+    this.pharmacistService.FindAllByPharmacyId(this.pharmacyId).subscribe(
       data=>{
         this.pharmacists=data;
         
@@ -54,9 +60,9 @@ export class PharmacyProfileComponent implements OnInit {
     )
   }
 
-  GetDermatologists(pharmacyId:number)
+  GetDermatologists()
   {
-    this.dermatologistService.FindAllByPharmacyId(pharmacyId).subscribe(
+    this.dermatologistService.FindAllByPharmacyId(this.pharmacyId).subscribe(
       data=>{
         this.dermatologists=data;
         

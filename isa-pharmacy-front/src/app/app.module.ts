@@ -25,6 +25,9 @@ import { DermatologistPatientSearchComponent } from './dermatologist-patient-sea
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
+import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
     PharmacistPatientSearchComponent,
-    PharmacyProfileComponent
+    PharmacyProfileComponent,
+    PharmacistListComponent,
+    DermatologistListComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -56,6 +63,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatDialogModule,
     MatTabsModule,
     MatTableModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA24VE6O4XCe1Xzr1azrrsI3gqurHNDbHE',
+      libraries: ['places']
+    }),
     NgbModule
   ],
   providers: [],
