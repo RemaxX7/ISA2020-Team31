@@ -9,5 +9,6 @@ public interface PharmacistService {
 	
 	Collection<Pharmacist> findAllByPharmacyId(Long id);
 	List<Pharmacist> findAll();
+	Pharmacist findById(Long id); 
 
 }

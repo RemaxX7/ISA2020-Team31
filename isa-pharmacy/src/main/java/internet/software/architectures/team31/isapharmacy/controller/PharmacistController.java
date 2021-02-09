@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.service.PharmacistService;
 
@@ -24,11 +25,16 @@ public class PharmacistController {
 	
 	@GetMapping("/all/{pharmacyId}")
 	public ResponseEntity<Collection<Pharmacist>> findAllByPharmacyId(@PathVariable Long pharmacyId) {
-		return new ResponseEntity<Collection<Pharmacist>>(this.pharmacistService.findAllByPharmacyId(pharmacyId), HttpStatus.OK);
+		return new ResponseEntity<>(this.pharmacistService.findAllByPharmacyId(pharmacyId), HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<List<Pharmacist>> findAll(){
-		return new ResponseEntity<List<Pharmacist>>(this.pharmacistService.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(this.pharmacistService.findAll(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Pharmacist> findById(Long id){
+		return new ResponseEntity<>(this.pharmacistService.findById(id), HttpStatus.OK);
 	}
 }

@@ -15,6 +15,7 @@ public abstract class Employee extends User {
 	@ElementCollection(targetClass=Patient.class)
 	private List<Patient> examinedPatientsList;
 	
+	@Column(name="rate")
 	private Float rate;
 
 	public Employee() {

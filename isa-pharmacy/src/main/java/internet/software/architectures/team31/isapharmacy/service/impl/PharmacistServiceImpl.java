@@ -26,4 +26,9 @@ public class PharmacistServiceImpl implements PharmacistService  {
 		return pharmacistRepository.findAll();
 	}
 
+	@Override
+	public Pharmacist findById(Long id) {
+		return pharmacistRepository.findById(id).orElse(null);
+	}
+
 }
