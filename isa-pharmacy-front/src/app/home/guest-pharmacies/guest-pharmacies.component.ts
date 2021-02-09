@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 import { PharmacyService } from 'src/app/service/pharmacy.service';
-import { PharmacyDTO } from './dto/pharmacy-dto.model';
 
 @Component({
   selector: 'app-guest-pharmacies',
@@ -11,11 +11,10 @@ import { PharmacyDTO } from './dto/pharmacy-dto.model';
 export class GuestPharmaciesComponent implements OnInit {
 
   public pharmacies:Array<any>;
-  private pages:Array<number>;
   public totalElements:number;
   private searchActive:boolean = false;
 
-  constructor(private pharmacyService: PharmacyService) { }
+  constructor(private pharmacyService: PharmacyService, private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.GetPharmacies(0);
@@ -25,7 +24,6 @@ export class GuestPharmaciesComponent implements OnInit {
     this.pharmacyService.getPage(page).subscribe(
       data => {
         this.pharmacies = data['content'];
-        this.pages = new Array(data['totalPages']);
         this.totalElements = data['totalElements'];
         this.searchActive = false;
       }
@@ -34,7 +32,6 @@ export class GuestPharmaciesComponent implements OnInit {
 
   Search() {
     let query = (<HTMLInputElement>document.getElementById('search-input')).value;
-    console.log(query);
     if(!query) {
       this.GetPharmacies(0);
     } else {
@@ -46,10 +43,10 @@ export class GuestPharmaciesComponent implements OnInit {
     this.pharmacyService.getSearchResultPage(page, query).subscribe(
       data => {
         this.pharmacies = data['content'];
-        this.pages = new Array(data['totalPages']);
         this.totalElements = data['totalElements'];
         this.searchActive = true;
-      }
+      },
+      err => this.toastr.error(err.error)
     )
   }
 

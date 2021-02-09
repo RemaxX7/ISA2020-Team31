@@ -29,7 +29,6 @@ export class SignInComponent implements OnInit {
 
     this.userService.Login(credentials).subscribe(data => {
       this.toastr.success('Logged in successfully.');
-      console.log(data);
     },
     err => {
       this.toastr.error(err.error);

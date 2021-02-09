@@ -25,7 +25,6 @@ public class PharmacyViewDTO {
 		super();
 		this.id = pharmacy.getId();
 		this.name = pharmacy.getName();
-		this.rate = pharmacy.getRate();
 		this.address = new AddressViewDTO(pharmacy.getAddress());
 	}
 

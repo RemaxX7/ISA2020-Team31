@@ -31,6 +31,20 @@ INSERT INTO AUTHORITY (name) VALUES ('ROLE_USER');
 INSERT INTO AUTHORITY (name) VALUES ('ROLE_ADMIN');
 
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (1, 'Paracetamol', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (2, 'asfasfas', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (3, 'asdahjgj', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (4, 'dfdhdgj', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (5, 'Xanax', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (6, 'afadgsdg', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (7, 'Andol', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (8, 'Aspirin', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (9, 'gfjfghj', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (10, 'hfghfgh', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (11, 'hfgsaasfd', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (12, 'jsdgsdg', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (13, 'sdfsdg', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (14, 'hgfdgjfhk', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
+INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (15, 'hhhjssdf', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
 
 INSERT INTO MEDICINE_RESERVATIONS (id, code, medicine_reservation_status, pick_up_date, price, patient_id, pharmacy_id) values (1, 'adasdasdasd', 3, '2020-02-02', 130, 5, 1);
 INSERT INTO MEDICINE_RESERVATION_ITEMS (id, quantity, medicine_id) values (1, 3, 1);

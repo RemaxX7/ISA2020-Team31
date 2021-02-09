@@ -57,6 +57,9 @@ public class MedicineReviewServiceImpl implements MedicineReviewService {
 	@Override
 	public Double calculateMedicineScore(Long id) {
 		Collection<MedicineReview> reviews = medicineReviewRepository.findAllByMedicineId(id);
+		if(reviews.size() == 0) {
+			return 0D;
+		}
 		Double score = 0D;
 		for(MedicineReview review : reviews) {
 			score += review.getScore();

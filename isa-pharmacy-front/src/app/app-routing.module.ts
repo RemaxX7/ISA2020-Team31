@@ -16,6 +16,7 @@ import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { SignInComponent } from './home/sign-in/sign-in.component';
 import { GuestPharmaciesComponent } from './home/guest-pharmacies/guest-pharmacies.component';
+import { GuestMedicinesComponent } from './home/guest-medicines/guest-medicines.component';
 
 const routes: Routes = [
   {path:'dermatologist',component:DermatologistComponent},
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'pharmacies', component: HomeComponent,
     children: [{ path: '', component: GuestPharmaciesComponent }]
+  },
+  {
+    path: 'medicines', component: HomeComponent,
+    children: [{ path: '', component: GuestMedicinesComponent }]
   }
 
 ];
