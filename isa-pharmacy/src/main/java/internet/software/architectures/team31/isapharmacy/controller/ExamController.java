@@ -1,6 +1,5 @@
 package internet.software.architectures.team31.isapharmacy.controller;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
@@ -50,6 +50,18 @@ public class ExamController {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/finished/patient/{id}")
+	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(id,
+				AppointmentStatus.FINISHED), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/created/patient/{id}")
+	public ResponseEntity<Collection<Counseling>> findCreatedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(id,
+				AppointmentStatus.OCCUPIED), HttpStatus.OK);
+	}
+	
 	@PutMapping(value = "/schedule")
 	public ResponseEntity<Exam> shedule(@RequestBody AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
 		return new ResponseEntity<>(examService.schedule(dto), HttpStatus.OK);
@@ -59,7 +71,6 @@ public class ExamController {
 	public ResponseEntity<Exam> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(examService.cancel(id), HttpStatus.OK);
 	}
-	
 	@GetMapping(value = "/test")
 	public ResponseEntity<Exam> test() {
 		ExamCreateDTO dto = new ExamCreateDTO();

@@ -16,6 +16,13 @@ body {
     text-align: center;
 }
 
+.main{   
+    margin: 1em auto; 
+    padding:10px;
+    width:80%;
+    font-size: 1rem;
+}
+
 .header{
     width: 90%;
     margin: 1em auto; 
@@ -28,7 +35,7 @@ header {
 header a {
     color: white;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 19px;
 }
 header a.logo {
     font-weight: bold;
@@ -85,3 +92,25 @@ textarea{
    color: #818181;
     display: block;
 }
+
+/*Star rating*/
+ngb-rating {
+    font-size: 2rem;
+    color:rgb(255,215,0);
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    color: #d3d3d3;
+  }
+  .full {
+    color:rgb(255,215,0);
+  }
+  .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color:rgb(255,215,0);
+  }

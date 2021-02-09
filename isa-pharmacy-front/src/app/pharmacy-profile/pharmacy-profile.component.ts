@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Address } from '../model/address.model';
-import { City } from '../model/city.model';
+import { ActivatedRoute } from '@angular/router';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
 import { Pharmacist } from '../model/pharmacist.model';
 import { Pharmacy } from '../model/pharmacy.model';
+import { DermatologistService } from '../service/dermatologist.service';
+import { PharmacistService } from '../service/pharmacist.service';
+import { PharmacyService } from '../service/pharmacy.service';
 
 
 @Component({
@@ -15,24 +16,58 @@ import { Pharmacy } from '../model/pharmacy.model';
 })
 export class PharmacyProfileComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute,private pharmacyService:PharmacyService,private pharmacistService:PharmacistService,private dermatologistService:DermatologistService) { }
   pharmacy:Pharmacy=new Pharmacy;
   currentRate:number;
   dermatologists:Dermatologist[]=[];
   pharmacists:Pharmacist[]=[];
   medicines:Medicine[]=[];
+  pharmacyId:number;
   
+  
+  lat = 22.2736308;
+  long = 70.7512555;
   
   medicine:Medicine=new Medicine;
-  dermatologist:Dermatologist=new Dermatologist;
-  pharmacist:Pharmacist=new Pharmacist;
 
   ngOnInit(): void {
+    this.pharmacyId=Number(this.route.snapshot.paramMap.get('id'));
+    this.GetPharmacy();
+    this.GetPharmacists();
+    this.GetDermatologists();
     this.Test();
+   
     
-    this.currentRate = this.pharmacy.Rate;
-    
-    
+  }
+
+  async GetPharmacy(){
+    await this.pharmacyService.getPharmacy(this.pharmacyId).then(data=>{
+          this.pharmacy=data;
+          this.currentRate = this.pharmacy.rate;
+          this.lat=this.pharmacy.address.latitude;
+          this.long=this.pharmacy.address.longitude;
+        }
+      )
+  }
+
+ GetPharmacists()
+  {
+    this.pharmacistService.FindAllByPharmacyId(this.pharmacyId).subscribe(
+      data=>{
+        this.pharmacists=data;
+        
+      }
+    )
+  }
+
+  GetDermatologists()
+  {
+    this.dermatologistService.FindAllByPharmacyId(this.pharmacyId).subscribe(
+      data=>{
+        this.dermatologists=data;
+        
+      }
+    )
   }
 
   CheckAvailableAppointments(dermatologistId:number){
@@ -46,31 +81,9 @@ export class PharmacyProfileComponent implements OnInit {
   
 
   Test(){
-    this.pharmacy.Name="Jankovic Apoteka"
-    this.pharmacy.Address=new Address;
-    this.pharmacy.Address.Street="Bulevar Mihajla Pupuna";
-    this.pharmacy.Address.Number=10;
-    this.pharmacy.Address.City=new City;
-    this.pharmacy.Address.City.Name="Novi Sad";
-    this.pharmacy.Rate=4.5;
-    this.dermatologist.id=1;
-    this.dermatologist.name="Dragan Draganic";
-    this.dermatologist.email="dragandraganic@gmail.com";
-    this.dermatologist.pharmacies=[];
-    this.dermatologist.pharmacies.push(this.pharmacy);
-    this.dermatologists.push(this.dermatologist);
-    this.dermatologists.push(this.dermatologist);
-    this.dermatologists.push(this.dermatologist);
-    this.pharmacist.id=2;
-    this.pharmacist.name="Nikola Nikolic";
-    this.pharmacist.email="nikolicnikola@gmail.com";
-    this.pharmacist.pharmacies=this.pharmacy;
-    this.pharmacists.push(this.pharmacist);
-    this.pharmacists.push(this.pharmacist);
-    this.pharmacists.push(this.pharmacist);
-    this.medicine.Id=1;
-    this.medicine.Name="Brufen";
-    this.medicine.Manufacturer="Abbott";
+    this.medicine.id=1;
+    this.medicine.name="Brufen";
+    this.medicine.manufacturer="Abbott";
     this.medicines.push(this.medicine);
     this.medicines.push(this.medicine);
     this.medicines.push(this.medicine);

@@ -21,6 +21,7 @@ public interface CounselingService {
 	Collection<Counseling> findAllByPatientId(Long id);
 	Collection<Counseling> findAllByPharmacistId(Long id);
 	Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status);
+	Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status);
 	Counseling findById(Long id);
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	Counseling finalizeExam(AppointmentFinalizationDTO dto);

@@ -1,0 +1,84 @@
+
+<div class="formBox">
+    <h1><b>Patient registration</b></h1>
+<form [formGroup]="myForm" autocomplete="off">
+    <hr>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Surname" formControlName="surname">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Uidn" formControlName="uidn">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Phone number" formControlName="phoneNumber">
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+            <mat-hint *ngIf="myForm.controls['password'].hasError('minlength')">Must contain at least 8 characters!</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="password" matInput placeholder="Confirm password" formControlName="passwordControl">
+            <mat-hint *ngIf="myForm.controls['passwordControl'].hasError('minlength')">Must contain at least 8 characters!</mat-hint>
+            <mat-hint *ngIf="myForm.controls['passwordControl'].hasError('NoPassswordMatch')">Passwords do not match!</mat-hint>
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <mat-select placeholder="Country" (selectionChange)="FillCities($event)" formControlName="country">
+                <mat-option *ngFor="let country of countries" [value]="country">
+                {{country.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="City" formControlName="city">
+                <mat-option *ngFor="let city of cities" [value]="city">
+                {{city.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input matInput placeholder="Street" formControlName="street">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Number" formControlName="number">
+        </mat-form-field>
+    </mat-grid-list>
+    <mat-grid-list cols="2">
+        <mat-form-field>
+            <input id="longitude" matInput placeholder="Longitude" formControlName="longitude" readonly>
+        </mat-form-field>
+        <mat-form-field>
+            <input id="latitude" matInput placeholder="Latitude" formControlName="latitude" readonly>
+        </mat-form-field>
+    </mat-grid-list>
+    <br>
+    <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="GetCoordinates($event)">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+    <button mat-raised-button [disabled]="myForm.invalid" (click)="Register()">Register</button>
+</form>
+</div>

@@ -7,5 +7,5 @@ export class Dermatologist {
     email:string;
     username:string;
     uidn:string;
-    pharmacies:Pharmacy[];
+    pharmacies:Pharmacy[]=[];
 }

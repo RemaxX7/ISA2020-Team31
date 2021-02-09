@@ -8,12 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import internet.software.architectures.team31.isapharmacy.dto.AddressCreateDTO;
 
 @Entity
+@Table(name="address")
 public class Address {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,10 +29,10 @@ public class Address {
 	private String number;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private City city;
-	@NotEmpty(message = "Latitude is mandatory")
+	@NotNull(message = "Latitude is mandatory")
 	@Column(nullable = false)
 	private Double latitude;
-	@NotEmpty(message = "Longitude is mandatory")
+	@NotNull(message = "Longitude is mandatory")
 	@Column(nullable = false)
 	private Double longitude;
 	
@@ -43,6 +47,14 @@ public class Address {
 		this.city = city;
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+	
+	public Address(AddressCreateDTO dto) {
+		super();
+		this.street = dto.getStreet();
+		this.number = dto.getNumber();
+		this.latitude = dto.getLatitude();
+		this.longitude = dto.getLatitude();
 	}
 
 	public String getStreet() {
@@ -83,5 +95,10 @@ public class Address {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+	
+	@Override
+	public String toString() {
+		return this.street + " " + this.number + ", " + this.city.getName();
 	}
 }
