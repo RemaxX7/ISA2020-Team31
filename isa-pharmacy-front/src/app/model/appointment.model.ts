@@ -9,5 +9,6 @@ export class Appointment {
     report:string;
     status:number;
     medicine:string[]=[];
+    employeeuidn:string;
 	
 }

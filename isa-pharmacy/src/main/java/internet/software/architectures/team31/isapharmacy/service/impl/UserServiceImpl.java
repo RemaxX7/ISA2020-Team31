@@ -89,4 +89,9 @@ public class UserServiceImpl implements UserService {
 		text.append("http://localhost:8080/auth/activate/" + patient.getActivationToken());
 		return text.toString();
 	}
+
+	@Override
+	public User findByUidn(String uidn) {
+		return userRepository.findByUidn(uidn);
+	}
 }

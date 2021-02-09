@@ -18,15 +18,13 @@
   </header>
   <div class="profilediv">
     <div class="userinfo">
-        <input style="width: 100%;" id="myInput" type="text" (keyup.enter)="MyFunction()" placeholder="Search patient by name + surname">
-        <!--ovde ide foreach pacijent sa tim id unesenim ispisati ime prezime... umesto zakucanih podataka-->
         <div class="founddiv">
             <table id="myTable">
                 <tr>
-                    <th (click)="sortTable(1)">Name</th>
-                    <th (click)="sortTable(2)">Surname</th>
-                    <th (click)="sortTable(3)">Uidn</th>
-                    <th (click)="sortTable(4)">Username</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Uidn</th>
+                    <th>Username</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -36,6 +34,8 @@
                         <td>{{u.surname}}</td>
                         <td>{{u.uidn}}</td>
                         <td>{{u.username}}</td>
+                        <td><a href="#" [routerLink]="['/pharmacist-appointment-report',u.uidn]" >Start appointment</a></td>
+                        <td><a href="#" [routerLink]="['/pharmacist-appointments']" (click)="PenalizePatient(u.uidn)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

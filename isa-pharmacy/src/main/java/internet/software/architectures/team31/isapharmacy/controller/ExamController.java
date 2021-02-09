@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
@@ -90,4 +91,9 @@ public class ExamController {
 	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
 		return new ResponseEntity<>(examService.finalizeExam(dto),HttpStatus.OK);
 	}
+	@PostMapping(value = "/schedulenewexam")
+	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
+		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
+	}
+	//@GetMapping(value = "/getavailabledates")
 }

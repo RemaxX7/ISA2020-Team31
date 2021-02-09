@@ -33,4 +33,10 @@ import { Appointment } from '../model/appointment.model';
     sendAppointmentDTOPharmacist(val:Appointment):Observable<any>{
       return this._http.post("http://localhost:8080/auth/appointments/counselings/finalizeappointmentpharmacist",val);
     }
+    scheduleNewAppointmentDerm(val:Appointment):Observable<any>{
+      return this._http.post("http://localhost:8080/auth/appointments/exams/schedulenewexam",val);
+    }
+    scheduleNewAppointmentPharm(val:Appointment):Observable<any>{
+      return this._http.post("http://localhost:8080/auth/appointments/counselings/schedulenewcounseling",val);
+    }
   }

@@ -17,5 +17,5 @@ public interface UserService {
     List<User> findAll ();
     Patient registerPatient(PatientRegisterDTO dto) throws UsernameNotUniqueException;
     void activate(String token) throws AccountException;
-    
+    User findByUidn(String uidn);
 }

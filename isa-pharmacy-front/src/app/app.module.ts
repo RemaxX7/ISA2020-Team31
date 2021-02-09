@@ -35,6 +35,8 @@ import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.compo
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
+import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     AppointmentReportPharmacistComponent,
     PharmacistListComponent,
     DermatologistListComponent,
-    SignUpComponent
+    SignUpComponent,
+    DermatologistAppointmentsPageComponent,
+    PharmacistAppointmentsPageComponent
   ],
   imports: [
     BrowserModule,

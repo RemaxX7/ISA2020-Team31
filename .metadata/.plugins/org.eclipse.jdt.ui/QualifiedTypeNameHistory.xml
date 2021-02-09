@@ -25,9 +25,6 @@
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.ExamRepository"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Exam"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Patient"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
@@ -45,5 +42,15 @@
     <fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.CounselingRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Exam"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.util.DateRange"/>
+    <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Counseling"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO"/>
 </qualifiedTypeNameHistroy>

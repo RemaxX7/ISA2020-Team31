@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +17,8 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Counsel
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
+import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
+import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
@@ -37,6 +40,8 @@ public class ExamServiceImpl implements ExamService {
 	private PharmacyService pharmacyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private PatientServiceImpl patientService;
 	@Autowired
 	private MedicineServiceImpl medicineService;
 	
@@ -147,5 +152,22 @@ public class ExamServiceImpl implements ExamService {
 		text.append("Address: " + exam.getPharmacy().getAddress() + "\r\n");
 		text.append("Date and time: " + exam.getDateRange().getStartDateTime() + " - " + exam.getDateRange().getEndDateTime() + "\r\n");
 		return text.toString();
+	}
+
+	@Override
+	public Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Patient patient = patientService.findByUidn(dto.getUidn());
+		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
+		DateRange range = new DateRange();
+		range.setStartDateTime(date);
+		range.setEndDateTime(date.plusMinutes(30));
+		Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
+		Exam exam = new Exam();
+		exam.setDermatologist(derm);
+		exam.setPatient(patient);
+		exam.setAppointmentStatus(AppointmentStatus.OCCUPIED);
+		exam.setDateRange(range);
+		return examRepository.save(exam);
 	}
 }

@@ -16,6 +16,8 @@ import { PharmacistComponent } from './pharmacist/pharmacist.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
+import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
+import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
 
 const routes: Routes = [
   {path:'dermatologist',component:DermatologistComponent},
@@ -34,7 +36,9 @@ const routes: Routes = [
   {path: 'pharmacist-appointment-report/:uidn',component:AppointmentReportPharmacistComponent},
   {path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
   {path:'pharmacist-list', component:PharmacistListComponent},
-  {path:'dermatologist-list', component:DermatologistListComponent}
+  {path:'dermatologist-list', component:DermatologistListComponent},
+  {path:'dermatologist-appointments',component:DermatologistAppointmentsPageComponent},
+  {path:'pharmacist-appointments',component:PharmacistAppointmentsPageComponent}
 ];
 
 @NgModule({
