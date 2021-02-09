@@ -31,6 +31,6 @@ import { Appointment } from '../model/appointment.model';
       return this._http.post("http://localhost:8080/auth/appointments/exams/finalizeappointment",val);
     }
     sendAppointmentDTOPharmacist(val:Appointment):Observable<any>{
-      return this._http.post("http://localhost:8080/auth/appointments/exams/finalizeappointmentpharmacist",val);
+      return this._http.post("http://localhost:8080/auth/appointments/counselings/finalizeappointmentpharmacist",val);
     }
   }

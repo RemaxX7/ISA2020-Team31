@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
+import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservationStatus;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineReservationCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
@@ -37,8 +38,20 @@ public class MedicineReservationController {
 	}
 	
 	@GetMapping(value = "/patient/{id}")
-	public ResponseEntity<Collection<MedicineReservation>> findAllByPatient(@PathVariable long id) {
+	public ResponseEntity<Collection<MedicineReservation>> findAllByPatient(@PathVariable Long id) {
 		return new ResponseEntity<>(medicineReservationService.findAllByPatientId(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/finished/patient/{id}")
+	public ResponseEntity<Collection<MedicineReservation>> findAllFinishedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(medicineReservationService.findAllByPatientIdAndMedicineReservationStatus(id,
+				MedicineReservationStatus.FINISHED), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/created/patient/{id}")
+	public ResponseEntity<Collection<MedicineReservation>> findAllCreatedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(medicineReservationService.findAllByPatientIdAndMedicineReservationStatus(id,
+				MedicineReservationStatus.CREATED), HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/cancel/{id}")

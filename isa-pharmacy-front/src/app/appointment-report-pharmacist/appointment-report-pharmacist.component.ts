@@ -45,6 +45,9 @@ export class AppointmentReportPharmacistComponent implements OnInit {
       }
      } );
   }
+  Reload(){
+    window.location.reload();
+  }
   async CallComposition(name){
     await this.medicineService.getCompositionForMedicine(name.toLowerCase()).then(data=>this.medicineSpecification=data)
     alert(this.medicineSpecification.composition);

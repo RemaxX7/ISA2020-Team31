@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.ComplaintReply;
@@ -34,13 +35,14 @@ public class EmployeeComplaintServiceImpl implements EmployeeComplaintService {
 	
 	@Override
 	public EmployeeComplaint save(EmployeeComplaintCreateDTO dto) throws InvalidComplaintException {
-		if(examService.hasPatientVisitedDermatologist(dto.getPatientId(), dto.getEmployeeId()) ||
-				counselingService.hasPatientVisitedPharmacist(dto.getPatientId(), dto.getEmployeeId())) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if(!examService.hasPatientVisitedDermatologist(patient.getId(), dto.getEmployeeId()) &&
+				!counselingService.hasPatientVisitedPharmacist(patient.getId(), dto.getEmployeeId())) {
 			throw new InvalidComplaintException("You cannot make a complaint for this employee.");
 		}
 		
 		EmployeeComplaint complaint = new EmployeeComplaint(dto);
-		complaint.setPatient((Patient) userService.findById(dto.getPatientId()));
+		complaint.setPatient(patient);
 		complaint.setEmployee((Employee) userService.findById(dto.getEmployeeId()));
 		return employeeComplaintRepository.save(complaint);
 	}

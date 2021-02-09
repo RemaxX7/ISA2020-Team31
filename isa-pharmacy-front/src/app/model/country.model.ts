@@ -1,5 +1,5 @@
 export class Country {
-    Code:string;
-	Name:string;
+    code:string;
+	name:string;
 	
 }

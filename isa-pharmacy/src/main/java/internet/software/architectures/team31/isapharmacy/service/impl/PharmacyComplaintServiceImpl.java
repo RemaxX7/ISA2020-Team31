@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.ComplaintReply;
@@ -36,14 +37,15 @@ public class PharmacyComplaintServiceImpl implements PharmacyComplaintService {
 
 	@Override
 	public PharmacyComplaint save(PharmacyComplaintCreateDTO dto) throws InvalidComplaintException {
-		if(!appointmentService.hasPatientVisitedPharmacy(dto.getPatientId(), dto.getPharmacyId()) ||
-				!medicineReservationService.hasPatientPurchasedMedicineFromPharmacy(dto.getPatientId(), dto.getPharmacyId())) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if(!appointmentService.hasPatientVisitedPharmacy(patient.getId(), dto.getPharmacyId()) &&
+				!medicineReservationService.hasPatientPurchasedMedicineFromPharmacy(patient.getId(), dto.getPharmacyId())) {
 			//TODO: Add check for e-prescriptions
 			throw new InvalidComplaintException("You cannot make a complaint for this pharmacy.");
 		}
 		
 		PharmacyComplaint pharmacyComplaint = new PharmacyComplaint(dto);
-		pharmacyComplaint.setPatient((Patient) userService.findById(dto.getPatientId()));
+		pharmacyComplaint.setPatient(patient);
 		pharmacyComplaint.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		return pharmacyComplaintRepository.save(pharmacyComplaint);
 	}
@@ -58,6 +60,7 @@ public class PharmacyComplaintServiceImpl implements PharmacyComplaintService {
 		ComplaintReply reply = new ComplaintReply(dto);
 		reply.setAdmin((SystemAdmin) userService.findById(dto.getAdminId()));
 		complaint.setReply(reply);
+		//TODO:Sent reply to patient
 		return pharmacyComplaintRepository.save(complaint).getReply();
 	}
 	

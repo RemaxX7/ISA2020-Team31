@@ -10,5 +10,6 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Medicin
 public interface MedicineReservationRepository extends JpaRepository<MedicineReservation, Long> {
 
 	Collection<MedicineReservation> findAllByPatientId(Long id);
+	Collection<MedicineReservation> findAllByPatientIdAndMedicineReservationStatus(Long patientId, MedicineReservationStatus status);
 	MedicineReservation findOneByPatientIdAndPharmacyIdAndMedicineReservationStatus(Long patientId, Long pharmacyId, MedicineReservationStatus status);
 }

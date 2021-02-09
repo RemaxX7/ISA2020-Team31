@@ -49,6 +49,18 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/finished/patient/{id}")
+	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,
+				AppointmentStatus.FINISHED), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/created/patient/{id}")
+	public ResponseEntity<Collection<Counseling>> findCreatedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,
+				AppointmentStatus.OCCUPIED), HttpStatus.OK);
+	}
+	
 	@PutMapping(value = "/schedule")
 	public ResponseEntity<Counseling> shedule(@RequestBody AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
 		return new ResponseEntity<>(counselingService.schedule(dto), HttpStatus.OK);
