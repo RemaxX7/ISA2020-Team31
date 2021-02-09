@@ -29,7 +29,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignUpComponent } from './patient/sign-up/sign-up.component';
+import { ToastrModule } from 'ngx-toastr';
+import { PatientComponent } from './patient/patient.component';
+import { SignInComponent } from './patient/sign-in/sign-in.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,10 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     PharmacyProfileComponent,
     PharmacistListComponent,
     DermatologistListComponent,
-    SignUpComponent
+    SignUpComponent,
+    PatientComponent,
+    SignInComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +76,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']
     }),
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+    })
   ],
   providers: [],
   entryComponents:[

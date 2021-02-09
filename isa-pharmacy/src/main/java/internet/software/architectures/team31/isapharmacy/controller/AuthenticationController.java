@@ -64,9 +64,8 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping(value = "/register/patient")
-	public ResponseEntity<String> register(@RequestBody PatientRegisterDTO dto) throws UsernameNotUniqueException {
-		userService.registerPatient(dto);
-		return new ResponseEntity<>("Registered successfully.", HttpStatus.CREATED);
+	public ResponseEntity<Patient> register(@RequestBody PatientRegisterDTO dto) throws UsernameNotUniqueException {
+		return new ResponseEntity<>(userService.registerPatient(dto), HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value = "/activate/{token}")
