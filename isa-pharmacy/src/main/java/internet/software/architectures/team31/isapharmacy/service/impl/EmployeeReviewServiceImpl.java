@@ -58,6 +58,9 @@ public class EmployeeReviewServiceImpl implements EmployeeReviewService {
 	@Override
 	public Double calculateEmployeeScore(Long id) {
 		Collection<EmployeeReview> reviews = employeeReviewRepository.findAllByEmployeeId(id);
+		if(reviews.size() == 0) {
+			return 0D;
+		}
 		Double score = 0D;
 		for(EmployeeReview review : reviews) {
 			score += review.getScore();

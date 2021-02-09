@@ -12,9 +12,10 @@ import { PharmacistComponent } from './pharmacist/pharmacist.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
-import { SignUpComponent } from './patient/sign-up/sign-up.component';
+import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
-import { SignInComponent } from './patient/sign-in/sign-in.component';
+import { SignInComponent } from './home/sign-in/sign-in.component';
+import { GuestPharmaciesComponent } from './home/guest-pharmacies/guest-pharmacies.component';
 
 const routes: Routes = [
   {path:'dermatologist',component:DermatologistComponent},
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'login', component: HomeComponent,
     children: [{ path: '', component: SignInComponent }]
+  },
+  {
+    path: 'pharmacies', component: HomeComponent,
+    children: [{ path: '', component: GuestPharmaciesComponent }]
   }
 
 ];

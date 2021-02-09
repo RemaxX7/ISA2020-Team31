@@ -1,0 +1,31 @@
+.pharmaciesBox {
+    align-items: center;
+    width: 50%;
+    margin: 1em auto; 
+    padding:10px;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.08);
+}
+
+.pharmacy {
+    position: relative;
+    text-align: left;
+}
+
+.search {
+    position: relative;
+    text-align: left;
+    margin: 5px 0px 5px 0px;
+    border: 0;
+}
+
+.search > input {
+    margin: 0px 15px 0px 0px;
+}
+
+.pharmacy > * {
+    margin: 10px 10px 10px 10px;
+}
+
+mat-divider {
+    margin: 5px 0px 5px 0px;
+}

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import internet.software.architectures.team31.isapharmacy.dto.AddressCreateDTO;
 
 @Entity
-@Table(name="address")
+@Table(name="addresses")
 public class Address {
 	
 	@Id
@@ -55,6 +55,14 @@ public class Address {
 		this.number = dto.getNumber();
 		this.latitude = dto.getLatitude();
 		this.longitude = dto.getLatitude();
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getStreet() {

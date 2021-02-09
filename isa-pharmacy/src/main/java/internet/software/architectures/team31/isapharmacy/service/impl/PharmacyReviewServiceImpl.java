@@ -61,6 +61,9 @@ public class PharmacyReviewServiceImpl implements PharmacyReviewService {
 	@Override
 	public Double calculatePharmacyScore(Long id) {
 		Collection<PharmacyReview> reviews = pharmacyReviewRepository.findAllByPharmacyId(id);
+		if(reviews.size() == 0) {
+			return 0D;
+		}
 		Double score = 0D;
 		for(PharmacyReview review : reviews) {
 			score += review.getScore();
