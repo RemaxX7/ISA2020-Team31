@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
-import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
@@ -71,7 +70,7 @@ public class ExamController {
 		return new ResponseEntity<>(examService.schedule(dto), HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/cancel/{id}")
+	@PostMapping(value = "/cancel/{id}")
 	public ResponseEntity<Exam> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(examService.cancel(id), HttpStatus.OK);
 	}

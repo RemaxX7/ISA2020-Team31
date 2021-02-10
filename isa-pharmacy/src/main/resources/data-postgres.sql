@@ -61,11 +61,11 @@ INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);
 
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 1, '2020-02-02 13:30:00', '2020-02-02 13:00:00', 100, 'Report', 5, 1, 2);
+						('Counseling', 1, '2021-01-11 13:30:00', '2020-02-11 13:00:00', 100, 'Report', 5, 1, 2);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
-						('Exam', 3, '2020-02-03 16:30:00', '2020-02-03 16:05:00', 105, 'Report', 5, 1, 3);
+						('Exam', 3, '2021-01-12 16:30:00', '2021-02-12 16:05:00', 105, 'Report', 5, 1, 3);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
-						('Exam', 1, '2020-02-03 13:30:00', '2020-02-03 13:00:00', 100, 'Report', 5, 7, 3);
+						('Exam', 1, '2021-02-03 13:30:00', '2021-02-03 13:00:00', 100, 'Report', 5, 7, 3);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
 						('Exam', 3, '2020-02-03 12:10:00', '2020-02-03 11:30:00', 12, 'Report', 5, 6, 3);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
@@ -73,26 +73,26 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
 						('Exam', 1, '2020-04-04 12:30:00', '2020-04-04 11:00:00', 50, 'Report', 5, 4, 3);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
-						('Exam', 1, '2021-02-03 13:30:00', '2021-02-03 13:00:00', 88, 'Report', 5, 3, 3);	
+						('Exam', 1, '2021-02-12 13:30:00', '2021-02-12 13:00:00', 88, 'Report', 5, 3, 3);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
-						('Exam', 1, '2018-02-03 13:30:00', '2018-02-03 12:45:00', 190, 'Report', 5, 2, 3);	
+						('Exam', 1, '2018-01-11 13:30:00', '2018-02-03 12:45:00', 190, 'Report', 5, 2, 3);	
 						
 					
 					
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 1, '2020-02-03 16:30:00', '2020-02-03 16:05:00', 105, 'Report', 5, 1, 2);
+						('Counseling', 1, '2009-02-11 16:30:00', '2021-02-11 16:05:00', 105, 'Report', 5, 1, 2);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 1, '2020-02-03 13:30:00', '2020-02-03 13:00:00', 100, 'Report', 5, 7, 2);
+						('Counseling', 1, '2009-02-12 13:30:00', '2021-02-12 13:00:00', 100, 'Report', 5, 7, 2);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 3, '2020-02-03 12:10:00', '2020-02-03 11:30:00', 12, 'Report', 5, 6, 2);	
+						('Counseling', 3, '2009-02-03 12:10:00', '2009-02-03 11:30:00', 12, 'Report', 5, 6, 2);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 1, '2019-03-03 13:30:00', '2019-03-03 13:10:00', 55, 'Report', 5, 5, 2);	
+						('Counseling', 1, '2021-01-12 13:30:00', '2021-01-12 13:10:00', 55, 'Report', 5, 5, 2);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 3, '2020-04-04 12:30:00', '2020-04-04 11:00:00', 50, 'Report', 5, 4, 2);	
+						('Counseling', 3, '2021-01-11 12:30:00', '2021-01-11 11:00:00', 50, 'Report', 5, 4, 2);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 3, '2021-02-03 13:30:00', '2021-02-03 13:00:00', 88, 'Report', 5, 3, 2);	
+						('Counseling', 3, '2021-02-12 13:30:00', '2021-02-12 13:00:00', 88, 'Report', 5, 3, 2);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
-						('Counseling', 1, '2018-02-03 13:30:00', '2018-02-03 12:45:00', 190, 'Report', 5, 2, 2);							
+						('Counseling', 1, '2021-02-11 13:30:00', '2021-02-11 12:45:00', 190, 'Report', 5, 2, 2);							
 						
 INSERT INTO APPOINTMENT_MEDICINE_ITEMS (id, quantity, medicine_id) values (1, 2, 5);
 INSERT INTO APPOINTMENT_MEDICINE_ITEMS (id, quantity, medicine_id) values (2, 3, 1);

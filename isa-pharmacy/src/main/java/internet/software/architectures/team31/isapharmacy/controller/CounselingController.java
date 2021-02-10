@@ -68,18 +68,21 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.schedule(dto), HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/cancel/{id}")
+	@PostMapping(value = "/cancel/{id}")
 	public ResponseEntity<Counseling> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
 	}
+	
 	@GetMapping(value = "/pharmacistpenalize/{id}")
 	public ResponseEntity<Counseling>penalize(@PathVariable String id){
 		return new ResponseEntity<>(patientService.pharmacistPenalize(id),HttpStatus.OK);
 	}
+	
 	@PostMapping(value = "/finalizeappointmentpharmacist")
 	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
 		return new ResponseEntity<>(counselingService.finalizeExam(dto),HttpStatus.OK);
 	}
+	
 	@PostMapping(value = "/schedulenewcounseling")
 	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(counselingService.scheduleAdditionalConsultation(dto),HttpStatus.OK);

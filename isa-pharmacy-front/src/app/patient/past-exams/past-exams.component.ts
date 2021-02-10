@@ -35,7 +35,7 @@ export class PastExamsComponent implements OnInit {
   }
 
   ParseDate(date: Array<number>) {
-    return new Date(date[0], date[1], date[2], date[3], date[4]).toString().slice(0, 24);
+    return new Date(date[0], date[1]-1, date[2], date[3], date[4]).toString().slice(0, 24);
   }
 
   Sort() {

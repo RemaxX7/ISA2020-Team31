@@ -79,7 +79,7 @@ public class CounselingServiceImpl implements CounselingService {
 		Counseling counseling = findById(id);
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		if(!currentDateTime.plusDays(1).isBefore(counseling.getDateRange().getStartDateTime())) {
-			throw new CancelAppointmentException("Counseling cannot be cancelled 24 hours before start.");
+			throw new CancelAppointmentException("This counseling cannot be cancelled.");
 		}
 		counseling.setPatient(null);
 		counseling.setAppointmentStatus(AppointmentStatus.FREE);

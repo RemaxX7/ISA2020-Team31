@@ -16,6 +16,7 @@
             <p><b>Date</b>: {{ParseDate(counseling.startDateTime)}}</p>
             <p><b>Duration</b>: {{counseling.duration}} minutes</p>
             <p><b>Price</b>: {{counseling.price}}</p>
+            <button mat-raised-button (click)="Cancel(counseling)">Cancel</button>
         </div>
         <mat-divider></mat-divider>
     </div>

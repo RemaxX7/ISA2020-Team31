@@ -79,7 +79,7 @@ public class ExamServiceImpl implements ExamService {
 		Exam exam = findById(id);
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		if(!currentDateTime.plusDays(1).isBefore(exam.getDateRange().getStartDateTime())) {
-			throw new CancelAppointmentException("Exam cannot be cancelled 24 hours before start.");
+			throw new CancelAppointmentException("This exam cannot be cancelled.");
 		}
 		exam.setPatient(null);
 		exam.setAppointmentStatus(AppointmentStatus.FREE);
