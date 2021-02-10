@@ -5,6 +5,7 @@ import { NumberLiteralType } from 'typescript';
 import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
+import { Patient } from '../model/patient.model';
 import { EmployeeService } from '../service/employee-service';
 import { MedicineService } from '../service/medicine-service';
 
@@ -16,7 +17,8 @@ import { MedicineService } from '../service/medicine-service';
 export class AppointmentReportComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService) { }
-  pat:Dermatologist = new Dermatologist();
+  pat:Patient = new Patient();
+  derm:Dermatologist = new Dermatologist();
   medicine:Medicine[]=[];
   userid:number;
   appointment:Appointment = new Appointment();
@@ -25,17 +27,15 @@ export class AppointmentReportComponent implements OnInit {
   medicineSelect:string;
   newDate:string;
   myForm:FormGroup;
-  freeTermins:string[]=[];
+  freeTermins:any[]=[];
 
   ngOnInit(): void {
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
     this.GetPatientForAppointment();
     this.GetAllMedicineForPatient(this.userid);
-    this.Test();
+    this.GetFreeTermins();
     this.myForm=this.fb.group({
-      area:['',[Validators.required]],
-      //newDate:['',[Validators.required]],
-      //medicine:['',[Validators.required]]
+      area:['',[Validators.required]]
     })
 
   }
@@ -52,9 +52,10 @@ export class AppointmentReportComponent implements OnInit {
      } );
   }
   ScheduleAdditionalExam(){
+    let user = JSON.parse(localStorage.getItem("user"));
     this.additionalExam.uidn=this.pat.uidn;
     this.additionalExam.date = this.newDate;
-    this.additionalExam.employeeuidn = "3234567891234";
+    this.additionalExam.employeeuidn = user.uidn;
     this.service.scheduleNewAppointmentDerm(this.additionalExam).subscribe((res)=>
       alert("Uspesno zakazan novi pregled")
     );
@@ -74,10 +75,9 @@ export class AppointmentReportComponent implements OnInit {
       data=>this.medicine=data
     )
   }
-  Test(){
-    this.freeTermins.push("2021-10-11 11:30:00");
-    this.freeTermins.push("2021-10-12 11:30:00");
-    this.freeTermins.push("2021-10-13 11:30:00");
-    this.freeTermins.push("2021-10-14 11:30:00");
+  GetFreeTermins(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.derm.uidn = user.uidn;
+    this.service.getFreeTermins(this.userid,this.derm.uidn).subscribe(data=>this.freeTermins=data);
   }
 }

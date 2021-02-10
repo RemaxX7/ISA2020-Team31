@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
+import internet.software.architectures.team31.isapharmacy.service.CounselingService;
+import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.UserDetailsServiceImpl;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
+import internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl;
+import internet.software.architectures.team31.isapharmacy.service.impl.DermatologistServiceImpl;
+import internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl;
 import internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl;
 
 @RestController
@@ -27,6 +32,10 @@ public class EmployeeController {
 	private UserDetailsServiceImpl userService;
 	@Autowired
 	private UserService employedService;
+	@Autowired
+	private ExamService examService;
+	@Autowired
+	private CounselingService counService;
 	@GetMapping("/all")
 	public ResponseEntity<Collection<User>> findAll() {
 		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
@@ -42,5 +51,13 @@ public class EmployeeController {
 	@PostMapping(value = "/editpassword")
 	public ResponseEntity<User> editUserPassword(@RequestBody PasswordChangeDTO dto){
 		return new ResponseEntity<>(employedService.employeeEditPassword(dto),HttpStatus.OK);
+	}
+	@GetMapping(value = "/freeterm/{patuidn}/{empuidn}")
+	public ResponseEntity<Collection<String>> findFreeTermins(@PathVariable String patuidn,@PathVariable String empuidn) {
+		return new ResponseEntity<>(examService.findTerminsByUidns(patuidn,empuidn), HttpStatus.OK);
+	}
+	@GetMapping(value = "/freetermpharm/{patuidn}/{empuidn}")
+	public ResponseEntity<Collection<String>> findFreeTerminsPharm(@PathVariable String patuidn,@PathVariable String empuidn) {
+		return new ResponseEntity<>(counService.findTerminsByUidnsPharm(patuidn,empuidn), HttpStatus.OK);
 	}
 }

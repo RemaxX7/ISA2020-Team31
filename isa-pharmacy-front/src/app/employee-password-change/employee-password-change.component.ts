@@ -25,11 +25,10 @@ export class EmployeePasswordChangeComponent implements OnInit {
       alert("New passwords do not match!");
     }else{
       let user = JSON.parse(localStorage.getItem("user"));
-      console.log(user.name)
       this.pharmacist.uidn = user.uidn;
       this.pharmacist.password = this.myForm.get('pass').value;
-      console.log(this.pharmacist.uidn);
       this.service.editPassword(this.pharmacist).subscribe(()=>alert("Password changed"))
+      this.router.navigate(['/dermatologist']);
     }
   }
 }

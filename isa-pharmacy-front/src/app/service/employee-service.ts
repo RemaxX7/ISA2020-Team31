@@ -47,4 +47,10 @@ import { Pharmacist } from '../model/pharmacist.model';
     editPassword(val:any):Observable<any>{
       return this._http.post("http://localhost:8080/auth/search/employee/editpassword",val);
     }
+    getFreeTermins(patiudn,empuidn):Observable<any>{
+      return this._http.get("http://localhost:8080/auth/search/employee/freeterm/" + patiudn + "/" + empuidn);
+    }
+    getFreeTerminsPharm(patiudn,empuidn):Observable<any>{
+      return this._http.get("http://localhost:8080/auth/search/employee/freetermpharm/" + patiudn + "/" + empuidn);
+    }
   }

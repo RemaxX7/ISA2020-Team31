@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
+import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
@@ -16,8 +18,10 @@ import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
+import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.AuthorityService;
 import internet.software.architectures.team31.isapharmacy.service.CityService;
+import internet.software.architectures.team31.isapharmacy.service.DermatologistService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
@@ -32,6 +36,8 @@ public class UserServiceImpl implements UserService {
 	private AuthorityService authorityService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private DermatologistService dermService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	

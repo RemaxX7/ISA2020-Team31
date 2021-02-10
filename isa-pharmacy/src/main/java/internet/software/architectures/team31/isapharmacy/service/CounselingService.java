@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
@@ -27,4 +28,5 @@ public interface CounselingService {
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	Counseling finalizeExam(AppointmentFinalizationDTO dto);
 	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
+	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 }

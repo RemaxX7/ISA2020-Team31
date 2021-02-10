@@ -48,7 +48,7 @@ export class SignInComponent implements OnInit {
       }
       case "ROLE_DERMATOLOGIST":{
         if(this.myForm.controls['password'].value == 123){
-          this.router.navigate(['/pharmacist-password-change'])
+          this.router.navigate(['/employee-password-change'])
           break;
         }else{
         this.router.navigate(['/dermatologist'])
