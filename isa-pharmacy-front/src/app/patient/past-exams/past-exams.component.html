@@ -1,1 +1,32 @@
-<p>past-exams works!</p>
+<div class="examsBox">
+    <h1><b>Past exams</b></h1>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+        <mat-label>Sort by</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="Sort()">
+            <mat-option value="dateRange.startDateTime" selected>Date</mat-option>
+            <mat-option value="price">Price</mat-option>
+            <mat-option value="pharmacy.name">Pharmacy</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngFor="let exam of exams">
+        <div class="exam">
+            <h1>{{exam.pharmacyName}}</h1>
+            <p><b>Dermatologist</b>: {{exam.employeeName}} {{exam.employeeSurname}}, {{exam.employeeEmail}}</p>
+            <p><b>Date</b>: {{ParseDate(exam.startDateTime)}}</p>
+            <p><b>Duration</b>: {{exam.duration}} minutes</p>
+            <p><b>Price</b>: {{exam.price}}</p>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Prescribed medicines<span class="material-icons">keyboard_arrow_down</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p *ngFor="let medicine of exam.medicines">{{medicine}}</p>
+            </mat-expansion-panel>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+    <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+    </mat-paginator>
+</div>

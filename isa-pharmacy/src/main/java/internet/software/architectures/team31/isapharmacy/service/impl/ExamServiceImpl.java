@@ -7,13 +7,14 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
-import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
@@ -21,6 +22,7 @@ import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
@@ -105,8 +107,14 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
+	public Collection<Exam> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
 		return examRepository.findAllByPatientIdAndAppointmentStatus(patientId, status);
+	}
+	
+	@Override
+	public Page<AppointmentViewDTO> findAllByPatientIdAndAppointmentStatus(AppointmentStatus status, Pageable pageable) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		return examRepository.findAllByPatientIdAndAppointmentStatus(patient.getId(), status, pageable).map(exam -> new AppointmentViewDTO(exam));
 	}
 	
 	@Override

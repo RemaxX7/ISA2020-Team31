@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
@@ -28,7 +32,7 @@ import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/exams")
+@RequestMapping(value = "api/appointments/exams")
 public class ExamController {
 
 	@Autowired
@@ -52,16 +56,14 @@ public class ExamController {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/finished/patient/{id}")
-	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
-		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(id,
-				AppointmentStatus.FINISHED), HttpStatus.OK);
+	@GetMapping(value = "/finished/{page}/{sortBy}")
+	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sortBy) {
+		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/created/patient/{id}")
-	public ResponseEntity<Collection<Counseling>> findCreatedByPatient(@PathVariable Long id) {
-		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(id,
-				AppointmentStatus.OCCUPIED), HttpStatus.OK);
+	@GetMapping(value = "/created/{page}/{sortBy}")
+	public ResponseEntity<Page<AppointmentViewDTO>> findCreatedByPatient(@PathVariable Integer page, @PathVariable String sortBy) {
+		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.OCCUPIED, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/schedule")

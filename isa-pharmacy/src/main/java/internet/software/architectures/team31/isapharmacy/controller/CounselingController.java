@@ -3,6 +3,9 @@ package internet.software.architectures.team31.isapharmacy.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
-import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
-import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
+import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
@@ -27,7 +30,7 @@ import internet.software.architectures.team31.isapharmacy.service.CounselingServ
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/counselings")
+@RequestMapping(value = "api/appointments/counselings")
 public class CounselingController {
 
 	@Autowired
@@ -50,17 +53,15 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/finished/patient/{id}")
-	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
-		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,
-				AppointmentStatus.FINISHED), HttpStatus.OK);
+	@GetMapping(value = "/finished/{page}/{sort}")
+	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sort) {
+		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/created/patient/{id}")
-	public ResponseEntity<Collection<Counseling>> findCreatedByPatient(@PathVariable Long id) {
-		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,
-				AppointmentStatus.OCCUPIED), HttpStatus.OK);
-	}
+	@GetMapping(value = "/created/{page}/{sort}")
+	public ResponseEntity<Page<AppointmentViewDTO>> findCreatedByPatient(@PathVariable Integer page, @PathVariable String sort) {
+		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.OCCUPIED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
+	}	
 	
 	@PutMapping(value = "/schedule")
 	public ResponseEntity<Counseling> shedule(@RequestBody AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {

@@ -57,6 +57,7 @@ import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmac
 import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-p
     MatPaginatorModule,
     MatMenuModule,
     MatIconModule,
+    MatExpansionModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']
