@@ -1,6 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.dto;
 
-public class PatientRegisterDTO {
+public class UserRegisterDTO {
 
 	private String name;
 	private String surname;
@@ -11,11 +11,11 @@ public class PatientRegisterDTO {
 	private String phoneNumber;
 	private AddressCreateDTO address;
 	
-	public PatientRegisterDTO() {
+	public UserRegisterDTO() {
 		super();
 	}
 
-	public PatientRegisterDTO(String name, String surname, String username, String uidn, String email, String password,
+	public UserRegisterDTO(String name, String surname, String username, String uidn, String email, String password,
 			String phoneNumber, AddressCreateDTO address) {
 		super();
 		this.name = name;

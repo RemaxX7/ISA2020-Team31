@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule ,FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule} from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -30,6 +30,11 @@ import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.compo
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
+import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
+import { AddShiftPharmacistComponent } from './dialog/add-shift-pharmacist/add-shift-pharmacist.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +51,10 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     PharmacyProfileComponent,
     PharmacistListComponent,
     DermatologistListComponent,
-    SignUpComponent
+    SignUpComponent,
+    PharmacyAdminProfileComponent,
+    PharmacistRegistrationComponent,
+    AddShiftPharmacistComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +77,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']
     }),
-    NgbModule
+    NgbModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [],
   entryComponents:[

@@ -25,6 +25,5 @@ public interface ShiftRepository extends JpaRepository<Shift,Long> {
 			+ " shifts s  WHERE s.employee_id=:employeeId AND (s.start_date_time BETWEEN :start AND :end OR s.end_date_time BETWEEN :start AND :end) ", nativeQuery = true )
 	List<Shift> findAllByIntervalAndEmployeeId(@Param("start")LocalDateTime startDateTime,
 												@Param("end")LocalDateTime endDateTime,
-												@Param("employeeId")Long employeeId);
-	
+												@Param("employeeId")Long id);
 }

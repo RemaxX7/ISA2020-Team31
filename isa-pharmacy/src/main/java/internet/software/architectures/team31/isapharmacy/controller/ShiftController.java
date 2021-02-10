@@ -1,6 +1,5 @@
 package internet.software.architectures.team31.isapharmacy.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.ShiftCreateDTO;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.service.ShiftService;
 
 @RestController
-@RequestMapping(value = "api/shift")
+@RequestMapping(value = "auth/shift")
 public class ShiftController {
 	
 	@Autowired
 	private ShiftService shiftService;
 	
 	@PostMapping(value="/add")
-	public ResponseEntity<Shift> save(@RequestBody ShiftCreateDTO dto)
+	public ResponseEntity<Shift> save(@RequestBody ShiftCreateDTO dto) throws ShiftNotFreeEception
 	{
 		return new ResponseEntity<>(shiftService.save(dto),HttpStatus.CREATED);
 	}
+	
+	
 	@GetMapping(value = "/all/employee/{id}")
 	 ResponseEntity<List<Shift>> findAllByEmployee(@PathVariable Long id){
 		return  new ResponseEntity<>(this.shiftService.findAllByEmployeeId(id),HttpStatus.OK);

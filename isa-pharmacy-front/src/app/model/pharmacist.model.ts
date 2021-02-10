@@ -5,5 +5,5 @@ export class Pharmacist {
     name:string;
     surname:string;
     email:string;
-    pharmacies:Pharmacy;
+    pharmacy:Pharmacy;
 }
