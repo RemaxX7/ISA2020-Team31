@@ -3,7 +3,9 @@
         <a routerLink="/" class="logo">Pharmacy name placeholder</a>
         <nav>
             <ul>
-                <li><a routerLink="/patient-profile">Profile</a></li>
+                <button mat-icon-button routerLink="/patient-profile">
+                    <li>Profile</li>
+                </button>
                 <button mat-icon-button [matMenuTriggerFor]="appointments">
                     <li>Appointments
                         <span class="material-icons">
@@ -12,29 +14,29 @@
                     </li>
                 </button>
                 <mat-menu #appointments="matMenu" class="appointment-menu">
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/new-exam">
                         <span class="material-icons">schedule</span>
-                        <a routerLink="/new-exam">Schedule dermatologist exam</a>
+                        <mat-label>Schedule dermatologist exam</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/new-counseling">
                         <span class="material-icons">schedule</span>
-                        <a routerLink="/new-counseling">Schedule pharmacist counseling</a>
+                        <mat-label>Schedule pharmacist counseling</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/upcoming-exams">
                         <span class="material-icons">update</span>
-                        <a routerLink="/upcoming-exams">Upcoming dermatologist exams</a>
+                        <mat-label>Upcoming dermatologist exams</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/upcoming-counselings">
                         <span class="material-icons">update</span>
-                        <a routerLink="/upcoming-counselings">Upcoming pharmacist counselings</a>
+                        <mat-label>Upcoming pharmacist counselings</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/past-exams">
                         <span class="material-icons">history</span>
-                        <a routerLink="/past-exams">Past dermatologist exams</a>
+                        <mat-label>Past dermatologist exams</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/past-counselings">
                         <span class="material-icons">history</span>
-                        <a routerLink="/past-counselings">Past pharmacist counselings</a>
+                        <mat-label>Past pharmacist counselings</mat-label>
                     </div>
                 </mat-menu>
                 <button mat-icon-button [matMenuTriggerFor]="medicines">
@@ -45,13 +47,13 @@
                     </li>
                 </button>
                 <mat-menu #medicines="matMenu">
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/reservations">
                         <span class="material-icons">medication</span>
-                        <a routerLink="/reservations">Medicine reservations</a>
+                        <mat-label>Medicine reservations</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/eprescriptions">
                         <span class="material-icons">assignment</span>
-                        <a routerLink="/eprescriptions">ePrescriptions</a>
+                        <mat-label>ePrescriptions</mat-label>
                     </div>
                 </mat-menu>
                 <button mat-icon-button [matMenuTriggerFor]="complaints">
@@ -62,15 +64,18 @@
                     </li>
                 </button>
                 <mat-menu #complaints="matMenu">
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/pharmacy-complaint">
                         <span class="material-icons">local_pharmacy</span>
-                        <a href="#" routerLink="/pharmacy-complaint">New pharmacy complaint</a>
+                        <mat-label>New pharmacy complaint</mat-label>
                     </div>
-                    <div mat-menu-item>
+                    <div mat-menu-item routerLink="/employee-complaint">
                         <span class="material-icons">person_remove</span>
-                        <a href="#" routerLink="/employee-complaint">New employee complaint</a>
+                        <mat-label>New employee complaint</mat-label>
                     </div>
                 </mat-menu>
+                <button mat-icon-button (click)="LogOut()">
+                    <li>Logout</li>
+                </button>
             </ul>
         </nav>
     </div>

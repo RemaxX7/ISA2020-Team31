@@ -1,25 +1,28 @@
 <div class="pharmaciesBox">
-    <h1><b>Pharmacies</b></h1>
-    <mat-divider></mat-divider>
-    <div class="search">
-      <input type="text" id="search-input" matInput placeholder="Search pharmacies" autocomplete="off" (input)="CheckIfEmpty($event)">
-      <button mat-raised-button (click)="Search()">Search</button>
+  <h1><b>Pharmacies</b></h1>
+  <mat-divider></mat-divider>
+  <div class="search">
+    <mat-form-field>
+      <input type="text" id="search-input" matInput placeholder="Search pharmacies" autocomplete="off"
+        (input)="CheckIfEmpty($event)">
+    </mat-form-field>
+    <button mat-raised-button (click)="Search()">Search</button>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngFor="let pharmacy of pharmacies">
+    <div class="pharmacy">
+      <h1>{{pharmacy.name}}</h1>
+      <p><b>Address</b>: {{pharmacy.address.street}} {{pharmacy.address.number}}, {{pharmacy.address.city}}</p>
+      <ng-template #t let-fill="fill">
+        <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill">&#9733;</span>
+          &#9733;
+        </span>
+      </ng-template>
+      <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="pharmacy.rate" [readonly]="true"></ngb-rating>
     </div>
     <mat-divider></mat-divider>
-    <div *ngFor="let pharmacy of pharmacies">
-        <div class="pharmacy">
-            <h1>{{pharmacy.name}}</h1>
-            <p><b>Address</b>: {{pharmacy.address.street}} {{pharmacy.address.number}}, {{pharmacy.address.city}}</p>
-            <ng-template #t let-fill="fill">
-              <span class="star" [class.full]="fill === 100">
-                <span class="half" [style.width.%]="fill">&#9733;</span>
-                &#9733;
-              </span>
-            </ng-template>
-            <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="pharmacy.rate" [readonly]="true"></ngb-rating>
-        </div>
-        <mat-divider></mat-divider>
-    </div>
-    <mat-paginator  [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
-    </mat-paginator>
+  </div>
+  <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+  </mat-paginator>
 </div>
