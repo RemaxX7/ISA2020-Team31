@@ -79,6 +79,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 	
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<Object> handleException(Exception exception) {
+		System.out.println(exception.getMessage());
 		return new ResponseEntity<>("An error has occured.", HttpStatus.BAD_REQUEST);
 	}
 }
