@@ -30,7 +30,7 @@ export class DermatologistPatientSearchComponent implements OnInit {
     this.Reload();
   }
   MyFunction(){
-    var input, filter, table, tr, td, i,td1;
+    var input, filter, table, tr, td, i,td1,th;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     let novi:string = filter;
@@ -39,12 +39,15 @@ export class DermatologistPatientSearchComponent implements OnInit {
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
+    th = table.getElementsByTagName("th");
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
         td1 = tr[i].getElementsByTagName("td")[1];
         if(td){
         if (td.innerHTML.toUpperCase().indexOf(novi.split(' ')[0]) > -1 && td1.innerHTML.toUpperCase().indexOf(novi.split(' ')[1]) > -1 ) {
             tr[i].style.display = "";
+            tr[i].getElementsByTagName("td")[2].style.display="none";
+            tr[i].getElementsByTagName("td")[3].style.display="none";
         } else {
             tr[i].style.display = "none";
         }

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppointmentReportPharmacistComponent } from '../appointment-report-pharmacist/appointment-report-pharmacist.component';
 import { Appointment } from '../model/appointment.model';
+import { PharmacistAppointmentsPageComponent } from '../pharmacist-appointments-page/pharmacist-appointments-page.component';
+import { Pharmacist } from '../model/pharmacist.model';
 
 @Injectable({
     providedIn: 'root'
@@ -38,5 +40,8 @@ import { Appointment } from '../model/appointment.model';
     }
     scheduleNewAppointmentPharm(val:Appointment):Observable<any>{
       return this._http.post("http://localhost:8080/auth/appointments/counselings/schedulenewcounseling",val);
+    }
+    editProfile(val:any):Observable<any>{
+      return this._http.post("http://localhost:8080/auth/search/employee/editprofile",val);
     }
   }

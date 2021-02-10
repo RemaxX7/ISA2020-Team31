@@ -22,13 +22,16 @@
             <a href="" routerLink="/employee-password-change">Promena lozinke</a>
             <a href="" routerLink="/dermatologist-work-cal">Radni kalendar</a>
         </div>
-        
         <div class="userinfo">
-            <textarea name="email" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Username">{{dermatologist.email}}</textarea><br>
-            <textarea name="name" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Name">{{dermatologist.name}}</textarea><br>
-            <textarea name="surname" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Surname">{{dermatologist.surname}}</textarea><br>
-            <textarea name="dermID" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Id">{{dermatologist.id}}</textarea><br>
-            <button>Confirm edit</button>
-        </div>
+        <form [formGroup]="myForm">
+          <table>
+          <tr><td><textarea name="" id="username" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.email}}" formControlName="email" required></textarea></td></tr>
+          <tr><td><textarea name="" id="name" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.name}}" formControlName="name" required></textarea></td></tr>
+          <tr><td><textarea name="" id="surname" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.surname}}" formControlName="surname" required></textarea></td></tr>
+          <tr><td><textarea name="" id="pharmID" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.uidn}}" formControlName="uidn" readonly></textarea></td></tr>
+          <tr><td> <button (click)="EditProfile()">Confirm edit</button></td></tr>
+        </table>
+        </form>
+      </div>
     </div>
   </body>

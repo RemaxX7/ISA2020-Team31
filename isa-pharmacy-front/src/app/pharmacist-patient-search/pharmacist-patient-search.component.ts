@@ -44,6 +44,8 @@ export class PharmacistPatientSearchComponent implements OnInit {
         if(td){
         if (td.innerHTML.toUpperCase().indexOf(novi.split(' ')[0]) > -1 && td1.innerHTML.toUpperCase().indexOf(novi.split(' ')[1]) > -1 ) {
             tr[i].style.display = "";
+            tr[i].getElementsByTagName("td")[2].style.display="none";
+            tr[i].getElementsByTagName("td")[3].style.display="none";
         } else {
             tr[i].style.display = "none";
         }
