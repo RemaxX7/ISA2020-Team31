@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../shared/user.model';
+import { User } from '../../shared/user.model';
 import { FormBuilder,FormGroup , Validators} from '@angular/forms'
-import { UserService } from '../shared/user.service';
-import { Address } from '../shared/Location/address.model';
-import { Country } from '../shared/Location/country.model';
-import { City } from '../shared/Location/city.model';
-import { LocationService } from '../shared/Location/location.service';
+import { UserService } from '../../shared/user.service';
+import { Address } from '../../shared/Location/address.model';
+import { Country } from '../../shared/Location/country.model';
+import { City } from '../../shared/Location/city.model';
+import { LocationService } from '../../shared/Location/location.service';
 import { PasswordValidator } from './password-validator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,11 +22,10 @@ export class SignUpComponent implements OnInit {
   longitude = 21.0059;
   locationChosen = false;
 
-  constructor(private fb: FormBuilder, private userService:UserService, private locationService:LocationService) { }
+  constructor(private fb: FormBuilder, private userService:UserService, private locationService:LocationService, private toastr:ToastrService) { }
 
   countries:Country[]=[];
   cities:City[]=[];
-  selectedCity:City=new City();
 
   ngOnInit(): void {
     this.myForm=this.fb.group({
@@ -62,14 +62,8 @@ export class SignUpComponent implements OnInit {
     this.locationService.getAllCitiesByCountry(event.value.id).subscribe(
       data => {
         this.cities = data;
-        console.log(data);
       }
     )}
-
-    SelectCity(event: any) {
-      this.selectedCity = event.value;
-      console.log(event.value);
-    }
 
     GetCoordinates(event: any) {
       this.latitude = event.coords.lat;
@@ -98,10 +92,10 @@ export class SignUpComponent implements OnInit {
       user.address = address;
       
       this.userService.register(user).subscribe(data => {
-        alert(data);
+        this.toastr.success('Registered successfully');
           },
           err =>{
-            alert(err.error);
+            this.toastr.error(err.error);
           }
           );
     }

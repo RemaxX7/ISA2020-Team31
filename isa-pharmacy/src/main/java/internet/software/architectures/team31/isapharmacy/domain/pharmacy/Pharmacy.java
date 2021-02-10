@@ -32,13 +32,13 @@ public class Pharmacy {
 	private Address address;
 	
 	@Column(name="rate")
-	private Float rate;
+	private Double rate;
 	
 	public Pharmacy() {
 		super();
 	}
 
-	public Pharmacy(Long id, String name, Address address, Float rate) {
+	public Pharmacy(Long id, String name, Address address, Double rate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -70,11 +70,11 @@ public class Pharmacy {
 		this.address = address;
 	}
 
-	public Float getRate() {
+	public Double getRate() {
 		return rate;
 	}
 
-	public void setRate(Float rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
 	}
 
