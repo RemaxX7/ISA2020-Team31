@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import internet.software.architectures.team31.isapharmacy.domain.location.Address;
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
-import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 @Entity
 @DiscriminatorValue("Patient")
 public class Patient extends User {
@@ -44,7 +44,7 @@ public class Patient extends User {
 		this.activationToken = activationToken;
 	}
 
-	public Patient(PatientRegisterDTO dto) {
+	public Patient(UserRegisterDTO dto) {
 		super();
 		this.name = dto.getName(); 
 		this.surname = dto.getSurname();
