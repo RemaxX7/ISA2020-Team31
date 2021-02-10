@@ -78,6 +78,6 @@
         <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
     </agm-map>
     <br>
-    <button mat-raised-button  (click)="Register()">Register</button>
+    <button mat-raised-button [disabled]="myForm.invalid"  (click)="Register()">Register</button>
 </form>
 </div>

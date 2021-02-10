@@ -10,7 +10,7 @@ import { City } from '../shared/Location/city.model';
 import { Country } from '../shared/Location/country.model';
 import { LocationService } from '../shared/Location/location.service';
 import { User } from '../shared/user.model';
-import { PasswordValidator } from '../sign-up/password-validator';
+import { PasswordValidator } from '../home/sign-up/password-validator';
 
 @Component({
   selector: 'app-pharmacist-registration',

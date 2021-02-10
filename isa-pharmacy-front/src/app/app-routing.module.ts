@@ -35,6 +35,8 @@ import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmac
 import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
+import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
+import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
 
 const routes: Routes = [
   { path: 'dermatologist', component: DermatologistComponent },
@@ -56,7 +58,9 @@ const routes: Routes = [
   { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'dermatologist-appointments', component: DermatologistAppointmentsPageComponent },
   { path: 'pharmacist-appointments', component: PharmacistAppointmentsPageComponent },
-  { path: '', component: HomeComponent },
+  {path:'dermatologist-list', component:DermatologistListComponent},
+  {path:'pharmacy-admin-profile', component:PharmacyAdminProfileComponent},
+  {path:'pharmacist-registration/:id', component:PharmacistRegistrationComponent},
   {
     path: 'register', component: HomeComponent,
     children: [{ path: '', component: SignUpComponent }]

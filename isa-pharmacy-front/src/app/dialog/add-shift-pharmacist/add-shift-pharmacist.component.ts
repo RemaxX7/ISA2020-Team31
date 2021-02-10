@@ -29,7 +29,7 @@ export class AddShiftPharmacistComponent implements OnInit {
     selectedDate:Date;
     interval:DateRange;
     errorMessage:string;
-
+    shiftAdded:boolean;
     
 
   ngOnInit(): void {
@@ -41,6 +41,7 @@ export class AddShiftPharmacistComponent implements OnInit {
       endMinute:[0,[Validators.required]]
     });
     this.errorMessage="";
+    this.shiftAdded=true;
     }
 
   AddShift(){
@@ -61,7 +62,10 @@ export class AddShiftPharmacistComponent implements OnInit {
     if(this.TimeCheck())
       {
         this.shiftService.AddShift(this.shiftDto).subscribe(
-          data=>{this.errorMessage="Shift added "},
+          data=>{
+            this.errorMessage="Shift added ",
+            this.shiftAdded=false
+              },
           err=>this.errorMessage=err.error
         );
       }

@@ -42,7 +42,7 @@
 </div>
   <p>{{errorMessage}}</p>
 <div mat-dialog-actions class="offerButtons">
-    <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button  (click)="AddShift()" > Add Shift</button>
-    <button mat-raised-button  (click)="Return()" > Finish</button>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-raised-button [disabled]="myForm.invalid" (click)="AddShift()" > Add Shift</button>
+    <button mat-raised-button [disabled]="shiftAdded" (click)="Return()" > Finish</button>
   </div>
