@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
+import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
@@ -88,5 +89,19 @@ public class UserServiceImpl implements UserService {
 		text.append("Click the following link to activate your account: \r\n");
 		text.append("http://localhost:8080/auth/activate/" + patient.getActivationToken());
 		return text.toString();
+	}
+
+	@Override
+	public User findByUidn(String uidn) {
+		return userRepository.findByUidn(uidn);
+	}
+
+	@Override
+	public User employeeEditProfile(EmployeeProfileEditDTO dto) {
+		User user = findByUidn(dto.getUidn());
+		user.setName(dto.getName());
+		user.setSurname(dto.getSurname());
+		user.setEmail(dto.getEmail());
+		return userRepository.save(user);
 	}
 }

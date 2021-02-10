@@ -18,6 +18,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Autowired
 	private PharmacyRepository pharmacyRepository;
+
 	@Autowired
 	private PharmacyReviewService pharmacyReviewService;
 
@@ -50,4 +51,5 @@ public class PharmacyServiceImpl implements PharmacyService {
 	public Pharmacy findById(Long id) {
 		return pharmacyRepository.findById(id).orElse(null);
 	}
+
 }

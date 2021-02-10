@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Pharmacist } from '../model/pharmacist.model';
+import { EmployeeService } from '../service/employee-service';
 
 @Component({
   selector: 'app-pharmacist-patient-search',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PharmacistPatientSearchComponent implements OnInit {
 
-  constructor() { }
+  users:Pharmacist[]=[]
+  constructor(private service:EmployeeService) { }
 
   ngOnInit(): void {
+    
+    this.FillPatients();
+  }
+  async FillPatients(){
+    await this.service.getAllUsers().then(
+      data=>this.users=data
+      
+    )
+    console.log(this.users);
+  }
+  PenalizePatient(uidn){
+    this.service.penalizePatientPharmacist(uidn);
+    alert("Korisnik je kaznjen jednim negativnim bodom");
+    //this.Reload();
   }
   MyFunction(){
     var input, filter, table, tr, td, i,td1;
@@ -27,6 +44,8 @@ export class PharmacistPatientSearchComponent implements OnInit {
         if(td){
         if (td.innerHTML.toUpperCase().indexOf(novi.split(' ')[0]) > -1 && td1.innerHTML.toUpperCase().indexOf(novi.split(' ')[1]) > -1 ) {
             tr[i].style.display = "";
+            tr[i].getElementsByTagName("td")[2].style.display="none";
+            tr[i].getElementsByTagName("td")[3].style.display="none";
         } else {
             tr[i].style.display = "none";
         }

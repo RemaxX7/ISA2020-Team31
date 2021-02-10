@@ -1,0 +1,60 @@
+<header>
+    <div class="header">
+      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
+         <li><a href="" routerLink="/pharmacist-patient-search">Patient list</a></li>
+            <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
+            <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
+            <li><a href="">Schedule leave</a></li>
+            <li><a href="">Schedule appointment</a></li>
+            <li><a href="" routerLink="pharmacist-profile">Profile</a></li>
+            <li id="log"><a href="">Log out</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <body>
+    <div class="profilediv">
+        <div class="sidemenu">
+            <a href="" routerLink="/pharmacist-profile">Lični podaci</a>
+            <a href="" routerLink="/pharmacist-password-change">Promena lozinke</a>
+            <a href="" routerLink="/pharmacist-work-cal">Radni kalendar</a>
+        </div>
+        <div class="userinfo">
+          <button (click)="FilterTable(7)">Nedeljno</button>
+          <button (click)="FilterTable(30)">Mesecno</button>
+          <button (click)="FilterTable(365)">Godisnje</button>
+          <div class="founddiv">
+            <table id="myTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>Duration</th>
+                </tr>
+                <tbody id="tableinfo">
+                    <tr>
+                        <td>marko</td>
+                        <td>rakic</td>
+                        <td>19.01.2021</td>
+                        <td>19:00</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                      <td>aleksa</td>
+                      <td>rakic</td>
+                      <td>19.01.2022</td>
+                      <td>22:00</td>
+                      <td>30</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+  </body>
+  
