@@ -1,0 +1,22 @@
+<div class="complaintBox">
+    <h1><b>Pharmacy complaint</b></h1>
+    <mat-divider></mat-divider>
+    <form [formGroup]="myForm" autocomplete="off">
+        <mat-form-field>
+            <mat-label>Pharmacy</mat-label>
+            <mat-select formControlName="pharmacy">
+                <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">
+                    <h1>{{pharmacy.name}} </h1>
+                    <p>{{pharmacy.address.street}} {{pharmacy.address.number}}, {{pharmacy.address.city}}
+                    </p>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Complaint text</mat-label>
+            <textarea formControlName="text" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"
+                cdkAutosizeMaxRows="5"></textarea>
+        </mat-form-field>
+        <button mat-raised-button [disabled]="myForm.invalid" (click)="Send()">Send</button>
+    </form>
+</div>

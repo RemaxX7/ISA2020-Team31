@@ -35,6 +35,12 @@ public class AppointmentMedicineItem {
 		this.medicine = medicine;
 		this.quantity = quantity;
 	}
+	public AppointmentMedicineItem(Medicine medicine, Integer quantity) {
+		super();
+		this.medicine = medicine;
+		this.quantity = quantity;
+	}
+	
 
 	public Long getId() {
 		return id;

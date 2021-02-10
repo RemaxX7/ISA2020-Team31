@@ -1,16 +1,26 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
+import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
+import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
@@ -32,6 +42,10 @@ public class CounselingServiceImpl implements CounselingService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private PatientServiceImpl patientService;
+	@Autowired
+	private MedicineServiceImpl medicineService;
+	
 	private EmailService emailService;
 
 	@Override
@@ -106,7 +120,27 @@ public class CounselingServiceImpl implements CounselingService {
 	public boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId) {
 		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED) != null;
 	}
-	
+	@Override
+	public Counseling finalizeExam(AppointmentFinalizationDTO dto) {
+		List<Counseling> counseling = (List<Counseling>) findAll();
+		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
+		List<Medicine>medicineList = new ArrayList<Medicine>();
+		for (String med : dto.getMedicine()) {
+			medicineList.add(medicineService.findByName(med));
+		}
+		for (Counseling couns : counseling) {
+			if(couns.getPatient().getUidn().equals(dto.getUidn())) {
+				for (Medicine medicine : medicineList) {
+					itemList.add(new AppointmentMedicineItem(medicine,3));
+				}
+				couns.setAppointmentStatus(AppointmentStatus.FINISHED);
+				couns.setReport(dto.getReport());
+				couns.setAppointmentMedicineItems(itemList);
+				return counselingRepository.save(couns);
+			}
+		}
+		return null;
+	}
 	private void sendCounselingEmail(Counseling counseling) {
 		emailService.sendEmail(counseling.getPatient().getEmail(), "Counseling appointment confirmation", getCounselingEmailText(counseling));
 	}
@@ -118,5 +152,22 @@ public class CounselingServiceImpl implements CounselingService {
 		text.append("Address: " + counseling.getPharmacy().getAddress() + "\r\n");
 		text.append("Date and time: " + counseling.getDateRange().getStartDateTime() + " - " + counseling.getDateRange().getEndDateTime() + "\r\n");
 		return text.toString();
+	}
+
+	@Override
+	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Patient patient = patientService.findByUidn(dto.getUidn());
+		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
+		DateRange range = new DateRange();
+		range.setStartDateTime(date);
+		range.setEndDateTime(date.plusMinutes(30));
+		Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
+		Counseling counseling = new Counseling();
+		counseling.setPharmacist(pharm);
+		counseling.setPatient(patient);
+		counseling.setAppointmentStatus(AppointmentStatus.OCCUPIED);
+		counseling.setDateRange(range);
+		return counselingRepository.save(counseling);
 	}
 }

@@ -1,17 +1,25 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
+import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
+import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
@@ -33,6 +41,10 @@ public class ExamServiceImpl implements ExamService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private PatientServiceImpl patientService;
+	@Autowired
+	private MedicineServiceImpl medicineService;
+	
 	private EmailService emailService;
 
 	@Override
@@ -107,6 +119,28 @@ public class ExamServiceImpl implements ExamService {
 	public boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId) {
 		return examRepository.findOneByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED) != null;
 	}
+
+	@Override
+	public Exam finalizeExam(AppointmentFinalizationDTO dto) {
+		List<Exam> exam = (List<Exam>) findAll();
+		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
+		List<Medicine>medicineList = new ArrayList<Medicine>();
+		for (String med : dto.getMedicine()) {
+			medicineList.add(medicineService.findByName(med));
+		}
+		for (Exam ex : exam) {
+			if(ex.getPatient().getUidn().equals(dto.getUidn())) {
+				for (Medicine medicine : medicineList) {
+					itemList.add(new AppointmentMedicineItem(medicine,3));
+				}
+				ex.setAppointmentStatus(AppointmentStatus.FINISHED);
+				ex.setReport(dto.getReport());
+				ex.setAppointmentMedicineItems(itemList);
+				return examRepository.save(ex);
+			}
+		}
+		return null;
+	}
 	
 	private void sendExamEmail(Exam exam) {
 		emailService.sendEmail(exam.getPatient().getEmail(), "Dermatologist appointment confirmation", getExamEmailText(exam));
@@ -119,5 +153,22 @@ public class ExamServiceImpl implements ExamService {
 		text.append("Address: " + exam.getPharmacy().getAddress() + "\r\n");
 		text.append("Date and time: " + exam.getDateRange().getStartDateTime() + " - " + exam.getDateRange().getEndDateTime() + "\r\n");
 		return text.toString();
+	}
+
+	@Override
+	public Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Patient patient = patientService.findByUidn(dto.getUidn());
+		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
+		DateRange range = new DateRange();
+		range.setStartDateTime(date);
+		range.setEndDateTime(date.plusMinutes(30));
+		Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
+		Exam exam = new Exam();
+		exam.setDermatologist(derm);
+		exam.setPatient(patient);
+		exam.setAppointmentStatus(AppointmentStatus.OCCUPIED);
+		exam.setDateRange(range);
+		return examRepository.save(exam);
 	}
 }

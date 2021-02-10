@@ -1,0 +1,16 @@
+<div class="formBox">
+    <h1><b>Patient login</b></h1>
+    <form [formGroup]="myForm" autocomplete="off">
+        <hr>
+        <mat-grid-list cols="2">
+            <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input type="password" matInput placeholder="Password" formControlName="password">
+            </mat-form-field>
+        </mat-grid-list>
+        <br>
+        <button mat-raised-button [disabled]="myForm.invalid" (click)="Login()">Log in</button>
+    </form>
+</div>

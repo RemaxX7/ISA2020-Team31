@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
+import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AuthorityService;
@@ -93,5 +94,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String findTypeById(Long id) {
 		return this.userRepository.findTypeById(id);
+	}
+
+	@Override
+	public User findByUidn(String uidn) {
+		return userRepository.findByUidn(uidn);
+	}
+
+	@Override
+	public User employeeEditProfile(EmployeeProfileEditDTO dto) {
+		User user = findByUidn(dto.getUidn());
+		user.setName(dto.getName());
+		user.setSurname(dto.getSurname());
+		user.setEmail(dto.getEmail());
+		return userRepository.save(user);
 	}
 }
