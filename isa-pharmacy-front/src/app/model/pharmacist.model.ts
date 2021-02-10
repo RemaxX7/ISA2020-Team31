@@ -5,5 +5,7 @@ export class Pharmacist {
     name:string;
     surname:string;
     email:string;
+    username:string;
+    uidn:string;
     pharmacies:Pharmacy;
 }

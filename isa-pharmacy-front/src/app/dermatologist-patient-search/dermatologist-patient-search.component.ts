@@ -1,5 +1,7 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import {EmployeeService} from 'src/app/service/employee-service'
+import { Dermatologist } from '../model/dermatologist.model';
 
 @Component({
   selector: 'app-dermatologist-patient-search',
@@ -8,12 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DermatologistPatientSearchComponent implements OnInit {
 
-  constructor() { }
+  users:Dermatologist[]=[]
+  constructor(private service:EmployeeService ) {}
 
   ngOnInit(): void {
+    this.FillPatients();
+
+  }
+  async FillPatients(){
+    await this.service.getAllUsers().then(
+      data=>this.users=data
+      
+    )
+    console.log(this.users);
+  }
+  PenalizePatient(uidn){
+    this.service.penalizePatient(uidn);
+    alert("Korisnik je kaznjen jednim negativnim bodom");
+    this.Reload();
   }
   MyFunction(){
-    var input, filter, table, tr, td, i,td1;
+    var input, filter, table, tr, td, i,td1,th;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     let novi:string = filter;
@@ -22,12 +39,15 @@ export class DermatologistPatientSearchComponent implements OnInit {
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
+    th = table.getElementsByTagName("th");
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
         td1 = tr[i].getElementsByTagName("td")[1];
         if(td){
         if (td.innerHTML.toUpperCase().indexOf(novi.split(' ')[0]) > -1 && td1.innerHTML.toUpperCase().indexOf(novi.split(' ')[1]) > -1 ) {
             tr[i].style.display = "";
+            tr[i].getElementsByTagName("td")[2].style.display="none";
+            tr[i].getElementsByTagName("td")[3].style.display="none";
         } else {
             tr[i].style.display = "none";
         }

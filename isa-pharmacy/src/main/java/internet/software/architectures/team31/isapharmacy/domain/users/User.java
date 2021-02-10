@@ -71,7 +71,6 @@ public abstract class User implements UserDetails {
 	@NotBlank(message = "Phone number is mandatory")
 	@Column(name="phone_number",nullable=false)
 	protected String phoneNumber;
-	
 	//@NotNull(message = "Address is mandatory")
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	protected Address address;

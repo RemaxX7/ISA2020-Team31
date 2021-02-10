@@ -26,10 +26,17 @@ import { DermatologistPatientSearchComponent } from './dermatologist-patient-sea
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PharmacistWorkCalendarComponent } from './pharmacist-work-calendar/pharmacist-work-calendar.component';
+import { AppointmentReportComponent } from './appointment-report/appointment-report.component';
+import { DermatologistWorkCalendarComponent } from './dermatologist-work-calendar/dermatologist-work-calendar.component';
+import { AppointmentReportPharmacistComponent } from './appointment-report-pharmacist/appointment-report-pharmacist.component';
+
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
+import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +51,15 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     DermatologistPatientSearchComponent,
     PharmacistPatientSearchComponent,
     PharmacyProfileComponent,
+    PharmacistWorkCalendarComponent,
+    AppointmentReportComponent,
+    DermatologistWorkCalendarComponent,
+    AppointmentReportPharmacistComponent,
     PharmacistListComponent,
     DermatologistListComponent,
-    SignUpComponent
+    SignUpComponent,
+    DermatologistAppointmentsPageComponent,
+    PharmacistAppointmentsPageComponent
   ],
   imports: [
     BrowserModule,
