@@ -21,17 +21,11 @@
     <fullyQualifiedTypeName name="javax.websocket.server.ServerEndpoint"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.User"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.ExamRepository"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Patient"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.MedicineServiceImpl"/>
@@ -53,4 +47,12 @@
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Counseling"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.EmployeeComplaintCreateDTO"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 </qualifiedTypeNameHistroy>

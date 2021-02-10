@@ -15,8 +15,8 @@ import internet.software.architectures.team31.isapharmacy.service.impl.MedicineS
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/medicine")
-public class MedicineContoller {
+@RequestMapping(value = "api/medicine")
+public class MedicineController {
 	
 	@Autowired
 	private MedicineServiceImpl medicineService;
