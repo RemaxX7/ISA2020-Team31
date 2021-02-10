@@ -165,7 +165,7 @@ public class CounselingServiceImpl implements CounselingService {
 		Counseling counseling = new Counseling();
 		counseling.setPharmacist(pharm);
 		counseling.setPatient(patient);
-		counseling.setAppointmentStatus(AppointmentStatus.OCCUPIED);
+		counseling.setAppointmentStatus(AppointmentStatus.FREE);
 		counseling.setDateRange(range);
 		return counselingRepository.save(counseling);
 	}

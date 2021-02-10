@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
@@ -104,4 +105,12 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(dto.getEmail());
 		return userRepository.save(user);
 	}
+
+	@Override
+	public User employeeEditPassword(PasswordChangeDTO dto) {
+		User user = findByUidn(dto.getUidn());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		return userRepository.save(user);
+	}
+	
 }

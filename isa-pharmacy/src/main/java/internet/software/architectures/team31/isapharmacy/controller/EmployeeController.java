@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.service.UserDetailsServiceImpl;
+import internet.software.architectures.team31.isapharmacy.service.UserService;
 import internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl;
 
 @RestController
@@ -24,7 +26,7 @@ public class EmployeeController {
 	@Autowired
 	private UserDetailsServiceImpl userService;
 	@Autowired
-	private UserServiceImpl employedService;
+	private UserService employedService;
 	@GetMapping("/all")
 	public ResponseEntity<Collection<User>> findAll() {
 		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
@@ -36,5 +38,9 @@ public class EmployeeController {
 	@PostMapping(value = "/editprofile")
 	public ResponseEntity<User> editUserProfile(@RequestBody EmployeeProfileEditDTO dto){
 		return new ResponseEntity<>(employedService.employeeEditProfile(dto),HttpStatus.OK);
+	}
+	@PostMapping(value = "/editpassword")
+	public ResponseEntity<User> editUserPassword(@RequestBody PasswordChangeDTO dto){
+		return new ResponseEntity<>(employedService.employeeEditPassword(dto),HttpStatus.OK);
 	}
 }

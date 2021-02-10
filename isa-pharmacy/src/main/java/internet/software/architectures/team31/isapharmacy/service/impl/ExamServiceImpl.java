@@ -166,7 +166,7 @@ public class ExamServiceImpl implements ExamService {
 		Exam exam = new Exam();
 		exam.setDermatologist(derm);
 		exam.setPatient(patient);
-		exam.setAppointmentStatus(AppointmentStatus.OCCUPIED);
+		exam.setAppointmentStatus(AppointmentStatus.FREE);
 		exam.setDateRange(range);
 		return examRepository.save(exam);
 	}

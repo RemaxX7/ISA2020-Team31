@@ -44,4 +44,7 @@ import { Pharmacist } from '../model/pharmacist.model';
     editProfile(val:any):Observable<any>{
       return this._http.post("http://localhost:8080/auth/search/employee/editprofile",val);
     }
+    editPassword(val:any):Observable<any>{
+      return this._http.post("http://localhost:8080/auth/search/employee/editpassword",val);
+    }
   }

@@ -15,7 +15,7 @@ export class DermatologistProfileComponent implements OnInit {
   dermatologist:Dermatologist = new Dermatologist;
   myForm:FormGroup;
   ngOnInit(): void {
-    this.Test();
+    this.LoadUser();
     this.myForm=this.fb.group({
       email:['',[Validators.required]],
       name:['',[Validators.required]],
@@ -28,15 +28,14 @@ export class DermatologistProfileComponent implements OnInit {
     this.dermatologist.email=this.myForm.get('email').value;
     this.dermatologist.name=this.myForm.get('name').value;
     this.dermatologist.surname=this.myForm.get('surname').value;
-    //this.pharmacist.uidn kad se dovede farmaceut
-    this.dermatologist.uidn="3234567891234";
+    this.dermatologist.uidn= this.dermatologist.uidn;
     this.service.editProfile(this.dermatologist).subscribe(()=>alert("Uspesno promenjeni podaci"))
   }
-  Test(){
-    this.dermatologist.name ="Marko";
-    this.dermatologist.email = "mr98@gmail.com";
-    this.dermatologist.id = 11111;
-    this.dermatologist.surname = "Rakic";
-    this.dermatologist.uidn = "3234567891234";
+  LoadUser(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.dermatologist.name = user.name;
+    this.dermatologist.email = user.email;
+    this.dermatologist.surname = user.surname;
+    this.dermatologist.uidn = user.uidn;
   }
 }
