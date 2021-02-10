@@ -178,6 +178,7 @@ public class ExamServiceImpl implements ExamService {
 		exam.setPatient(patient);
 		exam.setAppointmentStatus(AppointmentStatus.FREE);
 		exam.setDateRange(range);
+		emailService.sendEmail(patient.getEmail(), "Additional examination", "You are scheduled to come in again" + range.getStartDateTime());
 		return examRepository.save(exam);
 	}
 

@@ -174,6 +174,7 @@ public class CounselingServiceImpl implements CounselingService {
 		counseling.setPatient(patient);
 		counseling.setAppointmentStatus(AppointmentStatus.FREE);
 		counseling.setDateRange(range);
+		emailService.sendEmail(patient.getEmail(), "Additional consultation", "You are scheduled to come in again" + range.getStartDateTime());
 		return counselingRepository.save(counseling);
 	}
 
