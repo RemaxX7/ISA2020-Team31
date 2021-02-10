@@ -29,8 +29,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Override
 	public Collection<Pharmacy> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return pharmacyRepository.findAll();
 	}
 
 	@Override

@@ -27,8 +27,10 @@ INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_num
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type) VALUES (3, 'Milan', 'Milanovic', '3234567891234', 'milanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'usermilan@email.com', '555-333-333', true, '2017-10-01 21:58:58.508-07', 'Dermatologist');
 INSERT INTO USERS_PHARMACIES (dermatologist_id, pharmacies_id) values (3, 1), (3, 2);
 
-INSERT INTO AUTHORITY (name) VALUES ('ROLE_USER');
-INSERT INTO AUTHORITY (name) VALUES ('ROLE_ADMIN');
+INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_USER');
+INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
+
+INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1);
 
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (1, 'Paracetamol', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (2, 'asfasfas', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);

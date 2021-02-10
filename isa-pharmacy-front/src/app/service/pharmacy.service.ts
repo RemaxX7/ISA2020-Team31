@@ -15,6 +15,10 @@ export class PharmacyService {
     return this._http.get<any>(this._APIUrl+'/'+pharmacyId).toPromise();
   }
 
+  getAll():Observable<any> {
+    return this._http.get<any>(this._APIUrl + '/all')
+  }
+
   getPage(page: number):Observable<any> {
     return this._http.get<any>(this._APIUrl + '/all/' + page);
   }

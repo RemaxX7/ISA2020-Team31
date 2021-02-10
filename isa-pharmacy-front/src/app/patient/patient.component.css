@@ -1,0 +1,32 @@
+li, button {
+    font-size: large;
+    color: white;
+}
+
+button {
+    margin: -10px 10px 0 10px;
+    width: max-content;
+}
+
+button > a {
+    color: darkgray;
+    font-weight: normal;
+}
+
+::ng-deep .appointment-menu {
+    width: 300px;
+    max-width: none !important;
+    overflow: hidden !important;
+    color: darkgray;
+}
+
+div > span {
+    color: black;
+    position: relative;
+    margin: 10px 10px 0 0;
+    float: left;
+}
+
+mat-menu-item > a {
+    float: left;
+}

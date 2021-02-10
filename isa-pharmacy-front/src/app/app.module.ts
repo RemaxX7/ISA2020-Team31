@@ -38,6 +38,19 @@ import { PatientComponent } from './patient/patient.component';
 import { GuestPharmaciesComponent } from './home/guest-pharmacies/guest-pharmacies.component';
 import { GuestMedicinesComponent } from './home/guest-medicines/guest-medicines.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { PatientProfileComponent } from './patient/patient-profile/patient-profile.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { NewExamComponent } from './patient/new-exam/new-exam.component';
+import { NewCounselingComponent } from './patient/new-counseling/new-counseling.component';
+import { UpcomingExamsComponent } from './patient/upcoming-exams/upcoming-exams.component';
+import { UpcomingCounselingsComponent } from './patient/upcoming-counselings/upcoming-counselings.component';
+import { PastExamsComponent } from './patient/past-exams/past-exams.component';
+import { PastCounselingsComponent } from './patient/past-counselings/past-counselings.component';
+import { ReservationsComponent } from './patient/reservations/reservations.component';
+import { EPrescriptionsComponent } from './patient/eprescriptions/eprescriptions.component';
+import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmacy-complaint.component';
+import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +72,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     SignInComponent,
     HomeComponent,
     GuestPharmaciesComponent,
-    GuestMedicinesComponent
+    GuestMedicinesComponent,
+    PatientProfileComponent,
+    NewExamComponent,
+    NewCounselingComponent,
+    UpcomingExamsComponent,
+    UpcomingCounselingsComponent,
+    PastExamsComponent,
+    PastCounselingsComponent,
+    ReservationsComponent,
+    EPrescriptionsComponent,
+    PharmacyComplaintComponent,
+    EmployeeComplaintComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +104,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatGridListModule,
     MatDividerModule,
     MatPaginatorModule,
+    MatMenuModule,
+    MatIconModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']

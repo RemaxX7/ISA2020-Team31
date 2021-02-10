@@ -1,5 +1,8 @@
 package internet.software.architectures.team31.isapharmacy.controller;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +28,12 @@ public class PharmacyController {
 	@GetMapping("/{pharmacyId}")
 	public Pharmacy loadById(@PathVariable Long pharmacyId) {
 		return this.pharmacyService.findById(pharmacyId);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<Collection<PharmacyViewDTO>> findAll() {
+		return new ResponseEntity<>(pharmacyService.findAll().stream()
+				.map(pharmacy -> new PharmacyViewDTO(pharmacy)).collect(Collectors.toList()), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/all/{page}")

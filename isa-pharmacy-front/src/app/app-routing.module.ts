@@ -17,6 +17,18 @@ import { HomeComponent } from './home/home.component';
 import { SignInComponent } from './home/sign-in/sign-in.component';
 import { GuestPharmaciesComponent } from './home/guest-pharmacies/guest-pharmacies.component';
 import { GuestMedicinesComponent } from './home/guest-medicines/guest-medicines.component';
+import { PatientComponent } from './patient/patient.component';
+import { PatientProfileComponent } from './patient/patient-profile/patient-profile.component';
+import { NewExamComponent } from './patient/new-exam/new-exam.component';
+import { NewCounselingComponent } from './patient/new-counseling/new-counseling.component';
+import { UpcomingExamsComponent } from './patient/upcoming-exams/upcoming-exams.component';
+import { UpcomingCounselingsComponent } from './patient/upcoming-counselings/upcoming-counselings.component';
+import { PastExamsComponent } from './patient/past-exams/past-exams.component';
+import { PastCounselingsComponent } from './patient/past-counselings/past-counselings.component';
+import { ReservationsComponent } from './patient/reservations/reservations.component';
+import { EPrescriptionsComponent } from './patient/eprescriptions/eprescriptions.component';
+import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmacy-complaint.component';
+import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 
 const routes: Routes = [
   {path:'dermatologist',component:DermatologistComponent},
@@ -47,8 +59,52 @@ const routes: Routes = [
   {
     path: 'medicines', component: HomeComponent,
     children: [{ path: '', component: GuestMedicinesComponent }]
+  },
+  { path: 'patient', component: PatientComponent },
+  {
+    path: 'patient-profile', component: PatientComponent,
+    children: [{ path: '', component: PatientProfileComponent }]
+  },
+  {
+    path: 'new-exam', component: PatientComponent,
+    children: [{ path: '', component: NewExamComponent }]
+  },
+  {
+    path: 'new-counseling', component: PatientComponent,
+    children: [{ path: '', component: NewCounselingComponent }]
+  },
+  {
+    path: 'upcoming-exams', component: PatientComponent,
+    children: [{ path: '', component: UpcomingExamsComponent }]
+  },
+  {
+    path: 'upcoming-counselings', component: PatientComponent,
+    children: [{ path: '', component: UpcomingCounselingsComponent }]
+  },
+  {
+    path: 'past-exams', component: PatientComponent,
+    children: [{ path: '', component: PastExamsComponent }]
+  },
+  {
+    path: 'past-counselings', component: PatientComponent,
+    children: [{ path: '', component: PastCounselingsComponent }]
+  },
+  {
+    path: 'reservations', component: PatientComponent,
+    children: [{ path: '', component: ReservationsComponent }]
+  },
+  {
+    path: 'eprescriptions', component: PatientComponent,
+    children: [{ path: '', component: EPrescriptionsComponent }]
+  },
+  {
+    path: 'pharmacy-complaint', component: PatientComponent,
+    children: [{ path: '', component: PharmacyComplaintComponent }]
+  },
+  {
+    path: 'employee-complaint', component: PatientComponent,
+    children: [{ path: '', component: EmployeeComplaintComponent }]
   }
-
 ];
 
 @NgModule({

@@ -1,1 +1,81 @@
-<p>patient works!</p>
+<header>
+    <div class="header">
+        <a routerLink="/" class="logo">Pharmacy name placeholder</a>
+        <nav>
+            <ul>
+                <li><a routerLink="/patient-profile">Profile</a></li>
+                <button mat-icon-button [matMenuTriggerFor]="appointments">
+                    <li>Appointments
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #appointments="matMenu" class="appointment-menu">
+                    <div mat-menu-item>
+                        <span class="material-icons">schedule</span>
+                        <a routerLink="/new-exam">Schedule dermatologist exam</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">schedule</span>
+                        <a routerLink="/new-counseling">Schedule pharmacist counseling</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">update</span>
+                        <a routerLink="/upcoming-exams">Upcoming dermatologist exams</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">update</span>
+                        <a routerLink="/upcoming-counselings">Upcoming pharmacist counselings</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">history</span>
+                        <a routerLink="/past-exams">Past dermatologist exams</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">history</span>
+                        <a routerLink="/past-counselings">Past pharmacist counselings</a>
+                    </div>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="medicines">
+                    <li>Medicines
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #medicines="matMenu">
+                    <div mat-menu-item>
+                        <span class="material-icons">medication</span>
+                        <a routerLink="/reservations">Medicine reservations</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">assignment</span>
+                        <a routerLink="/eprescriptions">ePrescriptions</a>
+                    </div>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="complaints">
+                    <li>Complaints
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #complaints="matMenu">
+                    <div mat-menu-item>
+                        <span class="material-icons">local_pharmacy</span>
+                        <a href="#" routerLink="/pharmacy-complaint">New pharmacy complaint</a>
+                    </div>
+                    <div mat-menu-item>
+                        <span class="material-icons">person_remove</span>
+                        <a href="#" routerLink="/employee-complaint">New employee complaint</a>
+                    </div>
+                </mat-menu>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
