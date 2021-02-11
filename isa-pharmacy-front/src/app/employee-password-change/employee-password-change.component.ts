@@ -28,7 +28,7 @@ export class EmployeePasswordChangeComponent implements OnInit {
       this.pharmacist.uidn = user.uidn;
       this.pharmacist.password = this.myForm.get('pass').value;
       this.service.editPassword(this.pharmacist).subscribe(()=>alert("Password changed"))
-      this.router.navigate(['/']);
+      this.router.navigate(['/dermatologist']);
     }
   }
 }
