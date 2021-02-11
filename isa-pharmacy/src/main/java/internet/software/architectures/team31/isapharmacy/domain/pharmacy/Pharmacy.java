@@ -1,7 +1,10 @@
 package internet.software.architectures.team31.isapharmacy.domain.pharmacy;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +36,10 @@ public class Pharmacy {
 	
 	@Column(name="rate")
 	private Double rate;
+	
+	@Column
+	@ElementCollection(targetClass=InventoryItem.class)
+	private List<InventoryItem> inventory;
 	
 	public Pharmacy() {
 		super();
