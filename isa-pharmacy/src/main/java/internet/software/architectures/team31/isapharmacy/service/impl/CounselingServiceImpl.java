@@ -57,8 +57,6 @@ public class CounselingServiceImpl implements CounselingService {
 	@Autowired
 	private AppointmentService appointmentService;
 	@Autowired
-	private MedicineServiceImpl medicineService;
-	@Autowired
 	private PharmacistService pharmacistService;
 	@Autowired
 	private ExamService examService;
@@ -70,6 +68,7 @@ public class CounselingServiceImpl implements CounselingService {
 		Counseling counseling = new Counseling(dto);
 		counseling.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		counseling.setPharmacist((Pharmacist) userService.findById(dto.getPharmacistId()));
+		counseling.setAppointmentStatus(AppointmentStatus.FREE);
 		return counselingRepository.save(counseling);
 	}
 
@@ -101,7 +100,7 @@ public class CounselingServiceImpl implements CounselingService {
 		counseling.setAppointmentStatus(AppointmentStatus.FREE);
 		return counselingRepository.save(counseling);
 	}
-
+	
 	@Override
 	public Collection<Counseling> findAll() {
 		return counselingRepository.findAll();

@@ -17,6 +17,7 @@ import internet.software.architectures.team31.isapharmacy.exception.InvalidCompl
 import internet.software.architectures.team31.isapharmacy.exception.InvalidReviewException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidScoreException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 
 @RestControllerAdvice
@@ -34,6 +35,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 	
 	@ExceptionHandler(value = AppointmentNotFreeException.class)
 	public ResponseEntity<Object> handleAppointmentNotFreeException(AppointmentNotFreeException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	@ExceptionHandler(value = ShiftNotFreeEception.class)
+	public ResponseEntity<Object> handleShiftNotFreeEception(ShiftNotFreeEception exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	

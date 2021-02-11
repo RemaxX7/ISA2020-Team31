@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
-import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserDetailsDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserTokenState;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
@@ -65,7 +65,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping(value = "/register/patient")
-	public ResponseEntity<Patient> register(@RequestBody PatientRegisterDTO dto) throws UsernameNotUniqueException {
+	public ResponseEntity<Patient> register(@RequestBody UserRegisterDTO dto) throws UsernameNotUniqueException {
 		return new ResponseEntity<>(userService.registerPatient(dto), HttpStatus.CREATED);
 	}
 	

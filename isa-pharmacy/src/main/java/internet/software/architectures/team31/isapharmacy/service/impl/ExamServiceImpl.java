@@ -54,8 +54,6 @@ public class ExamServiceImpl implements ExamService {
 	@Autowired
 	private PatientServiceImpl patientService;
 	@Autowired
-	private MedicineServiceImpl medicineService;
-	@Autowired
 	private AppointmentService appointmentService;
 	@Autowired
 	private EmailService emailService;
@@ -65,6 +63,7 @@ public class ExamServiceImpl implements ExamService {
 		Exam exam = new Exam(dto);
 		exam.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		exam.setDermatologist((Dermatologist) userService.findById(dto.getDermatologistId()));
+		exam.setAppointmentStatus(AppointmentStatus.FREE);
 		return examRepository.save(exam);
 	}
 	

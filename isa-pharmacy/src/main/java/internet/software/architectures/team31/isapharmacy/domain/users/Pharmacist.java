@@ -8,7 +8,9 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import internet.software.architectures.team31.isapharmacy.domain.location.Address;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
+import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 
 @Entity
 @DiscriminatorValue("Pharmacist")
@@ -26,6 +28,19 @@ public class Pharmacist extends Employee {
 	public Pharmacist(Pharmacy pharmacy) {
 		super();
 		this.pharmacy = pharmacy;
+	}
+
+	public Pharmacist(UserRegisterDTO dto,Pharmacy pharmacy) {
+		this.name = dto.getName(); 
+		this.surname = dto.getSurname();
+		this.username = dto.getUsername();
+		this.uidn = dto.getUidn();
+		this.email = dto.getEmail();
+		this.password = dto.getPassword();
+		this.phoneNumber = dto.getPhoneNumber();
+		this.address = new Address(dto.getAddress());
+		this.pharmacy=pharmacy;
+		
 	}
 
 	public Pharmacy getPharmacy() {

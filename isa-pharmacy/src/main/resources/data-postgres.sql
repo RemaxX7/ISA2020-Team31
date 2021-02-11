@@ -39,6 +39,7 @@ INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) value
 INSERT INTO appointments (appointment_status,patient_id,type) values (1,1,'Exam');
 INSERT INTO appointments (appointment_status,patient_id,type) values (1,4,'Exam');
 INSERT INTO appointments (appointment_status,patient_id,type) values (1,1,'Counseling');
+INSERT INTO AUTHORITY (id, name) VALUES (3,'ROLE_PHARMACIST');
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (2, 3), (3, 4);
 

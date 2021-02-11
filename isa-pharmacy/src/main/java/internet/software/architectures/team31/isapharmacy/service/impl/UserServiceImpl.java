@@ -9,16 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
-import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
-import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
-import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.AuthorityService;
 import internet.software.architectures.team31.isapharmacy.service.CityService;
 import internet.software.architectures.team31.isapharmacy.service.DermatologistService;
@@ -62,7 +59,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Patient registerPatient(PatientRegisterDTO dto) throws UsernameNotUniqueException {
+	public Patient registerPatient(UserRegisterDTO dto) throws UsernameNotUniqueException {
 		if(findByEmail(dto.getEmail()) != null) {
 			throw new UsernameNotUniqueException("Username " + dto.getEmail() + " is already registered.");
 		}
@@ -96,6 +93,11 @@ public class UserServiceImpl implements UserService {
 		text.append("Click the following link to activate your account: \r\n");
 		text.append("http://localhost:8080/auth/activate/" + patient.getActivationToken());
 		return text.toString();
+	}
+
+	@Override
+	public String findTypeById(Long id) {
+		return this.userRepository.findTypeById(id);
 	}
 
 	@Override

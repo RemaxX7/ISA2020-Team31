@@ -13,13 +13,19 @@ body {
 .container {
     width: 80%;
     margin: 1em auto; 
-    text-align: center;
-}
 
+}
 .main{   
     margin: 1em auto; 
     padding:10px;
     width:80%;
+    font-size: 1rem;
+}
+
+.main-form{
+    margin: auto;
+    padding: auto;
+    text-align: center;
     font-size: 1rem;
 }
 
@@ -114,3 +120,4 @@ ngb-rating {
     overflow: hidden;
     color:rgb(255,215,0);
   }
+  
