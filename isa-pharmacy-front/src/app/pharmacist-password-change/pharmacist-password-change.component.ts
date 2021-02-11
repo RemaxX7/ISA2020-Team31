@@ -30,7 +30,7 @@ export class PharmacistPasswordChangeComponent implements OnInit {
       this.pharmacist.password = this.myForm.get('pass').value;
       console.log(this.pharmacist.uidn);
       this.service.editPassword(this.pharmacist).subscribe(()=>alert("Password changed"))
-      this.router.navigate(['/pharmacist']);
+      this.router.navigate(['/']);
     }
   }
 
