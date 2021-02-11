@@ -1,1 +1,19 @@
-<p>reservations works!</p>
+<div class="reservationsBox">
+    <h1><b>Reservations</b></h1>
+    <mat-divider></mat-divider>
+    <div *ngFor="let reservation of reservations" class="medicines">
+      <div class="medicine">
+        <h1>{{reservation.medicine.name}}</h1>
+        <p><b>Type</b>: {{reservation.medicine.type}}</p>
+      </div>
+      <div class="pharmacy">
+        <h1>{{reservation.pharmacy}}</h1>
+        <p><b>Address</b>: {{reservation.address.street}} {{reservation.address.number}}, {{reservation.address.city}}</p>
+        <p><b>Pick-up date</b>: {{ParseDate(reservation.pickUpDate)}}</p>
+      </div>
+      <button mat-raised-button class="cancel-button"(click)="Cancel(reservation)">Cancel</button>
+      <mat-divider></mat-divider>
+    </div>
+    <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+    </mat-paginator>
+  </div>

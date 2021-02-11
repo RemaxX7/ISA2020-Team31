@@ -1,34 +1,23 @@
 package internet.software.architectures.team31.isapharmacy.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class MedicineReservationCreateDTO {
 
-	private Long patientId;
 	private Long pharmacyId;
 	private LocalDate pickUpDate;
-	private List<MedicineReservationItemCreateDTO> medicineReservationItems;
+	private Long medicineId;
 	
 	public MedicineReservationCreateDTO() {
 		super();
 	}
 
-	public MedicineReservationCreateDTO(Long patientId, Long pharmacyId, LocalDate pickUpDate,
-			List<MedicineReservationItemCreateDTO> medicineReservationItems) {
+	public MedicineReservationCreateDTO(Long pharmacyId, LocalDate pickUpDate,
+			Long medicineId) {
 		super();
-		this.patientId = patientId;
 		this.pharmacyId = pharmacyId;
 		this.pickUpDate = pickUpDate;
-		this.medicineReservationItems = medicineReservationItems;
-	}
-
-	public Long getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(Long patientId) {
-		this.patientId = patientId;
+		this.medicineId = medicineId;
 	}
 
 	public Long getPharmacyId() {
@@ -47,11 +36,11 @@ public class MedicineReservationCreateDTO {
 		this.pickUpDate = pickUpDate;
 	}
 
-	public List<MedicineReservationItemCreateDTO> getMedicineReservationItems() {
-		return medicineReservationItems;
+	public Long getMedicineId() {
+		return medicineId;
 	}
 
-	public void setMedicineReservationItems(List<MedicineReservationItemCreateDTO> medicineReservationItems) {
-		this.medicineReservationItems = medicineReservationItems;
+	public void setMedicineId(Long medicineId) {
+		this.medicineId = medicineId;
 	}
 }

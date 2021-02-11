@@ -50,6 +50,10 @@
                     </li>
                 </button>
                 <mat-menu #medicines="matMenu">
+                    <div mat-menu-item routerLink="/new-reservation">
+                        <span class="material-icons">post_add</span>
+                        <mat-label>New medicine reservation</mat-label>
+                    </div>
                     <div mat-menu-item routerLink="/reservations">
                         <span class="material-icons">medication</span>
                         <mat-label>Medicine reservations</mat-label>

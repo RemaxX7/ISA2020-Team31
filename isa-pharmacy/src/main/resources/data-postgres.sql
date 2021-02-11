@@ -48,14 +48,8 @@ INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manu
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (14, 'hgfdgjfhk', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (15, 'hhhjssdf', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
 
-INSERT INTO MEDICINE_RESERVATIONS (id, code, medicine_reservation_status, pick_up_date, price, patient_id, pharmacy_id) values (1, 'adasdasdasd', 3, '2020-02-02', 130, 5, 1);
-INSERT INTO MEDICINE_RESERVATION_ITEMS (id, quantity, medicine_id) values (1, 3, 1);
-INSERT INTO MEDICINE_RESERVATIONS_MEDICINE_RESERVATION_ITEMS (medicine_reservation_id, medicine_reservation_items_id) values (1, 1);
 INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 5, 5, 1);
 
-INSERT INTO MEDICINE_RESERVATIONS (id, code, medicine_reservation_status, pick_up_date, price, patient_id, pharmacy_id) values (2, 'dafasfasfasf', 3, '2020-02-02', 130, 4, 1);
-INSERT INTO MEDICINE_RESERVATION_ITEMS (id, quantity, medicine_id) values (2, 3, 1);
-INSERT INTO MEDICINE_RESERVATIONS_MEDICINE_RESERVATION_ITEMS (medicine_reservation_id, medicine_reservation_items_id) values (2, 2);
 INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 4, 4, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5, 5, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);

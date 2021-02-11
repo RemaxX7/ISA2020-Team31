@@ -60,6 +60,7 @@ import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-p
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PatientPharmaciesComponent } from './patient/patient-pharmacies/patient-pharmacies.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NewReservationComponent } from './patient/new-reservation/new-reservation.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     EmployeeComplaintComponent,
     DermatologistAppointmentsPageComponent,
     PharmacistAppointmentsPageComponent,
-    PatientPharmaciesComponent
+    PatientPharmaciesComponent,
+    NewReservationComponent
   ],
   imports: [
     BrowserModule,

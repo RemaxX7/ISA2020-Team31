@@ -1,4 +1,4 @@
-.reservationsBox {
+.medicinesBox {
     align-items: center;
     width: 50%;
     margin: 1em auto; 
@@ -11,6 +11,16 @@
     text-align: left;
 }
 
+.search {
+    position: relative;
+    margin: 5px 0px 5px 0px;
+    border: 0;
+}
+
+.search > button {
+    margin: 0 0 0 15px;
+}
+
 .medicine > * {
     margin: 10px 10px 10px 10px;
 }
@@ -19,20 +29,23 @@ mat-divider {
     margin: 5px 0px 5px 0px;
 }
 
-.pharmacy {
-    position: relative;
-    text-align: left;
+.pharmacies {
+    width: 100%;
 }
 
-.pharmacy > * {
-    margin: 10px 10px 10px 10px;
-} 
+mat-option {
+    min-height: 80px !important;
+}
+
+h1 {
+    margin: 10px 0 0 0;
+}
 
 .medicines {
     position: relative;
     text-align: left;
 }
 
-.cancel-button {
+.reservation-button {
     margin: 10px 0 10px 5px;
 }

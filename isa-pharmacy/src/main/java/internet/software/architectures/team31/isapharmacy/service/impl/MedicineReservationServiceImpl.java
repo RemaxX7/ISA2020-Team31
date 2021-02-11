@@ -1,18 +1,20 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
-import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservationItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservationStatus;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineReservationCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.MedicineReservationViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.MedicineReservationRepository;
@@ -38,18 +40,18 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 
 	@Override
 	public MedicineReservation save(MedicineReservationCreateDTO dto) throws PenaltyException {
-		Patient patient = (Patient) userService.findById(dto.getPatientId());
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(patient.getPenalty() >= 3) {
 			throw new PenaltyException("Cannot make medicine reservations. Maximum number of penalties exceeded.");
 		}
 		
+		//TODO: Check inventory before creating the reservation
+		
 		MedicineReservation reservation = new MedicineReservation(dto);
-		reservation.setCode(String.valueOf(LocalDateTime.now().hashCode()) + "_" + reservation.getId());
+		reservation.setCode(UUID.randomUUID().toString().substring(0, 13));
 		reservation.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		reservation.setPatient(patient);
-		reservation.setMedicineReservationItems(dto.getMedicineReservationItems().stream()
-			    .map(item -> new MedicineReservationItem(medicineService.findById(item.getMedicineId()), item.getQuantity()))
-			    .collect(Collectors.toList()));
+		reservation.setMedicine(medicineService.findById(dto.getMedicineId()));
 		sendReservationEmail(reservation);
 		return medicineReservationRepository.save(reservation);
 	}
@@ -72,14 +74,17 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	}
 
 	@Override
-	public Collection<MedicineReservation> findAllByPatientId(Long id) {
-		return medicineReservationRepository.findAllByPatientId(id);
+	public Page<MedicineReservationViewDTO> findAllByPatient(Pageable pageable) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		return medicineReservationRepository.findAllByPatientId(patient.getId(), pageable)
+				.map(reservation -> new MedicineReservationViewDTO(reservation));
 	}
 	
 	@Override
-	public Collection<MedicineReservation> findAllByPatientIdAndMedicineReservationStatus(Long patientId,
-			MedicineReservationStatus status) {
-		return medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patientId, status);
+	public Page<MedicineReservationViewDTO> findAllByPatientAndMedicineReservationStatus(MedicineReservationStatus status, Pageable pageable) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		return medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patient.getId(), status, pageable)
+				.map(reservation -> new MedicineReservationViewDTO(reservation));
 	}
 
 	@Override
@@ -96,10 +101,8 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	public boolean hasPatientPurchasedMedicine(Long patientId, Long medicineId) {
 		Collection<MedicineReservation> reservations = medicineReservationRepository.findAllByPatientIdAndMedicineReservationStatus(patientId, MedicineReservationStatus.FINISHED);
 		for(MedicineReservation reservation : reservations) {
-			for(MedicineReservationItem item: reservation.getMedicineReservationItems()) {
-				if(item.getMedicine().getId() == medicineId) {
-					return true;
-				}
+			if(reservation.getId() == medicineId) {
+				return true;
 			}
 		}
 		return false;
@@ -112,13 +115,9 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	private String getReservationEmailText(MedicineReservation reservation) {
 		StringBuilder text = new StringBuilder("Hello, " + reservation.getPatient().getName() + ". Your medicine reservation pick-up code is: " + reservation.getCode() + "\r\n");
 		text.append("Pharmacy: " + reservation.getPharmacy().getName() + "\r\n");
-		text.append("Address: " + reservation.getPharmacy().getAddress());
+		text.append("Address: " + reservation.getPharmacy().getAddress() + "\r\n");
 		text.append("Pick-up date: " + reservation.getPickUpDate() + "\r\n");
-		text.append("Medicine reservation: \r\n");
-		
-		for(MedicineReservationItem item: reservation.getMedicineReservationItems()) {
-			text.append(item.getQuantity() + " x " + item.getMedicine().getName() + "\r\n");
-		}
+		text.append("Medicine: " + reservation.getMedicine().getName());
 		
 		return text.toString();
 	}
