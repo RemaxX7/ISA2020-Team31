@@ -52,13 +52,15 @@ public class MedicineServiceImpl implements MedicineService {
 	@Override
 	public List<Medicine> findAllMedicineForPatient(String uidn){
 		Patient patient = patientService.findByUidn(uidn);
+		ArrayList<Medicine> medListRemove = new ArrayList<Medicine>();
 		ArrayList<Medicine> medicineList = (ArrayList<Medicine>) findAll();
 		for (Medicine med : medicineList) {
 			for (Medicine al : patient.getAllergies()) {
 				if(al.equals(med))
-					medicineList.remove(med);
+					medListRemove.add(med);
 			}
 		}
+		medicineList.removeAll(medListRemove);
 		return medicineList;
 	}
 	

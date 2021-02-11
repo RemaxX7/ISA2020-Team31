@@ -21,6 +21,7 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   pharm:Pharmacist = new Pharmacist();
   medicine:Medicine[]=[];
   userid:number;
+  examid:number;
   appointment:Appointment = new Appointment();
   medicineSpecification:Medicine=new Medicine;
   additionalExam:Appointment = new Appointment();
@@ -30,7 +31,9 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   freeTermins:any[]=[];
 
   ngOnInit(): void {
+    this.examid=Number(this.route.snapshot.paramMap.get('id'));
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
+    this.GetAppointment();
     this.GetPatientForAppointment();
     this.GetAllMedicineForPatient(this.userid);
     this.  GetFreeTermins();
@@ -51,11 +54,18 @@ export class AppointmentReportPharmacistComponent implements OnInit {
       }
      } );
   }
+  async GetAppointment(){
+    await this.service.getByCounselingId(this.examid).then(
+      data=>this.appointment=data
+    )
+    console.log(this.appointment);
+  }
   ScheduleAdditionalConsultation(){
     let user = JSON.parse(localStorage.getItem("user"));
     this.additionalExam.uidn=this.pat.uidn;
     this.additionalExam.date = this.newDate;
     this.additionalExam.employeeuidn = user.uidn;
+    this.additionalExam.id = this.examid;
     this.service.scheduleNewAppointmentPharm(this.additionalExam).subscribe((res)=>
       alert("Uspesno zakazan novi pregled")
     );

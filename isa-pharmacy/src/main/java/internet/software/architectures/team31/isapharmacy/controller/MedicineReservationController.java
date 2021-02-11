@@ -21,7 +21,7 @@ import internet.software.architectures.team31.isapharmacy.exception.PenaltyExcep
 import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
 
 @RestController
-@RequestMapping(value = "api/reservations")
+@RequestMapping(value = "auth/reservations")
 public class MedicineReservationController {
 
 	@Autowired
@@ -57,5 +57,9 @@ public class MedicineReservationController {
 	@PutMapping(value = "/cancel/{id}")
 	public ResponseEntity<MedicineReservation> cancel(@PathVariable Long id) throws CancelMedicineReservationException {
 		return new ResponseEntity<>(medicineReservationService.cancel(id), HttpStatus.OK);
+	}
+	@GetMapping(value = "/pickedup/{code}")
+	public ResponseEntity<MedicineReservation> cancel(@PathVariable String code) throws CancelMedicineReservationException{
+		return new ResponseEntity<>(medicineReservationService.closeRequest(code), HttpStatus.OK);
 	}
 }

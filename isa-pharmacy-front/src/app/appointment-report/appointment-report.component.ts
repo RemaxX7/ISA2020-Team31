@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NumberLiteralType } from 'typescript';
+import { extname } from 'path';
+import { isExternalModuleNameRelative, NumberLiteralType } from 'typescript';
 import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
@@ -21,6 +22,7 @@ export class AppointmentReportComponent implements OnInit {
   derm:Dermatologist = new Dermatologist();
   medicine:Medicine[]=[];
   userid:number;
+  examid:number;
   appointment:Appointment = new Appointment();
   additionalExam:Appointment = new Appointment();
   medicineSpecification:Medicine=new Medicine;
@@ -30,13 +32,16 @@ export class AppointmentReportComponent implements OnInit {
   freeTermins:any[]=[];
 
   ngOnInit(): void {
+    this.examid=Number(this.route.snapshot.paramMap.get('id'));
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
-    this.GetPatientForAppointment();
-    this.GetAllMedicineForPatient(this.userid);
-    this.GetFreeTermins();
     this.myForm=this.fb.group({
       area:['',[Validators.required]]
     })
+    this.GetAppointment();
+    this.GetPatientForAppointment();
+    this.GetAllMedicineForPatient(this.userid);
+    this.GetFreeTermins();
+    
 
   }
   FinalizeDTO(){
@@ -56,6 +61,7 @@ export class AppointmentReportComponent implements OnInit {
     this.additionalExam.uidn=this.pat.uidn;
     this.additionalExam.date = this.newDate;
     this.additionalExam.employeeuidn = user.uidn;
+    this.additionalExam.id = this.examid;
     this.service.scheduleNewAppointmentDerm(this.additionalExam).subscribe((res)=>
       alert("Uspesno zakazan novi pregled")
     );
@@ -69,6 +75,12 @@ export class AppointmentReportComponent implements OnInit {
       data=>this.pat=data
     )
     console.log(this.pat);
+  }
+  async GetAppointment(){
+    await this.service.getByExamId(this.examid).then(
+      data=>this.appointment=data
+    )
+    console.log(this.appointment);
   }
   async GetAllMedicineForPatient(userid){
     await this.medicineService.getAllMedicineForPatient(userid).then(

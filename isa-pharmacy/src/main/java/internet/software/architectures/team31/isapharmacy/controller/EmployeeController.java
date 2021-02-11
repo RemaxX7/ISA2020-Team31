@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
+import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
 import internet.software.architectures.team31.isapharmacy.service.UserDetailsServiceImpl;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 import internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl;
@@ -35,6 +37,8 @@ public class EmployeeController {
 	@Autowired
 	private ExamService examService;
 	@Autowired
+	private MedicineReservationService medicineService;
+	@Autowired
 	private CounselingService counService;
 	@GetMapping("/all")
 	public ResponseEntity<Collection<User>> findAll() {
@@ -43,6 +47,10 @@ public class EmployeeController {
 	@GetMapping("/getbyid/{uidn}")
 	public ResponseEntity<User> findByID(@PathVariable String uidn) {
 		return new ResponseEntity<>(userService.findByUidn(uidn), HttpStatus.OK);
+	}
+	@GetMapping("/reservation/{id}/{uidn}")
+	public ResponseEntity<Collection<MedicineReservation>> findReservationByID(@PathVariable String id,@PathVariable String uidn) {
+		return new ResponseEntity<>(medicineService.findById(id,uidn), HttpStatus.OK);
 	}
 	@PostMapping(value = "/editprofile")
 	public ResponseEntity<User> editUserProfile(@RequestBody EmployeeProfileEditDTO dto){

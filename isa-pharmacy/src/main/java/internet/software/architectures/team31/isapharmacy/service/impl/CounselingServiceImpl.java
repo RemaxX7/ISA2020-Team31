@@ -52,7 +52,7 @@ public class CounselingServiceImpl implements CounselingService {
 	private AppointmentService appointmentService;
 	@Autowired
 	private MedicineServiceImpl medicineService;
-	
+	@Autowired
 	private EmailService emailService;
 
 	@Override
@@ -171,10 +171,11 @@ public class CounselingServiceImpl implements CounselingService {
 		Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
 		Counseling counseling = new Counseling();
 		counseling.setPharmacist(pharm);
+		counseling.setPharmacy(pharm.getPharmacy());
 		counseling.setPatient(patient);
 		counseling.setAppointmentStatus(AppointmentStatus.FREE);
 		counseling.setDateRange(range);
-		emailService.sendEmail(patient.getEmail(), "Additional consultation", "You are scheduled to come in again" + range.getStartDateTime());
+		sendCounselingEmail(counseling);
 		return counselingRepository.save(counseling);
 	}
 

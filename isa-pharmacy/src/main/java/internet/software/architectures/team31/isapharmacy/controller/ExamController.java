@@ -46,7 +46,10 @@ public class ExamController {
 	public ResponseEntity<Collection<Exam>> findAll() {
 		return new ResponseEntity<>(examService.findAll(), HttpStatus.OK);
 	}
-	
+	@GetMapping(value = "/findbyid/{id}")
+	public ResponseEntity<Exam> findById(@PathVariable Long id) {
+		return new ResponseEntity<>(examService.findById(id), HttpStatus.OK);
+	}
 	@GetMapping(value = "/free")
 	public ResponseEntity<Collection<Exam>> findFree() {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);

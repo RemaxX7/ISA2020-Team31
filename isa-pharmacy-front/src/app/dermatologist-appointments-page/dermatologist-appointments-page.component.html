@@ -28,13 +28,13 @@
                     <th></th>
                 </tr>
                 <tbody id="tableinfo">
-                    <tr *ngFor="let u of users">
-                        <td>{{u.name}}</td>
-                        <td>{{u.surname}}</td>
-                        <td>{{u.uidn}}</td>
-                        <td>{{u.username}}</td>
-                        <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.uidn]" >Start appointment</a></td>
-                        <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.uidn)">Penalize </a></td>
+                    <tr *ngFor="let u of appointments">
+                        <td>{{u.patient.name}}</td>
+                        <td>{{u.patient.surname}}</td>
+                        <td>{{u.patient.uidn}}</td>
+                        <td>{{u.patient.email}}</td>
+                        <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.id,u.patient.uidn]" >Start appointment</a></td>
+                        <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.patient.uidn)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

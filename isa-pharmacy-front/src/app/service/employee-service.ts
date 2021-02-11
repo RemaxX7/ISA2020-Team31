@@ -17,11 +17,29 @@ import { Pharmacist } from '../model/pharmacist.model';
     getAllUsers(): Promise<any>{
       return this._http.get("http://localhost:8080/auth/search/patients/all").toPromise();
     }
+    fillExams(): Promise<any>{
+      return this._http.get("http://localhost:8080/auth/appointments/exams/all").toPromise();
+    }
+    fillCounselings(): Promise<any>{
+      return this._http.get("http://localhost:8080/auth/appointments/counselings/all").toPromise();
+    }
     getAllCalendarEntries(forDays):Promise<any>{
       return this._http.get(this._APIUrl + '/pharmacistCalendarEntries').toPromise();
     }
+    loadReservation(reservation,uidn):Observable<any>{
+      return this._http.get("http://localhost:8080/auth/search/employee/reservation/" + reservation+"/"+uidn);
+    }
+    finalizeReservation(code):Observable<any>{
+      return this._http.get("http://localhost:8080/auth/reservations/pickedup/"+code);
+    }
     getById(id): Promise<any>{
       return this._http.get(this._APIUrl + '/getbyid/' + id).toPromise();
+    }
+    getByExamId(examid):Promise<any>{
+      return this._http.get("http://localhost:8080/auth/appointments/exams/findbyid/" + examid).toPromise();
+    }
+    getByCounselingId(examid):Promise<any>{
+      return this._http.get("http://localhost:8080/auth/appointments/counselings/findbyid/" + examid).toPromise();
     }
     penalizePatient(uidn):Promise<any>{
       return this._http.get("http://localhost:8080/auth/appointments/exams/penalize/" + uidn).toPromise();

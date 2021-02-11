@@ -49,7 +49,10 @@ public class CounselingController {
 	public ResponseEntity<Collection<Counseling>> findFree() {
 		return new ResponseEntity<>(counselingService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
-	
+	@GetMapping(value = "/findbyid/{id}")
+	public ResponseEntity<Counseling> findById(@PathVariable Long id) {
+		return new ResponseEntity<>(counselingService.findById(id), HttpStatus.OK);
+	}
 	@GetMapping(value = "/finished/patient/{id}")
 	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,

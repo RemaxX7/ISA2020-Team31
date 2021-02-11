@@ -17,6 +17,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
@@ -54,7 +55,7 @@ public class ExamServiceImpl implements ExamService {
 	private MedicineServiceImpl medicineService;
 	@Autowired
 	private AppointmentService appointmentService;
-	
+	@Autowired
 	private EmailService emailService;
 
 	@Override
@@ -173,12 +174,14 @@ public class ExamServiceImpl implements ExamService {
 		range.setStartDateTime(date);
 		range.setEndDateTime(date.plusMinutes(30));
 		Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
+		Exam examInProgress = findById(Long.parseLong(dto.getId()));
 		Exam exam = new Exam();
 		exam.setDermatologist(derm);
+		exam.setPharmacy(examInProgress.getPharmacy());
 		exam.setPatient(patient);
 		exam.setAppointmentStatus(AppointmentStatus.FREE);
 		exam.setDateRange(range);
-		emailService.sendEmail(patient.getEmail(), "Additional examination", "You are scheduled to come in again" + range.getStartDateTime());
+		sendExamEmail(exam);
 		return examRepository.save(exam);
 	}
 
