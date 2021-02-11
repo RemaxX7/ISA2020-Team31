@@ -58,6 +58,8 @@ import { EmployeeComplaintComponent } from './patient/employee-complaint/employe
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PatientPharmaciesComponent } from './patient/patient-pharmacies/patient-pharmacies.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -96,7 +98,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     PharmacyComplaintComponent,
     EmployeeComplaintComponent,
     DermatologistAppointmentsPageComponent,
-    PharmacistAppointmentsPageComponent
+    PharmacistAppointmentsPageComponent,
+    PatientPharmaciesComponent
   ],
   imports: [
     BrowserModule,
@@ -120,6 +123,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatMenuModule,
     MatIconModule,
     MatExpansionModule,
+    MatCheckboxModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']
