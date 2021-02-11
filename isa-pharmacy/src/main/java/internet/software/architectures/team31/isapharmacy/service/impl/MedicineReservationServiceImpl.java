@@ -153,6 +153,7 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 			throw new CancelMedicineReservationException("Medicine reservation cannot be cancelled 24 hours before pick-up date.");
 		}
 		reservation.setMedicineReservationStatus(MedicineReservationStatus.FINISHED);
+		emailService.sendEmail(reservation.getPatient().getEmail(), "Medicine was picked up", "Thank you for your patronage.");
 		return medicineReservationRepository.save(reservation);
 	}
 }

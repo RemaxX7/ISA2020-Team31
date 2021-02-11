@@ -29,4 +29,6 @@ public interface CounselingService {
 	Counseling finalizeExam(AppointmentFinalizationDTO dto);
 	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
+	List<Counseling>findCounsForPharm(String uidn,String days);
+	List<Exam>findExamsForDerm(String uidn,String days);
 }

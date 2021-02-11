@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ import internet.software.architectures.team31.isapharmacy.repository.CounselingR
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
+import internet.software.architectures.team31.isapharmacy.service.ExamService;
+import internet.software.architectures.team31.isapharmacy.service.PharmacistService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
@@ -52,6 +55,10 @@ public class CounselingServiceImpl implements CounselingService {
 	private AppointmentService appointmentService;
 	@Autowired
 	private MedicineServiceImpl medicineService;
+	@Autowired
+	private PharmacistService pharmacistService;
+	@Autowired
+	private ExamService examService;
 	@Autowired
 	private EmailService emailService;
 
@@ -233,6 +240,32 @@ public class CounselingServiceImpl implements CounselingService {
 			}
 		}
 		frontList.removeAll(backList);
+		return frontList;
+	}
+
+	@Override
+	public List<Counseling> findCounsForPharm(String uidn,String days) {
+		List<Counseling>counsList = (List<Counseling>) counselingService.findAll();
+		List<Counseling>frontList = new ArrayList<Counseling>();
+		User user = (Pharmacist)userService.findByUidn(uidn);
+		for (Counseling counseling : counsList) {
+			if(counseling.getPharmacist().getUidn().equals(user.getUidn()) && counseling.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
+				frontList.add(counseling);
+			}
+		}
+		return frontList;
+	}
+
+	@Override
+	public List<Exam> findExamsForDerm(String uidn, String days) {
+		List<Exam> examsList = (List<Exam>) examService.findAll();
+		List<Exam>frontList = new ArrayList<Exam>();
+		User user = (Dermatologist)userService.findByUidn(uidn);
+		for (Exam exam : examsList) {
+			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && exam.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
+				frontList.add(exam);
+			}
+		}
 		return frontList;
 	}
 }

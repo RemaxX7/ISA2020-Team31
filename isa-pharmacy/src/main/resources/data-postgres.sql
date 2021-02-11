@@ -69,8 +69,10 @@ INSERT INTO MEDICINE_RESERVATION_ITEMS (id, quantity, medicine_id) values (3, 3,
 INSERT INTO MEDICINE_RESERVATIONS_MEDICINE_RESERVATION_ITEMS (medicine_reservation_id, medicine_reservation_items_id) values (3, 3);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-02-02 13:30:00', '2020-03-02 13:00:00', 100, 'Report', 5, 1, 2);
-		INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
-						('Exam', 1, '2021-02-02 13:30:00', '2021-02-02 13:00:00', 100, 'Reportt', 5, 1, 3);				
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
+						('Exam', 1, '2021-02-02 13:30:00', '2021-02-02 13:00:00', 100, 'Reportt', 5, 1, 3);	
+		INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
+						('Counseling', 1, '2021-09-09 16:30:00', '2021-09-09 17:00:00', 100, 'Report2', 5, 1, 2);	                        
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
 INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);

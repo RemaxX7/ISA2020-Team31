@@ -23,9 +23,6 @@ import { Pharmacist } from '../model/pharmacist.model';
     fillCounselings(): Promise<any>{
       return this._http.get("http://localhost:8080/auth/appointments/counselings/all").toPromise();
     }
-    getAllCalendarEntries(forDays):Promise<any>{
-      return this._http.get(this._APIUrl + '/pharmacistCalendarEntries').toPromise();
-    }
     loadReservation(reservation,uidn):Observable<any>{
       return this._http.get("http://localhost:8080/auth/search/employee/reservation/" + reservation+"/"+uidn);
     }
@@ -70,5 +67,11 @@ import { Pharmacist } from '../model/pharmacist.model';
     }
     getFreeTerminsPharm(patiudn,empuidn):Observable<any>{
       return this._http.get("http://localhost:8080/auth/search/employee/freetermpharm/" + patiudn + "/" + empuidn);
+    }
+    getConsultationsForPharmacist(uidn,days):Observable<any>{
+      return this._http.get("http://localhost:8080/auth/search/employee/counsforpharm/" + uidn+"/"+days);
+    }
+    getExamsForDermatologist(uidn,days):Observable<any>{
+      return this._http.get("http://localhost:8080/auth/search/employee/examsforderm/" + uidn+"/"+days);
     }
   }

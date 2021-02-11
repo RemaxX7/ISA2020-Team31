@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Appointment } from '../model/appointment.model';
+import { EmployeeService } from '../service/employee-service';
 
 @Component({
   selector: 'app-dermatologist-work-calendar',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DermatologistWorkCalendarComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private service:EmployeeService) { }
+  entries:Appointment[]=[]
   ngOnInit(): void {
   }
-
+  FillExams(days){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.service.getExamsForDermatologist(user.uidn,days).subscribe(data=>this.entries=data)
+  }
 }

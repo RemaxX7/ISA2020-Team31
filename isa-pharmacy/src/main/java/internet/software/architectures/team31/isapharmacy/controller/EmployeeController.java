@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
@@ -67,5 +69,13 @@ public class EmployeeController {
 	@GetMapping(value = "/freetermpharm/{patuidn}/{empuidn}")
 	public ResponseEntity<Collection<String>> findFreeTerminsPharm(@PathVariable String patuidn,@PathVariable String empuidn) {
 		return new ResponseEntity<>(counService.findTerminsByUidnsPharm(patuidn,empuidn), HttpStatus.OK);
+	}
+	@GetMapping(value = "/counsforpharm/{uidn}/{days}")
+	public ResponseEntity<Collection<Counseling>> findCounsForPharm(@PathVariable String uidn,@PathVariable String days) {
+		return new ResponseEntity<>(counService.findCounsForPharm(uidn,days), HttpStatus.OK);
+	}
+	@GetMapping(value = "/examsforderm/{uidn}/{days}")
+	public ResponseEntity<Collection<Exam>> findExamsForDerm(@PathVariable String uidn,@PathVariable String days) {
+		return new ResponseEntity<>(counService.findExamsForDerm(uidn,days), HttpStatus.OK);
 	}
 }
