@@ -27,7 +27,7 @@ import internet.software.architectures.team31.isapharmacy.service.CounselingServ
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/counselings")
+@RequestMapping(value = "api/appointments/counselings")
 public class CounselingController {
 
 	@Autowired

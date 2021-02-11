@@ -29,7 +29,7 @@ import internet.software.architectures.team31.isapharmacy.service.impl.ExamServi
 import internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/search/employee")
+@RequestMapping(value = "api/search/employee")
 public class EmployeeController {
 	
 	@Autowired

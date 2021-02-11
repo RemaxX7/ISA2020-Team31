@@ -21,7 +21,7 @@ import internet.software.architectures.team31.isapharmacy.exception.PenaltyExcep
 import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
 
 @RestController
-@RequestMapping(value = "auth/reservations")
+@RequestMapping(value = "api/reservations")
 public class MedicineReservationController {
 
 	@Autowired

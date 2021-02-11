@@ -28,7 +28,7 @@ import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/exams")
+@RequestMapping(value = "api/appointments/exams")
 public class ExamController {
 
 	@Autowired

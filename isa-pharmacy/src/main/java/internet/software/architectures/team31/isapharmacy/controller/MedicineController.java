@@ -19,7 +19,7 @@ import internet.software.architectures.team31.isapharmacy.service.MedicineServic
 
 
 @RestController
-@RequestMapping(value = "auth/medicine")
+@RequestMapping(value = "api/medicine")
 public class MedicineController {
 	
 	@Autowired
