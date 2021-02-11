@@ -20,11 +20,11 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
-import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
+import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
@@ -64,12 +64,12 @@ public class CounselingController {
 	}	
 	
 	@PutMapping(value = "/schedule")
-	public ResponseEntity<Counseling> shedule(@RequestBody AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
-		return new ResponseEntity<>(counselingService.schedule(dto), HttpStatus.OK);
+	public ResponseEntity<AppointmentViewDTO> shedule(@PathVariable Long id) throws PenaltyException, AppointmentNotFreeException, CounselingAlreadyScheduledException {
+		return new ResponseEntity<>(counselingService.schedule(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/cancel/{id}")
-	public ResponseEntity<Counseling> cancel(@PathVariable Long id) throws CancelAppointmentException {
+	public ResponseEntity<AppointmentViewDTO> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
 	}
 	

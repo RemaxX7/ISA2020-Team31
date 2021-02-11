@@ -11,6 +11,14 @@ export class ExamService {
 
   constructor(private _http: HttpClient) { }
 
+  getPageFree(page: number, sort: string): Observable<any> {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+    return this._http.get<any>(this._APIUrl + '/free/' + page + '/' + sort, options);
+  }
+
   getPageFinished(page: number, sort: string): Observable<any> {
     let headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -25,6 +33,14 @@ export class ExamService {
     })
     let options = { headers: headers };
     return this._http.get<any>(this._APIUrl + '/created/' + page + '/' + sort, options);
+  }
+
+  schedule(id: number) {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+    return this._http.post<any>(this._APIUrl + '/schedule/' + id, {}, options);
   }
 
   cancel(id: number) {

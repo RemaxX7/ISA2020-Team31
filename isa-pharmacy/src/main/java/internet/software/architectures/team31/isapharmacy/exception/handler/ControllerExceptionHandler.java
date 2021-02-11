@@ -14,6 +14,7 @@ import internet.software.architectures.team31.isapharmacy.exception.AlreadyRepli
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
+import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidComplaintException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidReviewException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidScoreException;
@@ -36,6 +37,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 	
 	@ExceptionHandler(value = AppointmentNotFreeException.class)
 	public ResponseEntity<Object> handleAppointmentNotFreeException(AppointmentNotFreeException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(value = CounselingAlreadyScheduledException.class)
+	public ResponseEntity<Object> handleCounselingAlreadyScheduledException(CounselingAlreadyScheduledException exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	

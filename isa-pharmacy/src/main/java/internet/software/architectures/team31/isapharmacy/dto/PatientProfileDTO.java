@@ -8,6 +8,7 @@ public class PatientProfileDTO {
 	private String name;
 	private String surname;
 	private String phoneNumber;
+	private Integer penalties;
 	private String street;
 	private String number;
 	private Double latitude;
@@ -19,13 +20,14 @@ public class PatientProfileDTO {
 		super();
 	}
 
-	public PatientProfileDTO(Long id, String name, String surname, String phoneNumber, String street, String number,
+	public PatientProfileDTO(Long id, String name, String surname, String phoneNumber, Integer penalties, String street, String number,
 			Double latitude, Double longitude, Long cityId, Long countryId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.phoneNumber = phoneNumber;
+		this.penalties = penalties;
 		this.street = street;
 		this.number = number;
 		this.latitude = latitude;
@@ -40,6 +42,7 @@ public class PatientProfileDTO {
 		this.name = patient.getName();
 		this.surname = patient.getSurname();
 		this.phoneNumber = patient.getPhoneNumber();
+		this.penalties = patient.getPenalty();
 		this.street = patient.getAddress().getStreet();
 		this.number = patient.getAddress().getNumber();
 		this.latitude = patient.getAddress().getLatitude();
@@ -78,6 +81,14 @@ public class PatientProfileDTO {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public Integer getPenalties() {
+		return penalties;
+	}
+
+	public void setPenalties(Integer penalties) {
+		this.penalties = penalties;
 	}
 
 	public String getStreet() {

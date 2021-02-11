@@ -16,10 +16,10 @@
             <p><b>Date</b>: {{ParseDate(exam.startDateTime)}}</p>
             <p><b>Duration</b>: {{exam.duration}} minutes</p>
             <p><b>Price</b>: {{exam.price}}</p>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Prescribed medicines<span class="material-icons">keyboard_arrow_down</span>
+                        Prescribed medicines
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <p *ngFor="let medicine of exam.medicines">{{medicine}}</p>

@@ -9,7 +9,6 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
-import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
@@ -19,12 +18,13 @@ import internet.software.architectures.team31.isapharmacy.exception.PenaltyExcep
 public interface ExamService {
 
 	Exam save(ExamCreateDTO dto);
-	Exam schedule(AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException;
-	Exam cancel(Long id) throws CancelAppointmentException;
+	AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException;
+	AppointmentViewDTO cancel(Long id) throws CancelAppointmentException;
 	Collection<Exam> findAll();
 	Collection<Exam> findAllByPatientId(Long id);
 	Collection<Exam> findAllByDermatologistId(Long id);
 	Collection<Exam> findAllByAppointmentStatus(AppointmentStatus status);
+	Page<AppointmentViewDTO> findAllByAppointmentStatus(AppointmentStatus status, Pageable pageable);
 	Collection<Exam> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status);
 	Page<AppointmentViewDTO> findAllByPatientIdAndAppointmentStatus(AppointmentStatus status, Pageable pageable);
 	Exam findById(Long id);

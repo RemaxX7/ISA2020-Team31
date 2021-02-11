@@ -86,6 +86,21 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 						('Counseling', 3, '2021-02-12 13:30:00', '2021-02-12 13:00:00', 88, 'Report', 5, 3, 2);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 1, '2021-02-11 13:30:00', '2021-02-11 12:45:00', 190, 'Report', 5, 2, 2);							
+				
+						
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, pharmacy_id, dermatologist_id) values
+						('Exam', 0, '2021-02-12 11:30:00', '2021-02-12 11:00:00', 500, 1, 3);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, pharmacy_id, dermatologist_id) values
+						('Exam', 0, '2021-03-12 11:30:00', '2021-03-12 11:00:00', 500, 2, 3);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, pharmacy_id, dermatologist_id) values
+						('Exam', 0, '2021-04-12 11:30:00', '2021-04-12 11:00:00', 500, 3, 3);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, pharmacy_id, dermatologist_id) values
+						('Exam', 0, '2021-02-12 11:30:00', '2021-02-12 11:00:00', 500, 4, 3);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, pharmacy_id, dermatologist_id) values
+						('Exam', 0, '2021-03-12 11:30:00', '2021-03-12 11:00:00', 500, 5, 3);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, pharmacy_id, dermatologist_id) values
+						('Exam', 0, '2021-04-12 11:30:00', '2021-04-12 11:00:00', 500, 6, 3);
+
 						
 INSERT INTO APPOINTMENT_MEDICINE_ITEMS (id, quantity, medicine_id) values (1, 2, 5);
 INSERT INTO APPOINTMENT_MEDICINE_ITEMS (id, quantity, medicine_id) values (2, 3, 1);

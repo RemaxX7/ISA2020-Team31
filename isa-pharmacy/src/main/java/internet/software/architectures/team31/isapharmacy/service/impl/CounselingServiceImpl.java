@@ -21,11 +21,11 @@ import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacis
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
-import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
+import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
@@ -58,24 +58,29 @@ public class CounselingServiceImpl implements CounselingService {
 	}
 
 	@Override
-	public Counseling schedule(AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
+	public AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException, CounselingAlreadyScheduledException {
 		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(patient.getPenalty() >= 3) {
-			throw new PenaltyException("Cannot schedule counseling. Maximum number of penalties exceeded.");
+			throw new PenaltyException("Cannot schedule a counseling appointment. Maximum number of penalties exceeded.");
 		}
 		
-		Counseling counseling = findById(dto.getAppointmentId());
+		Counseling counseling = findById(id);
+		if(hasPatientAlreadyScheduledCounseling(patient.getId(), counseling.getPharmacist().getId())) {
+			throw new CounselingAlreadyScheduledException("You have already scheduled a counseling appointment with this pharmacist.");
+		}
+		
 		if(counseling.getAppointmentStatus() != AppointmentStatus.FREE) {
 			throw new AppointmentNotFreeException("Appointment term is not available.");
 		}
 		
 		counseling.setPatient(patient);
+		counseling.setAppointmentStatus(AppointmentStatus.OCCUPIED);
 		sendCounselingEmail(counseling);
-		return counselingRepository.save(counseling);
+		return new AppointmentViewDTO(counselingRepository.save(counseling));
 	}
 
 	@Override
-	public Counseling cancel(Long id) throws CancelAppointmentException {
+	public AppointmentViewDTO cancel(Long id) throws CancelAppointmentException {
 		Counseling counseling = findById(id);
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		if(!currentDateTime.plusDays(1).isBefore(counseling.getDateRange().getStartDateTime())) {
@@ -83,7 +88,7 @@ public class CounselingServiceImpl implements CounselingService {
 		}
 		counseling.setPatient(null);
 		counseling.setAppointmentStatus(AppointmentStatus.FREE);
-		return counselingRepository.save(counseling);
+		return new AppointmentViewDTO(counselingRepository.save(counseling));
 	}
 
 	@Override
@@ -126,6 +131,12 @@ public class CounselingServiceImpl implements CounselingService {
 	public boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId) {
 		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED) != null;
 	}
+		
+	@Override
+	public boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId) {
+		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.OCCUPIED) != null;
+	}
+
 	@Override
 	public Counseling finalizeExam(AppointmentFinalizationDTO dto) {
 		List<Counseling> counseling = (List<Counseling>) findAll();

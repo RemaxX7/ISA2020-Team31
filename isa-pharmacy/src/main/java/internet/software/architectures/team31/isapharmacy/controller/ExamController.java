@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +20,6 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
-import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
@@ -55,6 +53,11 @@ public class ExamController {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/free/{page}/{sortBy}")
+	public ResponseEntity<Page<AppointmentViewDTO>> findFree(@PathVariable Integer page, @PathVariable String sortBy) {
+		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/finished/{page}/{sortBy}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sortBy) {
 		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
@@ -65,13 +68,13 @@ public class ExamController {
 		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.OCCUPIED, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/schedule")
-	public ResponseEntity<Exam> shedule(@RequestBody AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
-		return new ResponseEntity<>(examService.schedule(dto), HttpStatus.OK);
+	@PostMapping(value = "/schedule/{id}")
+	public ResponseEntity<AppointmentViewDTO> shedule(@PathVariable Long id) throws PenaltyException, AppointmentNotFreeException {
+		return new ResponseEntity<>(examService.schedule(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/cancel/{id}")
-	public ResponseEntity<Exam> cancel(@PathVariable Long id) throws CancelAppointmentException {
+	public ResponseEntity<AppointmentViewDTO> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(examService.cancel(id), HttpStatus.OK);
 	}
 	@GetMapping(value = "/test")

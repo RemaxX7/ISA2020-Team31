@@ -17,10 +17,10 @@
             <p><b>Date</b>: {{ParseDate(counseling.startDateTime)}}</p>
             <p><b>Duration</b>: {{counseling.duration}} minutes</p>
             <p><b>Price</b>: {{counseling.price}}</p>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Prescribed medicines<span class="material-icons">keyboard_arrow_down</span>
+                        Prescribed medicines
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <p *ngFor="let medicine of counseling.medicines">{{medicine}}</p>
