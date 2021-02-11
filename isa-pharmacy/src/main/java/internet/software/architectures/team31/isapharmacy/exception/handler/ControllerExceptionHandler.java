@@ -4,6 +4,7 @@ import javax.security.auth.login.AccountException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -71,8 +72,14 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(value = BadCredentialsException.class)
+	public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<Object> handleException(Exception exception) {
+		System.out.println(exception.getMessage());
 		return new ResponseEntity<>("An error has occured.", HttpStatus.BAD_REQUEST);
 	}
 }

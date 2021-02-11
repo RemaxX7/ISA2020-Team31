@@ -9,13 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
+import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
+import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
+import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.AuthorityService;
 import internet.software.architectures.team31.isapharmacy.service.CityService;
+import internet.software.architectures.team31.isapharmacy.service.DermatologistService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
@@ -30,6 +36,8 @@ public class UserServiceImpl implements UserService {
 	private AuthorityService authorityService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private DermatologistService dermService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
@@ -89,4 +97,26 @@ public class UserServiceImpl implements UserService {
 		text.append("http://localhost:8080/auth/activate/" + patient.getActivationToken());
 		return text.toString();
 	}
+
+	@Override
+	public User findByUidn(String uidn) {
+		return userRepository.findByUidn(uidn);
+	}
+
+	@Override
+	public User employeeEditProfile(EmployeeProfileEditDTO dto) {
+		User user = findByUidn(dto.getUidn());
+		user.setName(dto.getName());
+		user.setSurname(dto.getSurname());
+		user.setEmail(dto.getEmail());
+		return userRepository.save(user);
+	}
+
+	@Override
+	public User employeeEditPassword(PasswordChangeDTO dto) {
+		User user = findByUidn(dto.getUidn());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		return userRepository.save(user);
+	}
+	
 }

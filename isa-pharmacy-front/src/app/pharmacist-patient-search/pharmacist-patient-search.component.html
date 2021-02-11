@@ -5,7 +5,7 @@
         <ul>
          <!--<li><a href="#" routerLink="/">Log in</a></li>-->
          <li><a href="" routerLink="/pharmacist-patient-search" (click)="Reload()">Patient list</a></li>
-            <li><a href="">Start appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
             <li><a href="">Schedule leave</a></li>
@@ -36,8 +36,6 @@
                         <td>{{u.surname}}</td>
                         <td>{{u.uidn}}</td>
                         <td>{{u.username}}</td>
-                        <td><a href="#" [routerLink]="['/pharmacist-appointment-report',u.uidn]" >Start appointment</a></td>
-                        <td><a href="#" [routerLink]="['/pharmacist-patient-search']" (click)="PenalizePatient(u.uidn)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

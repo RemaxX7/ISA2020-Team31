@@ -12,4 +12,5 @@ public interface MedicineReservationRepository extends JpaRepository<MedicineRes
 	Collection<MedicineReservation> findAllByPatientId(Long id);
 	Collection<MedicineReservation> findAllByPatientIdAndMedicineReservationStatus(Long patientId, MedicineReservationStatus status);
 	MedicineReservation findOneByPatientIdAndPharmacyIdAndMedicineReservationStatus(Long patientId, Long pharmacyId, MedicineReservationStatus status);
+	MedicineReservation findOneByCode(String code);
 }

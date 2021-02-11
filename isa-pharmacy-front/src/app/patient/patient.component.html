@@ -1,0 +1,86 @@
+<header>
+    <div class="header">
+        <a routerLink="/" class="logo">Pharmacy name placeholder</a>
+        <nav>
+            <ul>
+                <button mat-icon-button routerLink="/patient-profile">
+                    <li>Profile</li>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="appointments">
+                    <li>Appointments
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #appointments="matMenu" class="appointment-menu">
+                    <div mat-menu-item routerLink="/new-exam">
+                        <span class="material-icons">schedule</span>
+                        <mat-label>Schedule dermatologist exam</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/new-counseling">
+                        <span class="material-icons">schedule</span>
+                        <mat-label>Schedule pharmacist counseling</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/upcoming-exams">
+                        <span class="material-icons">update</span>
+                        <mat-label>Upcoming dermatologist exams</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/upcoming-counselings">
+                        <span class="material-icons">update</span>
+                        <mat-label>Upcoming pharmacist counselings</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/past-exams">
+                        <span class="material-icons">history</span>
+                        <mat-label>Past dermatologist exams</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/past-counselings">
+                        <span class="material-icons">history</span>
+                        <mat-label>Past pharmacist counselings</mat-label>
+                    </div>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="medicines">
+                    <li>Medicines
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #medicines="matMenu">
+                    <div mat-menu-item routerLink="/reservations">
+                        <span class="material-icons">medication</span>
+                        <mat-label>Medicine reservations</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/eprescriptions">
+                        <span class="material-icons">assignment</span>
+                        <mat-label>ePrescriptions</mat-label>
+                    </div>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="complaints">
+                    <li>Complaints
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #complaints="matMenu">
+                    <div mat-menu-item routerLink="/pharmacy-complaint">
+                        <span class="material-icons">local_pharmacy</span>
+                        <mat-label>New pharmacy complaint</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/employee-complaint">
+                        <span class="material-icons">person_remove</span>
+                        <mat-label>New employee complaint</mat-label>
+                    </div>
+                </mat-menu>
+                <button mat-icon-button (click)="LogOut()">
+                    <li>Logout</li>
+                </button>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

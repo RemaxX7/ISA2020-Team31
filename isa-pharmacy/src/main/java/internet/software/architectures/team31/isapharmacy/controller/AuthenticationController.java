@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserDetailsDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserTokenState;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.security.TokenUtils;
@@ -56,17 +56,17 @@ public class AuthenticationController {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		User user = (User) authentication.getPrincipal();
+		User user = userService.findByEmail(authenticationRequest.getUsername());
+		UserDetailsDTO userDetails = new UserDetailsDTO(user);
 		String jwt = tokenUtils.generateToken(user.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
-
-		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+		
+		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, userDetails));
 	}
 	
 	@PostMapping(value = "/register/patient")
-	public ResponseEntity<String> register(@RequestBody PatientRegisterDTO dto) throws UsernameNotUniqueException {
-		userService.registerPatient(dto);
-		return new ResponseEntity<>("Registered successfully.", HttpStatus.CREATED);
+	public ResponseEntity<Patient> register(@RequestBody PatientRegisterDTO dto) throws UsernameNotUniqueException {
+		return new ResponseEntity<>(userService.registerPatient(dto), HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value = "/activate/{token}")
@@ -80,13 +80,14 @@ public class AuthenticationController {
 
 		String token = tokenUtils.getToken(request);
 		String username = this.tokenUtils.getUsernameFromToken(token);
-		User user = (User) this.userDetailsServiceImpl.loadUserByUsername(username);
+		User user = userService.findByEmail(username);
+		UserDetailsDTO userDetails = new UserDetailsDTO(user);
 
 		if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
 			String refreshedToken = tokenUtils.refreshToken(token);
 			int expiresIn = tokenUtils.getExpiredIn();
 
-			return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn));
+			return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, userDetails));
 		} else {
 			UserTokenState userTokenState = new UserTokenState();
 			return ResponseEntity.badRequest().body(userTokenState);

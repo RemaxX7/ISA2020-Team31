@@ -8,4 +8,5 @@ export class Pharmacist {
     username:string;
     uidn:string;
     pharmacies:Pharmacy;
+    password:string;
 }

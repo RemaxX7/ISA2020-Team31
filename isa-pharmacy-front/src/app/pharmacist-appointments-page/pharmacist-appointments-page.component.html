@@ -1,0 +1,44 @@
+<header>
+    <div class="header">
+      <a routerLink="/pharmacist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
+         <li><a href="" routerLink="/pharmacist-patient-search" (click)="Reload()">Patient list</a></li>
+            <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
+            <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
+            <li><a href="">Schedule leave</a></li>
+            <li><a href="">Schedule appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
+            <li id="log"><a href="">Log out</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="profilediv">
+    <div class="userinfo">
+        <div class="founddiv">
+            <table id="myTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Uidn</th>
+                    <th>Username</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tbody id="tableinfo">
+                    <tr *ngFor="let u of appointments">
+                        <td>{{u.patient.name}}</td>
+                        <td>{{u.patient.surname}}</td>
+                        <td>{{u.patient.uidn}}</td>
+                        <td>{{u.patient.email}}</td>
+                        <td><a href="#" [routerLink]="['/pharmacist-appointment-report',u.id,u.patient.uidn]" >Start appointment</a></td>
+                        <td><a href="#" [routerLink]="['/pharmacist-appointments']" (click)="PenalizePatient(u.patient.uidn)">Penalize </a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

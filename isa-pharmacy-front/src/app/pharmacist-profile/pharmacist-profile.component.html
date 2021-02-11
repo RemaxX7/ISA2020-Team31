@@ -5,7 +5,7 @@
         <ul>
          <!--<li><a href="#" routerLink="/">Log in</a></li>-->
          <li><a href="" routerLink="/pharmacist-patient-search">Patient list</a></li>
-            <li><a href="">Start appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
             <li><a href="">Schedule leave</a></li>
@@ -23,14 +23,16 @@
             <a href="" routerLink="/pharmacist-password-change">Promena lozinke</a>
             <a href="" routerLink="/pharmacist-work-cal">Radni kalendar</a>
         </div>
-
         <div class="userinfo">
-            <textarea name="username" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Username">{{pharmacist.email}}</textarea><br>
-            <textarea name="name" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Name">{{pharmacist.name}}</textarea><br>
-            <textarea name="surname" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Surname">{{pharmacist.surname}}</textarea><br>
-            <textarea name="pharmID" id="" cols="60" rows="3.5" style="resize: none;" placeholder="Id">{{pharmacist.id}}</textarea><br>
-            <button>Confirm edit</button>
-            
+          <form [formGroup]="myForm">
+            <table>
+            <tr><td><textarea name="" id="username" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.email}}" formControlName="email" required></textarea></td></tr>
+            <tr><td><textarea name="" id="name" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.name}}" formControlName="name" required></textarea></td></tr>
+            <tr><td><textarea name="" id="surname" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.surname}}" formControlName="surname" required></textarea></td></tr>
+            <tr><td><textarea name="" id="pharmID" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.uidn}}" formControlName="uidn" readonly></textarea></td></tr>
+            <tr><td> <button (click)="EditProfile()">Confirm edit</button></td></tr>
+          </table>
+          </form>
         </div>
     </div>
   </body>

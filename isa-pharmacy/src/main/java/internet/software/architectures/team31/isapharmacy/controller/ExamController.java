@@ -1,5 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.controller;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
@@ -26,7 +28,7 @@ import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/exams")
+@RequestMapping(value = "api/appointments/exams")
 public class ExamController {
 
 	@Autowired
@@ -44,7 +46,10 @@ public class ExamController {
 	public ResponseEntity<Collection<Exam>> findAll() {
 		return new ResponseEntity<>(examService.findAll(), HttpStatus.OK);
 	}
-	
+	@GetMapping(value = "/findbyid/{id}")
+	public ResponseEntity<Exam> findById(@PathVariable Long id) {
+		return new ResponseEntity<>(examService.findById(id), HttpStatus.OK);
+	}
 	@GetMapping(value = "/free")
 	public ResponseEntity<Collection<Exam>> findFree() {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
@@ -88,5 +93,9 @@ public class ExamController {
 	@PostMapping(value = "/finalizeappointment")
 	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
 		return new ResponseEntity<>(examService.finalizeExam(dto),HttpStatus.OK);
+	}
+	@PostMapping(value = "/schedulenewexam")
+	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
+		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
 	}
 }

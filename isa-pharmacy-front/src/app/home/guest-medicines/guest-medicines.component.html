@@ -1,0 +1,28 @@
+<div class="medicinesBox">
+  <h1><b>Medicines</b></h1>
+  <mat-divider></mat-divider>
+  <div class="search">
+    <mat-form-field>
+      <input type="text" id="search-input" matInput placeholder="Search medicines" autocomplete="off"
+        (input)="CheckIfEmpty($event)">
+    </mat-form-field>
+    <button mat-raised-button (click)="Search()">Search</button>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngFor="let medicine of medicines">
+    <div class="medicine">
+      <h1>{{medicine.name}}</h1>
+      <p><b>Type</b>: {{medicine.type}}</p>
+      <ng-template #t let-fill="fill">
+        <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill">&#9733;</span>
+          &#9733;
+        </span>
+      </ng-template>
+      <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="medicine.rate" [readonly]="true"></ngb-rating>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+  </mat-paginator>
+</div>

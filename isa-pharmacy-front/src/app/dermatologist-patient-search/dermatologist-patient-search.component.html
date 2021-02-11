@@ -5,7 +5,7 @@
         <ul>
          <!--<li><a href="#" routerLink="/">Log in</a></li>-->
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
-         <li><a href="">Start appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
          <li><a href="">Schedule leave</a></li>
          <li><a href="">Schedule appointment</a></li>
@@ -17,7 +17,7 @@
   </header>
   <div class="profilediv">
     <div class="userinfo">
-        <input style="width: 100%;" id="myInput" type="text" (keyup.enter)="MyFunction()" placeholder="Search patient by name + surname">
+        <input style="width: 100%;" id="myInput" type="text" (keyup.enter)="MyFunction()" placeholder="Search patient by name + surname" >
         <!--ovde ide foreach pacijent sa tim id unesenim ispisati ime prezime... umesto zakucanih podataka-->
         <div class="founddiv">
             <table id="myTable">
@@ -26,8 +26,6 @@
                     <th (click)="sortTable(2)">Surname</th>
                     <th (click)="sortTable(3)">Uidn</th>
                     <th (click)="sortTable(4)">Username</th>
-                    <th></th>
-                    <th></th>
                 </tr>
                 <tbody id="tableinfo">
                     <tr *ngFor="let u of users">
@@ -35,8 +33,6 @@
                         <td>{{u.surname}}</td>
                         <td>{{u.uidn}}</td>
                         <td>{{u.username}}</td>
-                        <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.uidn]" >Start appointment</a></td>
-                        <td><a href="#" [routerLink]="['/dermatologist--patient-search']" (click)="PenalizePatient(u.uidn)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

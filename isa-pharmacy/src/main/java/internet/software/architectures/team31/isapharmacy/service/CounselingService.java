@@ -1,11 +1,13 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
@@ -25,4 +27,8 @@ public interface CounselingService {
 	Counseling findById(Long id);
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	Counseling finalizeExam(AppointmentFinalizationDTO dto);
+	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
+	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
+	List<Counseling>findCounsForPharm(String uidn,String days);
+	List<Exam>findExamsForDerm(String uidn,String days);
 }

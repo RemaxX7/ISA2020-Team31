@@ -5,6 +5,7 @@ INDEX VERSION 1.131+D:\Users\marko\Desktop\ISA2020-Team31\.metadata\.plugins\org
 246482718.index
 2558002399.index
 999452964.index
+2159205324.index
 580889753.index
 2844010481.index
 1870591839.index
@@ -19,6 +20,7 @@ INDEX VERSION 1.131+D:\Users\marko\Desktop\ISA2020-Team31\.metadata\.plugins\org
 3325468264.index
 4011034379.index
 1471658268.index
+3879579256.index
 4156348429.index
 777123102.index
 3564188217.index
@@ -84,6 +86,7 @@ INDEX VERSION 1.131+D:\Users\marko\Desktop\ISA2020-Team31\.metadata\.plugins\org
 1504427184.index
 75463763.index
 1851378705.index
+3336535367.index
 857274197.index
 1561849332.index
 789021043.index
@@ -95,8 +98,8 @@ INDEX VERSION 1.131+D:\Users\marko\Desktop\ISA2020-Team31\.metadata\.plugins\org
 3727066389.index
 3235951800.index
 1483842131.index
-4131564861.index
-2986444527.index
-1607500160.index
 2176161153.index
+4131564861.index
+1607500160.index
+2986444527.index
 2317964167.index
