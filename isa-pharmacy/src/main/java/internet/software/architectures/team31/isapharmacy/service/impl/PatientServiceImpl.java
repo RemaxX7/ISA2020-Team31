@@ -1,25 +1,32 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
-import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
+import internet.software.architectures.team31.isapharmacy.dto.AllergiesDTO;
+import internet.software.architectures.team31.isapharmacy.dto.MedicineViewDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PasswordUpdateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PatientProfileDTO;
+import internet.software.architectures.team31.isapharmacy.exception.PasswordControlException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
 import internet.software.architectures.team31.isapharmacy.repository.PatientRepository;
+import internet.software.architectures.team31.isapharmacy.service.CityService;
+import internet.software.architectures.team31.isapharmacy.service.MedicineService;
 import internet.software.architectures.team31.isapharmacy.service.PatientService;
+import internet.software.architectures.team31.isapharmacy.service.UserService;
 @Service
-public class PatientServiceImpl implements PatientService{
+public class PatientServiceImpl implements PatientService {
 
 	@Autowired
 	private PatientRepository patientRepository;
@@ -31,6 +38,15 @@ public class PatientServiceImpl implements PatientService{
 	private ExamRepository examRepository;
 	@Autowired
 	private CounselingRepository counsRepository;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private CityService cityService;
+	@Autowired
+	private MedicineService medicineService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public Patient findByUidn(String uidn) {
 		return patientRepository.findByUidn(uidn);
@@ -68,5 +84,54 @@ public class PatientServiceImpl implements PatientService{
 			}
 		}
 		return null;
+	}
+	@Override
+	public PatientProfileDTO getPatientProfile() {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		return new PatientProfileDTO(patient);
+	}
+	
+	@Override
+	public AllergiesDTO getPatientAllergies() {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		return new AllergiesDTO(patient);
+	}
+	@Override
+	public PatientProfileDTO updatePatientProfile(PatientProfileDTO dto) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		patient.setName(dto.getName());
+		patient.setSurname(dto.getSurname());
+		patient.setPhoneNumber(dto.getPhoneNumber());
+		patient.getAddress().setCity(cityService.findById(dto.getCityId()));
+		patient.getAddress().setStreet(dto.getStreet());
+		patient.getAddress().setNumber(dto.getNumber());
+		patient.getAddress().setLatitude(dto.getLatitude());
+		patient.getAddress().setLongitude(dto.getLongitude());
+		userService.save(patient);
+		return dto;
+	}
+	
+	@Override
+	public AllergiesDTO updatePatientAllergies(AllergiesDTO dto) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		List<Long> medicineIdList = new ArrayList<Long>();
+		for(MedicineViewDTO medicine: dto.getAllergies()) {
+			medicineIdList.add(medicine.getId());
+		}
+		List<Medicine> allergies = medicineService.findByMedicineIds(medicineIdList);
+		patient.setAllergies(allergies);
+		patientRepository.save(patient);
+		return dto;
+	}
+	
+	@Override
+	public Boolean updatePatientPassword(PasswordUpdateDTO dto) throws PasswordControlException {
+		if(!dto.getPassword().contentEquals(dto.getPasswordControl())) {
+			throw new PasswordControlException("Passwords do not match.");
+		}
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		patient.setPassword(passwordEncoder.encode(dto.getPassword()));
+		userService.save(patient);
+		return Boolean.TRUE;
 	}
 }

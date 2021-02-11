@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserService {
 		if(findByEmail(dto.getEmail()) != null) {
 			throw new UsernameNotUniqueException("Username " + dto.getEmail() + " is already registered.");
 		}
-		System.out.println(dto.getAddress().getLongitude());
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		Patient patient = new Patient(dto);
 		patient.getAddress().setCity(cityService.findById(dto.getAddress().getCityId()));

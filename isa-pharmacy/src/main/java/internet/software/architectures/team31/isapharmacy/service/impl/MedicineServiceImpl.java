@@ -77,4 +77,9 @@ public class MedicineServiceImpl implements MedicineService {
 	public Medicine findByName(String name) {
 		return medicineRepository.findByName(name);
 	}
+
+	@Override
+	public List<Medicine> findByMedicineIds(List<Long> medicineIdList) {
+		return medicineRepository.findByMedicineIds(medicineIdList);
+	}
 }

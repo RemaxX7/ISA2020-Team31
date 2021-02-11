@@ -61,6 +61,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PatientPharmaciesComponent } from './patient/patient-pharmacies/patient-pharmacies.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NewReservationComponent } from './patient/new-reservation/new-reservation.component';
+import { PatientPasswordComponent } from './patient/patient-password/patient-password.component';
+import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import { NewReservationComponent } from './patient/new-reservation/new-reservati
     DermatologistAppointmentsPageComponent,
     PharmacistAppointmentsPageComponent,
     PatientPharmaciesComponent,
-    NewReservationComponent
+    NewReservationComponent,
+    PatientPasswordComponent,
+    PatientAllergiesComponent
   ],
   imports: [
     BrowserModule,
@@ -133,7 +137,7 @@ import { NewReservationComponent } from './patient/new-reservation/new-reservati
     NgbModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
     })
   ],
   providers: [],

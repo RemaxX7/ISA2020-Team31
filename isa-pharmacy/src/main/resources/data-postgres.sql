@@ -1,6 +1,5 @@
 INSERT INTO COUNTRIES (name, code) values ('Serbia', 'RS'), ('Norway', 'NO');
 INSERT INTO CITIES(name, country_id) values ('Novi Sad', 1), ('Belgrade', 1);
-
 INSERT INTO ADDRESSES(street, number, city_id, latitude, longitude) values ('Bulevar Oslobodjenja', '50', 1, 45, 45);
 INSERT INTO ADDRESSES(street, number, city_id, latitude, longitude) values ('Bulevar Evrope', '50', 1, 45, 45);
 INSERT INTO PHARMACIES (name, address_id, rate) values ('Benu', 1, 4.5);
@@ -102,3 +101,5 @@ INSERT INTO APPOINTMENTS_APPOINTMENT_MEDICINE_ITEMS (appointment_id, appointment
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
 INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);
+
+INSERT INTO PATIENTS_ALLERGIES (patient_id, allergies_id) values (5, 1), (5, 2), (5, 3), (5, 7), (4, 1), (4,2), (4,6);

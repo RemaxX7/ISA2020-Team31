@@ -5,6 +5,7 @@ import javax.security.auth.login.AccountException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -16,6 +17,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CancelMedici
 import internet.software.architectures.team31.isapharmacy.exception.InvalidComplaintException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidReviewException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidScoreException;
+import internet.software.architectures.team31.isapharmacy.exception.PasswordControlException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 
@@ -74,6 +76,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 	
 	@ExceptionHandler(value = BadCredentialsException.class)
 	public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(value = DisabledException.class)
+	public ResponseEntity<Object> handleDisabledException(DisabledException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(value = PasswordControlException.class)
+	public ResponseEntity<Object> handlePasswordControlException(PasswordControlException exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	

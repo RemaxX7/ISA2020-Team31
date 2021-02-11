@@ -7,6 +7,7 @@ import javax.security.auth.login.AccountException;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PatientProfileDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PatientRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 

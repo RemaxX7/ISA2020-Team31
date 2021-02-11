@@ -3,9 +3,6 @@
         <a routerLink="/" class="logo">Pharmacy name placeholder</a>
         <nav>
             <ul>
-                <button mat-icon-button routerLink="/patient-profile">
-                    <li>Profile</li>
-                </button>
                 <button mat-icon-button routerLink="/patient-pharmacies">
                     <li>Pharmacies</li>
                 </button>
@@ -78,6 +75,27 @@
                     <div mat-menu-item routerLink="/employee-complaint">
                         <span class="material-icons">person_remove</span>
                         <mat-label>New employee complaint</mat-label>
+                    </div>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="profile">
+                    <li>Profile
+                        <span class="material-icons">
+                            subdirectory_arrow_left
+                        </span>
+                    </li>
+                </button>
+                <mat-menu #profile="matMenu">
+                    <div mat-menu-item routerLink="/patient-profile">
+                        <span class="material-icons">manage_accounts</span>
+                        <mat-label>Edit profile</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/patient-password">
+                        <span class="material-icons">password</span>
+                        <mat-label>Change password</mat-label>
+                    </div>
+                    <div mat-menu-item routerLink="/patient-allergies">
+                        <span class="material-icons">coronavirus</span>
+                        <mat-label>Add allergies</mat-label>
                     </div>
                 </mat-menu>
                 <button mat-icon-button (click)="LogOut()">

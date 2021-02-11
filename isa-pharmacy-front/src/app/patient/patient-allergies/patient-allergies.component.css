@@ -1,0 +1,55 @@
+.medicinesBox {
+    align-items: center;
+    width: 50%;
+    margin: 1em auto; 
+    padding:10px;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.08);
+}
+
+.medicine {
+    position: relative;
+    text-align: left;
+}
+
+.search {
+    position: relative;
+    margin: 5px 0px 5px 0px;
+    border: 0;
+}
+
+.search > button {
+    margin: 0 0 0 15px;
+}
+
+.medicine > * {
+    margin: 10px 10px 10px 10px;
+}
+
+mat-divider {
+    margin: 5px 0px 5px 0px;
+}
+
+h1 {
+    margin: 10px 0 0 0;
+}
+
+.medicines {
+    position: relative;
+    text-align: left;
+}
+
+.allergy-button {
+    margin: 10px 0 10px 5px;
+}
+
+.allergies {
+    text-align: left;
+}
+
+.save-button {
+    margin: 10px 0 10px 0;
+}
+
+.clear-button {
+    margin: 10px 0 10px 10px;
+}

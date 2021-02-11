@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -26,8 +28,8 @@ public class Patient extends User {
 	@Column(name="bought_medicine_list")
 	@ElementCollection(targetClass=Medicine.class)
 	private List<Medicine> boughtMedicineList;
-	@Column
-	@ElementCollection(targetClass=Medicine.class)
+	@ManyToMany
+	@JoinTable(name = "patients_allergies")
 	private List<Medicine> allergies;
 	@Column(name = "activation_token")
 	private String activationToken;

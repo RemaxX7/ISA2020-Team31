@@ -1,0 +1,37 @@
+<div class="medicinesBox" *ngIf="loaded">
+    <h1><b>Allergies</b></h1>
+    <mat-divider></mat-divider>
+    <div class="search">
+        <mat-form-field>
+            <input type="text" id="search-input" matInput placeholder="Search medicines" autocomplete="off"
+                (input)="CheckIfEmpty($event)">
+        </mat-form-field>
+        <button mat-raised-button (click)="Search()">Search</button>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Allergies</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="allergies">
+            <p *ngFor="let medicine of allergies"><button mat-icon-button (click)="Remove(medicine)">
+                    <mat-icon style="color: red">remove_circle_outline</mat-icon>
+                </button>{{medicine.name}}</p>
+        </div>
+    </mat-expansion-panel>
+    <div style="text-align: left;">
+        <button mat-raised-button class="save-button" *ngIf="changed" (click)="Save()">Save</button>
+        <button mat-raised-button class="clear-button" *ngIf="changed" (click)="Restore()">Clear changes</button>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngFor="let medicine of medicines" class="medicines">
+        <div class="medicine">
+            <h1>{{medicine.name}}</h1>
+            <p><b>Type</b>: {{medicine.type}}</p>
+        </div>
+        <button mat-raised-button class="allergy-button" (click)="AddAllergy(medicine)">Add allergy</button>
+        <mat-divider></mat-divider>
+    </div>
+    <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+    </mat-paginator>
+</div>
