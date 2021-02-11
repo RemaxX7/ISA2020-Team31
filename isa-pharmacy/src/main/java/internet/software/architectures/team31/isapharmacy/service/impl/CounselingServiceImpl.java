@@ -20,6 +20,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
+import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
@@ -49,6 +50,8 @@ public class CounselingServiceImpl implements CounselingService {
 	private PharmacyService pharmacyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MedicineServiceImpl medicineService;
 	@Autowired
 	private PatientServiceImpl patientService;
 	@Autowired

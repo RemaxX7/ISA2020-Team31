@@ -50,6 +50,8 @@ public class ExamServiceImpl implements ExamService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private MedicineServiceImpl medicineService;
+	@Autowired
 	private PatientServiceImpl patientService;
 	@Autowired
 	private MedicineServiceImpl medicineService;

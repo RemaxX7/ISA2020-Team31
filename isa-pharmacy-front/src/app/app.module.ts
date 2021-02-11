@@ -34,6 +34,7 @@ import { AppointmentReportPharmacistComponent } from './appointment-report-pharm
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
+import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SignInComponent } from './home/sign-in/sign-in.component';
@@ -57,6 +58,7 @@ import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmac
 import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
+
 
 @NgModule({
   declarations: [

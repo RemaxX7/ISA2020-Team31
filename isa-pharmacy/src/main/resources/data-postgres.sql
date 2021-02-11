@@ -32,6 +32,13 @@ INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_PHARMACIST');
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_DERMATOLOGIST');
 
+INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (2,'Midol',3,2,'midol 200g','SlaFarm',1);
+INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (3,'Andol',2,1,'andol 200g','SlaFarm',1);
+INSERT INTO MEDICINE (id,name,type,shape,composition,manufacturer,issuing) values (4,'Fenidol',1,3,'fenidol 200g','SlaFarm',1);
+
+INSERT INTO appointments (appointment_status,patient_id,type) values (1,1,'Exam');
+INSERT INTO appointments (appointment_status,patient_id,type) values (1,4,'Exam');
+INSERT INTO appointments (appointment_status,patient_id,type) values (1,1,'Counseling');
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (2, 3), (3, 4);
 
@@ -75,4 +82,9 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 						('Counseling', 1, '2021-09-09 16:30:00', '2021-09-09 17:00:00', 100, 'Report2', 5, 1, 2);	                        
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
+INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);
+
+INSERT INTO COUNTRIES (name, code) values ('Serbia', 'RS'), ('Norway', 'NO');
+
+INSERT INTO CITIES(name, country_id) values ('Novi Sad', 1), ('Belgrade', 1);
 INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);

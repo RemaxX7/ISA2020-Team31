@@ -98,5 +98,4 @@ public class ExamController {
 	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
 	}
-	//@GetMapping(value = "/getavailabledates")
 }
