@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Pharmacy } from '../model/pharmacy.model';
 import { DermatologistService } from '../service/dermatologist.service';
@@ -10,13 +11,17 @@ import { DermatologistService } from '../service/dermatologist.service';
 })
 export class DermatologistListComponent implements OnInit {
 
-  constructor(private dermatologistService:DermatologistService) { }
+  constructor(private router: Router,private dermatologistService:DermatologistService) { }
 
   dermatologists:Dermatologist[]=[];
   
 
   ngOnInit(): void {
-    this.GetDermatologists();
+  }
+  LogOut() {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    this.router.navigate(['login']);
   }
 
   async GetDermatologists()
@@ -28,6 +33,28 @@ export class DermatologistListComponent implements OnInit {
       }
     );
   }
+
+  searchActive:boolean;
+  Search() {
+    let query = (<HTMLInputElement>document.getElementById('search-input')).value;
+    if (query) {
+      this.SearchDermatologist( query);
+    }
+  }
+
+  SearchDermatologist( query: string) {
+    this.dermatologistService.search( query).subscribe(
+      data => {
+        this.dermatologists = data;
+        this.searchActive = true;
+      }
+    )
+  }
+
+  CheckIfEmpty(event: InputEvent) {
+      this.GetDermatologists();
+    }
+
 
 
 

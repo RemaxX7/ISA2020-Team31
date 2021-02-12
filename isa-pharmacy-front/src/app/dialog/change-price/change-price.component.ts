@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PricelistItemMedicineCreate } from 'src/app/dto/pricelist-item-medicine-create.model';
 import { SetMedicinePrice } from 'src/app/dto/set-medicine-price.model';
 import { PricelistService } from 'src/app/service/pricelist.service';
-import { AddShiftPharmacistComponent } from '../add-shift-pharmacist/add-shift-pharmacist.component';
 
 @Component({
   selector: 'app-change-price',

@@ -9,7 +9,7 @@ import { User } from '../shared/user.model';
 export class PharmacistService {
   
 
-  private readonly _APIUrl="http://localhost:8080/api/pharmacist";
+  private readonly _APIUrl="http://localhost:8080/auth/pharmacist";
 
   constructor(private _http : HttpClient) { }
 
@@ -26,4 +26,8 @@ export class PharmacistService {
   Register(user: User, pharmacyId: number):Observable<any> {
      return this._http.post(this._APIUrl+'/register/'+pharmacyId,user);
   }
+
+	search(query:string) :Observable<any> {
+    return this._http.get<any>(this._APIUrl+'/search/'+query); 
+	}
 }

@@ -36,7 +36,7 @@ import { DermatologistListComponent } from './dermatologist-list/dermatologist-l
 import { AgmCoreModule } from '@agm/core';
 import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
 import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
-import { AddShiftPharmacistComponent } from './dialog/add-shift-pharmacist/add-shift-pharmacist.component';
+import { AddShiftPharmacistComponent } from './dialog/add-shift/add-shift-pharmacist.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { ToastrModule } from 'ngx-toastr';

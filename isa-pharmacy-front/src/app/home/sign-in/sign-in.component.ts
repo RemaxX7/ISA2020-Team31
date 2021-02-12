@@ -63,6 +63,10 @@ export class SignInComponent implements OnInit {
           break;
         }
         }
+      case "ROLE_PHARMACY_ADMIN":{
+          this.router.navigate(['/pharmacy-admin-profile'])
+          break;
+        }
     }
   }
 
