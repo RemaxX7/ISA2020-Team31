@@ -18,6 +18,8 @@ import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pricel
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.PricelistItem;
 import internet.software.architectures.team31.isapharmacy.dto.PriceListItemAppointmentCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PriceListItemMedicineCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.SetPriceAppointmentDTO;
+import internet.software.architectures.team31.isapharmacy.dto.SetPriceMedicineDTO;
 import internet.software.architectures.team31.isapharmacy.service.PricelistItemService;
 import internet.software.architectures.team31.isapharmacy.service.PricelistService;
 
@@ -33,16 +35,20 @@ public class PricelistController {
 	{
 		return new ResponseEntity<>(pricelistService.addPricelist(pricelist),HttpStatus.CREATED);
 	}
+	@GetMapping(value="{pharmacyId}")
+	public ResponseEntity<Pricelist> findByPharmacyId(@PathVariable Long pharmacyId){
+		return new ResponseEntity<>(pricelistService.findByPharmacyId(pharmacyId),HttpStatus.OK);
+	}
 	
-	@PutMapping(value="item/add/{id}")
+	@PostMapping(value="item/add/{id}")
 	public ResponseEntity<Pricelist> save(@RequestBody PriceListItemMedicineCreateDTO dto,@PathVariable Long id)
 	{
 		return new ResponseEntity<>(pricelistService.addItem(dto,id),HttpStatus.CREATED);
 	}
 	
-	@PutMapping(value="item/setNewPrice/{id}/{itemId}")
-	public ResponseEntity<Pricelist> setNewPrice(@RequestBody PriceListItemMedicineCreateDTO dto,@PathVariable Long id,@PathVariable Long itemId){
-		return new ResponseEntity<>(pricelistService.setNewPrice(dto,id,itemId),HttpStatus.OK);
+	@PostMapping(value="item/setNewPrice")
+	public ResponseEntity<Pricelist> setNewPrice(@RequestBody SetPriceMedicineDTO dto){
+		return new ResponseEntity<>(pricelistService.setNewPrice(dto.getDto(),dto.getPricelistId(),dto.getItemId()),HttpStatus.OK);
 	}
 	
 	@GetMapping(value="{id}/allMedicine")
@@ -50,15 +56,15 @@ public class PricelistController {
 		return new ResponseEntity<>(pricelistService.findAllActiveMedicineItem(id),HttpStatus.OK);
 	}
 	
-	@PutMapping(value="item/add/appointment/{id}")
+	@PostMapping(value="item/add/appointment/{id}")
 	public ResponseEntity<Pricelist> save(@RequestBody PriceListItemAppointmentCreateDTO dto,@PathVariable Long id)
 	{
 		return new ResponseEntity<>(pricelistService.addNewAppointmentItem(dto,id),HttpStatus.CREATED);
 	}
 	
-	@PutMapping(value="item/setNewPrice/appointment/{id}/{itemId}")
-	public ResponseEntity<Pricelist> setNewPrice(@RequestBody PriceListItemAppointmentCreateDTO dto,@PathVariable Long id,@PathVariable Long itemId){
-		return new ResponseEntity<>(pricelistService.setNewAppointmentPrice(dto,id,itemId),HttpStatus.OK);
+	@PostMapping(value="item/setNewPrice/appointment")
+	public ResponseEntity<Pricelist> setNewPrice(@RequestBody SetPriceAppointmentDTO dto){
+		return new ResponseEntity<>(pricelistService.setNewAppointmentPrice(dto.getDto(),dto.getPricelistId(),dto.getItemId()),HttpStatus.OK);
 	}
 	
 	@GetMapping(value="{id}/allAppointment")

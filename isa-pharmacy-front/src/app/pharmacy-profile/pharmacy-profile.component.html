@@ -92,20 +92,19 @@
           <table class="table table-hover">
             <thead>
               <th scope="col">Name</th>
-              <th scope="col"> Manufacturer</th>
-              
+              <th scope="col"> Composition</th>
               <th scope="col">Reserve medication</th>
             </thead>
             <tbody>
-              <tr *ngFor="let m of medicines">
+              <tr *ngFor="let i of pharmacy.inventory">
                 <td>
-                  {{m.name}}
+                  {{i.medicine.name}}
                 </td>
                 <td>
-                  {{m.manufacturer}}
+                  {{i.medicine.composition}}
                 </td>
                 <td>
-                  <button mat-raised-button (click)="ReserveMedication(m.id)"> Reserve Medication</button>
+                  <button mat-raised-button (click)="ReserveMedication(i.medicine.id)"> Reserve Medication</button>
                 </td>
               </tr>
             </tbody>

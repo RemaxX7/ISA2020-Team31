@@ -26,9 +26,10 @@ public class PricelistItemServiceImpl implements PricelistItemService {
 	
 	@Override
 	public PricelistItem setNewPrice(PriceListItemMedicineCreateDTO item,Long id) {
-		PricelistItem oldItem=this.findById(id);
+		PriceListItemMedicine oldItem=(PriceListItemMedicine)this.findById(id);
 		oldItem.getInterval().setEndDateTime(item.getStartDateTime());
 		oldItem.setStatus(PriceListItemStatus.EXPIRED);
+		item.setMedicineId(oldItem.getMedicine().getId());
 		this.pricelistItemRepository.save(oldItem);
 		return this.addNewMedicineItem(item);
 	}

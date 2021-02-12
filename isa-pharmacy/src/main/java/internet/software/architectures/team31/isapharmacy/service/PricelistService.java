@@ -9,6 +9,7 @@ import internet.software.architectures.team31.isapharmacy.dto.PriceListItemAppoi
 import internet.software.architectures.team31.isapharmacy.dto.PriceListItemMedicineCreateDTO;
 
 public interface PricelistService {
+	Pricelist findByPharmacyId(Long id);
 	Pricelist addPricelist(Pricelist pricelist);
 	Pricelist addItem(PriceListItemMedicineCreateDTO dto,Long id);
 	Pricelist setNewPrice(PriceListItemMedicineCreateDTO dto,Long id,Long itemId);

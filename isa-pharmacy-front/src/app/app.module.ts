@@ -61,6 +61,8 @@ import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmac
 import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
+import { PricelistComponent } from './pricelist/pricelist.component';
+import { ChangePriceComponent } from './dialog/change-price/change-price.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,9 @@ import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-p
     PharmacyComplaintComponent,
     EmployeeComplaintComponent,
     DermatologistAppointmentsPageComponent,
-    PharmacistAppointmentsPageComponent
+    PharmacistAppointmentsPageComponent,
+    PricelistComponent,
+    ChangePriceComponent
   ],
   imports: [
     BrowserModule,
@@ -138,6 +142,8 @@ import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-p
   ],
   providers: [],
   entryComponents: [
+    ChangePriceComponent,
+    AddShiftPharmacistComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -21,7 +21,6 @@ export class PharmacyProfileComponent implements OnInit {
   currentRate:number;
   dermatologists:Dermatologist[]=[];
   pharmacists:Pharmacist[]=[];
-  medicines:Medicine[]=[];
   pharmacyId:number;
   
   
@@ -35,7 +34,6 @@ export class PharmacyProfileComponent implements OnInit {
     this.GetPharmacy();
     this.GetPharmacists();
     this.GetDermatologists();
-    this.Test();
    
     
   }
@@ -74,19 +72,6 @@ export class PharmacyProfileComponent implements OnInit {
   }
 
   ScheduleConsultation(pharmacistId:number){
-    
-    
-  }
-
-  
-
-  Test(){
-    this.medicine.id=1;
-    this.medicine.name="Brufen";
-    this.medicine.manufacturer="Abbott";
-    this.medicines.push(this.medicine);
-    this.medicines.push(this.medicine);
-    this.medicines.push(this.medicine);
   }
 
 }

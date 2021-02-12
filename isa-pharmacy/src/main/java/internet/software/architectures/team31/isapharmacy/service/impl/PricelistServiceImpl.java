@@ -79,6 +79,12 @@ public class PricelistServiceImpl implements PricelistService {
 		pricelist.setItems(list);
 		return this.pricelistRepository.save(pricelist);
 	}
+
+
+	@Override
+	public Pricelist findByPharmacyId(Long id) {
+		return this.pricelistRepository.findByPharmacyId(id);
+	}
 	
 	
 
