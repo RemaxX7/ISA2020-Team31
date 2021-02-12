@@ -9,12 +9,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
+import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineViewDTO;
 import internet.software.architectures.team31.isapharmacy.repository.MedicineRepository;
+import internet.software.architectures.team31.isapharmacy.service.EmailService;
+import internet.software.architectures.team31.isapharmacy.service.InventoryItemService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineReviewService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineService;
+import internet.software.architectures.team31.isapharmacy.service.PharmacistService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 
 @Service
@@ -28,6 +33,12 @@ public class MedicineServiceImpl implements MedicineService {
 	private PatientServiceImpl patientService;
 	@Autowired
 	private PharmacyService pharmacyService;
+	@Autowired
+	private InventoryItemService inventoryService;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private PharmacistService pharmacistService;
 
 	@Override
 	public Medicine findById(Long id) {
@@ -91,10 +102,17 @@ public class MedicineServiceImpl implements MedicineService {
 	
 	public String findAvailableMedicineCount(String name, String id) {
 		Medicine med = findByName(name);
+		String broj = "";
 		Pharmacy pharm = pharmacyService.findById(Long.parseLong(id));
-		String broj = "5";
-		//return pharmacy.getlek.getkolicina
-		//sendmail()
+		List<InventoryItem> item = inventoryService.findAll();
+		for (InventoryItem inventoryItem : item) {
+			if(inventoryItem.getMedicine().getName().toLowerCase().equals(name.toLowerCase())) {
+				broj = inventoryItem.getQuantity().toString();
+				if(Integer.parseInt(broj)==0) {
+					//emailService.sendEmail(adminu apoteke, "Nedostatak lekova", "Na stanju je 0 "+ med);
+				}
+			}
+		}
 		return broj;
 	}
 }

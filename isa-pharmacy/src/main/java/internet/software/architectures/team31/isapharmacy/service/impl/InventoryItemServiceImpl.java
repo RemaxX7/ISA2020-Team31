@@ -1,7 +1,10 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.dto.InventoryItemCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.SetQuantityDTO;
@@ -57,5 +60,12 @@ public class InventoryItemServiceImpl implements InventoryItemService{
 		item.setQuantity(dto.getQuantity());
 		return this.save(item);
 	}
+
+	@Override
+	public List<InventoryItem> findAll() {
+		return inventoryItemRepository.findAll();
+	}
+
+	
 	
 }
