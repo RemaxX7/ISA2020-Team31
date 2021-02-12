@@ -132,17 +132,15 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Exam finalizeExam(AppointmentFinalizationDTO dto) {
+	public Exam finalizeExam(AppointmentFinalizationDTO dto,String quant) {
 		List<Exam> exam = (List<Exam>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
 		List<Medicine>medicineList = new ArrayList<Medicine>();
-		for (String med : dto.getMedicine()) {
-			medicineList.add(medicineService.findByName(med));
-		}
+		medicineList.add(medicineService.findByName(dto.getMedicine()));
 		for (Exam ex : exam) {
-			if(ex.getPatient().getUidn().equals(dto.getUidn())) {
+			if(ex.getPatient().getUidn().equals(dto.getUidn()) && ex.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
 				for (Medicine medicine : medicineList) {
-					itemList.add(new AppointmentMedicineItem(medicine,3));
+					itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
 				}
 				ex.setAppointmentStatus(AppointmentStatus.FINISHED);
 				ex.setReport(dto.getReport());
@@ -243,4 +241,16 @@ public class ExamServiceImpl implements ExamService {
 		frontList.removeAll(backList);
 		return frontList;
 }
+
+	@Override
+	public Collection<Exam> findAllActive() {
+		List<Exam> examList = examRepository.findAll();
+		List<Exam> frontList = new ArrayList<Exam>();
+		for (Exam exam : examList) {
+			if(exam.getAppointmentStatus().equals(AppointmentStatus.FREE) || exam.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
+				frontList.add(exam);
+			}
+		}
+		return frontList;
+	}
 }

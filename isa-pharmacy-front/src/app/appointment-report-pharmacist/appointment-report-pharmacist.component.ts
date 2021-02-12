@@ -27,6 +27,7 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   additionalExam:Appointment = new Appointment();
   medicineSelect:string;
   newDate:string;
+  availability:number;
   myForm:FormGroup;
   freeTermins:any[]=[];
 
@@ -38,15 +39,20 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     this.GetAllMedicineForPatient(this.userid);
     this.  GetFreeTermins();
     this.myForm=this.fb.group({
-      area:['',[Validators.required]]
+      area:['',[Validators.required]],
+      quantity:['',[Validators.required]]
     })
 
   }
-  FinalizeDTOPharmacist(){
+  async MedicineAvailability(name){
+    await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>this.availability=data)
+    alert("Dostupno je " + this.availability +" " + name);
+  }
+  FinalizeDTOPharmacist(medicine){
     this.appointment.report=this.myForm.get('area').value;
     this.appointment.uidn=this.pat.uidn;
-    this.appointment.medicine.push(this.medicineSelect);
-    this.service.sendAppointmentDTOPharmacist(this.appointment).subscribe(res=>{
+    this.appointment.medicine = medicine
+    this.service.sendAppointmentDTOPharmacist(this.appointment,this.myForm.get('quantity').value).subscribe(res=>{
       console.log(res);
       alert("Uspesno zavrsen pregled"),
       err =>{

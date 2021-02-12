@@ -44,6 +44,10 @@ public class CounselingController {
 	public ResponseEntity<Collection<Counseling>> findAll() {
 		return new ResponseEntity<>(counselingService.findAll(), HttpStatus.OK);
 	}
+	@GetMapping(value = "/allactive")
+	public ResponseEntity<Collection<Counseling>> findAllActive() {
+		return new ResponseEntity<>(counselingService.findAllActive(), HttpStatus.OK);
+	}
 	
 	@GetMapping(value = "/free")
 	public ResponseEntity<Collection<Counseling>> findFree() {
@@ -78,9 +82,9 @@ public class CounselingController {
 	public ResponseEntity<Counseling>penalize(@PathVariable String id){
 		return new ResponseEntity<>(patientService.pharmacistPenalize(id),HttpStatus.OK);
 	}
-	@PostMapping(value = "/finalizeappointmentpharmacist")
-	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
-		return new ResponseEntity<>(counselingService.finalizeExam(dto),HttpStatus.OK);
+	@PostMapping(value = "/finalizeappointmentpharmacist/{quant}")
+	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
+		return new ResponseEntity<>(counselingService.finalizeExam(dto,quant),HttpStatus.OK);
 	}
 	@PostMapping(value = "/schedulenewcounseling")
 	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){

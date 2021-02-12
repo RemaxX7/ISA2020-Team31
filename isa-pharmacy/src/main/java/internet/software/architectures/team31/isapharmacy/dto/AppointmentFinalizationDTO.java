@@ -3,29 +3,31 @@ package internet.software.architectures.team31.isapharmacy.dto;
 import java.util.List;
 
 public class AppointmentFinalizationDTO {
-	private String report;
-	private List<String> medicine;
+	private String reportt;
+	private String medicine;
 	private String uidn;
+	private String medicineQuantity;
 	
 	public AppointmentFinalizationDTO() {
 		super();
 	}
-	public AppointmentFinalizationDTO(String report, List<String> medicine,String uidn) {
+	public AppointmentFinalizationDTO(String report, String medicine,String uidn,String medicineQuantity) {
 		super();
-		this.report = report;
+		this.reportt = report;
 		this.medicine = medicine;
 		this.uidn=uidn;
+		this.medicineQuantity = medicineQuantity;
 	}
 	public String getReport() {
-		return report;
+		return reportt;
 	}
 	public void setReport(String report) {
-		this.report = report;
+		this.reportt = report;
 	}
-	public List<String> getMedicine() {
+	public String getMedicine() {
 		return medicine;
 	}
-	public void setMedicine(List<String> medicine) {
+	public void setMedicine(String medicine) {
 		this.medicine = medicine;
 	}
 	public String getUidn() {
@@ -33,6 +35,12 @@ public class AppointmentFinalizationDTO {
 	}
 	public void setUidn(String uidn) {
 		this.uidn = uidn;
+	}
+	public String getQuantity() {
+		return medicineQuantity;
+	}
+	public void setQuantity(String medicineQuantity) {
+		this.medicineQuantity = medicineQuantity;
 	}
 	
 	

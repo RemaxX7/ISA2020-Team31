@@ -136,17 +136,15 @@ public class CounselingServiceImpl implements CounselingService {
 		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED) != null;
 	}
 	@Override
-	public Counseling finalizeExam(AppointmentFinalizationDTO dto) {
+	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) {
 		List<Counseling> counseling = (List<Counseling>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
 		List<Medicine>medicineList = new ArrayList<Medicine>();
-		for (String med : dto.getMedicine()) {
-			medicineList.add(medicineService.findByName(med));
-		}
+		medicineList.add(medicineService.findByName(dto.getMedicine()));
 		for (Counseling couns : counseling) {
-			if(couns.getPatient().getUidn().equals(dto.getUidn())) {
+			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
 				for (Medicine medicine : medicineList) {
-					itemList.add(new AppointmentMedicineItem(medicine,3));
+					itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
 				}
 				couns.setAppointmentStatus(AppointmentStatus.FINISHED);
 				couns.setReport(dto.getReport());
@@ -266,6 +264,18 @@ public class CounselingServiceImpl implements CounselingService {
 		for (Exam exam : examsList) {
 			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && exam.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
 				frontList.add(exam);
+			}
+		}
+		return frontList;
+	}
+
+	@Override
+	public Collection<Counseling> findAllActive() {
+		List<Counseling> counsList = counselingRepository.findAll();
+		List<Counseling> frontList = new ArrayList<Counseling>();
+		for (Counseling couns : counsList) {
+			if(couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
+				frontList.add(couns);
 			}
 		}
 		return frontList;
