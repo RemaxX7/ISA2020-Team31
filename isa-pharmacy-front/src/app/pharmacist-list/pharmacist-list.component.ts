@@ -13,7 +13,7 @@ export class PharmacistListComponent implements OnInit {
 
   pharmacists:Pharmacist[]=[];
   ngOnInit(): void {
-    this.GetPharmacists();
+    this.searchActive=false;
   }
 
   GetPharmacists()
@@ -25,5 +25,25 @@ export class PharmacistListComponent implements OnInit {
       }
     )
   }
+  searchActive:boolean;
+  Search() {
+    let query = (<HTMLInputElement>document.getElementById('search-input')).value;
+    if (query) {
+      this.SearchPharmacist( query);
+    }
+  }
+
+  SearchPharmacist( query: string) {
+    this.pharmacistService.search( query).subscribe(
+      data => {
+        this.pharmacists = data;
+        this.searchActive = true;
+      }
+    )
+  }
+
+  CheckIfEmpty(event: InputEvent) {
+      this.GetPharmacists();
+    }
 
 }

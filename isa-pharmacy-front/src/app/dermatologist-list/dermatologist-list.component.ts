@@ -16,7 +16,6 @@ export class DermatologistListComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.GetDermatologists();
   }
 
   async GetDermatologists()
@@ -28,6 +27,28 @@ export class DermatologistListComponent implements OnInit {
       }
     );
   }
+
+  searchActive:boolean;
+  Search() {
+    let query = (<HTMLInputElement>document.getElementById('search-input')).value;
+    if (query) {
+      this.SearchDermatologist( query);
+    }
+  }
+
+  SearchDermatologist( query: string) {
+    this.dermatologistService.search( query).subscribe(
+      data => {
+        this.dermatologists = data;
+        this.searchActive = true;
+      }
+    )
+  }
+
+  CheckIfEmpty(event: InputEvent) {
+      this.GetDermatologists();
+    }
+
 
 
 

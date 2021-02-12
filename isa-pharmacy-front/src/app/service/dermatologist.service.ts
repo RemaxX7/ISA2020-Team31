@@ -8,7 +8,7 @@ import { Dermatologist } from '../model/dermatologist.model';
 })
 export class DermatologistService {
 
-  readonly _APIUrl="http://localhost:8080/api/dermatologist"
+  readonly _APIUrl="http://localhost:8080/auth/dermatologist"
 
   constructor(private _http : HttpClient) { }
 
@@ -20,4 +20,8 @@ export class DermatologistService {
   {
     return this._http.get<Dermatologist[]>(this._APIUrl+'/all').toPromise();
   }
+
+  search(query:string) :Observable<any> {
+    return this._http.get<any>(this._APIUrl+'/search/'+query); 
+	}
 }

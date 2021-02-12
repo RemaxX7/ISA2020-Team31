@@ -16,4 +16,10 @@ public interface DermatologistRepository extends JpaRepository<Dermatologist, Lo
 	List<Dermatologist> findAllByPharmacy(@Param("id")Long id);
 	
 	List<Dermatologist> findAll();
+	
+	@Query(value ="SELECT * FROM users s " + 
+			"WHERE (LOWER(concat(s.name,' ',s.surname)) LIKE LOWER(concat('%', :query,'%')) " + 
+			"	   or LOWER(concat(s.surname,' ',s.name)) LIKE LOWER(concat('%', :query,'%')))" + 
+			"AND s.type='Dermatologist'", nativeQuery = true)
+	List<Dermatologist> search(@Param("query")String query);
 }
