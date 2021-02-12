@@ -1,10 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
-import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +8,8 @@ import org.springframework.stereotype.Service;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.patient.UserCategory;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
-import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
 import internet.software.architectures.team31.isapharmacy.repository.PatientRepository;
@@ -68,5 +64,13 @@ public class PatientServiceImpl implements PatientService{
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public Patient changeUserCategory(Long userId, UserCategory userCategory) {
+		Patient patient = (Patient) patientRepository.getOne(userId);
+		patient.setUserCategory(userCategory);
+		
+		return patientRepository.save(patient);
 	}
 }

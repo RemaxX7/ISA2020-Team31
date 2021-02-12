@@ -90,4 +90,10 @@ public class CounselingController {
 	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(counselingService.scheduleAdditionalConsultation(dto),HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/update/points/{counselingId}/{points}")
+	public ResponseEntity<Counseling> updateLoyaltyPointsForSpecificCounseling(@PathVariable Long counselingId, @PathVariable Integer points){
+		return new ResponseEntity<>(counselingService.updatePoints(counselingId, points), HttpStatus.OK);
+	}
+
 }

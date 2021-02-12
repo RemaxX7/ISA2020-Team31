@@ -76,3 +76,10 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
 INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);
+
+-- Loyalty program categories
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (0, 5);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (1, 10);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (2, 15);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (3, 10);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (4, 15);
