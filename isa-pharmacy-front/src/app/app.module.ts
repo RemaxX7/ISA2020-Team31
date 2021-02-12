@@ -64,6 +64,7 @@ import { NewReservationComponent } from './patient/new-reservation/new-reservati
 import { PatientPasswordComponent } from './patient/patient-password/patient-password.component';
 import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
 import { RatingDialogComponent } from './patient/rating-dialog/rating-dialog.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { RatingDialogComponent } from './patient/rating-dialog/rating-dialog.com
     MatIconModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatStepperModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']

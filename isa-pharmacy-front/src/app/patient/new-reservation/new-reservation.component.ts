@@ -25,7 +25,6 @@ export class NewReservationComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetPharmacies();
-    this.GetMedicines(0);
     this.myForm = this.fb.group({
       pharmacy: ['', [Validators.required]],
       date: ['', [Validators.required]]
@@ -38,20 +37,11 @@ export class NewReservationComponent implements OnInit {
     )
   }
 
-  GetMedicines(page: number) {
-    this.medicineService.getPage(page).subscribe(
-      data => {
-        this.medicines = data['content'];
-        this.totalElements = data['totalElements'];
-        this.searchActive = false;
-      }
-    )
-  }
-
   Search() {
     let query = (<HTMLInputElement>document.getElementById('search-input')).value;
     if (!query) {
-      this.GetMedicines(0);
+      this.medicines = null;
+      this.totalElements = null;
     } else {
       this.SearchMedicines(0, query);
     }
@@ -69,27 +59,26 @@ export class NewReservationComponent implements OnInit {
 
   NextPage(event: PageEvent) {
     let query = (<HTMLInputElement>document.getElementById('search-input')).value;
-    if (query) {
-      this.SearchMedicines(event.pageIndex, query);
-    } else {
-      this.GetMedicines(event.pageIndex);
-    }
+    this.SearchMedicines(event.pageIndex, query);
   }
 
   CheckIfEmpty(event: InputEvent) {
     if (!(<HTMLInputElement>document.getElementById('search-input')).value && this.searchActive) {
-      this.GetMedicines(0);
+      this.medicines = null;
+      this.totalElements = null;
     }
   }
 
   MakeReservation(medicine: any) {
     let pharmacy = this.myForm.controls['pharmacy'].value.id;
-    let date = this.myForm.controls['date'].value;
+    let date = new Date(this.myForm.controls['date'].value).setHours(12);
     let reservation = {
       pharmacyId: pharmacy,
       pickUpDate: date,
       medicineId: medicine.id
     }
+
+    console.log(reservation);
     
     this.reservationService.makeReservation(reservation).subscribe(data => {
       this.toastr.success('Medicine reservation created.')

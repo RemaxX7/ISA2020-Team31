@@ -1,1 +1,54 @@
-<p>new-counseling works!</p>
+<mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstStep" [editable]="isEditable">
+        <form [formGroup]="firstStep">
+            <ng-template matStepLabel>Choose date and time</ng-template>
+            <mat-form-field>
+                <mat-label>Choose date and time</mat-label>
+                <input matInput [min]="min" [matDatepicker]="picker" formControlName="dateAndTime">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext (click)="GetPharmacies()">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondStep" [editable]="isEditable">
+        <form [formGroup]="secondStep">
+            <ng-template matStepLabel>Select a pharmacy</ng-template>
+            <mat-form-field>
+                <mat-label>Pharmacy</mat-label>
+                <mat-select formControlName="pharmacy" placeholder="Pharmacy">
+                    <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">
+                        <h1>{{pharmacy.name}} </h1>
+                        <p>{{pharmacy.address.street}} {{pharmacy.address.number}}, {{pharmacy.address.city}}
+                        </p>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdStep" [editable]="isEditable">
+        <form [formGroup]="thirdStep">
+            <ng-template matStepLabel>Select a pharmacist</ng-template>
+            <mat-form-field>
+                <mat-label>Pharmacist</mat-label>
+                <input matInput formControlName="pharmacist" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
