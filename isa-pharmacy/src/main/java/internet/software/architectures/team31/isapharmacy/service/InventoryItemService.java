@@ -1,12 +1,16 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
+import internet.software.architectures.team31.isapharmacy.dto.InventoryItemCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.SetQuantityDTO;
 
 public interface InventoryItemService {
-	InventoryItem save(InventoryItem inventoryItem);
 	InventoryItem findById(Long id);
-	InventoryItem addQuantity(Long itemId,Double quantity);
-	InventoryItem subQuantity(Long itemId,Double quantity);	
+	InventoryItem save(InventoryItem inventoryItem);
+	InventoryItem addQuantity(SetQuantityDTO dto);
+	InventoryItem subQuantity(SetQuantityDTO dto);	
 	//InventoryItem findByPharmacyId(Long id);
+	InventoryItem addNewItem(InventoryItemCreateDTO dto);
+	InventoryItem setQuantity(SetQuantityDTO dto);
 
 }

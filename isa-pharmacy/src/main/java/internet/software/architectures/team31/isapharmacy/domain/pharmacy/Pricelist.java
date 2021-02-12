@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -20,13 +21,17 @@ public class Pricelist {
 	@Column(name="id")
 	private Long id;
 	
+	@OneToOne
+	private Pharmacy pharmacy;
+	
 	@Column
 	@ElementCollection(targetClass=PricelistItem.class)
 	private List<PricelistItem> items;
 
-	public Pricelist(Long id, List<PricelistItem> items) {
+	public Pricelist(Long id, Pharmacy pharmacy, List<PricelistItem> items) {
 		super();
 		this.id = id;
+		this.pharmacy = pharmacy;
 		this.items = items;
 	}
 
@@ -42,6 +47,14 @@ public class Pricelist {
 		this.id = id;
 	}
 
+	public Pharmacy getPharmacy() {
+		return pharmacy;
+	}
+
+	public void setPharmacy(Pharmacy pharmacy) {
+		this.pharmacy = pharmacy;
+	}
+
 	public List<PricelistItem> getItems() {
 		return items;
 	}
@@ -49,6 +62,9 @@ public class Pricelist {
 	public void setItems(List<PricelistItem> items) {
 		this.items = items;
 	}
+	
+
+	
 
 	
 }

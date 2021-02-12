@@ -85,6 +85,14 @@ public class Pharmacy {
 		this.rate = rate;
 	}
 
+	public List<InventoryItem> getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(List<InventoryItem> inventory) {
+		this.inventory = inventory;
+	}
+
 	
 	
 	//TODO: implement the rest of the class
