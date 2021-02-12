@@ -62,6 +62,7 @@ import { EmployeeComplaintComponent } from './patient/employee-complaint/employe
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Appointment } from '../model/appointment.model';
+import { Patient } from '../model/patient.model';
 import { Pharmacist } from '../model/pharmacist.model';
 import { EmployeeService } from '../service/employee-service';
 
@@ -8,12 +10,20 @@ import { EmployeeService } from '../service/employee-service';
   styleUrls: ['./pharmacist-appointments-page.component.css']
 })
 export class PharmacistAppointmentsPageComponent implements OnInit {
-  users:Pharmacist[]=[]
+  users:Patient[]=[]
+  appointments:Appointment[]=[]
   constructor(private service:EmployeeService) { }
 
   ngOnInit(): void {
     
     this.FillPatients();
+    this.FillConsultations();
+  }
+  async FillConsultations(){
+    await this.service.fillCounselings().then(
+      data=>this.appointments=data
+    )
+    console.log(this.appointments);
   }
   async FillPatients(){
     await this.service.getAllUsers().then(

@@ -28,7 +28,7 @@ import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/exams")
+@RequestMapping(value = "api/appointments/exams")
 public class ExamController {
 
 	@Autowired
@@ -46,7 +46,14 @@ public class ExamController {
 	public ResponseEntity<Collection<Exam>> findAll() {
 		return new ResponseEntity<>(examService.findAll(), HttpStatus.OK);
 	}
-	
+	@GetMapping(value = "/allactive")
+	public ResponseEntity<Collection<Exam>> findAllActive() {
+		return new ResponseEntity<>(examService.findAllActive(), HttpStatus.OK);
+	}
+	@GetMapping(value = "/findbyid/{id}")
+	public ResponseEntity<Exam> findById(@PathVariable Long id) {
+		return new ResponseEntity<>(examService.findById(id), HttpStatus.OK);
+	}
 	@GetMapping(value = "/free")
 	public ResponseEntity<Collection<Exam>> findFree() {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
@@ -87,13 +94,12 @@ public class ExamController {
 	public ResponseEntity<Exam>penalize(@PathVariable String id){
 		return new ResponseEntity<>(patientService.penalize(id),HttpStatus.OK);
 	}
-	@PostMapping(value = "/finalizeappointment")
-	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
-		return new ResponseEntity<>(examService.finalizeExam(dto),HttpStatus.OK);
+	@PostMapping(value = "/finalizeappointment/{quant}")
+	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
+		return new ResponseEntity<>(examService.finalizeExam(dto,quant),HttpStatus.OK);
 	}
 	@PostMapping(value = "/schedulenewexam")
 	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
 	}
-	//@GetMapping(value = "/getavailabledates")
 }

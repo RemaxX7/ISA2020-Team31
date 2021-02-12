@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NumberLiteralType } from 'typescript';
+import { extname } from 'path';
+import { isExternalModuleNameRelative, NumberLiteralType } from 'typescript';
 import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
+import { Patient } from '../model/patient.model';
 import { EmployeeService } from '../service/employee-service';
 import { MedicineService } from '../service/medicine-service';
 
@@ -16,34 +18,44 @@ import { MedicineService } from '../service/medicine-service';
 export class AppointmentReportComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService) { }
-  pat:Dermatologist = new Dermatologist();
+  pat:Patient = new Patient();
+  derm:Dermatologist = new Dermatologist();
   medicine:Medicine[]=[];
   userid:number;
+  examid:number;
   appointment:Appointment = new Appointment();
   additionalExam:Appointment = new Appointment();
   medicineSpecification:Medicine=new Medicine;
   medicineSelect:string;
   newDate:string;
+  availability:number;
   myForm:FormGroup;
-  freeTermins:string[]=[];
+  freeTermins:any[]=[];
 
   ngOnInit(): void {
+    this.examid=Number(this.route.snapshot.paramMap.get('id'));
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
-    this.GetPatientForAppointment();
-    this.GetAllMedicineForPatient(this.userid);
-    this.Test();
     this.myForm=this.fb.group({
       area:['',[Validators.required]],
-      //newDate:['',[Validators.required]],
-      //medicine:['',[Validators.required]]
+      quantity:['',[Validators.required]]
     })
+    this.GetAppointment();
+    this.GetPatientForAppointment();
+    this.GetAllMedicineForPatient(this.userid);
+    this.GetFreeTermins();
+    
 
   }
-  FinalizeDTO(){
+  async MedicineAvailability(name){
+    await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>this.availability=data)
+    alert("Dostupno je " + this.availability +" " + name);
+  }
+  FinalizeDTO(medicine){
+    console.log(medicine)
     this.appointment.report=this.myForm.get('area').value;
     this.appointment.uidn=this.pat.uidn;
-    this.appointment.medicine.push(this.medicineSelect);
-    this.service.sendAppointmentDTO(this.appointment).subscribe(res=>{
+    this.appointment.medicine = medicine;
+    this.service.sendAppointmentDTO(this.appointment,this.myForm.get('quantity').value).subscribe(res=>{
       console.log(res);
       alert("Uspesno zavrsen pregled"),
       err =>{
@@ -52,9 +64,11 @@ export class AppointmentReportComponent implements OnInit {
      } );
   }
   ScheduleAdditionalExam(){
+    let user = JSON.parse(localStorage.getItem("user"));
     this.additionalExam.uidn=this.pat.uidn;
     this.additionalExam.date = this.newDate;
-    this.additionalExam.employeeuidn = "3234567891234";
+    this.additionalExam.employeeuidn = user.uidn;
+    this.additionalExam.id = this.examid;
     this.service.scheduleNewAppointmentDerm(this.additionalExam).subscribe((res)=>
       alert("Uspesno zakazan novi pregled")
     );
@@ -69,15 +83,20 @@ export class AppointmentReportComponent implements OnInit {
     )
     console.log(this.pat);
   }
+  async GetAppointment(){
+    await this.service.getByExamId(this.examid).then(
+      data=>this.appointment=data
+    )
+    console.log(this.appointment);
+  }
   async GetAllMedicineForPatient(userid){
     await this.medicineService.getAllMedicineForPatient(userid).then(
       data=>this.medicine=data
     )
   }
-  Test(){
-    this.freeTermins.push("2021-10-11 11:30:00");
-    this.freeTermins.push("2021-10-12 11:30:00");
-    this.freeTermins.push("2021-10-13 11:30:00");
-    this.freeTermins.push("2021-10-14 11:30:00");
+  GetFreeTermins(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.derm.uidn = user.uidn;
+    this.service.getFreeTermins(this.userid,this.derm.uidn).subscribe(data=>this.freeTermins=data);
   }
 }

@@ -6,23 +6,29 @@ public class UserDetailsDTO {
 
 	private String name;
 	private String surname;
+	private String uidn;
+	private String email;
 	private String role;
 	
 	public UserDetailsDTO() {
 		super();
 	}
-
-	public UserDetailsDTO(String name, String surname, String role) {
+	
+	public UserDetailsDTO(String name, String surname, String uidn, String email, String role) {
 		super();
 		this.name = name;
 		this.surname = surname;
+		this.uidn = uidn;
+		this.email = email;
 		this.role = role;
 	}
-	
+
 	public UserDetailsDTO(User user) {
 		super();
 		this.name = user.getName();
 		this.surname = user.getSurname();
+		this.uidn = user.getUidn();
+		this.email = user.getEmail();
 		this.role = user.getAuthorities().iterator().next().getAuthority();
 	}
 
@@ -40,6 +46,22 @@ public class UserDetailsDTO {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	
+	public String getUidn() {
+		return uidn;
+	}
+
+	public void setUidn(String uidn) {
+		this.uidn = uidn;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getRole() {

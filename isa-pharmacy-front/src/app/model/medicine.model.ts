@@ -3,4 +3,5 @@ export class Medicine {
     name:string;
     composition:string;
     manufacturer:string;
+    quantity:number;
 }

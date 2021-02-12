@@ -27,7 +27,7 @@ import internet.software.architectures.team31.isapharmacy.service.CounselingServ
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/appointments/counselings")
+@RequestMapping(value = "api/appointments/counselings")
 public class CounselingController {
 
 	@Autowired
@@ -44,12 +44,19 @@ public class CounselingController {
 	public ResponseEntity<Collection<Counseling>> findAll() {
 		return new ResponseEntity<>(counselingService.findAll(), HttpStatus.OK);
 	}
+	@GetMapping(value = "/allactive")
+	public ResponseEntity<Collection<Counseling>> findAllActive() {
+		return new ResponseEntity<>(counselingService.findAllActive(), HttpStatus.OK);
+	}
 	
 	@GetMapping(value = "/free")
 	public ResponseEntity<Collection<Counseling>> findFree() {
 		return new ResponseEntity<>(counselingService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
-	
+	@GetMapping(value = "/findbyid/{id}")
+	public ResponseEntity<Counseling> findById(@PathVariable Long id) {
+		return new ResponseEntity<>(counselingService.findById(id), HttpStatus.OK);
+	}
 	@GetMapping(value = "/finished/patient/{id}")
 	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,
@@ -75,9 +82,9 @@ public class CounselingController {
 	public ResponseEntity<Counseling>penalize(@PathVariable String id){
 		return new ResponseEntity<>(patientService.pharmacistPenalize(id),HttpStatus.OK);
 	}
-	@PostMapping(value = "/finalizeappointmentpharmacist")
-	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
-		return new ResponseEntity<>(counselingService.finalizeExam(dto),HttpStatus.OK);
+	@PostMapping(value = "/finalizeappointmentpharmacist/{quant}")
+	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
+		return new ResponseEntity<>(counselingService.finalizeExam(dto,quant),HttpStatus.OK);
 	}
 	@PostMapping(value = "/schedulenewcounseling")
 	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){
