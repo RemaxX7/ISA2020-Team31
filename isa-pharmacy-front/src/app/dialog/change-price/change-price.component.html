@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>New Shift</h2>
+<div class="dialog" mat-dialog-content>
+    <form class="example-form">
+        <mat-form-field>
+          <mat-label>New price</mat-label>
+          <input type="number" matInput [formControl]="priceFormControl" placeholder="New price">
+        </mat-form-field>
+      </form>
+</div>
+<div mat-dialog-actions class="offerButtons">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button  [disabled]="priceFormControl.hasError('required')" (click)="Confirm()" > Confirm</button>
+  </div>

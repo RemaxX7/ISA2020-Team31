@@ -1,0 +1,22 @@
+<div class="main">
+<table class="table table-hover">
+    <thead>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Change Price</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of pricelistMedicineItems">
+        <td>
+          {{i.medicine.name}}
+        </td>
+        <td>
+          {{i.price}}
+        </td>
+        <td>
+          <button mat-raised-button (click)="ChangePrice(i.id)"> Change Price</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

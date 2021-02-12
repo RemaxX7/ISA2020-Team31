@@ -9,7 +9,7 @@ import { ShiftDto } from '../model/shift-dto.model';
 })
 export class ShiftService {
 
-  private readonly _APIUrl="http://localhost:8080/auth/shift"
+  private readonly _APIUrl="http://localhost:8080/api/shift"
 
   constructor(private _http : HttpClient ){}
 

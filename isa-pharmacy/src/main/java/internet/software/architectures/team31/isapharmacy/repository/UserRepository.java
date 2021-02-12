@@ -17,6 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query(value = "SELECT u.type FROM users u  WHERE u.id=:id", nativeQuery = true )
 	String findTypeById(@Param("id")Long id);
+	
 	List<User> findAll();
 	
 	User findByUidn(String uidn);

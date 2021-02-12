@@ -1,0 +1,19 @@
+<div class="main">
+    <button mat-raised-button (click)="AddItem()" > Add new item </button>
+    <table class="table table-hover">
+        <thead>
+          <th scope="col">Name</th>
+          <th scope="col">Quantity</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of inventoryItems">
+            <td>
+              {{i.medicine.name}}
+            </td>
+            <td>
+              {{i.quantity}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

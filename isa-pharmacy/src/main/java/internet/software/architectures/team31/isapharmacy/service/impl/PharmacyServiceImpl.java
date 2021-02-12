@@ -7,11 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
+import internet.software.architectures.team31.isapharmacy.dto.InventoryItemCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PharmacyViewDTO;
 import internet.software.architectures.team31.isapharmacy.repository.PharmacyRepository;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyReviewService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
+import internet.software.architectures.team31.isapharmacy.service.InventoryItemService;
 
 @Service
 public class PharmacyServiceImpl implements PharmacyService {
@@ -21,11 +24,13 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Autowired
 	private PharmacyReviewService pharmacyReviewService;
+	
+	@Autowired
+	private InventoryItemService inventoryItemService;
 
 	@Override
 	public Pharmacy save(Pharmacy pharmacy) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.pharmacyRepository.save(pharmacy);
 	}
 
 	@Override
@@ -51,5 +56,15 @@ public class PharmacyServiceImpl implements PharmacyService {
 	public Pharmacy findById(Long id) {
 		return pharmacyRepository.findById(id).orElse(null);
 	}
+
+	@Override
+	public Pharmacy addNewItem(InventoryItemCreateDTO dto) {
+		Pharmacy pharmacy= this.findById(dto.getPharmacyId());
+		pharmacy.getInventory().add(this.inventoryItemService.addNewItem(dto));
+		return this.save(pharmacy);
+	}
+	
+	
+	
 
 }
