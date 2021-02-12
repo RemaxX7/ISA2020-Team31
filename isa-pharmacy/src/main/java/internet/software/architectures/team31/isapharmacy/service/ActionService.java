@@ -15,4 +15,8 @@ public class ActionService {
 	public Action findOne(Long id) {
 		return actionRepository.findById(id).orElseGet(null);
 	}
+
+	public Action save(Action action) {
+		return actionRepository.save(action);
+	}
 }

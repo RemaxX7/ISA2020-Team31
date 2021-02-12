@@ -22,6 +22,7 @@ import { PharmacistPasswordChangeComponent } from './pharmacist-password-change/
 import { MedicineDispensingComponent } from './medicine-dispensing/medicine-dispensing.component';
 import { DermatologistPatientSearchComponent } from './dermatologist-patient-search/dermatologist-patient-search.component';
 import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/pharmacist-patient-search.component';
+import { AddNewActionComponent } from './dialog/add-new-action/add-new-action.component';
 
 
 
@@ -36,7 +37,8 @@ import { PharmacistPatientSearchComponent } from './pharmacist-patient-search/ph
     PharmacistPasswordChangeComponent,
     MedicineDispensingComponent,
     DermatologistPatientSearchComponent,
-    PharmacistPatientSearchComponent
+    PharmacistPatientSearchComponent,
+    AddNewActionComponent
   ],
   imports: [
     BrowserModule,
