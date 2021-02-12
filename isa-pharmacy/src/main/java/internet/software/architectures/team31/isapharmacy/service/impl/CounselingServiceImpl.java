@@ -129,12 +129,12 @@ public class CounselingServiceImpl implements CounselingService {
 
 	@Override
 	public boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId) {
-		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED) != null;
+		return counselingRepository.existsByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.FINISHED);
 	}
 		
 	@Override
 	public boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId) {
-		return counselingRepository.findOneByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.OCCUPIED) != null;
+		return counselingRepository.existsByPatientIdAndPharmacistIdAndAppointmentStatus(patientId, pharmacistId, AppointmentStatus.OCCUPIED);
 	}
 
 	@Override

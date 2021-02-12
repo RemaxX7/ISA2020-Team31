@@ -17,5 +17,5 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
 	Page<Exam> findAllByAppointmentStatus(AppointmentStatus status, Pageable pageable);
 	Collection<Exam> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status);
 	Page<Exam> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status, Pageable pageable);
-	Exam findOneByPatientIdAndDermatologistIdAndAppointmentStatus(Long patientId, Long dermatologistId, AppointmentStatus status);
+	boolean existsByPatientIdAndDermatologistIdAndAppointmentStatus(Long patientId, Long dermatologistId, AppointmentStatus status);
 }

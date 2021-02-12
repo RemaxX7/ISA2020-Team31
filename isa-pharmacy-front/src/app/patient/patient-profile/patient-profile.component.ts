@@ -112,4 +112,14 @@ export class PatientProfileComponent implements OnInit {
       }
     )
   }
+
+  GetPenaltyColor() {
+    switch(this.profile.penalties) {
+      case 0: return '#5CDB95';
+      case 1: return '#FFE400';
+      case 2: return '#FF652F';
+      case 3: return '#FC4445';
+      default: return 'black';
+    }
+  }
 }

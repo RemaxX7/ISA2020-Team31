@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ExamService } from 'src/app/service/exam.service';
+import { RatingDialogComponent } from '../rating-dialog/rating-dialog.component';
 
 @Component({
   selector: 'app-past-exams',
@@ -14,7 +16,7 @@ export class PastExamsComponent implements OnInit {
   public selected: string = 'dateRange.startDateTime'
   public currentPage: number = 0;
 
-  constructor(private examService: ExamService) { }
+  constructor(private examService: ExamService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.GetExams(0, 'dateRange.startDateTime');
@@ -40,5 +42,14 @@ export class PastExamsComponent implements OnInit {
 
   Sort() {
     this.GetExams(this.currentPage, this.selected);
+  }
+
+  OpenDialog(employeeId) {
+    this.dialog.open(RatingDialogComponent, {
+      data: {
+        type: 'employee',
+        target: employeeId
+      }
+    });
   }
 }

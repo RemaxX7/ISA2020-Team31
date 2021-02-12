@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { PharmacyService } from 'src/app/service/pharmacy.service';
+import { RatingDialogComponent } from '../rating-dialog/rating-dialog.component';
 
 @Component({
   selector: 'app-patient-pharmacies',
@@ -10,7 +12,7 @@ import { PharmacyService } from 'src/app/service/pharmacy.service';
 })
 export class PatientPharmaciesComponent implements OnInit {
 
-  constructor(private pharmacyService: PharmacyService, private toastr: ToastrService) { }
+  constructor(private pharmacyService: PharmacyService, private toastr: ToastrService, public dialog: MatDialog) { }
 
   public pharmacies:Array<any>;
   public totalElements:number;
@@ -65,5 +67,14 @@ export class PatientPharmaciesComponent implements OnInit {
     if(!(<HTMLInputElement>document.getElementById('search-input')).value && this.searchActive) {
       this.GetPharmacies(0);
     }
+  }
+
+  OpenDialog(pharmacy) {
+    this.dialog.open(RatingDialogComponent, {
+      data: {
+        type: 'pharmacy',
+        target: pharmacy.id
+      }
+    });
   }
 }

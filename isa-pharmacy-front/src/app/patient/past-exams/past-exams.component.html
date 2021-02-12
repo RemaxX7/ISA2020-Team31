@@ -11,11 +11,17 @@
     </mat-form-field>
     <div *ngFor="let exam of exams">
         <div class="exam">
-            <h1>{{exam.pharmacyName}}</h1>
-            <p><b>Dermatologist</b>: {{exam.employeeName}} {{exam.employeeSurname}}, {{exam.employeeEmail}}</p>
-            <p><b>Date</b>: {{ParseDate(exam.startDateTime)}}</p>
-            <p><b>Duration</b>: {{exam.duration}} minutes</p>
-            <p><b>Price</b>: {{exam.price}}</p>
+            <div class="info">
+                <h1>{{exam.pharmacyName}}</h1>
+                <p><b>Dermatologist</b>: {{exam.employeeName}} {{exam.employeeSurname}}, {{exam.employeeEmail}}</p>
+                <p><b>Date</b>: {{ParseDate(exam.startDateTime)}}</p>
+                <p><b>Duration</b>: {{exam.duration}} minutes</p>
+                <p><b>Price</b>: {{exam.price}}</p>
+            </div>
+            <div style="text-align: left;">
+                <button mat-raised-button class="rate-button" (click)="OpenDialog(exam.employeeId)">Rate
+                    dermatologist</button>
+            </div>
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>

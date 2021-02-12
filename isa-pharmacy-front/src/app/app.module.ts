@@ -63,6 +63,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NewReservationComponent } from './patient/new-reservation/new-reservation.component';
 import { PatientPasswordComponent } from './patient/patient-password/patient-password.component';
 import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
+import { RatingDialogComponent } from './patient/rating-dialog/rating-dialog.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { PatientAllergiesComponent } from './patient/patient-allergies/patient-a
     PatientPharmaciesComponent,
     NewReservationComponent,
     PatientPasswordComponent,
-    PatientAllergiesComponent
+    PatientAllergiesComponent,
+    RatingDialogComponent
   ],
   imports: [
     BrowserModule,

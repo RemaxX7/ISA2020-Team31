@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
@@ -30,7 +31,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Override
 	public Collection<Pharmacy> findAll() {
-		return pharmacyRepository.findAll();
+		return pharmacyRepository.findAll(Sort.by("name"));
 	}
 
 	@Override

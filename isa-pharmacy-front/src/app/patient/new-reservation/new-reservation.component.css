@@ -49,3 +49,8 @@ h1 {
 .reservation-button {
     margin: 10px 0 10px 5px;
 }
+
+
+ngb-rating {
+    outline: none;
+}

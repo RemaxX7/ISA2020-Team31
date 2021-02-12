@@ -1,5 +1,11 @@
 <div class="profileBox" *ngIf="loaded">
     <h1><b>Profile</b></h1>
+    <mat-divider></mat-divider>
+    <div class="penalties">
+        <span class="material-icons" [style.color]="GetPenaltyColor()">loyalty</span>
+        <span class="penalties-text"><b>Penalties</b>: {{profile.penalties}}</span>
+    </div>
+    <mat-divider></mat-divider>
     <button mat-raised-button id="toggle" (click)="Toggle()">Edit</button>
     <form [formGroup]="myForm" autocomplete="off">
         <hr>
@@ -20,16 +26,17 @@
         <br>
         <mat-grid-list cols="2">
             <mat-form-field>
-                <mat-select placeholder="Country" (selectionChange)="FillCities($event)" formControlName="country" id="country">
+                <mat-select placeholder="Country" (selectionChange)="FillCities($event)" formControlName="country"
+                    id="country">
                     <mat-option *ngFor="let country of countries" [value]="country">
-                    {{country.name}}
+                        {{country.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
                 <mat-select placeholder="City" formControlName="city" id="city">
                     <mat-option *ngFor="let city of cities" [value]="city">
-                    {{city.name}}
+                        {{city.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

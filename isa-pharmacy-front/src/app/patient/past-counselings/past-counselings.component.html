@@ -11,12 +11,18 @@
     </mat-form-field>
     <div *ngFor="let counseling of counselings">
         <div class="counseling">
-            <h1>{{counseling.pharmacyName}}</h1>
-            <p><b>Pharmacist</b>: {{counseling.employeeName}} {{counseling.employeeSurname}},
-                {{counseling.employeeEmail}}</p>
-            <p><b>Date</b>: {{ParseDate(counseling.startDateTime)}}</p>
-            <p><b>Duration</b>: {{counseling.duration}} minutes</p>
-            <p><b>Price</b>: {{counseling.price}}</p>
+            <div class="info">
+                <h1>{{counseling.pharmacyName}}</h1>
+                <p><b>Pharmacist</b>: {{counseling.employeeName}} {{counseling.employeeSurname}},
+                    {{counseling.employeeEmail}}</p>
+                <p><b>Date</b>: {{ParseDate(counseling.startDateTime)}}</p>
+                <p><b>Duration</b>: {{counseling.duration}} minutes</p>
+                <p><b>Price</b>: {{counseling.price}}</p>
+            </div>
+            <div style="text-align: left;">
+                <button mat-raised-button class="rate-button" (click)="OpenDialog(counseling.employeeId)">Rate
+                    pharmacist</button>
+            </div>
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>

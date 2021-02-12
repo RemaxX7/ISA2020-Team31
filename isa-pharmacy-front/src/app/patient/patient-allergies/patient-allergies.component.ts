@@ -124,6 +124,7 @@ export class PatientAllergiesComponent implements OnInit, OnDestroy {
     }
     this.patientService.updatePatientAllergies(allergies).subscribe(data => {
       this.toastr.success('Changes saved.')
+      this.backupAllergies = JSON.parse(JSON.stringify(this.allergies));
       this.changed = false;
     },
       err => {

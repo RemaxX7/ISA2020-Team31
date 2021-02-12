@@ -44,3 +44,11 @@ mat-divider {
 .filter-input {
     width: 150px;
 }
+
+ngb-rating {
+    outline: none;
+}
+
+.rate-button {
+    margin: 10px 0 10px 5px;
+}

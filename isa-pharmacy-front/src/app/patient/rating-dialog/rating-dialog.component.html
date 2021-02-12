@@ -1,0 +1,14 @@
+<div style="text-align: center;" *ngIf="loaded">
+    <div>
+        <p>{{text}}</p>
+        <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill"></span>
+                &#9733;
+            </span>
+        </ng-template>
+        <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="currentRating" (rateChange)="Changed()"></ngb-rating>
+    </div>
+    <br>
+    <button mat-raised-button (click)="Rate()" [disabled]="!enabled">Save rating</button>
+</div>

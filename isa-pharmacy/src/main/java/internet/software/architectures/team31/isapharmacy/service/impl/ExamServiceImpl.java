@@ -129,7 +129,7 @@ public class ExamServiceImpl implements ExamService {
 
 	@Override
 	public boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId) {
-		return examRepository.findOneByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED) != null;
+		return examRepository.existsByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED);
 	}
 
 	@Override

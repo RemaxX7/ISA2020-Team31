@@ -16,5 +16,5 @@ public interface CounselingRepository extends JpaRepository<Counseling, Long> {
 	Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status);
 	Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status);
 	Page<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status, Pageable pageable);
-	Counseling findOneByPatientIdAndPharmacistIdAndAppointmentStatus(Long patientId, Long pharmacistId, AppointmentStatus status);
+	boolean existsByPatientIdAndPharmacistIdAndAppointmentStatus(Long patientId, Long pharmacistId, AppointmentStatus status);
 }

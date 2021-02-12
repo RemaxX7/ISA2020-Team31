@@ -12,6 +12,18 @@
     margin: 10px 0 10px 0;
 }
 
+.info {
+    margin: 10px 10px 10px 10px !important;
+}
+
 mat-form-field {
     margin: 10px 0 10px 0;
+}
+
+.rate-button {
+    margin: 10px 0 10px 10px;
+}
+
+mat-expansion-panel {
+    margin: 0 10px 0 10px;
 }

@@ -94,7 +94,7 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 
 	@Override
 	public boolean hasPatientPurchasedMedicineFromPharmacy(Long patientId, Long pharmacyId) {
-		return medicineReservationRepository.findOneByPatientIdAndPharmacyIdAndMedicineReservationStatus(patientId, pharmacyId, MedicineReservationStatus.FINISHED) != null;
+		return medicineReservationRepository.existsByPatientIdAndPharmacyIdAndMedicineReservationStatus(patientId, pharmacyId, MedicineReservationStatus.FINISHED);
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package internet.software.architectures.team31.isapharmacy.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
@@ -9,5 +7,5 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long>{
 
-	Appointment findOneByPatientIdAndPharmacyIdAndAppointmentStatus(Long patientId, Long pharmacyId, AppointmentStatus appointmentStatus);
+	boolean existsByPatientIdAndPharmacyIdAndAppointmentStatus(Long patientId, Long pharmacyId, AppointmentStatus appointmentStatus);
 }

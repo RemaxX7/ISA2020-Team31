@@ -20,13 +20,14 @@ public class AppointmentViewDTO {
 	private String employeeName;
 	private String employeeSurname;
 	private String employeeEmail;
+	private Long employeeId;
 	
 	public AppointmentViewDTO() {
 		super();
 	}
 	
 	public AppointmentViewDTO(Long id, LocalDateTime startDateTime, Long duration, String pharmacyName, Double price,
-			String report, List<String> medicines, String employeeName, String employeeSurname, String employeeEmail) {
+			String report, List<String> medicines, String employeeName, String employeeSurname, String employeeEmail, Long employeeId) {
 		super();
 		this.id = id;
 		this.startDateTime = startDateTime;
@@ -38,6 +39,7 @@ public class AppointmentViewDTO {
 		this.employeeName = employeeName;
 		this.employeeSurname = employeeSurname;
 		this.employeeEmail = employeeEmail;
+		this.employeeId = employeeId;
 	}
 	
 	public AppointmentViewDTO(Exam exam) {
@@ -52,6 +54,7 @@ public class AppointmentViewDTO {
 		this.employeeName = exam.getDermatologist().getName();
 		this.employeeSurname = exam.getDermatologist().getSurname();
 		this.employeeEmail = exam.getDermatologist().getEmail();
+		this.employeeId = exam.getDermatologist().getId();
 	}
 	
 	public AppointmentViewDTO(Counseling counseling) {
@@ -66,6 +69,7 @@ public class AppointmentViewDTO {
 		this.employeeName = counseling.getPharmacist().getName();
 		this.employeeSurname = counseling.getPharmacist().getSurname();
 		this.employeeEmail = counseling.getPharmacist().getEmail();
+		this.employeeId = counseling.getPharmacist().getId();
 	}
 
 	public Long getId() {
@@ -146,5 +150,13 @@ public class AppointmentViewDTO {
 
 	public void setEmployeeEmail(String employeeEmail) {
 		this.employeeEmail = employeeEmail;
+	}
+
+	public Long getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
 	}
 }

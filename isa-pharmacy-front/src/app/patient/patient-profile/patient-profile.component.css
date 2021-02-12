@@ -26,3 +26,18 @@ button {
     padding:10px;
     box-shadow:0 0 15px 4px rgba(0,0,0,0.08);
 }
+
+.penalties {
+    height: 50px;
+    text-align: left;
+}
+
+.penalties > .material-icons {
+    font-size: 40px;
+    margin: 5px 0 0 0;
+}
+
+.penalties-text {
+    position: absolute;
+    margin: 15px 0 0 5px;
+}

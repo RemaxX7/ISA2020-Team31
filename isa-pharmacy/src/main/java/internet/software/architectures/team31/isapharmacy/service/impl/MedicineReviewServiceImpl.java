@@ -37,7 +37,7 @@ public class MedicineReviewServiceImpl implements MedicineReviewService {
 		}
 		if(!medicineReservationService.hasPatientPurchasedMedicine(patient.getId(), dto.getMedicineId())) {
 			//TODO: Add check for e-prescriptions
-			throw new InvalidReviewException("You cannot review this medicine.");
+			throw new InvalidReviewException("You cannot rate this medicine.");
 		}
 		if(hasPatientReviewedMedicine(patient.getId(), dto.getMedicineId())) {
 			return update(dto);
@@ -76,5 +76,16 @@ public class MedicineReviewServiceImpl implements MedicineReviewService {
 		MedicineReview review = medicineReviewRepository.findOneByPatientIdAndMedicineId(patient.getId(), dto.getMedicineId());
 		review.setScore(dto.getScore());
 		return medicineReviewRepository.save(review);
+	}
+
+	@Override
+	public Integer findOneByPatientAndMedicineId(Long medicineId) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		MedicineReview review = medicineReviewRepository.findOneByPatientIdAndMedicineId(patient.getId(), medicineId);
+		if(review == null) {
+			return 0;
+		} else {
+			return review.getScore();
+		}
 	}
 }

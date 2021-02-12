@@ -13,13 +13,18 @@
     <div class="pharmacy">
       <h1>{{pharmacy.name}}</h1>
       <p><b>Address</b>: {{pharmacy.address.street}} {{pharmacy.address.number}}, {{pharmacy.address.city}}</p>
-      <ng-template #t let-fill="fill">
-        <span class="star" [class.full]="fill === 100">
-          <span class="half" [style.width.%]="fill">&#9733;</span>
-          &#9733;
-        </span>
-      </ng-template>
-      <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="pharmacy.rate" [readonly]="true"></ngb-rating>
+      <p><b>Rating</b>:
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#9733;</span>
+            &#9733;
+          </span>
+        </ng-template>
+        <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="pharmacy.rate" [readonly]="true"></ngb-rating>
+      </p>
+    </div>
+    <div style="text-align: left;">
+      <button mat-raised-button class="rate-button" (click)="OpenDialog(pharmacy)">Rate pharmacy</button>
     </div>
     <mat-divider></mat-divider>
   </div>
