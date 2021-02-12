@@ -34,17 +34,21 @@ public class Patient extends User {
 	private String activationToken;
 	@Column
     private UserCategory userCategory;
+	@Column 
+	private Integer obtainedPoints;
 	
 	public Patient() {
 		super();
 	}
 
-	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken, UserCategory userCategory) {
+	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken, UserCategory userCategory, Integer obtainedPoints) {
 		super();
 		this.penalty = penalty;
 		this.boughtMedicineList = boughtMedicineList;
 		this.allergies = allergies;
 		this.activationToken = activationToken;
+		this.userCategory = userCategory;
+		this.obtainedPoints = obtainedPoints;
 	}
 
 	public Patient(UserRegisterDTO dto) {
@@ -59,6 +63,7 @@ public class Patient extends User {
 		this.address = new Address(dto.getAddress());
 		this.penalty = 0;
 		this.userCategory = UserCategory.REGULAR;
+		this.obtainedPoints = 0;
 	}
 
 	public Integer getPenalty() {
@@ -99,6 +104,14 @@ public class Patient extends User {
 
 	public void setUserCategory(UserCategory userCategory) {
 		this.userCategory = userCategory;
+	}
+	
+	public Integer getObtainedPoints() {
+		return obtainedPoints;
+	}
+
+	public void setObtainedPoints(Integer obtainedPoints) {
+		this.obtainedPoints = obtainedPoints;
 	}
 
 	@Override
