@@ -14,7 +14,7 @@ export class PharmacistProfileComponent implements OnInit {
   pharmacist:Pharmacist = new Pharmacist();
   myForm:FormGroup;
   ngOnInit(): void {
-    this.Test();
+    this.LoadUser();
     this.myForm=this.fb.group({
       email:['',[Validators.required]],
       name:['',[Validators.required]],
@@ -27,15 +27,14 @@ export class PharmacistProfileComponent implements OnInit {
     this.pharmacist.email=this.myForm.get('email').value;
     this.pharmacist.name=this.myForm.get('name').value;
     this.pharmacist.surname=this.myForm.get('surname').value;
-    //this.pharmacist.uidn kad se dovede farmaceut
-    this.pharmacist.uidn="2234567891234";
+    this.pharmacist.uidn=this.pharmacist.uidn;
     this.service.editProfile(this.pharmacist).subscribe(()=>alert("Uspesno promenjeni podaci"))
   }
-  Test(){
-    this.pharmacist.name = "Aleksa";
-    this.pharmacist.surname = "Rakic"
-    this.pharmacist.id = 22222;
-    this.pharmacist.email = "ar95@email.com";
-    this.pharmacist.uidn = "2234567891234";
+  LoadUser(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.pharmacist.name = user.name;
+    this.pharmacist.email = user.email;
+    this.pharmacist.surname = user.surname;
+    this.pharmacist.uidn = user.uidn;
   }
 }

@@ -1,6 +1,6 @@
 <header>
     <div class="header">
-      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <a routerLink="/pharmacist" class="logo">Pharmacy</a>
       <nav>
         <ul>
          <!--<li><a href="#" routerLink="/">Log in</a></li>-->
@@ -8,10 +8,10 @@
             <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
-            <li><a href="">Schedule leave</a></li>
-            <li><a href="">Schedule appointment</a></li>
+            <li><a href="" routerLink="/pharmacist">Schedule leave</a></li>
+            <li><a href="" routerLink="/pharmacist">Schedule appointment</a></li>
             <li><a href="" routerLink="pharmacist-profile">Profile</a></li>
-            <li id="log"><a href="">Log out</a></li>
+            <li id="log"><a href="" routerLink="/login">Log out</a></li>
         </ul>
       </nav>
     </div>
@@ -24,9 +24,9 @@
             <a href="" routerLink="/pharmacist-work-cal">Radni kalendar</a>
         </div>
         <div class="userinfo">
-          <button (click)="FilterTable(7)">Nedeljno</button>
-          <button (click)="FilterTable(30)">Mesecno</button>
-          <button (click)="FilterTable(365)">Godisnje</button>
+          <button (click)="FillConsultations(7)">Nedeljno</button>
+          <button (click)="FillConsultations(30)">Mesecno</button>
+          <button (click)="FillConsultations(365)">Godisnje</button>
           <div class="founddiv">
             <table id="myTable">
                 <tr>
@@ -37,20 +37,14 @@
                     <th>Duration</th>
                 </tr>
                 <tbody id="tableinfo">
-                    <tr>
-                        <td>marko</td>
-                        <td>rakic</td>
-                        <td>19.01.2021</td>
-                        <td>19:00</td>
+                    <tr *ngFor="let c of entries">
+                        <td>{{c.patient.name}}</td>
+                        <td>{{c.patient.surname}}</td>
+                        <td>{{c.dateRange.startDateTime[0]}}.{{c.dateRange.startDateTime[1]}}.{{c.dateRange.startDateTime[2]}}</td>
+                        <td>{{c.dateRange.startDateTime[3]}}:{{c.dateRange.startDateTime[4]}}0</td>
                         <td>30</td>
                     </tr>
-                    <tr>
-                      <td>aleksa</td>
-                      <td>rakic</td>
-                      <td>19.01.2022</td>
-                      <td>22:00</td>
-                      <td>30</td>
-                  </tr>
+                    
                 </tbody>
             </table>
         </div>

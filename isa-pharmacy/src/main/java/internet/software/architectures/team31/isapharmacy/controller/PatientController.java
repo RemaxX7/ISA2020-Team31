@@ -13,7 +13,7 @@ import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
 @RestController
-@RequestMapping(value = "auth/search/patients")
+@RequestMapping(value = "api/search/patients")
 public class PatientController {
 	@Autowired
 	private PatientServiceImpl patientService;

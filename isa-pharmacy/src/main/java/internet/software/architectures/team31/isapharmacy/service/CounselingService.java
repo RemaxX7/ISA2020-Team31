@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
@@ -19,12 +20,16 @@ public interface CounselingService {
 	Counseling schedule(AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException;
 	Counseling cancel(Long id) throws CancelAppointmentException;
 	Collection<Counseling> findAll();
+	Collection<Counseling> findAllActive();
 	Collection<Counseling> findAllByPatientId(Long id);
 	Collection<Counseling> findAllByPharmacistId(Long id);
 	Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status);
 	Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status);
 	Counseling findById(Long id);
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
-	Counseling finalizeExam(AppointmentFinalizationDTO dto);
+	Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant);
 	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
+	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
+	List<Counseling>findCounsForPharm(String uidn,String days);
+	List<Exam>findExamsForDerm(String uidn,String days);
 }

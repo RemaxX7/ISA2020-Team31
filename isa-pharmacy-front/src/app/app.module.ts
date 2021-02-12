@@ -66,6 +66,7 @@ import { ChangePriceComponent } from './dialog/change-price/change-price.compone
 import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
 import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inventory-item.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

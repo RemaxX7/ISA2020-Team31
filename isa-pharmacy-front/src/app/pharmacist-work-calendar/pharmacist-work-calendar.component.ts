@@ -13,9 +13,8 @@ export class PharmacistWorkCalendarComponent implements OnInit {
   entries:Appointment[]=[]
   ngOnInit(): void {
   }
-  async FilterTable(forDays){
-    await this.service.getAllCalendarEntries(forDays).then(
-      data=>this.entries=data
-    )
+  FillConsultations(days){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.service.getConsultationsForPharmacist(user.uidn,days).subscribe(data=>this.entries=data)
   }
 }

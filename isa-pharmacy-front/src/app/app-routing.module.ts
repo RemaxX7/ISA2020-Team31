@@ -41,6 +41,23 @@ import { PricelistComponent } from './pricelist/pricelist.component';
 import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
 
 const routes: Routes = [
+  {path:'dermatologist',component:DermatologistComponent},
+  {path:'dermatologist-profile',component:DermatologistProfileComponent},
+  {path:'employee-password-change',component:EmployeePasswordChangeComponent},
+  {path:'pharmacist',component:PharmacistComponent},
+  {path:'pharmacist-profile',component:PharmacistProfileComponent},
+  {path:'pharmacist-password-change',component:PharmacistPasswordChangeComponent},
+  {path:'medicine-dispensing',component:MedicineDispensingComponent},
+  {path:'dermatologist-patient-search',component:DermatologistPatientSearchComponent},
+  {path:'pharmacist-patient-search',component:PharmacistPatientSearchComponent},
+  { path: 'pharmacy-profile', component: PharmacyProfileComponent },
+  {path: 'pharmacist-work-cal',component:PharmacistWorkCalendarComponent},
+  {path: 'dermatologist-work-cal',component:DermatologistWorkCalendarComponent},
+  {path: 'dermatologist-appointment-report/:uidn',component:AppointmentReportComponent},
+  {path: 'pharmacist-appointment-report/:uidn',component:AppointmentReportPharmacistComponent},
+  {path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
+  {path:'pharmacist-list', component:PharmacistListComponent},
+  {path:'dermatologist-list', component:DermatologistListComponent},
   { path: 'dermatologist', component: DermatologistComponent },
   { path: 'dermatologist-profile', component: DermatologistProfileComponent },
   { path: 'employee-password-change', component: EmployeePasswordChangeComponent },
@@ -53,8 +70,8 @@ const routes: Routes = [
   { path: 'pharmacy-profile', component: PharmacyProfileComponent },
   { path: 'pharmacist-work-cal', component: PharmacistWorkCalendarComponent },
   { path: 'dermatologist-work-cal', component: DermatologistWorkCalendarComponent },
-  { path: 'dermatologist-appointment-report/:uidn', component: AppointmentReportComponent },
-  { path: 'pharmacist-appointment-report/:uidn', component: AppointmentReportPharmacistComponent },
+  { path: 'dermatologist-appointment-report/:id/:uidn', component: AppointmentReportComponent },
+  { path: 'pharmacist-appointment-report/:id/:uidn', component: AppointmentReportPharmacistComponent },
   { path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
   { path: 'pharmacist-list', component: PharmacistListComponent },
   { path: 'dermatologist-list', component: DermatologistListComponent },
@@ -128,8 +145,7 @@ const routes: Routes = [
   {
     path: 'employee-complaint', component: PatientComponent,
     children: [{ path: '', component: EmployeeComplaintComponent }]
-  },
-
+  }
 ];
 
 @NgModule({

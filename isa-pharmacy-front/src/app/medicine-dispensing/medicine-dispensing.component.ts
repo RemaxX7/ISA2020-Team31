@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MedicineReservation } from '../model/medicineReservation.model';
+import { EmployeeService } from '../service/employee-service';
 
 @Component({
   selector: 'app-medicine-dispensing',
@@ -7,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MedicineDispensingComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private service:EmployeeService) { }
+  patientReservation:MedicineReservation[]=[];
   ngOnInit(): void {
-    this.HideTable();
+    //this.HideTable();
+  }
+  LoadMedicineReservation(reservation){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.service.loadReservation(reservation,user.uidn).subscribe(data=>this.patientReservation=data,err => {
+      alert("Reservation not found or expired.");
+    } )
+  
+  }
+  FinalizeReservation(code){
+    this.service.finalizeReservation(code).subscribe(()=>alert("Reservation picked up."))
+    window.location.reload();
   }
   HideTable(){
     var table = document.getElementById("myTable");

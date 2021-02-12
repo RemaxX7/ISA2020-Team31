@@ -1,4 +1,4 @@
-INSERT INTO COUNTRIES (name, code) values ('Serbia', 'RS'), ('Norway', 'NO');
+INSERT INTO COUNTRIES (name, code) values ('Serbia', 'RSD'), ('Norway', 'NO');
 INSERT INTO CITIES(name, country_id) values ('Novi Sad', 1), ('Belgrade', 1);
 
 INSERT INTO ADDRESSES(street, number, city_id, latitude, longitude) values ('Bulevar Oslobodjenja', '50', 1, 45, 45);
@@ -29,8 +29,11 @@ INSERT INTO USERS_PHARMACIES (dermatologist_id, pharmacies_id) values (3, 1), (3
 
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_USER');
 INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
-INSERT INTO AUTHORITY (id, name) VALUES (3,'ROLE_PHARMACIST');
+INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_PHARMACIST');
+INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_DERMATOLOGIST');
+
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) values (2, 3), (3, 4);
 
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (1, 'Paracetamol', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (2, 'asfasfas', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
@@ -60,9 +63,16 @@ INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 4
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5, 5, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);
 
+
+INSERT INTO MEDICINE_RESERVATIONS (id, code, medicine_reservation_status, pick_up_date, price, patient_id, pharmacy_id) values (3, '6165146', 0, '2022-02-02', 130, 5, 1);
+INSERT INTO MEDICINE_RESERVATION_ITEMS (id, quantity, medicine_id) values (3, 3, 1);
+INSERT INTO MEDICINE_RESERVATIONS_MEDICINE_RESERVATION_ITEMS (medicine_reservation_id, medicine_reservation_items_id) values (3, 3);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-02-02 13:30:00', '2020-03-02 13:00:00', 100, 'Report', 5, 1, 2);
-						
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
+						('Exam', 1, '2021-02-02 13:30:00', '2021-02-02 13:00:00', 100, 'Reportt', 5, 1, 3);	
+		INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
+						('Counseling', 1, '2021-09-09 16:30:00', '2021-09-09 17:00:00', 100, 'Report2', 5, 1, 2);	                        
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
 INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);

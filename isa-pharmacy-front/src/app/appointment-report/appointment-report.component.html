@@ -7,10 +7,10 @@
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
          <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
-         <li><a href="">Schedule leave</a></li>
-         <li><a href="">Schedule appointment</a></li>
+         <li><a href="" routerLink="/dermatologist">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist">Schedule appointment</a></li>
          <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
-         <li id="log"><a href="">Log out</a></li>
+         <li id="log"><a href="" routerLink="/login">Log out</a></li>
         </ul>
       </nav>
     </div>
@@ -19,18 +19,18 @@
   <div class="profilediv">
     <div class="userinfo">
         <table >
-        <tr><td >Unesite podatke o pregledu za uidn: {{pat.uidn}}</td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
-        <tr ><td>Izaberite terapiju</td><td ><mat-form-field >
+        <tr><td >Unesite podatke o pregledu za uidn: {{pat.uidn}}</td><td></td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
+        <tr ><td>Izaberite lek i kolicinu</td><td></td><td ><mat-form-field >
           <mat-select name="" id="" #mySelect [(value)]="medicineSelect">
             <mat-option *ngFor="let med of medicine" [value]="med.name" >{{med.name}}</mat-option>
-        </mat-select></mat-form-field></td>
-        <td><button (click)="CallComposition(mySelect.value)">Specifikacija</button></td><td><button>Dostupnost</button></td></tr>
-        <tr><td>Zakazite dodatan pregled</td>
+        </mat-select></mat-form-field></td><td><input type="text" formControlName="quantity" #quantSelect></td>
+        <td><button (click)="CallComposition(mySelect.value)">Specifikacija</button></td><td><button (click)="MedicineAvailability(mySelect.value)">Dostupnost</button></td></tr>
+        <tr><td>Zakazite dodatan pregled</td><td></td>
           <td><mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
             <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
         </mat-select></mat-form-field></td>
           <td><button (click)="ScheduleAdditionalExam()">Dodatan termin</button></td></tr>
-        <button (click)="FinalizeDTO()">Zavrsi pregled</button>
+        <td></td><td></td><button (click)="FinalizeDTO(mySelect.value)">Zavrsi pregled</button>
     </table>
     </div>
 </div>
