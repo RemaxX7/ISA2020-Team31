@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,12 @@ public class AuthenticationController {
 		int expiresIn = tokenUtils.getExpiredIn();
 		
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, userDetails));
+	}
+	
+	@PostMapping("/logout")
+	public ResponseEntity<Boolean> logout(HttpServletRequest request) {
+		new SecurityContextLogoutHandler().logout(request, null, null);
+		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/register/patient")

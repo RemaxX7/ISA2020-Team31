@@ -96,6 +96,10 @@ public class MedicineServiceImpl implements MedicineService {
 	}
 
 	@Override
+	public List<Medicine> findByMedicineIds(List<Long> medicineIdList) {
+		return medicineRepository.findByMedicineIds(medicineIdList);
+	}
+	
 	public String findAvailableMedicineCount(String name, String id) {
 		Medicine med = findByName(name);
 		String broj = "";

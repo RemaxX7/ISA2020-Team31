@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-patient',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class PatientComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -17,5 +18,10 @@ export class PatientComponent implements OnInit {
     localStorage.removeItem('userToken');
     localStorage.removeItem('user');
     this.router.navigate(['login']);
+
+    this.userService.Logout().subscribe(data => {
+    },
+      err => console.log(err)
+    )
   }
 }

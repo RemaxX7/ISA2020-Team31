@@ -12,4 +12,5 @@ public interface PharmacyReviewService {
 	PharmacyReview save(PharmacyReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException;
 	Collection<PharmacyReview> findAll();
 	Double calculatePharmacyScore(Long id);
+	Integer findOneByPatientAndPharmacyId(Long pharmacyId);
 }

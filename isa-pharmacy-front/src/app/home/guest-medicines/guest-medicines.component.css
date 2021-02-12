@@ -28,3 +28,7 @@
 mat-divider {
     margin: 5px 0px 5px 0px;
 }
+
+ngb-rating {
+    outline: none;
+}

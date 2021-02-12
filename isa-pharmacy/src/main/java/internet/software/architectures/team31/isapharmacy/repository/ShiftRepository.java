@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
-import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 
 public interface ShiftRepository extends JpaRepository<Shift,Long> {
 	
@@ -26,4 +26,12 @@ public interface ShiftRepository extends JpaRepository<Shift,Long> {
 	List<Shift> findAllByIntervalAndEmployeeId(@Param("start")LocalDateTime startDateTime,
 												@Param("end")LocalDateTime endDateTime,
 												@Param("employeeId")Long id);
+	
+	@Query(value = "SELECT * FROM"
+			+ " shifts s  WHERE :date BETWEEN s.start_date_time AND s.end_date_time", nativeQuery = true)
+	Collection<Shift> findAllByDate(@Param("date") LocalDateTime dateTime);
+	
+	@Query(value = "SELECT * FROM"
+			+ " shifts s  WHERE :date BETWEEN s.start_date_time AND s.end_date_time AND s.pharmacy_id = :pharmacyId", nativeQuery = true)
+	Collection<Shift> findAllByDateAndPharmacyId(@Param("date") LocalDateTime dateTime, @Param("pharmacyId") Long pharmacyId);
 }

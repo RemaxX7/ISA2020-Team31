@@ -21,6 +21,7 @@ public class PharmacyAdmin extends User {
 	
 	public PharmacyAdmin() {
 		super();
+		this.enabled=true;
 	}
 
 	public PharmacyAdmin(Pharmacy pharmacy) {
@@ -39,19 +40,19 @@ public class PharmacyAdmin extends User {
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

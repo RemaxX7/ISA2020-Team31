@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AddInventoryItemComponent } from '../dialog/add-inventory-item/add-inventory-item.component';
 import { InventoryItem } from '../model/inventory-item.model';
 import { Pharmacy } from '../model/pharmacy.model';
@@ -12,7 +13,7 @@ import { PharmacyService } from '../service/pharmacy.service';
 })
 export class PharmacyInventoryComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,private pharmacyService:PharmacyService) { }
+  constructor(private router: Router,public dialog: MatDialog,private pharmacyService:PharmacyService) { }
 
   pharmacy:Pharmacy=new Pharmacy;
   pharmacyId:number;
@@ -22,6 +23,11 @@ export class PharmacyInventoryComponent implements OnInit {
     this.FillInventory();
   }
 
+  LogOut() {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    this.router.navigate(['login']);
+  }
   FillInventory(){
     this.pharmacyService.getPharmacy(this.pharmacyId).then(
       data=>{

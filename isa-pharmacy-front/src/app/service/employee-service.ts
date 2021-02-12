@@ -19,7 +19,7 @@ import { Pharmacist } from '../model/pharmacist.model';
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/search/patients/all",options).toPromise();
+      return this._http.get("http://localhost:8080/api/patients/all",options).toPromise();
     }
     fillExams(): Promise<any>{
       let headers = new HttpHeaders({
@@ -160,5 +160,13 @@ import { Pharmacist } from '../model/pharmacist.model';
     })
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/search/employee/medicineavailability/" + name+"/"+id,options).toPromise();
+    }
+
+    getAllEmployees():Observable<any> {
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+      let options = { headers: headers };
+      return this._http.get(this._APIUrl + '/employees', options);
     }
   }

@@ -1,7 +1,9 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.security.auth.login.AccountException;
 
@@ -14,7 +16,9 @@ import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
+import internet.software.architectures.team31.isapharmacy.repository.EmployeeRepository;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AuthorityService;
 import internet.software.architectures.team31.isapharmacy.service.CityService;
@@ -27,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	@Autowired
 	private CityService cityService;
 	@Autowired
@@ -63,7 +69,6 @@ public class UserServiceImpl implements UserService {
 		if(findByEmail(dto.getEmail()) != null) {
 			throw new UsernameNotUniqueException("Username " + dto.getEmail() + " is already registered.");
 		}
-		System.out.println(dto.getAddress().getLongitude());
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		Patient patient = new Patient(dto);
 		patient.getAddress().setCity(cityService.findById(dto.getAddress().getCityId()));
@@ -119,6 +124,11 @@ public class UserServiceImpl implements UserService {
 		User user = findByUidn(dto.getUidn());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return userRepository.save(user);
+	}
+
+	@Override
+	public Collection<UserViewDTO> findAllEmployees() {
+		return employeeRepository.findAll().stream().map(employee -> new UserViewDTO(employee)).collect(Collectors.toList());
 	}
 	
 }

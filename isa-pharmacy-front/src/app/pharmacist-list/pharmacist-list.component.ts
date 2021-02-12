@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Pharmacist } from '../model/pharmacist.model';
 import { PharmacistService } from '../service/pharmacist.service';
 
@@ -9,11 +10,11 @@ import { PharmacistService } from '../service/pharmacist.service';
 })
 export class PharmacistListComponent implements OnInit {
 
-  constructor(private pharmacistService:PharmacistService) { }
+  constructor(private router: Router,private pharmacistService:PharmacistService) { }
 
   pharmacists:Pharmacist[]=[];
   ngOnInit(): void {
-    this.GetPharmacists();
+    this.searchActive=false;
   }
 
   GetPharmacists()
@@ -25,5 +26,30 @@ export class PharmacistListComponent implements OnInit {
       }
     )
   }
+  searchActive:boolean;
+  Search() {
+    let query = (<HTMLInputElement>document.getElementById('search-input')).value;
+    if (query) {
+      this.SearchPharmacist( query);
+    }
+  }
+
+  SearchPharmacist( query: string) {
+    this.pharmacistService.search( query).subscribe(
+      data => {
+        this.pharmacists = data;
+        this.searchActive = true;
+      }
+    )
+  }
+
+  CheckIfEmpty(event: InputEvent) {
+      this.GetPharmacists();
+    }
+    LogOut() {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('user');
+      this.router.navigate(['login']);
+    }
 
 }

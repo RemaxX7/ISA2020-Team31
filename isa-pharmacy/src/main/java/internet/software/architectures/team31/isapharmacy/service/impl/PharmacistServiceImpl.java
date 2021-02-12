@@ -75,6 +75,11 @@ public class PharmacistServiceImpl implements PharmacistService  {
 		
 	}
 
+	@Override
+	public List<Pharmacist> search(String query) {
+		return this.pharmacistRepository.search(query);
+	}
+
 
 
 }

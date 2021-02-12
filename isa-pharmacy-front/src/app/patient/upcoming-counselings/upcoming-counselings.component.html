@@ -1,1 +1,25 @@
-<p>upcoming-counselings works!</p>
+<div class="counselingsBox">
+    <h1><b>Upcoming counselings</b></h1>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+        <mat-label>Sort by</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="Sort()">
+            <mat-option value="dateRange.startDateTime" selected>Date</mat-option>
+            <mat-option value="price">Price</mat-option>
+            <mat-option value="pharmacy.name">Pharmacy</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngFor="let counseling of counselings">
+        <div class="counseling">
+            <h1>{{counseling.pharmacyName}}</h1>
+            <p><b>Pharmacist</b>: {{counseling.employeeName}} {{counseling.employeeSurname}}, {{counseling.employeeEmail}}</p>
+            <p><b>Date</b>: {{ParseDate(counseling.startDateTime)}}</p>
+            <p><b>Duration</b>: {{counseling.duration + 1}} minutes</p>
+            <p><b>Price</b>: {{counseling.price}}</p>
+            <button mat-raised-button (click)="Cancel(counseling)">Cancel</button>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+        <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+        </mat-paginator>
+    </div>

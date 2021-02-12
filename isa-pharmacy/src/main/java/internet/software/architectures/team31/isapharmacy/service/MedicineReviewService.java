@@ -12,4 +12,5 @@ public interface MedicineReviewService {
 	MedicineReview save(MedicineReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException;
 	Collection<MedicineReview> findAll();
 	Double calculateMedicineScore(Long id);
+	Integer findOneByPatientAndMedicineId(Long medicineId);
 }

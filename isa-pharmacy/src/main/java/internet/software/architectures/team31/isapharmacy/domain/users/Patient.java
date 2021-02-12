@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import internet.software.architectures.team31.isapharmacy.domain.location.Address;
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.patient.UserCategory;
 import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 @Entity
 @DiscriminatorValue("Patient")
@@ -26,22 +29,28 @@ public class Patient extends User {
 	@Column(name="bought_medicine_list")
 	@ElementCollection(targetClass=Medicine.class)
 	private List<Medicine> boughtMedicineList;
-	@Column
-	@ElementCollection(targetClass=Medicine.class)
+	@ManyToMany
+	@JoinTable(name = "patients_allergies")
 	private List<Medicine> allergies;
 	@Column(name = "activation_token")
 	private String activationToken;
+	@Column
+    private UserCategory userCategory;
+	@Column 
+	private Integer obtainedPoints;
 	
 	public Patient() {
 		super();
 	}
 
-	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken) {
+	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken, UserCategory userCategory, Integer obtainedPoints) {
 		super();
 		this.penalty = penalty;
 		this.boughtMedicineList = boughtMedicineList;
 		this.allergies = allergies;
 		this.activationToken = activationToken;
+		this.userCategory = userCategory;
+		this.obtainedPoints = obtainedPoints;
 	}
 
 	public Patient(UserRegisterDTO dto) {
@@ -55,6 +64,8 @@ public class Patient extends User {
 		this.phoneNumber = dto.getPhoneNumber();
 		this.address = new Address(dto.getAddress());
 		this.penalty = 0;
+		this.userCategory = UserCategory.REGULAR;
+		this.obtainedPoints = 0;
 	}
 
 	public Integer getPenalty() {
@@ -87,6 +98,22 @@ public class Patient extends User {
 	
 	public void setActivationToken(String activationToken) {
 		this.activationToken = activationToken;
+	}
+	
+	public UserCategory getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(UserCategory userCategory) {
+		this.userCategory = userCategory;
+	}
+	
+	public Integer getObtainedPoints() {
+		return obtainedPoints;
+	}
+
+	public void setObtainedPoints(Integer obtainedPoints) {
+		this.obtainedPoints = obtainedPoints;
 	}
 
 	@Override

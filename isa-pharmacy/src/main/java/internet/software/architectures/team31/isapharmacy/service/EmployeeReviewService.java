@@ -12,4 +12,5 @@ public interface EmployeeReviewService {
 	EmployeeReview save(EmployeeReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException;
 	Collection<EmployeeReview> findAll();
 	Double calculateEmployeeScore(Long id);
+	Integer findOneByPatientAndEmployeeId(Long employeeId);
 }

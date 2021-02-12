@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
@@ -13,5 +14,6 @@ public interface ShiftService {
 	Shift save(ShiftCreateDTO shift) throws ShiftNotFreeEception;
 	List<Shift> findAllByIntervalAndPharmacyId(LocalDateTime startDateTime,LocalDateTime endDateTime,Long pharmachyId);
 	List<Shift> findAllByIntervalAndEmployeeId(LocalDateTime startDateTime,LocalDateTime endDateTime,Long id);
-	
+	Collection<Shift> findAllByDate(LocalDateTime dateTime);
+	Collection<Shift> findAllByDateAndPharmacyId(LocalDateTime dateTime, Long pharmacyId);
 }

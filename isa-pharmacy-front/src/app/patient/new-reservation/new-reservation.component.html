@@ -1,0 +1,49 @@
+<div class="medicinesBox">
+    <h1><b>Medicine reservation</b></h1>
+    <mat-divider></mat-divider>
+    <form [formGroup]="myForm" autocomplete="off">
+        <mat-form-field class="pharmacies">
+            <mat-label>Pharmacy</mat-label>
+            <mat-select formControlName="pharmacy">
+                <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">
+                    <h1>{{pharmacy.name}} </h1>
+                    <p>{{pharmacy.address.street}} {{pharmacy.address.number}}, {{pharmacy.address.city}}
+                    </p>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Pick-up date</mat-label>
+            <input matInput [min]="min" [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <div class="search">
+            <mat-form-field>
+                <input type="text" id="search-input" matInput placeholder="Search medicines" autocomplete="off"
+                    (input)="CheckIfEmpty($event)">
+            </mat-form-field>
+            <button mat-raised-button (click)="Search()">Search</button>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngFor="let medicine of medicines" class="medicines">
+            <div class="medicine">
+                <h1>{{medicine.name}}</h1>
+                <p><b>Type</b>: {{medicine.type}}</p>
+                <ng-template #t let-fill="fill">
+                    <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill">&#9733;</span>
+                        &#9733;
+                    </span>
+                </ng-template>
+                <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="medicine.rate" [readonly]="true"></ngb-rating>
+            </div>
+            <button mat-raised-button class="reservation-button" [disabled]="myForm.invalid" (click)="MakeReservation(medicine)">Make
+                reservation</button>
+            <mat-divider></mat-divider>
+        </div>
+        <mat-paginator [pageSize]="5" [length]="totalElements" (page)="NextPage($event)">
+        </mat-paginator>
+    </form>
+</div>

@@ -38,7 +38,7 @@ public class EmployeeReviewServiceImpl implements EmployeeReviewService {
 		}
 		if(!examService.hasPatientVisitedDermatologist(patient.getId(), dto.getEmployeeId()) &&
 				!counselingService.hasPatientVisitedPharmacist(patient.getId(), dto.getEmployeeId())) {
-			throw new InvalidReviewException("You cannot review this employee.");
+			throw new InvalidReviewException("You cannot rate this employee.");
 		}
 		if(hasPatientReviewedEmployee(patient.getId(), dto.getEmployeeId())) {
 			return update(dto);
@@ -77,5 +77,16 @@ public class EmployeeReviewServiceImpl implements EmployeeReviewService {
 		EmployeeReview review = employeeReviewRepository.findOneByPatientIdAndEmployeeId(patient.getId(), dto.getEmployeeId());
 		review.setScore(dto.getScore());
 		return employeeReviewRepository.save(review);
+	}
+
+	@Override
+	public Integer findOneByPatientAndEmployeeId(Long employeeId) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		EmployeeReview review = employeeReviewRepository.findOneByPatientIdAndEmployeeId(patient.getId(), employeeId);
+		if(review == null) {
+			return 0;
+		} else {
+			return review.getScore();
+		}
 	}
 }

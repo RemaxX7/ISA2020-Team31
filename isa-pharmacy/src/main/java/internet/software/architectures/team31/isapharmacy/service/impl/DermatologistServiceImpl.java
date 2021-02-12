@@ -30,4 +30,9 @@ public class DermatologistServiceImpl implements DermatologistService {
 	public Dermatologist findById(Long id) {
 		return dermatologistRepository.findById(id).orElse(null);
 	}
+
+	@Override
+	public List<Dermatologist> search(String query) {
+		return this.dermatologistRepository.search(query);
+	}
 }

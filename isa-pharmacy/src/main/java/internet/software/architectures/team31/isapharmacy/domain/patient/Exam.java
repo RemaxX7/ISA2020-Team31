@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.domain.patient;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,9 @@ public class Exam extends Appointment {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Dermatologist dermatologist;
 
+	@Column
+	private Integer points;
+	
 	public Exam() {
 		super();
 	}
@@ -39,4 +43,13 @@ public class Exam extends Appointment {
 	public void setDermatologist(Dermatologist dermatologist) {
 		this.dermatologist = dermatologist;
 	}
+	
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+
 }

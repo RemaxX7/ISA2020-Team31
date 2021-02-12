@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule} from '@angular/common/http';
-import { ReactiveFormsModule ,FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
@@ -36,7 +36,7 @@ import { DermatologistListComponent } from './dermatologist-list/dermatologist-l
 import { AgmCoreModule } from '@agm/core';
 import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
 import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
-import { AddShiftPharmacistComponent } from './dialog/add-shift-pharmacist/add-shift-pharmacist.component';
+import { AddShiftPharmacistComponent } from './dialog/add-shift/add-shift-pharmacist.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -61,6 +61,16 @@ import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmac
 import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { PatientPharmaciesComponent } from './patient/patient-pharmacies/patient-pharmacies.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NewReservationComponent } from './patient/new-reservation/new-reservation.component';
+import { PatientPasswordComponent } from './patient/patient-password/patient-password.component';
+import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
+import { RatingDialogComponent } from './patient/rating-dialog/rating-dialog.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
 import { ChangePriceComponent } from './dialog/change-price/change-price.component';
 import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
@@ -108,6 +118,12 @@ import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inven
     EmployeeComplaintComponent,
     DermatologistAppointmentsPageComponent,
     PharmacistAppointmentsPageComponent,
+    PatientPharmaciesComponent,
+    NewReservationComponent,
+    PatientPasswordComponent,
+    PatientAllergiesComponent,
+    RatingDialogComponent,
+    PatientMedicinesComponent,
     PricelistComponent,
     ChangePriceComponent,
     PharmacyInventoryComponent,
@@ -134,6 +150,12 @@ import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inven
     MatPaginatorModule,
     MatMenuModule,
     MatIconModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatStepperModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']
@@ -142,7 +164,7 @@ import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inven
     NgxMaterialTimepickerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
     })
   ],
   providers: [],

@@ -46,4 +46,9 @@ public class PharmacistController {
 	public ResponseEntity<Pharmacist> register(@RequestBody UserRegisterDTO dto,@PathVariable Long pharmacyId ) throws UsernameNotUniqueException {
 		return new ResponseEntity<>(pharmacistService.register(dto,pharmacyId), HttpStatus.CREATED);
 	}
+	
+	@GetMapping(value = "/search/{query}")
+	public ResponseEntity<List<Pharmacist>> search(@PathVariable String query) {
+		return new ResponseEntity<>(pharmacistService.search(query), HttpStatus.OK);
+	}
 }

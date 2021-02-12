@@ -18,7 +18,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public boolean hasPatientVisitedPharmacy(Long patientId, Long pharmacyId) {
-		return appointmentRepository.findOneByPatientIdAndPharmacyIdAndAppointmentStatus(patientId, pharmacyId, AppointmentStatus.FINISHED) != null;
+		return appointmentRepository.existsByPatientIdAndPharmacyIdAndAppointmentStatus(patientId, pharmacyId, AppointmentStatus.FINISHED);
 	}
 
 	@Override

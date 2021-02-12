@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddShiftPharmacistComponent } from '../dialog/add-shift-pharmacist/add-shift-pharmacist.component';
+import { AddShiftPharmacistComponent } from '../dialog/add-shift/add-shift-pharmacist.component';
 import { Pharmacist } from '../model/pharmacist.model';
 import { PharmacistService } from '../service/pharmacist.service';
 import { Address } from '../shared/Location/address.model';
@@ -29,7 +29,6 @@ export class PharmacistRegistrationComponent implements OnInit {
   constructor(private fb: FormBuilder,public dialog: MatDialog, private route: ActivatedRoute,private router: Router,private pharmacistService:PharmacistService, private locationService:LocationService) { }
 
   pharmacist:Pharmacist=new Pharmacist;
-  pharmacyAdminId:number;
   countries:Country[]=[];
   cities:City[]=[];
   selectedCity:City=new City();
@@ -38,8 +37,7 @@ export class PharmacistRegistrationComponent implements OnInit {
   shifts:boolean;
 
   ngOnInit(): void {
-    this.pharmacyId=1;
-    this.pharmacyAdminId=Number(this.route.snapshot.paramMap.get('id'));
+    this.pharmacyId=Number(this.route.snapshot.paramMap.get('id'));
     this.myForm=this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
@@ -91,9 +89,8 @@ export class PharmacistRegistrationComponent implements OnInit {
       this.myForm.controls['latitude'].setValue(event.coords.lat);
     }
 
-
+/*
     AddShifts(){
-      var id=1;
       const dialogRef = this.dialog.open(AddShiftPharmacistComponent,{
         height:"500px",
         data:{
@@ -106,7 +103,7 @@ export class PharmacistRegistrationComponent implements OnInit {
        this.ngOnInit();
        this.router.navigate(['/pharmacist-list']);
       });
-    }
+    }*/
 
     Register() {
       var address = new Address();
@@ -130,7 +127,7 @@ export class PharmacistRegistrationComponent implements OnInit {
         data=>{
           this.pharmacist=data;
           alert("Registration successful"),
-          this.AddShifts();
+          this.router.navigate(['/pharmacist-list']);
         }
 
       );
