@@ -110,4 +110,9 @@ public class CounselingController {
 	public ResponseEntity<Collection<UserViewDTO>> getAvailablePharmacists(@RequestBody FindAvailablePharmacistsDTO dto) {
 		return new ResponseEntity<>(counselingService.findAvailablePharmacists(dto.getDateTime().plusHours(1L), dto.getPharmacyId()), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/update/points/{counselingId}/{points}")
+	public ResponseEntity<Counseling> updateLoyaltyPointsForSpecificCounseling(@PathVariable Long counselingId, @PathVariable Integer points){
+		return new ResponseEntity<>(counselingService.updatePoints(counselingId, points), HttpStatus.OK);
+	}
 }

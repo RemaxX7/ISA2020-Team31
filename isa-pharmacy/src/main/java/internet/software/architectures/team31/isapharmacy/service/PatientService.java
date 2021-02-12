@@ -4,6 +4,7 @@ import java.util.List;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.patient.UserCategory;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.AllergiesDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordUpdateDTO;
@@ -20,4 +21,5 @@ public interface PatientService {
 	PatientProfileDTO updatePatientProfile(PatientProfileDTO dto);
 	AllergiesDTO updatePatientAllergies(AllergiesDTO dto);
 	Boolean updatePatientPassword(PasswordUpdateDTO dto) throws PasswordControlException;
+	Patient changeUserCategory(Long userId, UserCategory userCategory);
 }

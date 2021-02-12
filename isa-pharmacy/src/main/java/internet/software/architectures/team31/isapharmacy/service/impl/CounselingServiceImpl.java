@@ -344,4 +344,16 @@ public class CounselingServiceImpl implements CounselingService {
 		}
 		return frontList;
 	}
+	
+	@Override
+	public Counseling updatePoints(Long counselingId, Integer points) {
+		Counseling counseling = counselingRepository.getOne(counselingId);
+		
+		if (points >= 0) {
+			counseling.setPoints(points);
+			return counselingRepository.save(counseling);
+		}
+		
+		return counseling;
+	}
 }

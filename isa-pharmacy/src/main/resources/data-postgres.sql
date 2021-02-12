@@ -105,3 +105,9 @@ INSERT INTO PATIENTS_ALLERGIES (patient_id, allergies_id) values (5, 1), (5, 2),
 INSERT INTO SHIFTS (end_date_time, start_date_time, employee_id, pharmacy_id) values ('2021-02-20 00:00:00', '2021-02-15 00:00:00', 2, 1);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, pharmacy_id, pharmacist_id) values
 						('Counseling', 1, '2021-02-16 13:29:00', '2021-02-16 13:00:00', 100, 'Report', 1, 2);
+
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (0, 5);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (1, 10);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (2, 15);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (3, 10);
+INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (4, 15);

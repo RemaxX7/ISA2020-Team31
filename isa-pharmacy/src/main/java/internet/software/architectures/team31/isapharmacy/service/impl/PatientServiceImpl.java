@@ -12,6 +12,7 @@ import internet.software.architectures.team31.isapharmacy.domain.medicine.Medici
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.patient.UserCategory;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.AllergiesDTO;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineViewDTO;
@@ -85,6 +86,7 @@ public class PatientServiceImpl implements PatientService {
 		}
 		return null;
 	}
+
 	@Override
 	public PatientProfileDTO getPatientProfile() {
 		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -133,5 +135,13 @@ public class PatientServiceImpl implements PatientService {
 		patient.setPassword(passwordEncoder.encode(dto.getPassword()));
 		userService.save(patient);
 		return Boolean.TRUE;
+	}
+	
+	@Override
+	public Patient changeUserCategory(Long userId, UserCategory userCategory) {
+		Patient patient = (Patient) patientRepository.getOne(userId);
+		patient.setUserCategory(userCategory);
+		
+		return patientRepository.save(patient);
 	}
 }
