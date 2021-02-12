@@ -40,10 +40,9 @@ export class SignInComponent implements OnInit {
   }
 
   RedirectUser(role: string) {
-    console.log(this.myForm.controls['password'].value)
     switch(role) {
       case "ROLE_USER": {
-        this.router.navigate(['/patient'])
+        this.router.navigate(['/patient-profile'])
         break;
       }
       case "ROLE_DERMATOLOGIST":{

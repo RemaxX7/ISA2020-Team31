@@ -1,1 +1,67 @@
-<p>patient-profile works!</p>
+<div class="profileBox" *ngIf="loaded">
+    <h1><b>Profile</b></h1>
+    <mat-divider></mat-divider>
+    <div class="penalties">
+        <span class="material-icons" [style.color]="GetPenaltyColor()">loyalty</span>
+        <span class="penalties-text"><b>Penalties</b>: {{profile.penalties}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-raised-button id="toggle" (click)="Toggle()">Edit</button>
+    <form [formGroup]="myForm" autocomplete="off">
+        <hr>
+        <mat-grid-list cols="2">
+            <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Surname" formControlName="surname">
+            </mat-form-field>
+        </mat-grid-list>
+        <br>
+        <mat-grid-list cols="2">
+            <mat-form-field>
+                <input matInput placeholder="Phone number" formControlName="phoneNumber">
+            </mat-form-field>
+        </mat-grid-list>
+        <br>
+        <mat-grid-list cols="2">
+            <mat-form-field>
+                <mat-select placeholder="Country" (selectionChange)="FillCities($event)" formControlName="country"
+                    id="country">
+                    <mat-option *ngFor="let country of countries" [value]="country">
+                        {{country.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="City" formControlName="city" id="city">
+                    <mat-option *ngFor="let city of cities" [value]="city">
+                        {{city.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-grid-list>
+        <br>
+        <mat-grid-list cols="2">
+            <mat-form-field>
+                <input matInput placeholder="Street" formControlName="street">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Number" formControlName="number">
+            </mat-form-field>
+        </mat-grid-list>
+        <mat-grid-list cols="2">
+            <mat-form-field>
+                <input id="longitude" matInput placeholder="Longitude" formControlName="longitude" readonly>
+            </mat-form-field>
+            <mat-form-field>
+                <input id="latitude" matInput placeholder="Latitude" formControlName="latitude" readonly>
+            </mat-form-field>
+        </mat-grid-list>
+        <br>
+        <agm-map [latitude]="profile.latitude" [longitude]="profile.longitude" (mapClick)="GetCoordinates($event)">
+            <agm-marker [latitude]="profile.latitude" [longitude]="profile.longitude"></agm-marker>
+        </agm-map>
+        <button mat-raised-button [disabled]="!myForm.valid" (click)="Save()">Save changes</button>
+    </form>
+</div>

@@ -5,6 +5,7 @@ import javax.security.auth.login.AccountException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -13,9 +14,11 @@ import internet.software.architectures.team31.isapharmacy.exception.AlreadyRepli
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
+import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidComplaintException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidReviewException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidScoreException;
+import internet.software.architectures.team31.isapharmacy.exception.PasswordControlException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
@@ -39,6 +42,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 	}
 	@ExceptionHandler(value = ShiftNotFreeEception.class)
 	public ResponseEntity<Object> handleShiftNotFreeEception(ShiftNotFreeEception exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(value = CounselingAlreadyScheduledException.class)
+	public ResponseEntity<Object> handleCounselingAlreadyScheduledException(CounselingAlreadyScheduledException exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
@@ -82,9 +90,19 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler  
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(value = DisabledException.class)
+	public ResponseEntity<Object> handleDisabledException(DisabledException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(value = PasswordControlException.class)
+	public ResponseEntity<Object> handlePasswordControlException(PasswordControlException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<Object> handleException(Exception exception) {
-		System.out.println(exception.getMessage());
+		exception.printStackTrace();
 		return new ResponseEntity<>("An error has occured.", HttpStatus.BAD_REQUEST);
 	}
 }

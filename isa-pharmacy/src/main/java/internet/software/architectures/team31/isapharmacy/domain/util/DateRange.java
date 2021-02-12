@@ -1,6 +1,8 @@
 package internet.software.architectures.team31.isapharmacy.domain.util;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -45,5 +47,9 @@ public class DateRange {
 
 	public void setEndDateTime(LocalDateTime endDateTime) {
 		this.endDateTime = endDateTime;
+	}
+	
+	public static long getMinutesBetween(DateRange range) {
+		return Duration.between(range.getStartDateTime(), range.getEndDateTime()).toMinutes();
 	}
 }

@@ -13,7 +13,7 @@ import internet.software.architectures.team31.isapharmacy.dto.MedicineReviewCrea
 @DiscriminatorValue("Medicine")
 public class MedicineReview extends Review {
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Medicine medicine;
 
 	public MedicineReview() {

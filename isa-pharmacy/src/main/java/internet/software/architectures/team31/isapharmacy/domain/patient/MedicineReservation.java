@@ -1,12 +1,9 @@
 package internet.software.architectures.team31.isapharmacy.domain.patient;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineReservationCreateDTO;
@@ -37,9 +35,8 @@ public class MedicineReservation {
 	private Pharmacy pharmacy;
 	@Column(name = "pick_up_date")
 	private LocalDate pickUpDate;
-	@Column(name = "medicine_reservation_items")
-	@ElementCollection(targetClass = MedicineReservationItem.class)
-	private List<MedicineReservationItem> medicineReservationItems;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Medicine medicine;
 	private Double price;
 	
 	public MedicineReservation() {
@@ -48,7 +45,7 @@ public class MedicineReservation {
 
 	public MedicineReservation(Long id, MedicineReservationStatus medicineReservationStatus, String code,
 			Patient patient, Pharmacy pharmacy, LocalDate pickUpDate,
-			List<MedicineReservationItem> medicineReservationItems, Double price) {
+			Medicine medicine, Double price) {
 		super();
 		this.id = id;
 		this.medicineReservationStatus = medicineReservationStatus;
@@ -56,7 +53,7 @@ public class MedicineReservation {
 		this.patient = patient;
 		this.pharmacy = pharmacy;
 		this.pickUpDate = pickUpDate;
-		this.medicineReservationItems = medicineReservationItems;
+		this.medicine = medicine;
 		this.price = price;
 	}
 	
@@ -114,12 +111,12 @@ public class MedicineReservation {
 		this.pickUpDate = pickUpDate;
 	}
 
-	public List<MedicineReservationItem> getMedicineReservationItems() {
-		return medicineReservationItems;
+	public Medicine getMedicine() {
+		return medicine;
 	}
 
-	public void setMedicineReservationItems(List<MedicineReservationItem> medicineReservationItems) {
-		this.medicineReservationItems = medicineReservationItems;
+	public void setMedicine(Medicine medicine) {
+		this.medicine = medicine;
 	}
 
 	public Double getPrice() {

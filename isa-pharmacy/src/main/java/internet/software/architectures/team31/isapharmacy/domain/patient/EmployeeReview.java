@@ -37,4 +37,14 @@ public class EmployeeReview extends Review {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
+
+	@Override
+	public String toString() {
+		return "EmployeeReview [employee=" + employee + ", id=" + id + ", patient=" + patient + ", score=" + score
+				+ ", getEmployee()=" + getEmployee() + ", getId()=" + getId() + ", getPatient()=" + getPatient()
+				+ ", getScore()=" + getScore() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+	
+	
 }

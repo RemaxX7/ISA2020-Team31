@@ -22,7 +22,6 @@ export class GuestMedicinesComponent implements OnInit {
   GetMedicines(page: number) {
     this.medicineService.getPage(page).subscribe(
       data => {
-        console.log(data);
         this.medicines = data['content'];
         this.totalElements = data['totalElements'];
         this.searchActive = false;

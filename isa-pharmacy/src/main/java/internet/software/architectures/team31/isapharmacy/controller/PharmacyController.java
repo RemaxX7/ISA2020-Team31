@@ -1,5 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.controller;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -9,23 +10,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.dto.InventoryItemCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PharmacyViewDTO;
-import internet.software.architectures.team31.isapharmacy.service.InventoryItemService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 
 @RestController
-@RequestMapping(value = "auth/pharmacy")
+@RequestMapping(value = "api/pharmacy")
 public class PharmacyController {
 	
 	@Autowired
@@ -52,6 +51,11 @@ public class PharmacyController {
 		return new ResponseEntity<>(pharmacyService.search(query, PageRequest.of(page, 5, Sort.by("name"))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
+	@PostMapping(value = "/available/counseling")
+	public ResponseEntity<Collection<PharmacyViewDTO>> findAvailableForCounseling(@RequestBody LocalDateTime dateTime) {
+		return new ResponseEntity<>(pharmacyService.findAllAvailableForCounseling(dateTime.plusHours(1L)), HttpStatus.OK);
+	}
 
 	@PostMapping(value="/addItem")
 	public ResponseEntity<Pharmacy> addInventoryItem(@RequestBody InventoryItemCreateDTO dto) {

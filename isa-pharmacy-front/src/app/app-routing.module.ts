@@ -35,29 +35,18 @@ import { PharmacyComplaintComponent } from './patient/pharmacy-complaint/pharmac
 import { EmployeeComplaintComponent } from './patient/employee-complaint/employee-complaint.component';
 import { DermatologistAppointmentsPageComponent } from './dermatologist-appointments-page/dermatologist-appointments-page.component';
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
+import { PatientPharmaciesComponent } from './patient/patient-pharmacies/patient-pharmacies.component';
+import { NewReservationComponent } from './patient/new-reservation/new-reservation.component';
+import { PatientPasswordComponent } from './patient/patient-password/patient-password.component';
+import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
 import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
 import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
+import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
 import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
+import { PatientGuard } from './patient.guard';
 
 const routes: Routes = [
-  {path:'dermatologist',component:DermatologistComponent},
-  {path:'dermatologist-profile',component:DermatologistProfileComponent},
-  {path:'employee-password-change',component:EmployeePasswordChangeComponent},
-  {path:'pharmacist',component:PharmacistComponent},
-  {path:'pharmacist-profile',component:PharmacistProfileComponent},
-  {path:'pharmacist-password-change',component:PharmacistPasswordChangeComponent},
-  {path:'medicine-dispensing',component:MedicineDispensingComponent},
-  {path:'dermatologist-patient-search',component:DermatologistPatientSearchComponent},
-  {path:'pharmacist-patient-search',component:PharmacistPatientSearchComponent},
-  { path: 'pharmacy-profile', component: PharmacyProfileComponent },
-  {path: 'pharmacist-work-cal',component:PharmacistWorkCalendarComponent},
-  {path: 'dermatologist-work-cal',component:DermatologistWorkCalendarComponent},
-  {path: 'dermatologist-appointment-report/:uidn',component:AppointmentReportComponent},
-  {path: 'pharmacist-appointment-report/:uidn',component:AppointmentReportPharmacistComponent},
-  {path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
-  {path:'pharmacist-list', component:PharmacistListComponent},
-  {path:'dermatologist-list', component:DermatologistListComponent},
   { path: 'dermatologist', component: DermatologistComponent },
   { path: 'dermatologist-profile', component: DermatologistProfileComponent },
   { path: 'employee-password-change', component: EmployeePasswordChangeComponent },
@@ -70,6 +59,22 @@ const routes: Routes = [
   { path: 'pharmacy-profile', component: PharmacyProfileComponent },
   { path: 'pharmacist-work-cal', component: PharmacistWorkCalendarComponent },
   { path: 'dermatologist-work-cal', component: DermatologistWorkCalendarComponent },
+  { path: 'dermatologist-appointment-report/:uidn', component: AppointmentReportComponent },
+  { path: 'pharmacist-appointment-report/:uidn', component: AppointmentReportPharmacistComponent },
+  { path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
+  { path: 'pharmacist-list', component: PharmacistListComponent },
+  { path: 'dermatologist-list', component: DermatologistListComponent },
+  { path: 'dermatologist', component: DermatologistComponent },
+  { path: 'dermatologist-profile', component: DermatologistProfileComponent },
+  { path: 'employee-password-change', component: EmployeePasswordChangeComponent },
+  { path: 'pharmacist', component: PharmacistComponent },
+  { path: 'pharmacist-profile', component: PharmacistProfileComponent },
+  { path: 'pharmacist-password-change', component: PharmacistPasswordChangeComponent },
+  { path: 'medicine-dispensing', component: MedicineDispensingComponent },
+  { path: 'dermatologist-patient-search', component: DermatologistPatientSearchComponent },
+  { path: 'pharmacist-patient-search', component: PharmacistPatientSearchComponent },
+  { path: 'pharmacy-profile', component: PharmacyProfileComponent },
+  { path: 'dermatologist-work-cal', component: DermatologistWorkCalendarComponent },
   { path: 'dermatologist-appointment-report/:id/:uidn', component: AppointmentReportComponent },
   { path: 'pharmacist-appointment-report/:id/:uidn', component: AppointmentReportPharmacistComponent },
   { path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
@@ -77,13 +82,20 @@ const routes: Routes = [
   { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'dermatologist-appointments', component: DermatologistAppointmentsPageComponent },
   { path: 'pharmacist-appointments', component: PharmacistAppointmentsPageComponent },
-  {path:'dermatologist-list', component:DermatologistListComponent},
-  {path:'pharmacy-admin-profile', component:PharmacyAdminProfileComponent},
-  {path:'pharmacist-registration/:id', component:PharmacistRegistrationComponent},
-  {path:'pricelist', component: PricelistComponent},
+  { path: 'dermatologist-list', component: DermatologistListComponent },
+  { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
+  { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
   {
-    path:'pharmacy-inventory', component:  PharmacyInventoryComponent
-   
+    path: '', component: HomeComponent,
+    children: [{ path: '', component: SignInComponent }]
+  },
+  { path: 'dermatologist-list', component: DermatologistListComponent },
+  { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
+  { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
+  { path: 'pricelist', component: PricelistComponent },
+  {
+    path: 'pharmacy-inventory', component: PharmacyInventoryComponent
+
   },
   {
     path: 'register', component: HomeComponent,
@@ -101,50 +113,70 @@ const routes: Routes = [
     path: 'medicines', component: HomeComponent,
     children: [{ path: '', component: GuestMedicinesComponent }]
   },
-  { path: 'patient', component: PatientComponent },
+  { path: 'patient', component: PatientComponent, canActivate: [PatientGuard] },
   {
-    path: 'patient-profile', component: PatientComponent,
+    path: 'patient-profile', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PatientProfileComponent }]
   },
   {
-    path: 'new-exam', component: PatientComponent,
+    path: 'new-exam', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: NewExamComponent }]
   },
   {
-    path: 'new-counseling', component: PatientComponent,
+    path: 'new-counseling', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: NewCounselingComponent }]
   },
   {
-    path: 'upcoming-exams', component: PatientComponent,
+    path: 'upcoming-exams', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: UpcomingExamsComponent }]
   },
   {
-    path: 'upcoming-counselings', component: PatientComponent,
+    path: 'upcoming-counselings', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: UpcomingCounselingsComponent }]
   },
   {
-    path: 'past-exams', component: PatientComponent,
+    path: 'past-exams', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PastExamsComponent }]
   },
   {
-    path: 'past-counselings', component: PatientComponent,
+    path: 'past-counselings', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PastCounselingsComponent }]
   },
   {
-    path: 'reservations', component: PatientComponent,
+    path: 'reservations', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: ReservationsComponent }]
   },
   {
-    path: 'eprescriptions', component: PatientComponent,
+    path: 'eprescriptions', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: EPrescriptionsComponent }]
   },
   {
-    path: 'pharmacy-complaint', component: PatientComponent,
+    path: 'pharmacy-complaint', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PharmacyComplaintComponent }]
   },
   {
-    path: 'employee-complaint', component: PatientComponent,
+    path: 'employee-complaint', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: EmployeeComplaintComponent }]
+  },
+  {
+    path: 'patient-pharmacies', component: PatientComponent, canActivate: [PatientGuard],
+    children: [{ path: '', component: PatientPharmaciesComponent }]
+  },
+  {
+    path: 'new-reservation', component: PatientComponent, canActivate: [PatientGuard],
+    children: [{ path: '', component: NewReservationComponent }]
+  },
+  {
+    path: 'patient-password', component: PatientComponent, canActivate: [PatientGuard],
+    children: [{ path: '', component: PatientPasswordComponent }]
+  },
+  {
+    path: 'patient-allergies', component: PatientComponent, canActivate: [PatientGuard],
+    children: [{ path: '', component: PatientAllergiesComponent }]
+  },
+  {
+    path: 'patient-medicines', component: PatientComponent, canActivate: [PatientGuard],
+    children: [{ path: '', component: PatientMedicinesComponent }]
   }
 ];
 

@@ -5,23 +5,19 @@ import java.time.LocalDateTime;
 public class CounselingCreateDTO {
 
 	private LocalDateTime startDateTime;
-	private LocalDateTime endDateTime;
 	private Long pharmacyId;
 	private Long pharmacistId;
-	private Double price;
 	
 	public CounselingCreateDTO() {
 		super();
 	}
 
-	public CounselingCreateDTO(LocalDateTime startDateTime, LocalDateTime endDateTime, Long pharmacyId,
-			Long pharmacistId, Double price) {
+	public CounselingCreateDTO(LocalDateTime startDateTime, Long pharmacyId,
+			Long pharmacistId) {
 		super();
 		this.startDateTime = startDateTime;
-		this.endDateTime = endDateTime;
 		this.pharmacyId = pharmacyId;
 		this.pharmacistId = pharmacistId;
-		this.price = price;
 	}
 
 	public LocalDateTime getStartDateTime() {
@@ -30,14 +26,6 @@ public class CounselingCreateDTO {
 
 	public void setStartDateTime(LocalDateTime startDateTime) {
 		this.startDateTime = startDateTime;
-	}
-
-	public LocalDateTime getEndDateTime() {
-		return endDateTime;
-	}
-
-	public void setEndDateTime(LocalDateTime endDateTime) {
-		this.endDateTime = endDateTime;
 	}
 
 	public Long getPharmacyId() {
@@ -54,13 +42,5 @@ public class CounselingCreateDTO {
 
 	public void setPharmacistId(Long pharmacistId) {
 		this.pharmacistId = pharmacistId;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
 	}
 }

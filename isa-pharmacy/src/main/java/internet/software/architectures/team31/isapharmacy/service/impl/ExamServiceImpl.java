@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,6 @@ import internet.software.architectures.team31.isapharmacy.domain.medicine.Medici
 import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
-import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
@@ -24,7 +25,7 @@ import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
-import internet.software.architectures.team31.isapharmacy.dto.AppointmentScheduleDTO;
+import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
@@ -68,32 +69,33 @@ public class ExamServiceImpl implements ExamService {
 	}
 	
 	@Override
-	public Exam schedule(AppointmentScheduleDTO dto) throws PenaltyException, AppointmentNotFreeException {
+	public AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException {
 		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if(patient.getPenalty() >= 3) {
 			throw new PenaltyException("Cannot schedule an exam. Maximum number of penalties exceeded.");
 		}
 		
-		Exam exam = findById(dto.getAppointmentId());
+		Exam exam = findById(id);
 		if(exam.getAppointmentStatus() != AppointmentStatus.FREE) {
 			throw new AppointmentNotFreeException("Appointment term is not available.");
 		}
 		
 		exam.setPatient(patient);
+		exam.setAppointmentStatus(AppointmentStatus.OCCUPIED);
 		sendExamEmail(exam);
-		return examRepository.save(exam);
+		return new AppointmentViewDTO(examRepository.save(exam));
 	}
 
 	@Override
-	public Exam cancel(Long id) throws CancelAppointmentException {
+	public AppointmentViewDTO cancel(Long id) throws CancelAppointmentException {
 		Exam exam = findById(id);
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		if(!currentDateTime.plusDays(1).isBefore(exam.getDateRange().getStartDateTime())) {
-			throw new CancelAppointmentException("Exam cannot be cancelled 24 hours before start.");
+			throw new CancelAppointmentException("This exam cannot be cancelled.");
 		}
 		exam.setPatient(null);
 		exam.setAppointmentStatus(AppointmentStatus.FREE);
-		return examRepository.save(exam);
+		return new AppointmentViewDTO(examRepository.save(exam));
 	}
 
 	@Override
@@ -115,10 +117,21 @@ public class ExamServiceImpl implements ExamService {
 	public Collection<Exam> findAllByAppointmentStatus(AppointmentStatus status) {
 		return examRepository.findAllByAppointmentStatus(status);
 	}
+	
+	@Override
+	public Page<AppointmentViewDTO> findAllByAppointmentStatus(AppointmentStatus status, Pageable pageable) {
+		return examRepository.findAllByAppointmentStatus(status, pageable).map(exam -> new AppointmentViewDTO(exam));
+	}
 
 	@Override
-	public Collection<Counseling> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
+	public Collection<Exam> findAllByPatientIdAndAppointmentStatus(Long patientId, AppointmentStatus status) {
 		return examRepository.findAllByPatientIdAndAppointmentStatus(patientId, status);
+	}
+	
+	@Override
+	public Page<AppointmentViewDTO> findAllByPatientIdAndAppointmentStatus(AppointmentStatus status, Pageable pageable) {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		return examRepository.findAllByPatientIdAndAppointmentStatus(patient.getId(), status, pageable).map(exam -> new AppointmentViewDTO(exam));
 	}
 	
 	@Override
@@ -128,7 +141,7 @@ public class ExamServiceImpl implements ExamService {
 
 	@Override
 	public boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId) {
-		return examRepository.findOneByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED) != null;
+		return examRepository.existsByPatientIdAndDermatologistIdAndAppointmentStatus(patientId, dermatologistId, AppointmentStatus.FINISHED);
 	}
 
 	@Override

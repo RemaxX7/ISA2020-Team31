@@ -54,7 +54,7 @@ public class Address {
 		this.street = dto.getStreet();
 		this.number = dto.getNumber();
 		this.latitude = dto.getLatitude();
-		this.longitude = dto.getLatitude();
+		this.longitude = dto.getLongitude();
 	}
 	
 	public Long getId() {

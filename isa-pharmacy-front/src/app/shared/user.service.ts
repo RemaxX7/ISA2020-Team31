@@ -19,4 +19,8 @@ export class UserService {
   Login(credentials:LoginCredentials) {
     return this._http.post(this._APIUrl + '/auth/login', credentials);
   }
+
+  Logout() {
+    return this._http.post(this._APIUrl + '/auth/logout', {});
+  }
 }

@@ -1,0 +1,43 @@
+mat-form-field {
+    margin: 0px 5px 0px 5px;
+    width: 48%;
+}
+
+mat-hint {
+    color: red !important;
+}
+
+form {
+    justify-self: center;
+}
+
+agm-map {
+    height: 350px;
+}
+
+button {
+    margin: 10px;
+}
+
+.profileBox{
+    align-items: center;
+    width: 50%;
+    margin: 1em auto; 
+    padding:10px;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.08);
+}
+
+.penalties {
+    height: 50px;
+    text-align: left;
+}
+
+.penalties > .material-icons {
+    font-size: 40px;
+    margin: 5px 0 0 0;
+}
+
+.penalties-text {
+    position: absolute;
+    margin: 15px 0 0 5px;
+}
