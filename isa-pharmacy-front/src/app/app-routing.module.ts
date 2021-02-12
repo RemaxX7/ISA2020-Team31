@@ -65,6 +65,7 @@ const routes: Routes = [
   {path:'dermatologist-list', component:DermatologistListComponent},
   {path:'pharmacy-admin-profile', component:PharmacyAdminProfileComponent},
   {path:'pharmacist-registration/:id', component:PharmacistRegistrationComponent},
+  { path: '', component: HomeComponent },
   {
     path: 'register', component: HomeComponent,
     children: [{ path: '', component: SignUpComponent }]
