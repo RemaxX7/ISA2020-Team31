@@ -22,18 +22,19 @@ INSERT INTO PHARMACIES (name, address_id, rate) values ('Ajerhjsd', 1, 3);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type) VALUES (5, 'Nikola', 'Nikolic', '1234567891234', 'nikolaUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+nikolaUser@gmail.com', '555-555-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient');
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type) VALUES (4, 'Petar', 'Petrovic', '4234567891234', 'petarUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+petarUser@gmail.com', '333-333-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient');
 
-INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id) VALUES (2, 'Jovan', 'Jovanovic', '2234567891234', 'jovanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'userjovan@email.com', '555-333-555', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1);
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id) VALUES (2, 'Jovan', 'Jovanovic', '2234567891234', 'jovanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+userJovan@gmail.com', '555-333-555', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1);
 
-INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type) VALUES (3, 'Milan', 'Milanovic', '3234567891234', 'milanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'usermilan@email.com', '555-333-333', true, '2017-10-01 21:58:58.508-07', 'Dermatologist');
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type) VALUES (3, 'Milan', 'Milanovic', '3234567891234', 'milanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+userMilan@gmail.com', '555-333-333', true, '2017-10-01 21:58:58.508-07', 'Dermatologist');
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type) VALUES (99, 'Milutin', 'Miljkovic', '9876543219876', 'adminUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+adminUser@gmail.com', '123-333-333', true, '2017-10-01 21:58:58.508-07', 'Admin');
 INSERT INTO USERS_PHARMACIES (dermatologist_id, pharmacies_id) values (3, 1), (3, 2);
 
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_USER');
 INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_PHARMACIST');
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_DERMATOLOGIST');
-
+INSERT INTO SHIFTS (end_date_time, start_date_time, employee_id, pharmacy_id) values ('2021-02-20 00:00:00', '2021-02-15 00:00:00', 2, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1);
-INSERT INTO USER_AUTHORITY (user_id, authority_id) values (2, 3), (3, 4);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) values (2, 3), (3, 4),(99,2);
 
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (1, 'Paracetamol', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (2, 'asfasfas', 0, 0, 'Kompozicija paracetamola', 'Dodatne informacije', 'Galenika', 0);
@@ -63,7 +64,6 @@ INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 4
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5, 5, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);
 
-
 INSERT INTO MEDICINE_RESERVATIONS (id, code, medicine_reservation_status, pick_up_date, price, patient_id, pharmacy_id) values (3, '6165146', 0, '2022-02-02', 130, 5, 1);
 INSERT INTO MEDICINE_RESERVATION_ITEMS (id, quantity, medicine_id) values (3, 3, 1);
 INSERT INTO MEDICINE_RESERVATIONS_MEDICINE_RESERVATION_ITEMS (medicine_reservation_id, medicine_reservation_items_id) values (3, 3);
@@ -76,3 +76,4 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
 INSERT INTO REVIEWS (type, score, patient_id, employee_id) values ('Employee', 5, 4, 2);
+INSERT INTO INVENTORY_ITEM (quantity,medicine_id) values (15,5);
