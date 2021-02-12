@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PasswordValidator } from 'src/app/home/sign-up/password-validator';
 import { PatientService } from 'src/app/service/patient.service';
@@ -11,7 +12,7 @@ import { PatientService } from 'src/app/service/patient.service';
 })
 export class PatientPasswordComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private patientService: PatientService, private toastr: ToastrService) { }
+  constructor(private fb: FormBuilder, private patientService: PatientService, private toastr: ToastrService, private router: Router) { }
 
   public myForm: FormGroup;
 
@@ -31,9 +32,10 @@ export class PatientPasswordComponent implements OnInit {
     }
 
     this.patientService.updatePassword(passwordChange).subscribe(data => {
-      this.toastr.success('Password changed.');
+      this.toastr.success('Password changed. Please login again.');
       this.myForm.controls['password'].setValue(null);
       this.myForm.controls['passwordControl'].setValue(null);
+      this.router.navigate(['/login'])
     },
       err => {
         this.toastr.error(err.error);

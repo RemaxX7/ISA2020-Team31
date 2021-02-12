@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class MedicineReservationController {
 	@Autowired
 	private MedicineReservationService medicineReservationService;
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/save")
 	public ResponseEntity<MedicineReservation> save(@RequestBody MedicineReservationCreateDTO dto) throws PenaltyException {
 		dto.setPickUpDate(dto.getPickUpDate().plusDays(1L));
@@ -41,18 +43,21 @@ public class MedicineReservationController {
 		return new ResponseEntity<>(medicineReservationService.findAll(), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/finished/{page}")
 	public ResponseEntity<Page<MedicineReservationViewDTO>> findAllFinishedByPatient(@PathVariable Integer page) {
 		return new ResponseEntity<>(medicineReservationService.findAllByPatientAndMedicineReservationStatus(
 				MedicineReservationStatus.FINISHED, PageRequest.of(page, 5, Sort.by("pickUpDate"))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/created/{page}")
 	public ResponseEntity<Page<MedicineReservationViewDTO>> findAllCreatedByPatient(@PathVariable Integer page) {
 		return new ResponseEntity<>(medicineReservationService.findAllByPatientAndMedicineReservationStatus(
 				MedicineReservationStatus.CREATED, PageRequest.of(page, 5, Sort.by("pickUpDate"))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/cancel/{id}")
 	public ResponseEntity<MedicineReservation> cancel(@PathVariable Long id) throws CancelMedicineReservationException {
 		return new ResponseEntity<>(medicineReservationService.cancel(id), HttpStatus.OK);
