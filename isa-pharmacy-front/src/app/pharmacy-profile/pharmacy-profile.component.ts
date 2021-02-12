@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
 import { Pharmacist } from '../model/pharmacist.model';
@@ -16,13 +16,18 @@ import { PharmacyService } from '../service/pharmacy.service';
 })
 export class PharmacyProfileComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,private pharmacyService:PharmacyService,private pharmacistService:PharmacistService,private dermatologistService:DermatologistService) { }
+  constructor(private router: Router,private route: ActivatedRoute,private pharmacyService:PharmacyService,private pharmacistService:PharmacistService,private dermatologistService:DermatologistService) { }
   pharmacy:Pharmacy=new Pharmacy;
   currentRate:number;
   dermatologists:Dermatologist[]=[];
   pharmacists:Pharmacist[]=[];
   pharmacyId:number;
   
+  LogOut() {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    this.router.navigate(['login']);
+  }
   
   lat = 22.2736308;
   long = 70.7512555;

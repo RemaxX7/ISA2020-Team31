@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { AddShiftPharmacistComponent } from '../dialog/add-shift-pharmacist/add-shift-pharmacist.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AddShiftPharmacistComponent } from '../dialog/add-shift/add-shift-pharmacist.component';
 import { ChangePriceComponent } from '../dialog/change-price/change-price.component';
 import { PricelistMedicineItem } from '../model/pricelist-medicine-item.model';
 import { Pricelist } from '../model/pricelist.model';
@@ -14,7 +14,7 @@ import { PricelistService } from '../service/pricelist.service';
 })
 export class PricelistComponent implements OnInit {
 
-  constructor(private pricelistService:PricelistService,public dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(private router: Router,private pricelistService:PricelistService,public dialog: MatDialog, private route: ActivatedRoute) { }
 
   pharmacyId:number;
   pricelist:Pricelist=new Pricelist;
@@ -36,6 +36,12 @@ export class PricelistComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
      this.ngOnInit();
     });
+  }
+
+  LogOut() {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    this.router.navigate(['login']);
   }
 
   GetPricelist(){

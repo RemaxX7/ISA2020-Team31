@@ -1,12 +1,18 @@
 <header>
   <div class="header">
-    <a routerLink="/" class="logo">Pharmacy</a>
-    <nav>
-      <ul>
-        <li><a href="#" routerLink="/pharmacist-list">All pharmacists</a></li>
-        <li><a href="#" routerLink="/dermatologist-list">All dermatologists</a></li>  
+  <a routerLink="/" class="logo">Pharmacy</a>
+  <nav>
+    <ul>
+      <li><a href="#" routerLink="/pharmacist-list">All pharmacists</a></li>
+      <li><a href="#" routerLink="/dermatologist-list">All dermatologists</a></li>
+      <li><a href="#" routerLink="/pharmacy-inventory">Inventary</a></li>
+      <li><a href="#" routerLink="/pricelist">Pricelist</a></li>
+      <li><a href="#" routerLink="/pharmacy-admin-profile">Profile</a></li>
+      <button (click)="LogOut()">
+                  <li>Logout</li>
+      </button>
       </ul>
-    </nav>
+  </nav>
   </div>
 </header>
 <div class="main">
