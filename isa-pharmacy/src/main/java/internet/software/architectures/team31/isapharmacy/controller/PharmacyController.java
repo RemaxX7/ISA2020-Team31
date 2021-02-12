@@ -53,7 +53,7 @@ public class PharmacyController {
 	}
 	
 
-	@PutMapping(value="/addItem")
+	@PostMapping(value="/addItem")
 	public ResponseEntity<Pharmacy> addInventoryItem(@RequestBody InventoryItemCreateDTO dto) {
 		return new ResponseEntity<>(this.pharmacyService.addNewItem(dto),HttpStatus.CREATED);
 	}

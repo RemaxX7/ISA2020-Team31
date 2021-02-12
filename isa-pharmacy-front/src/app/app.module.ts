@@ -63,6 +63,8 @@ import { DermatologistAppointmentsPageComponent } from './dermatologist-appointm
 import { PharmacistAppointmentsPageComponent } from './pharmacist-appointments-page/pharmacist-appointments-page.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
 import { ChangePriceComponent } from './dialog/change-price/change-price.component';
+import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
+import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inventory-item.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { ChangePriceComponent } from './dialog/change-price/change-price.compone
     DermatologistAppointmentsPageComponent,
     PharmacistAppointmentsPageComponent,
     PricelistComponent,
-    ChangePriceComponent
+    ChangePriceComponent,
+    PharmacyInventoryComponent,
+    AddInventoryItemComponent
   ],
   imports: [
     BrowserModule,
@@ -143,7 +147,8 @@ import { ChangePriceComponent } from './dialog/change-price/change-price.compone
   providers: [],
   entryComponents: [
     ChangePriceComponent,
-    AddShiftPharmacistComponent
+    AddShiftPharmacistComponent,
+    AddInventoryItemComponent
   ],
   bootstrap: [AppComponent]
 })

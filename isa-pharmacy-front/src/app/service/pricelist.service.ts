@@ -9,7 +9,7 @@ import { SetMedicinePrice } from '../dto/set-medicine-price.model';
 })
 export class PricelistService {
 
-  private readonly _APIUrl="http://localhost:8080/auth/pricelist"
+  private readonly _APIUrl="http://localhost:8080/api/pricelist"
 
   constructor(private _http : HttpClient ) { }
 

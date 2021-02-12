@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class InventoryItemService {
 
-  private readonly _APIUrl="http://localhost:8080/auth/inventory"
+  private readonly _APIUrl="http://localhost:8080/api/inventory"
 
   constructor(private _http : HttpClient ) { }
 }

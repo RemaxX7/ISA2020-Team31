@@ -10,7 +10,7 @@ import { Pharmacist } from '../model/pharmacist.model';
     providedIn: 'root'
   })
   export class EmployeeService {
-    readonly _APIUrl="http://localhost:8080/auth/search/employee"
+    readonly _APIUrl="http://localhost:8080/api/search/employee"
   
     constructor(private _http : HttpClient) { }
     

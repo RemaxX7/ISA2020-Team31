@@ -26,8 +26,6 @@ export class PricelistComponent implements OnInit {
   }
 
   ChangePrice(itemId:number){
-
-    console.log(itemId);
     const dialogRef = this.dialog.open(ChangePriceComponent,{
       data:{
         itemId:itemId,

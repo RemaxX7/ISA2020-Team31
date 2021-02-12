@@ -9,7 +9,7 @@ import { User } from '../shared/user.model';
 export class PharmacistService {
   
 
-  private readonly _APIUrl="http://localhost:8080/auth/pharmacist";
+  private readonly _APIUrl="http://localhost:8080/api/pharmacist";
 
   constructor(private _http : HttpClient) { }
 

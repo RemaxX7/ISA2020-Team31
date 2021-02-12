@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { InventoryItemCreate } from '../dto/inventory-item-create.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class PharmacyService {
 
   getSearchResultPage(page: number, query:string):Observable<any> {
     return this._http.get<any>(this._APIUrl + '/search/' + query + '/' + page);
+  }
+
+  addItem(dto:InventoryItemCreate):Observable<any> {
+    return this._http.post(this._APIUrl + '/addItem',dto);
   }
 }
