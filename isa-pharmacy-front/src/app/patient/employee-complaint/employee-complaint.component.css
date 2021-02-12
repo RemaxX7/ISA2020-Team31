@@ -1,0 +1,23 @@
+.complaintBox {
+    align-items: center;
+    width: 50%;
+    margin: 1em auto;
+    padding: 10px;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.08);
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.text {
+    height: 500px;
+}
+
+mat-option {
+    min-height: 80px !important;
+}
+
+h1 {
+    margin: 10px 0 0 0;
+}

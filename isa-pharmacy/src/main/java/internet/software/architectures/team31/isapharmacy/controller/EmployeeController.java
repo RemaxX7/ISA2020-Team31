@@ -12,24 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineService;
 import internet.software.architectures.team31.isapharmacy.service.UserDetailsServiceImpl;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
-import internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl;
-import internet.software.architectures.team31.isapharmacy.service.impl.DermatologistServiceImpl;
-import internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl;
-import internet.software.architectures.team31.isapharmacy.service.impl.MedicineServiceImpl;
-import internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping(value = "api/search/employee")
@@ -86,5 +81,10 @@ public class EmployeeController {
 	@GetMapping(value = "/medicineavailability/{name}/{id}")
 	public ResponseEntity<String> findAvailableMedicineCount(@PathVariable String name,@PathVariable String id) {
 		return new ResponseEntity<>(medService.findAvailableMedicineCount(name,id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/employees")
+	public ResponseEntity<Collection<UserViewDTO>> findAllEmployees() {
+		return new ResponseEntity<>(employedService.findAllEmployees(), HttpStatus.OK);
 	}
 }

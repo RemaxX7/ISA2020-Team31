@@ -84,7 +84,10 @@ const routes: Routes = [
   { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
   { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
-  { path: '', component: HomeComponent },
+  {
+    path: '', component: HomeComponent,
+    children: [{ path: '', component: SignInComponent }]
+  },
   { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
   { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
@@ -173,6 +176,10 @@ const routes: Routes = [
   {
     path: 'patient-medicines', component: PatientComponent,
     children: [{ path: '', component: PatientMedicinesComponent }]
+  },
+  {
+    path: 'dispensing', component: PatientComponent,
+    children: [{ path: '', component: MedicineDispensingComponent }]
   }
 ];
 
