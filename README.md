@@ -12,3 +12,5 @@ funkcionalnostima na front-u. Predefinisane sifre za korisnike su 123 a njihove 
 u bazi. Korisceno je b-crypt hesiranje. Sql skripta se nalazi u src/main/resources folderu, i postavljen 
 je na create-drop mod, tako da se svakim pokretanjem projekta vraca na pocetnu verziju. Email i 
 sifra za gmail koriscen je takodje u src/main/resources folderu.
+
+Zaposleni pri prvom logovanju moraju promeniti sifru koja mora biti razlicita od '123'.
