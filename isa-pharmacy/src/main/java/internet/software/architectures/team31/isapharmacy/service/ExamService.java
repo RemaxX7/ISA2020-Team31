@@ -30,4 +30,5 @@ public interface ExamService {
 	Exam finalizeExam(AppointmentFinalizationDTO dto,String quant);
 	Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto);
 	List<String> findTerminsByUidns(String patuidn,String empuidn);
+	Exam updatePoints(Long examId, Integer points);
 }

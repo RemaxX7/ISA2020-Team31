@@ -32,4 +32,5 @@ public interface CounselingService {
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);
 	List<Exam>findExamsForDerm(String uidn,String days);
+	Counseling updatePoints(Long counselingId, Integer points);
 }

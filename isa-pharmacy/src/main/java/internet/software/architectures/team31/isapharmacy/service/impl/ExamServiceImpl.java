@@ -253,4 +253,16 @@ public class ExamServiceImpl implements ExamService {
 		}
 		return frontList;
 	}
+	
+	@Override
+	public Exam updatePoints(Long examId, Integer points) {
+		Exam exam = examRepository.getOne(examId);
+		
+		if (points >= 0) {
+			exam.setPoints(points);
+			return examRepository.save(exam);
+		}
+		
+		return exam;
+	}
 }

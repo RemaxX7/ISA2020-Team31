@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import internet.software.architectures.team31.isapharmacy.domain.location.Address;
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.patient.UserCategory;
 import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 @Entity
 @DiscriminatorValue("Patient")
@@ -31,12 +32,14 @@ public class Patient extends User {
 	private List<Medicine> allergies;
 	@Column(name = "activation_token")
 	private String activationToken;
+	@Column
+    private UserCategory userCategory;
 	
 	public Patient() {
 		super();
 	}
 
-	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken) {
+	public Patient(Integer penalty, List<Medicine> boughtMedicineList, List<Medicine> allergies, String activationToken, UserCategory userCategory) {
 		super();
 		this.penalty = penalty;
 		this.boughtMedicineList = boughtMedicineList;
@@ -55,6 +58,7 @@ public class Patient extends User {
 		this.phoneNumber = dto.getPhoneNumber();
 		this.address = new Address(dto.getAddress());
 		this.penalty = 0;
+		this.userCategory = UserCategory.REGULAR;
 	}
 
 	public Integer getPenalty() {
@@ -87,6 +91,14 @@ public class Patient extends User {
 	
 	public void setActivationToken(String activationToken) {
 		this.activationToken = activationToken;
+	}
+	
+	public UserCategory getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(UserCategory userCategory) {
+		this.userCategory = userCategory;
 	}
 
 	@Override

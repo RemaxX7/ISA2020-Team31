@@ -102,4 +102,9 @@ public class ExamController {
 	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/update/points/{examId}/{points}")
+	public ResponseEntity<Exam> updateLoyaltyPointsForSpecificExam(@PathVariable Long examId, @PathVariable Integer points){
+		return new ResponseEntity<>(examService.updatePoints(examId, points), HttpStatus.OK);
+	}
 }
