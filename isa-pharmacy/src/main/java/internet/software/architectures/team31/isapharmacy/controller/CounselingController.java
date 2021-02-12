@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,8 @@ import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSche
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
-import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
+import internet.software.architectures.team31.isapharmacy.dto.FindAvailablePharmacistsDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
@@ -38,8 +38,9 @@ public class CounselingController {
 	@Autowired
 	private PatientServiceImpl patientService;
 	
-	@PostMapping(value = "/save")
-	public ResponseEntity<Counseling> save(@RequestBody CounselingCreateDTO dto) {
+	@PostMapping(value = "/schedule")
+	public ResponseEntity<Counseling> save(@RequestBody CounselingCreateDTO dto) throws PenaltyException, CounselingAlreadyScheduledException {
+		dto.setStartDateTime(dto.getStartDateTime().plusHours(1L));
 		return new ResponseEntity<>(counselingService.save(dto), HttpStatus.CREATED);
 	}
 	
@@ -63,13 +64,8 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.OCCUPIED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
 	}	
 	
-	@PutMapping(value = "/schedule")
-	public ResponseEntity<AppointmentViewDTO> shedule(@PathVariable Long id) throws PenaltyException, AppointmentNotFreeException, CounselingAlreadyScheduledException {
-		return new ResponseEntity<>(counselingService.schedule(id), HttpStatus.OK);
-	}
-	
 	@PostMapping(value = "/cancel/{id}")
-	public ResponseEntity<AppointmentViewDTO> cancel(@PathVariable Long id) throws CancelAppointmentException {
+	public ResponseEntity<Boolean> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
 	}
 	
@@ -86,5 +82,10 @@ public class CounselingController {
 	@PostMapping(value = "/schedulenewcounseling")
 	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(counselingService.scheduleAdditionalConsultation(dto),HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/available")
+	public ResponseEntity<Collection<UserViewDTO>> getAvailablePharmacists(@RequestBody FindAvailablePharmacistsDTO dto) {
+		return new ResponseEntity<>(counselingService.findAvailablePharmacists(dto.getDateTime().plusHours(1L), dto.getPharmacyId()), HttpStatus.OK);
 	}
 }

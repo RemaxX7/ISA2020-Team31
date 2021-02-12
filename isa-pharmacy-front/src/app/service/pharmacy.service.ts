@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -25,5 +25,13 @@ export class PharmacyService {
 
   getSearchResultPage(page: number, query:string):Observable<any> {
     return this._http.get<any>(this._APIUrl + '/search/' + query + '/' + page);
+  }
+
+  getAvailablePharmacies(dateTime: Date):Observable<any> {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+    return this._http.post<any>(this._APIUrl + '/available/counseling', dateTime, options);
   }
 }

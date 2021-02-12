@@ -32,6 +32,7 @@ public class MedicineReservationController {
 	
 	@PostMapping(value = "/save")
 	public ResponseEntity<MedicineReservation> save(@RequestBody MedicineReservationCreateDTO dto) throws PenaltyException {
+		dto.setPickUpDate(dto.getPickUpDate().plusDays(1L));
 		return new ResponseEntity<>(medicineReservationService.save(dto), HttpStatus.CREATED);
 	}
 	

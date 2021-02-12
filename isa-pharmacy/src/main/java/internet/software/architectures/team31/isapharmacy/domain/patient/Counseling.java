@@ -28,8 +28,7 @@ public class Counseling extends Appointment {
 	
 	public Counseling(CounselingCreateDTO dto) {
 		super();
-		this.dateRange = new DateRange(dto.getStartDateTime(), dto.getEndDateTime());
-		this.price = dto.getPrice();
+		this.dateRange = new DateRange(dto.getStartDateTime(), dto.getStartDateTime().plusMinutes(29L));
 	}
 
 	public Pharmacist getPharmacist() {

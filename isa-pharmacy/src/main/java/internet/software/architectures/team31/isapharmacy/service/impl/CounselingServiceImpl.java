@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ import internet.software.architectures.team31.isapharmacy.domain.medicine.Medici
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
+import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
+import internet.software.architectures.team31.isapharmacy.domain.users.Employee;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
@@ -23,6 +26,7 @@ import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSche
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
 import internet.software.architectures.team31.isapharmacy.dto.CounselingCreateDTO;
+import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
@@ -31,6 +35,7 @@ import internet.software.architectures.team31.isapharmacy.repository.CounselingR
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
+import internet.software.architectures.team31.isapharmacy.service.ShiftService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
 @Service
@@ -46,15 +51,30 @@ public class CounselingServiceImpl implements CounselingService {
 	private PatientServiceImpl patientService;
 	@Autowired
 	private MedicineServiceImpl medicineService;
-	
+	@Autowired
+	private ShiftService shiftService;
+	@Autowired
 	private EmailService emailService;
 
 	@Override
-	public Counseling save(CounselingCreateDTO dto) {
+	public Counseling save(CounselingCreateDTO dto) throws PenaltyException, CounselingAlreadyScheduledException {
+		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if(patient.getPenalty() >= 3) {
+			throw new PenaltyException("Cannot schedule a counseling appointment. Maximum number of penalties exceeded.");
+		}
+		
+		if(hasPatientAlreadyScheduledCounseling(patient.getId(), dto.getPharmacistId())) {
+			throw new CounselingAlreadyScheduledException("You have already scheduled a counseling appointment with this pharmacist.");
+		}
+		
+		
 		Counseling counseling = new Counseling(dto);
 		counseling.setPharmacy(pharmacyService.findById(dto.getPharmacyId()));
 		counseling.setPharmacist((Pharmacist) userService.findById(dto.getPharmacistId()));
-		counseling.setAppointmentStatus(AppointmentStatus.FREE);
+		counseling.setAppointmentStatus(AppointmentStatus.OCCUPIED);
+		counseling.setPatient(patient);
+		//TODO: Set price here
+		sendCounselingEmail(counseling);
 		return counselingRepository.save(counseling);
 	}
 
@@ -81,15 +101,14 @@ public class CounselingServiceImpl implements CounselingService {
 	}
 
 	@Override
-	public AppointmentViewDTO cancel(Long id) throws CancelAppointmentException {
+	public Boolean cancel(Long id) throws CancelAppointmentException {
 		Counseling counseling = findById(id);
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		if(!currentDateTime.plusDays(1).isBefore(counseling.getDateRange().getStartDateTime())) {
 			throw new CancelAppointmentException("This counseling cannot be cancelled.");
 		}
-		counseling.setPatient(null);
-		counseling.setAppointmentStatus(AppointmentStatus.FREE);
-		return new AppointmentViewDTO(counselingRepository.save(counseling));
+		counselingRepository.delete(counseling);
+		return Boolean.TRUE;
 	}
 	
 	@Override
@@ -165,7 +184,7 @@ public class CounselingServiceImpl implements CounselingService {
 	
 	private String getCounselingEmailText(Counseling counseling) {
 		StringBuilder text = new StringBuilder("Hello, " + counseling.getPatient().getName() + ". Your pharmacist counseling appointment with "
-				+ counseling.getPharmacist().getFullName() + " has been scheduled.");
+				+ counseling.getPharmacist().getFullName() + " has been scheduled.\r\n");
 		text.append("Pharmacy: " + counseling.getPharmacy().getName() + "\r\n");
 		text.append("Address: " + counseling.getPharmacy().getAddress() + "\r\n");
 		text.append("Date and time: " + counseling.getDateRange().getStartDateTime() + " - " + counseling.getDateRange().getEndDateTime() + "\r\n");
@@ -187,5 +206,32 @@ public class CounselingServiceImpl implements CounselingService {
 		counseling.setAppointmentStatus(AppointmentStatus.OCCUPIED);
 		counseling.setDateRange(range);
 		return counselingRepository.save(counseling);
+	}
+
+	@Override
+	public boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime) {
+		return isPharmacistAvailable(shift.getEmployee().getId(), dateTime);
+	}
+	
+	@Override
+	public Collection<UserViewDTO> findAvailablePharmacists(LocalDateTime dateTime, Long pharmacyId) {
+		Collection<Shift> shifts = shiftService.findAllByDateAndPharmacyId(dateTime, pharmacyId);
+		List<Employee> pharmacists = new ArrayList<Employee>();
+		for(Shift shift: shifts) {
+			if(isPharmacistAvailable(shift.getEmployee().getId(), dateTime)) {
+				pharmacists.add(shift.getEmployee());
+			}
+		}
+		return pharmacists.stream().map(pharmacist -> new UserViewDTO(pharmacist)).collect(Collectors.toList());
+	}
+	
+	private boolean isPharmacistAvailable(Long pharmacistId, LocalDateTime dateTime) {
+		Collection<Counseling> counselings = counselingRepository.findAllByPharmacistIdAndAppointmentStatus(pharmacistId, AppointmentStatus.OCCUPIED);
+		for(Counseling counseling: counselings) {
+			if(counseling.getDateRange().getStartDateTime().equals(dateTime)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

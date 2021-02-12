@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MedicineService } from 'src/app/service/medicine.service';
+import { RatingDialogComponent } from '../rating-dialog/rating-dialog.component';
 
 @Component({
-  selector: 'app-guest-medicines',
-  templateUrl: './guest-medicines.component.html',
-  styleUrls: ['./guest-medicines.component.css']
+  selector: 'app-patient-medicines',
+  templateUrl: './patient-medicines.component.html',
+  styleUrls: ['./patient-medicines.component.css']
 })
-export class GuestMedicinesComponent implements OnInit {
+export class PatientMedicinesComponent implements OnInit {
 
   public medicines:Array<any>;
   public totalElements:number;
   private searchActive:boolean = false;
 
-  constructor(private medicineService: MedicineService) { }
+  constructor(private medicineService: MedicineService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.GetMedicines(0);
@@ -61,5 +63,14 @@ export class GuestMedicinesComponent implements OnInit {
     if(!(<HTMLInputElement>document.getElementById('search-input')).value && this.searchActive) {
       this.GetMedicines(0);
     }
+  }
+
+  OpenDialog(medicineId) {
+    this.dialog.open(RatingDialogComponent, {
+      data: {
+        type: 'medicine',
+        target: medicineId
+      }
+    });
   }
 }

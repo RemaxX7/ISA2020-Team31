@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule} from '@angular/common/http';
-import { ReactiveFormsModule ,FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
@@ -69,6 +69,8 @@ import { PatientPasswordComponent } from './patient/patient-password/patient-pas
 import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
 import { RatingDialogComponent } from './patient/rating-dialog/rating-dialog.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +117,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     NewReservationComponent,
     PatientPasswordComponent,
     PatientAllergiesComponent,
-    RatingDialogComponent
+    RatingDialogComponent,
+    PatientMedicinesComponent
   ],
   imports: [
     BrowserModule,
@@ -141,6 +144,9 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatExpansionModule,
     MatCheckboxModule,
     MatStepperModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
       libraries: ['places']

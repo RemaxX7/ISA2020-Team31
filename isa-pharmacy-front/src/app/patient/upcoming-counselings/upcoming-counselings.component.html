@@ -14,7 +14,7 @@
             <h1>{{counseling.pharmacyName}}</h1>
             <p><b>Pharmacist</b>: {{counseling.employeeName}} {{counseling.employeeSurname}}, {{counseling.employeeEmail}}</p>
             <p><b>Date</b>: {{ParseDate(counseling.startDateTime)}}</p>
-            <p><b>Duration</b>: {{counseling.duration}} minutes</p>
+            <p><b>Duration</b>: {{counseling.duration + 1}} minutes</p>
             <p><b>Price</b>: {{counseling.price}}</p>
             <button mat-raised-button (click)="Cancel(counseling)">Cancel</button>
         </div>

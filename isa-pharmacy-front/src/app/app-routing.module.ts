@@ -41,6 +41,7 @@ import { PatientPasswordComponent } from './patient/patient-password/patient-pas
 import { PatientAllergiesComponent } from './patient/patient-allergies/patient-allergies.component';
 import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
 import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
+import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
 
 const routes: Routes = [
   { path: 'dermatologist', component: DermatologistComponent },
@@ -62,9 +63,9 @@ const routes: Routes = [
   { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'dermatologist-appointments', component: DermatologistAppointmentsPageComponent },
   { path: 'pharmacist-appointments', component: PharmacistAppointmentsPageComponent },
-  {path:'dermatologist-list', component:DermatologistListComponent},
-  {path:'pharmacy-admin-profile', component:PharmacyAdminProfileComponent},
-  {path:'pharmacist-registration/:id', component:PharmacistRegistrationComponent},
+  { path: 'dermatologist-list', component: DermatologistListComponent },
+  { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
+  { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
   { path: '', component: HomeComponent },
   {
     path: 'register', component: HomeComponent,
@@ -142,6 +143,10 @@ const routes: Routes = [
   {
     path: 'patient-allergies', component: PatientComponent,
     children: [{ path: '', component: PatientAllergiesComponent }]
+  },
+  {
+    path: 'patient-medicines', component: PatientComponent,
+    children: [{ path: '', component: PatientMedicinesComponent }]
   }
 
 ];

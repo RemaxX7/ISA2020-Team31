@@ -14,5 +14,4 @@ public interface PharmacistService {
 	List<Pharmacist> findAll();
 	Pharmacist findById(Long id); 
 	Pharmacist register(UserRegisterDTO dto,Long pharmacyId) throws UsernameNotUniqueException;
-
 }

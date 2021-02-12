@@ -71,14 +71,12 @@ export class NewReservationComponent implements OnInit {
 
   MakeReservation(medicine: any) {
     let pharmacy = this.myForm.controls['pharmacy'].value.id;
-    let date = new Date(this.myForm.controls['date'].value).setHours(12);
+    let date = this.myForm.controls['date'].value;
     let reservation = {
       pharmacyId: pharmacy,
       pickUpDate: date,
       medicineId: medicine.id
-    }
-
-    console.log(reservation);
+    }    
     
     this.reservationService.makeReservation(reservation).subscribe(data => {
       this.toastr.success('Medicine reservation created.')

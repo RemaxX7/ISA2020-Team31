@@ -33,4 +33,20 @@ export class CounselingService {
     let options = { headers: headers };
     return this._http.post<any>(this._APIUrl + '/cancel/' + id, {}, options);
   }
+
+  getAvailablePharmacists(request: any) {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+    return this._http.post<any>(this._APIUrl + '/available', request, options);
+  }
+
+  schedule(counseling: any) {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+    return this._http.post<any>(this._APIUrl + '/schedule', counseling, options);
+  }
 }

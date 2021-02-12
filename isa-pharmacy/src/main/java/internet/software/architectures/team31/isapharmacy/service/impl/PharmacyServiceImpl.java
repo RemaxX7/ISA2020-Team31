@@ -1,5 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
+import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.dto.PharmacyViewDTO;
 import internet.software.architectures.team31.isapharmacy.repository.PharmacyRepository;
+import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyReviewService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
+import internet.software.architectures.team31.isapharmacy.service.ShiftService;
 
 @Service
 public class PharmacyServiceImpl implements PharmacyService {
@@ -22,6 +27,12 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Autowired
 	private PharmacyReviewService pharmacyReviewService;
+	
+	@Autowired
+	private ShiftService shiftService;
+	
+	@Autowired
+	private CounselingService counselingService;
 
 	@Override
 	public Pharmacy save(Pharmacy pharmacy) {
@@ -53,4 +64,15 @@ public class PharmacyServiceImpl implements PharmacyService {
 		return pharmacyRepository.findById(id).orElse(null);
 	}
 
+	@Override
+	public Collection<PharmacyViewDTO> findAllAvailableForCounseling(LocalDateTime dateTime) {
+		Collection<Shift> shifts = shiftService.findAllByDate(dateTime);
+		Collection<PharmacyViewDTO> pharmacies = new ArrayList<PharmacyViewDTO>();
+		for(Shift shift: shifts) {
+			if(counselingService.areThereAvailablePharmacists(shift, dateTime)) {
+				pharmacies.add(new PharmacyViewDTO(shift.getPharmacy()));
+			}
+		}
+		return pharmacies;
+	}
 }
