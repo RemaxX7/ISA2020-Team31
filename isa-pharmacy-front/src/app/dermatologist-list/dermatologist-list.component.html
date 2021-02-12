@@ -1,51 +1,48 @@
 <header>
-    <div class="header">
-      <a routerLink="/" class="logo">Pharmacy</a>
-      <nav>
-        <ul>
-          <li><a href="#" routerLink="/pharmacist-list">All pharmacists</a></li> 
-          <li><a href="#" routerLink="/dermatologist-list">All dermatologists</a></li> 
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <div class="contener">
-    <div class="main">
-        <table class="table table-hover">
-            <thead>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Rate</th>
-            <th scope="col">Pharmacists</th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let d of dermatologists">
-                <td>
-                {{d.name}}
-                </td>
-                <td>
-                {{d.surname}}
-                </td>
-                <td>
-                  <ng-template #t let-fill="fill">
-                    <span class="star" [class.full]="fill === 100">
-                      <span class="half" [style.width.%]="fill">&#9733;</span>
-                      &#9733;
-                    </span>
-                  </ng-template>
-                  <ngb-rating [max]="5" [starTemplate]="t" [rate]="d.rate" [readonly]="true"></ngb-rating>
-      
-                </td>
-                <td>
-                    <ul>
-                      <li *ngFor="let p of d.pharmacies">
-                        <a href="#" [routerLink]="['/pharmacy-profile',p.id]" >{{p.name}}</a>
-                      </li>
-                    </ul>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+  <div class="header">
+    <a routerLink="/" class="logo">Pharmacy</a>
+    <nav>
+      <ul>
+        <li><a href="#" routerLink="/pharmacist-list">All pharmacists</a></li> 
+        <li><a href="#" routerLink="/dermatologist-list">All dermatologists</a></li> 
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="main">
+    <table class="table table-hover">
+        <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Rate</th>
+        <th scope="col">Pharmacists</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let d of dermatologists">
+            <td>
+            {{d.name}}
+            </td>
+            <td>
+            {{d.surname}}
+            </td>
+            <td>
+              <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span>
+                  &#9733;
+                </span>
+              </ng-template>
+              <ngb-rating [max]="5" [starTemplate]="t" [rate]="d.rate" [readonly]="true"></ngb-rating>
+  
+            </td>
+            <td>
+                <ul>
+                  <li *ngFor="let p of d.pharmacies">
+                    <a href="#" [routerLink]="['/pharmacy-profile',p.id]" >{{p.name}}</a>
+                  </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-

@@ -8,4 +8,5 @@ public interface DermatologistService {
 	
 	List<Dermatologist> findAllByPharmacy(Long id);
 	List<Dermatologist> findAll();
+	Dermatologist findById(Long id);
 }

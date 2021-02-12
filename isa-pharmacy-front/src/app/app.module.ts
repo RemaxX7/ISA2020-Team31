@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule ,FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
@@ -34,6 +34,10 @@ import { AppointmentReportPharmacistComponent } from './appointment-report-pharm
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { AgmCoreModule } from '@agm/core';
+import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
+import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
+import { AddShiftPharmacistComponent } from './dialog/add-shift-pharmacist/add-shift-pharmacist.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SignInComponent } from './home/sign-in/sign-in.component';
@@ -86,6 +90,9 @@ import { MatStepperModule } from '@angular/material/stepper';
     PharmacistListComponent,
     DermatologistListComponent,
     SignUpComponent,
+    PharmacyAdminProfileComponent,
+    PharmacistRegistrationComponent,
+    AddShiftPharmacistComponent,
     PatientComponent,
     SignInComponent,
     HomeComponent,
@@ -139,6 +146,7 @@ import { MatStepperModule } from '@angular/material/stepper';
       libraries: ['places']
     }),
     NgbModule,
+    NgxMaterialTimepickerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

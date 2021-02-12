@@ -1,118 +1,116 @@
 <header>
-  <div class="header">
-    <a routerLink="/" class="logo">Pharmacy</a>
-    <nav>
-      <ul>
-        <li><a href="#" routerLink="/pharmacy-profile">Pharmacy profile</a></li> 
-      </ul>
-    </nav>
-  </div>
+<div class="header">
+  <a routerLink="/" class="logo">Pharmacy</a>
+  <nav>
+    <ul>
+      <li><a href="#" routerLink="/pharmacy-profile">Pharmacy profile</a></li> 
+    </ul>
+  </nav>
+</div>
 </header>
-  <div class="contener">
-      <div class="main">
-        <div class="info">
-            <h1> {{pharmacy.name}} </h1>
-            <p> Address: {{pharmacy.address.street}} {{pharmacy.address.number}} , {{pharmacy.address.city.name}}</p>
-            <p>Rate: {{pharmacy.rate}}</p>
+<div class="main">
+    <div class="info">
+        <h1> {{pharmacy.name}} </h1>
+        <p> Address: {{pharmacy.address.street}} {{pharmacy.address.number}} , {{pharmacy.address.city.name}}</p>
+        <p>Rate: {{pharmacy.rate}}</p>
 
-            <ng-template #t let-fill="fill">
-              <span class="star" [class.full]="fill === 100">
-                <span class="half" [style.width.%]="fill">&#9733;</span>
-                &#9733;
-              </span>
-            </ng-template>
-            <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="currentRate" [readonly]="true"></ngb-rating>
-            <agm-map 
-                [(latitude)]='lat' 
-                [(longitude)]='long'
-                [fitBounds]="true"       >
-  
-                <agm-marker 
-                    [(latitude)]="lat" 
-                    [(longitude)]="long"
-                    [agmFitBounds]="true"
-                    >    
-                </agm-marker>
-  
-            </agm-map>
-        </div>
-        <mat-tab-group dynamicHeight mat-stretch-tabs class="mat-elevation-z4">
-            <mat-tab label="Dermatologists">
-              <table class="table table-hover" >
-                <thead>
-                  <th scope="col">Name</th>
-                  <th scope="col">Surname</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Available appointments</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let d of dermatologists">
-                    <td>
-                      {{d.name}}
-                    </td>
-                    <td>
-                      {{d.surname}}
-                    </td>
-                    <td>
-                      {{d.email}}
-                    </td>
-                    <td>
-                      <button mat-raised-button (click)="CheckAvailableAppointments(d.id)"> Check</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </mat-tab>
-            <mat-tab label="Pharmacists">
-              <table class="table table-hover">
-                <thead>
-                  <th scope="col">Name</th>
-                  <th scope="col">Surname</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Consultation</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let p of pharmacists">
-                    <td>
-                      {{p.name}}
-                    </td>
-                    <td>
-                      {{p.surname}}
-                    </td>
-                    <td>
-                      {{p.email}}
-                    </td>
-                    <td>
-                      <button mat-raised-button (click)="ScheduleConsultation(p.id)"> Schedule Consultation</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </mat-tab>
-            <mat-tab label="Medications">
-              <table class="table table-hover">
-                <thead>
-                  <th scope="col">Name</th>
-                  <th scope="col"> Manufacturer</th>
-                 
-                  <th scope="col">Reserve medication</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let m of medicines">
-                    <td>
-                      {{m.name}}
-                    </td>
-                    <td>
-                      {{m.manufacturer}}
-                    </td>
-                    <td>
-                      <button mat-raised-button (click)="ReserveMedication(m.id)"> Reserve Medication</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </mat-tab>
-        </mat-tab-group>
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#9733;</span>
+            &#9733;
+          </span>
+        </ng-template>
+        <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="currentRate" [readonly]="true"></ngb-rating>
+        <agm-map 
+            [(latitude)]='lat' 
+            [(longitude)]='long'
+            [fitBounds]="true"       >
+
+            <agm-marker 
+                [(latitude)]="lat" 
+                [(longitude)]="long"
+                [agmFitBounds]="true"
+                >    
+            </agm-marker>
+
+        </agm-map>
     </div>
+    <mat-tab-group dynamicHeight mat-stretch-tabs class="mat-elevation-z4">
+        <mat-tab label="Dermatologists">
+          <table class="table table-hover" >
+            <thead>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Available appointments</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of dermatologists">
+                <td>
+                  {{d.name}}
+                </td>
+                <td>
+                  {{d.surname}}
+                </td>
+                <td>
+                  {{d.email}}
+                </td>
+                <td>
+                  <button mat-raised-button (click)="CheckAvailableAppointments(d.id)"> Check</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+        <mat-tab label="Pharmacists">
+          <table class="table table-hover">
+            <thead>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Consultation</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of pharmacists">
+                <td>
+                  {{p.name}}
+                </td>
+                <td>
+                  {{p.surname}}
+                </td>
+                <td>
+                  {{p.email}}
+                </td>
+                <td>
+                  <button mat-raised-button (click)="ScheduleConsultation(p.id)"> Schedule Consultation</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+        <mat-tab label="Medications">
+          <table class="table table-hover">
+            <thead>
+              <th scope="col">Name</th>
+              <th scope="col"> Manufacturer</th>
+              
+              <th scope="col">Reserve medication</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let m of medicines">
+                <td>
+                  {{m.name}}
+                </td>
+                <td>
+                  {{m.manufacturer}}
+                </td>
+                <td>
+                  <button mat-raised-button (click)="ReserveMedication(m.id)"> Reserve Medication</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+    </mat-tab-group>
 </div>
 

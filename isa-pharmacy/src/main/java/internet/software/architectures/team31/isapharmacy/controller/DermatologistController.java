@@ -31,4 +31,9 @@ public class DermatologistController {
 	public ResponseEntity<List<Dermatologist>> findAll(){
 		return new ResponseEntity<List<Dermatologist>>(this.dermatologistService.findAll(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Dermatologist> findById(Long id){
+		return new ResponseEntity<>(this.dermatologistService.findById(id), HttpStatus.OK);
+	}
 }
