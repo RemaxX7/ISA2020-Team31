@@ -38,6 +38,7 @@ export class PharmacyComplaintComponent implements OnInit {
 
     this.complaintService.makePharmacyComplaint(complaint).subscribe(data => {
       this.toastr.success('Complaint for ' + data.pharmacy.name + ' submitted.');
+      this.myForm.reset();
     },
     err => {
       this.toastr.error(err.error);

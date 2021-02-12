@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,36 +34,39 @@ public class ReviewController {
 	@Autowired
 	private EmployeeReviewService employeeReviewService;
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/pharmacy/{id}")
 	public ResponseEntity<Integer> findPharmacyScore(@PathVariable Long id) throws InvalidScoreException, InvalidReviewException {
 		return new ResponseEntity<>(pharmacyReviewService.findOneByPatientAndPharmacyId(id), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/medicine/{id}")
 	public ResponseEntity<Integer> findMedicineScore(@PathVariable Long id) throws InvalidScoreException, InvalidReviewException {
 		return new ResponseEntity<>(medicineReviewService.findOneByPatientAndMedicineId(id), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/employee/{id}")
 	public ResponseEntity<Integer> findEmployeeScore(@PathVariable Long id) throws InvalidScoreException, InvalidReviewException {
 		return new ResponseEntity<>(employeeReviewService.findOneByPatientAndEmployeeId(id), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/pharmacy")
 	public ResponseEntity<PharmacyReview> reviewPharmacy(@RequestBody PharmacyReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException {
 		return new ResponseEntity<>(pharmacyReviewService.save(dto), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/medicine")
 	public ResponseEntity<MedicineReview> reviewPharmacy(@RequestBody MedicineReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException {
 		return new ResponseEntity<>(medicineReviewService.save(dto), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/employee")
 	public ResponseEntity<EmployeeReview> reviewPharmacy(@RequestBody EmployeeReviewCreateDTO dto) throws InvalidScoreException, InvalidReviewException {
-		System.out.println(dto.getEmployeeId());
-		System.out.println(dto.getScore());
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return new ResponseEntity<>(employeeReviewService.save(dto), HttpStatus.OK);
 	}
 }

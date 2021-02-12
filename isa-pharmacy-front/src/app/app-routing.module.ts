@@ -44,6 +44,7 @@ import { PharmacistRegistrationComponent } from './pharmacist-registration/pharm
 import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
 import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
+import { PatientGuard } from './patient.guard';
 
 const routes: Routes = [
   { path: 'dermatologist', component: DermatologistComponent },
@@ -112,74 +113,70 @@ const routes: Routes = [
     path: 'medicines', component: HomeComponent,
     children: [{ path: '', component: GuestMedicinesComponent }]
   },
-  { path: 'patient', component: PatientComponent },
+  { path: 'patient', component: PatientComponent, canActivate: [PatientGuard] },
   {
-    path: 'patient-profile', component: PatientComponent,
+    path: 'patient-profile', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PatientProfileComponent }]
   },
   {
-    path: 'new-exam', component: PatientComponent,
+    path: 'new-exam', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: NewExamComponent }]
   },
   {
-    path: 'new-counseling', component: PatientComponent,
+    path: 'new-counseling', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: NewCounselingComponent }]
   },
   {
-    path: 'upcoming-exams', component: PatientComponent,
+    path: 'upcoming-exams', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: UpcomingExamsComponent }]
   },
   {
-    path: 'upcoming-counselings', component: PatientComponent,
+    path: 'upcoming-counselings', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: UpcomingCounselingsComponent }]
   },
   {
-    path: 'past-exams', component: PatientComponent,
+    path: 'past-exams', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PastExamsComponent }]
   },
   {
-    path: 'past-counselings', component: PatientComponent,
+    path: 'past-counselings', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PastCounselingsComponent }]
   },
   {
-    path: 'reservations', component: PatientComponent,
+    path: 'reservations', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: ReservationsComponent }]
   },
   {
-    path: 'eprescriptions', component: PatientComponent,
+    path: 'eprescriptions', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: EPrescriptionsComponent }]
   },
   {
-    path: 'pharmacy-complaint', component: PatientComponent,
+    path: 'pharmacy-complaint', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PharmacyComplaintComponent }]
   },
   {
-    path: 'employee-complaint', component: PatientComponent,
+    path: 'employee-complaint', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: EmployeeComplaintComponent }]
   },
   {
-    path: 'patient-pharmacies', component: PatientComponent,
+    path: 'patient-pharmacies', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PatientPharmaciesComponent }]
   },
   {
-    path: 'new-reservation', component: PatientComponent,
+    path: 'new-reservation', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: NewReservationComponent }]
   },
   {
-    path: 'patient-password', component: PatientComponent,
+    path: 'patient-password', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PatientPasswordComponent }]
   },
   {
-    path: 'patient-allergies', component: PatientComponent,
+    path: 'patient-allergies', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PatientAllergiesComponent }]
   },
   {
-    path: 'patient-medicines', component: PatientComponent,
+    path: 'patient-medicines', component: PatientComponent, canActivate: [PatientGuard],
     children: [{ path: '', component: PatientMedicinesComponent }]
-  },
-  {
-    path: 'dispensing', component: PatientComponent,
-    children: [{ path: '', component: MedicineDispensingComponent }]
   }
 ];
 

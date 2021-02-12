@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,21 +61,25 @@ public class ExamController {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/free/{page}/{sortBy}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findFree(@PathVariable Integer page, @PathVariable String sortBy) {
 		return new ResponseEntity<>(examService.findAllByAppointmentStatus(AppointmentStatus.FREE, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/finished/{page}/{sortBy}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sortBy) {
 		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/created/{page}/{sortBy}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findCreatedByPatient(@PathVariable Integer page, @PathVariable String sortBy) {
 		return new ResponseEntity<>(examService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.OCCUPIED, PageRequest.of(page, 5, Sort.by(sortBy))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/schedule/{id}")
 	public ResponseEntity<AppointmentViewDTO> shedule(@PathVariable Long id) throws PenaltyException, AppointmentNotFreeException {
 		return new ResponseEntity<>(examService.schedule(id), HttpStatus.OK);

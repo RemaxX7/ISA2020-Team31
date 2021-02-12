@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,7 @@ public class PharmacyController {
 		return new ResponseEntity<>(pharmacyService.search(query, PageRequest.of(page, 5, Sort.by("name"))), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/available/counseling")
 	public ResponseEntity<Collection<PharmacyViewDTO>> findAvailableForCounseling(@RequestBody LocalDateTime dateTime) {
 		return new ResponseEntity<>(pharmacyService.findAllAvailableForCounseling(dateTime.plusHours(1L)), HttpStatus.OK);

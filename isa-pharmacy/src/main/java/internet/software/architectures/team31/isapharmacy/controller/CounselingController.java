@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class CounselingController {
 	@Autowired
 	private PatientServiceImpl patientService;
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/schedule")
 	public ResponseEntity<Counseling> save(@RequestBody CounselingCreateDTO dto) throws PenaltyException, CounselingAlreadyScheduledException {
 		dto.setStartDateTime(dto.getStartDateTime().plusHours(1L));
@@ -58,6 +60,7 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.findAllByAppointmentStatus(AppointmentStatus.FREE), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/finished/{page}/{sort}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sort) {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
@@ -74,11 +77,13 @@ public class CounselingController {
 				AppointmentStatus.FINISHED), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/created/{page}/{sort}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findCreatedByPatient(@PathVariable Integer page, @PathVariable String sort) {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.OCCUPIED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
 	}	
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/cancel/{id}")
 	public ResponseEntity<Boolean> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
@@ -100,6 +105,7 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.scheduleAdditionalConsultation(dto),HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/available")
 	public ResponseEntity<Collection<UserViewDTO>> getAvailablePharmacists(@RequestBody FindAvailablePharmacistsDTO dto) {
 		return new ResponseEntity<>(counselingService.findAvailablePharmacists(dto.getDateTime().plusHours(1L), dto.getPharmacyId()), HttpStatus.OK);

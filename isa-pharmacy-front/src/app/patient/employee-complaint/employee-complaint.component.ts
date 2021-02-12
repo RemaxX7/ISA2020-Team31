@@ -38,6 +38,7 @@ export class EmployeeComplaintComponent implements OnInit {
 
     this.complaintService.makeEmployeeComplaint(complaint).subscribe(data => {
       this.toastr.success('Complaint for ' + data.employee.name + ' submitted.');
+      this.myForm.reset();
     },
     err => {
       this.toastr.error(err.error);
