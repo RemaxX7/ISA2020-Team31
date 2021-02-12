@@ -42,6 +42,8 @@ import { PatientAllergiesComponent } from './patient/patient-allergies/patient-a
 import { PharmacyAdminProfileComponent } from './pharmacy-admin-profile/pharmacy-admin-profile.component';
 import { PharmacistRegistrationComponent } from './pharmacist-registration/pharmacist-registration.component';
 import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
+import { PricelistComponent } from './pricelist/pricelist.component';
+import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
 
 const routes: Routes = [
   { path: 'dermatologist', component: DermatologistComponent },
@@ -61,12 +63,36 @@ const routes: Routes = [
   { path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
   { path: 'pharmacist-list', component: PharmacistListComponent },
   { path: 'dermatologist-list', component: DermatologistListComponent },
+  { path: 'dermatologist', component: DermatologistComponent },
+  { path: 'dermatologist-profile', component: DermatologistProfileComponent },
+  { path: 'employee-password-change', component: EmployeePasswordChangeComponent },
+  { path: 'pharmacist', component: PharmacistComponent },
+  { path: 'pharmacist-profile', component: PharmacistProfileComponent },
+  { path: 'pharmacist-password-change', component: PharmacistPasswordChangeComponent },
+  { path: 'medicine-dispensing', component: MedicineDispensingComponent },
+  { path: 'dermatologist-patient-search', component: DermatologistPatientSearchComponent },
+  { path: 'pharmacist-patient-search', component: PharmacistPatientSearchComponent },
+  { path: 'pharmacy-profile', component: PharmacyProfileComponent },
+  { path: 'dermatologist-work-cal', component: DermatologistWorkCalendarComponent },
+  { path: 'dermatologist-appointment-report/:id/:uidn', component: AppointmentReportComponent },
+  { path: 'pharmacist-appointment-report/:id/:uidn', component: AppointmentReportPharmacistComponent },
+  { path: 'pharmacy-profile/:id', component: PharmacyProfileComponent },
+  { path: 'pharmacist-list', component: PharmacistListComponent },
+  { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'dermatologist-appointments', component: DermatologistAppointmentsPageComponent },
   { path: 'pharmacist-appointments', component: PharmacistAppointmentsPageComponent },
   { path: 'dermatologist-list', component: DermatologistListComponent },
   { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
   { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
   { path: '', component: HomeComponent },
+  { path: 'dermatologist-list', component: DermatologistListComponent },
+  { path: 'pharmacy-admin-profile', component: PharmacyAdminProfileComponent },
+  { path: 'pharmacist-registration/:id', component: PharmacistRegistrationComponent },
+  { path: 'pricelist', component: PricelistComponent },
+  {
+    path: 'pharmacy-inventory', component: PharmacyInventoryComponent
+
+  },
   {
     path: 'register', component: HomeComponent,
     children: [{ path: '', component: SignUpComponent }]
@@ -148,7 +174,6 @@ const routes: Routes = [
     path: 'patient-medicines', component: PatientComponent,
     children: [{ path: '', component: PatientMedicinesComponent }]
   }
-
 ];
 
 @NgModule({

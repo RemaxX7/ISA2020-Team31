@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservationStatus;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
+import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineReservationCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineReservationViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
@@ -21,6 +23,7 @@ import internet.software.architectures.team31.isapharmacy.repository.MedicineRes
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineService;
+import internet.software.architectures.team31.isapharmacy.service.PharmacistService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
@@ -35,6 +38,8 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	private UserService userService;
 	@Autowired
 	private MedicineService medicineService;
+	@Autowired
+	private PharmacistService pharmacistService;
 	@Autowired
 	private EmailService emailService;
 
@@ -91,7 +96,9 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	public MedicineReservation findById(Long id) {
 		return medicineReservationRepository.findById(id).orElse(null);
 	}
-
+	public MedicineReservation findByCode(String code) {
+		return medicineReservationRepository.findOneByCode(code);
+	}
 	@Override
 	public boolean hasPatientPurchasedMedicineFromPharmacy(Long patientId, Long pharmacyId) {
 		return medicineReservationRepository.existsByPatientIdAndPharmacyIdAndMedicineReservationStatus(patientId, pharmacyId, MedicineReservationStatus.FINISHED);
@@ -120,5 +127,31 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 		text.append("Medicine: " + reservation.getMedicine().getName());
 		
 		return text.toString();
+	}
+
+	@Override
+	public Collection<MedicineReservation> findById(String id,String uidn) {
+		ArrayList<MedicineReservation> reservList = (ArrayList<MedicineReservation>) medicineReservationRepository.findAll();
+		Pharmacist user = (Pharmacist) userService.findByUidn(uidn);
+		ArrayList<MedicineReservation> frontList = new ArrayList<MedicineReservation>();
+		for (MedicineReservation medicineReservation : reservList) {
+			if(medicineReservation.getCode().equals(id) && medicineReservation.getMedicineReservationStatus()==MedicineReservationStatus.CREATED && medicineReservation.getPharmacy().getId().equals(user.getPharmacy().getId())) {
+				frontList.add(medicineReservation);
+			}
+		}
+		return frontList;
+	}
+
+	@Override
+	public MedicineReservation closeRequest(String code) throws CancelMedicineReservationException {
+		MedicineReservation reservation = findByCode(code);
+		
+		LocalDate currentDate = LocalDate.now();
+		if(!currentDate.plusDays(1).isBefore(reservation.getPickUpDate())) {
+			throw new CancelMedicineReservationException("Medicine reservation cannot be cancelled 24 hours before pick-up date.");
+		}
+		reservation.setMedicineReservationStatus(MedicineReservationStatus.FINISHED);
+		emailService.sendEmail(reservation.getPatient().getEmail(), "Medicine was picked up", "Thank you for your patronage.");
+		return medicineReservationRepository.save(reservation);
 	}
 }

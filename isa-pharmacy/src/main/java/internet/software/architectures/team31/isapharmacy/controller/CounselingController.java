@@ -48,6 +48,10 @@ public class CounselingController {
 	public ResponseEntity<Collection<Counseling>> findAll() {
 		return new ResponseEntity<>(counselingService.findAll(), HttpStatus.OK);
 	}
+	@GetMapping(value = "/allactive")
+	public ResponseEntity<Collection<Counseling>> findAllActive() {
+		return new ResponseEntity<>(counselingService.findAllActive(), HttpStatus.OK);
+	}
 	
 	@GetMapping(value = "/free")
 	public ResponseEntity<Collection<Counseling>> findFree() {
@@ -57,6 +61,17 @@ public class CounselingController {
 	@GetMapping(value = "/finished/{page}/{sort}")
 	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sort) {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/findbyid/{id}")
+	public ResponseEntity<Counseling> findById(@PathVariable Long id) {
+		return new ResponseEntity<>(counselingService.findById(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/finished/patient/{id}")
+	public ResponseEntity<Collection<Counseling>> findFinishedByPatient(@PathVariable Long id) {
+		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(id,
+				AppointmentStatus.FINISHED), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/created/{page}/{sort}")
@@ -74,9 +89,10 @@ public class CounselingController {
 		return new ResponseEntity<>(patientService.pharmacistPenalize(id),HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/finalizeappointmentpharmacist")
-	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto){
-		return new ResponseEntity<>(counselingService.finalizeExam(dto),HttpStatus.OK);
+
+	@PostMapping(value = "/finalizeappointmentpharmacist/{quant}")
+	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
+		return new ResponseEntity<>(counselingService.finalizeExam(dto,quant),HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/schedulenewcounseling")

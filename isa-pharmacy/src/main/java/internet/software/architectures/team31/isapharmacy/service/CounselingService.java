@@ -2,12 +2,14 @@ package internet.software.architectures.team31.isapharmacy.service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
@@ -25,6 +27,7 @@ public interface CounselingService {
 	AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException, CounselingAlreadyScheduledException;
 	Boolean cancel(Long id) throws CancelAppointmentException;
 	Collection<Counseling> findAll();
+	Collection<Counseling> findAllActive();
 	Collection<Counseling> findAllByPatientId(Long id);
 	Collection<Counseling> findAllByPharmacistId(Long id);
 	Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status);
@@ -34,7 +37,10 @@ public interface CounselingService {
 	Counseling findById(Long id);
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId);
-	Counseling finalizeExam(AppointmentFinalizationDTO dto);
-	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
 	boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime);
+	Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant);
+	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
+	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
+	List<Counseling>findCounsForPharm(String uidn,String days);
+	List<Exam>findExamsForDerm(String uidn,String days);
 }

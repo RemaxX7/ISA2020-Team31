@@ -18,4 +18,5 @@ public interface MedicineService {
 	Medicine findCompositionForMedicine(String name);
 	Medicine findByName(String name);
 	List<Medicine> findByMedicineIds(List<Long> medicineIdList);
+	String findAvailableMedicineCount(String name,String id);
 }

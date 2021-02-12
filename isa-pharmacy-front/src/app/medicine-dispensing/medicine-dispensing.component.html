@@ -8,42 +8,32 @@
             <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
-            <li><a href="">Schedule leave</a></li>
-            <li><a href="">Schedule appointment</a></li>
+            <li><a href="" routerLink="/pharmacist">Schedule leave</a></li>
+            <li><a href="" routerLink="/pharmacist">Schedule appointment</a></li>
             <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
-            <li id="log"><a href="">Log out</a></li>
+            <li id="log"><a href="" routerLink="/login">Log out</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <div class="profilediv">
     <div class="userinfo">
-        <input style="width: 100%;" id="myInput" type="text" (keyup.enter)="MyFunction()" placeholder="Search active reservations...">
-        <!--ovde ide foreach pacijent sa tim id unesenim ispisati ime prezime... umesto zakucanih podataka.Ovo je placeholder.-->
+        <input style="width: 100%;" id="myInput" type="text" #reservation (keyup.enter)="LoadMedicineReservation(reservation.value)" placeholder="Search active reservations...">
         <div class="founddiv">
             <table id="myTable">
-                <th>Name</th>
-                <th>Surname</th>
-                <th>ID</th>
+                <th>Code</th>
+                <th>Price</th>
                 <th></th>
-                <tr>
-                    <td>Marko</td>
-                    <td>Rakic</td>
-                    <td>187263</td>
+                <tbody>
+                <tr *ngFor="let m of patientReservation">
+                    <td>{{m.code}}</td>
+                    <td>{{m.price}} din.</td>
                     <td>
-                        <input type="submit" name="" value="Finalize dispensing">
+                        <button (click)="FinalizeReservation(m.code)">Mark as picked-up</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>Aleksa</td>
-                    <td>Popov</td>
-                    <td>685112</td>
-                    <td>
-                        <input type="submit" name="" value="Finalize dispensing">
-                    </td>
-                </tr>
+            </tbody>
             </table>
-            <!--Ako ne nadje nijedan alert -> nije pronadjena rezervacija-->
         </div>
     </div>
     

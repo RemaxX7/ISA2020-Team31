@@ -18,4 +18,8 @@ export class MedicineService {
   getSearchResultPage(page: number, query:string):Observable<any> {
     return this._http.get<any>(this._APIUrl + '/search/' + query + '/' + page);
   }
+
+  getAllMedicine(): Promise<any>{
+    return this._http.get(this._APIUrl + '/all' ).toPromise();
+  }
 }

@@ -57,4 +57,8 @@ public class MedicineReservationController {
 	public ResponseEntity<MedicineReservation> cancel(@PathVariable Long id) throws CancelMedicineReservationException {
 		return new ResponseEntity<>(medicineReservationService.cancel(id), HttpStatus.OK);
 	}
+	@GetMapping(value = "/pickedup/{code}")
+	public ResponseEntity<MedicineReservation> cancel(@PathVariable String code) throws CancelMedicineReservationException{
+		return new ResponseEntity<>(medicineReservationService.closeRequest(code), HttpStatus.OK);
+	}
 }

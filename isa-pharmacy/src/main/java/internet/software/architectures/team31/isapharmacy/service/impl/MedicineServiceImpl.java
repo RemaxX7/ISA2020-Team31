@@ -9,11 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.MedicineViewDTO;
 import internet.software.architectures.team31.isapharmacy.repository.MedicineRepository;
 import internet.software.architectures.team31.isapharmacy.service.MedicineReviewService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineService;
+import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 
 @Service
 public class MedicineServiceImpl implements MedicineService {
@@ -24,6 +26,8 @@ public class MedicineServiceImpl implements MedicineService {
 	private MedicineReviewService medicineReviewService;
 	@Autowired
 	private PatientServiceImpl patientService;
+	@Autowired
+	private PharmacyService pharmacyService;
 
 	@Override
 	public Medicine findById(Long id) {
@@ -52,13 +56,15 @@ public class MedicineServiceImpl implements MedicineService {
 	@Override
 	public List<Medicine> findAllMedicineForPatient(String uidn){
 		Patient patient = patientService.findByUidn(uidn);
+		ArrayList<Medicine> medListRemove = new ArrayList<Medicine>();
 		ArrayList<Medicine> medicineList = (ArrayList<Medicine>) findAll();
 		for (Medicine med : medicineList) {
 			for (Medicine al : patient.getAllergies()) {
 				if(al.equals(med))
-					medicineList.remove(med);
+					medListRemove.add(med);
 			}
 		}
+		medicineList.removeAll(medListRemove);
 		return medicineList;
 	}
 	
@@ -81,5 +87,14 @@ public class MedicineServiceImpl implements MedicineService {
 	@Override
 	public List<Medicine> findByMedicineIds(List<Long> medicineIdList) {
 		return medicineRepository.findByMedicineIds(medicineIdList);
+	}
+	
+	public String findAvailableMedicineCount(String name, String id) {
+		Medicine med = findByName(name);
+		Pharmacy pharm = pharmacyService.findById(Long.parseLong(id));
+		String broj = "5";
+		//return pharmacy.getlek.getkolicina
+		//sendmail()
+		return broj;
 	}
 }

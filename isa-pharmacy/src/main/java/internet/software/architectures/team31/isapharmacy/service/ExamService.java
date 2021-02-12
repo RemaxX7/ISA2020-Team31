@@ -1,6 +1,7 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ public interface ExamService {
 	AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException;
 	AppointmentViewDTO cancel(Long id) throws CancelAppointmentException;
 	Collection<Exam> findAll();
+	Collection<Exam> findAllActive();
 	Collection<Exam> findAllByPatientId(Long id);
 	Collection<Exam> findAllByDermatologistId(Long id);
 	Collection<Exam> findAllByAppointmentStatus(AppointmentStatus status);
@@ -29,6 +31,7 @@ public interface ExamService {
 	Page<AppointmentViewDTO> findAllByPatientIdAndAppointmentStatus(AppointmentStatus status, Pageable pageable);
 	Exam findById(Long id);
 	boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId);
-	Exam finalizeExam(AppointmentFinalizationDTO dto);
+	Exam finalizeExam(AppointmentFinalizationDTO dto,String quant);
 	Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto);
+	List<String> findTerminsByUidns(String patuidn,String empuidn);
 }

@@ -71,6 +71,11 @@ import { RatingDialogComponent } from './patient/rating-dialog/rating-dialog.com
 import { MatStepperModule } from '@angular/material/stepper';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { PatientMedicinesComponent } from './patient/patient-medicines/patient-medicines.component';
+import { PricelistComponent } from './pricelist/pricelist.component';
+import { ChangePriceComponent } from './dialog/change-price/change-price.component';
+import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
+import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inventory-item.component';
+
 
 @NgModule({
   declarations: [
@@ -118,7 +123,11 @@ import { PatientMedicinesComponent } from './patient/patient-medicines/patient-m
     PatientPasswordComponent,
     PatientAllergiesComponent,
     RatingDialogComponent,
-    PatientMedicinesComponent
+    PatientMedicinesComponent,
+    PricelistComponent,
+    ChangePriceComponent,
+    PharmacyInventoryComponent,
+    AddInventoryItemComponent
   ],
   imports: [
     BrowserModule,
@@ -160,6 +169,9 @@ import { PatientMedicinesComponent } from './patient/patient-medicines/patient-m
   ],
   providers: [],
   entryComponents: [
+    ChangePriceComponent,
+    AddShiftPharmacistComponent,
+    AddInventoryItemComponent
   ],
   bootstrap: [AppComponent]
 })

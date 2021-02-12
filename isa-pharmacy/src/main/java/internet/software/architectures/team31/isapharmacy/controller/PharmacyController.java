@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
+import internet.software.architectures.team31.isapharmacy.dto.InventoryItemCreateDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PharmacyViewDTO;
-import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
 
 @RestController
@@ -53,5 +53,10 @@ public class PharmacyController {
 	@PostMapping(value = "/available/counseling")
 	public ResponseEntity<Collection<PharmacyViewDTO>> findAvailableForCounseling(@RequestBody LocalDateTime dateTime) {
 		return new ResponseEntity<>(pharmacyService.findAllAvailableForCounseling(dateTime.plusHours(1L)), HttpStatus.OK);
+	}
+
+	@PostMapping(value="/addItem")
+	public ResponseEntity<Pharmacy> addInventoryItem(@RequestBody InventoryItemCreateDTO dto) {
+		return new ResponseEntity<>(this.pharmacyService.addNewItem(dto),HttpStatus.CREATED);
 	}
 }

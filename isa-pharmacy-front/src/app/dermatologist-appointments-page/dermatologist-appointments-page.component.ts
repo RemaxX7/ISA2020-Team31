@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
+import { Patient } from '../model/patient.model';
 import { EmployeeService } from '../service/employee-service';
 
 @Component({
@@ -8,12 +10,13 @@ import { EmployeeService } from '../service/employee-service';
   styleUrls: ['./dermatologist-appointments-page.component.css']
 })
 export class DermatologistAppointmentsPageComponent implements OnInit {
-  users:Dermatologist[]=[]
+  users:Patient[]=[]
+  appointments:Appointment[]=[]
   constructor(private service:EmployeeService ) {}
 
   ngOnInit(): void {
     this.FillPatients();
-
+    this.FillExams();
   }
   async FillPatients(){
     await this.service.getAllUsers().then(
@@ -21,6 +24,12 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
       
     )
     console.log(this.users);
+  }
+  async FillExams(){
+    await this.service.fillExams().then(
+      data=>this.appointments=data
+    )
+    console.log(this.appointments);
   }
   PenalizePatient(uidn){
     this.service.penalizePatient(uidn);

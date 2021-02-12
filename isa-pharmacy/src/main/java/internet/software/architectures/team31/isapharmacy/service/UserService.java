@@ -7,6 +7,7 @@ import javax.security.auth.login.AccountException;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
+import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 
@@ -21,4 +22,5 @@ public interface UserService {
     void activate(String token) throws AccountException;
     User findByUidn(String uidn);
     User employeeEditProfile(EmployeeProfileEditDTO dto);
+    User employeeEditPassword(PasswordChangeDTO dto);
 }
