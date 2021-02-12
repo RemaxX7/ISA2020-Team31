@@ -11,15 +11,21 @@ export class PharmacyAdminProfileComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  pharmacyAdminId:number;
+  pharmacyId:number;
   ngOnInit(): void {
-    this.pharmacyAdminId=1;
+    this.pharmacyId=1;
   }
 
+
   AddPharmacist(): void {
-    this.router.navigate(['/pharmacist-registration', this.pharmacyAdminId]);
+    this.router.navigate(['/pharmacist-registration', this.pharmacyId]);
     
   }
 
+  LogOut() {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    this.router.navigate(['login']);
+  }
 
 }

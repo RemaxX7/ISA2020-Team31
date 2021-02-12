@@ -3,8 +3,15 @@
   <a routerLink="/" class="logo">Pharmacy</a>
   <nav>
     <ul>
-      <li><a href="#" routerLink="/pharmacy-profile">Pharmacy profile</a></li> 
-    </ul>
+      <li><a href="#" routerLink="/pharmacist-list">All pharmacists</a></li>
+      <li><a href="#" routerLink="/dermatologist-list">All dermatologists</a></li>
+      <li><a href="#" routerLink="/pharmacy-inventory">Inventary</a></li>
+      <li><a href="#" routerLink="/pricelist">Pricelist</a></li>
+      <li><a href="#" routerLink="/pharmacy-admin-profile">Profile</a></li>
+      <button (click)="LogOut()">
+                  <li>Logout</li>
+      </button>
+      </ul>
   </nav>
 </div>
 </header>
