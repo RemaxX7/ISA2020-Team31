@@ -1,7 +1,8 @@
-INSERT INTO COUNTRIES (name, code) values ('Serbia', 'RS'), ('Norway', 'NO');
-INSERT INTO CITIES(name, country_id) values ('Novi Sad', 1), ('Belgrade', 1);
+INSERT INTO COUNTRIES (name, code) values ('Serbia', 'RS');
+INSERT INTO CITIES(name, country_id) values ('Novi Sad', 1), ('Belgrade', 1), ('Nis', 1);
 INSERT INTO ADDRESSES(street, number, city_id, latitude, longitude) values ('Bulevar Oslobodjenja', '50', 1, 45, 45);
 INSERT INTO ADDRESSES(street, number, city_id, latitude, longitude) values ('Bulevar Evrope', '50', 1, 45, 45);
+INSERT INTO ADDRESSES(street, number, city_id, latitude, longitude) values ('Trg Dositeja Obradovica', 6, 1, 45.24577941377878, 19.850995591105743);
 INSERT INTO PHARMACIES (name, address_id, rate) values ('Benu', 1, 4.5);
 INSERT INTO PHARMACIES (name, address_id, rate) values ('Jankovic', 2, 4.9);
 INSERT INTO PHARMACIES (name, address_id, rate) values ('Asd', 1, 2.8);
@@ -18,10 +19,10 @@ INSERT INTO PHARMACIES (name, address_id, rate) values ('Ben5gsu', 2, 4.5);
 INSERT INTO PHARMACIES (name, address_id, rate) values ('Jansdfkovic', 1, 4.9);
 INSERT INTO PHARMACIES (name, address_id, rate) values ('Ajerhjsd', 1, 3);
 
-INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type) VALUES (5, 'Nikola', 'Nikolic', '1234567891234', 'nikolaUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+p@gmail.com', '555-555-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient');
-INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type) VALUES (4, 'Petar', 'Petrovic', '4234567891234', 'petarUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+petarUser@gmail.com', '333-333-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient');
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type, address_id) VALUES (5, 'Nikola', 'Nikolic', '1234567891234', 'nikolaUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+nikolaUser@gmail.com', '555-555-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient', 3);
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type, address_id) VALUES (4, 'Petar', 'Petrovic', '4234567891234', 'petarUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+petarUser@gmail.com', '333-333-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient', 3);
 
-INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id) VALUES (2, 'Jovan', 'Jovanovic', '2234567891234', 'jovanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'userjovan@email.com', '555-333-555', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1);
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id) VALUES (2, 'Jovan', 'Jovanovic', '2234567891234', 'jovanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+userJovan@gmail.com', '555-333-555', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id) VALUES (6, 'Milos', 'Mirkovic', '1134567891234', 'milosUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+milosUser@gmail.com', '555-333-555', true, '2017-10-01 21:58:58.508-07','PharmacyAdmin', 1);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type) VALUES (3, 'Milan', 'Milanovic', '3234567891234', 'milanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'usermilan@email.com', '555-333-333', true, '2017-10-01 21:58:58.508-07', 'Dermatologist');
 INSERT INTO USERS_PHARMACIES (dermatologist_id, pharmacies_id) values (3, 1), (3, 2);
