@@ -17,10 +17,12 @@ import internet.software.architectures.team31.isapharmacy.domain.medicine.Medici
 import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
+import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
+import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
@@ -277,5 +279,19 @@ public class ExamServiceImpl implements ExamService {
 		}
 		
 		return exam;
+	}
+
+	@Override
+	public List<Patient> findCheckedPatientsDermatologist(String uidn) {
+		List<Exam> examList = examRepository.findAll();
+		Dermatologist derm = (Dermatologist) userService.findByUidn(uidn);
+		List<Patient> frontList = new ArrayList<Patient>();
+		for (Exam ex : examList) {
+			if(ex.getAppointmentStatus().equals(AppointmentStatus.FINISHED) && derm.getId().equals(ex.getDermatologist().getId())) {
+				if(!frontList.contains(ex.getPatient()))
+					frontList.add(ex.getPatient());
+			}
+		}
+		return frontList;
 	}
 }

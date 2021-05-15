@@ -18,12 +18,13 @@ export class MedicineDispensingComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem("user"));
     this.service.loadReservation(reservation,user.uidn).subscribe(data=>this.patientReservation=data,err => {
       alert("Reservation not found or expired.");
+      window.location.reload();
     } )
   
   }
   FinalizeReservation(code){
-    this.service.finalizeReservation(code).subscribe(()=>alert("Reservation picked up."))
-    window.location.reload();
+    this.service.finalizeReservation(code).subscribe(()=>alert("Reservation picked up."),err=>{alert('Alert For your User!');})
+    
   }
   HideTable(){
     var table = document.getElementById("myTable");

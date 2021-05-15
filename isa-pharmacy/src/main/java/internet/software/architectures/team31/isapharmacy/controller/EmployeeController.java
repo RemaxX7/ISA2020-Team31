@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
+import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
 import internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
+import internet.software.architectures.team31.isapharmacy.exception.CancelMedicineReservationException;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.MedicineReservationService;
@@ -48,10 +50,10 @@ public class EmployeeController {
 	}
 	@GetMapping("/getbyid/{uidn}")
 	public ResponseEntity<User> findByID(@PathVariable String uidn) {
-		return new ResponseEntity<>(userService.findByUidn(uidn), HttpStatus.OK);
+		return new ResponseEntity<>(employedService.findByUidn(uidn), HttpStatus.OK);
 	}
 	@GetMapping("/reservation/{id}/{uidn}")
-	public ResponseEntity<Collection<MedicineReservation>> findReservationByID(@PathVariable String id,@PathVariable String uidn) {
+	public ResponseEntity<Collection<MedicineReservation>> findReservationByID(@PathVariable String id,@PathVariable String uidn) throws CancelMedicineReservationException {
 		return new ResponseEntity<>(medicineService.findById(id,uidn), HttpStatus.OK);
 	}
 	@PostMapping(value = "/editprofile")
@@ -73,6 +75,14 @@ public class EmployeeController {
 	@GetMapping(value = "/counsforpharm/{uidn}/{days}")
 	public ResponseEntity<Collection<Counseling>> findCounsForPharm(@PathVariable String uidn,@PathVariable String days) {
 		return new ResponseEntity<>(counService.findCounsForPharm(uidn,days), HttpStatus.OK);
+	}
+	@GetMapping(value = "/finishedpatients/{uidn}")
+	public ResponseEntity<Collection<Patient>> findCheckedPatients(@PathVariable String uidn) {
+		return new ResponseEntity<>(counService.findCheckedPatients(uidn), HttpStatus.OK);
+	}
+	@GetMapping(value = "/finishedpatientsdermatologist/{uidn}")
+	public ResponseEntity<Collection<Patient>> findCheckedPatientsDermatologist(@PathVariable String uidn) {
+		return new ResponseEntity<>(examService.findCheckedPatientsDermatologist(uidn), HttpStatus.OK);
 	}
 	@GetMapping(value = "/examsforderm/{uidn}/{days}")
 	public ResponseEntity<Collection<Exam>> findExamsForDerm(@PathVariable String uidn,@PathVariable String days) {

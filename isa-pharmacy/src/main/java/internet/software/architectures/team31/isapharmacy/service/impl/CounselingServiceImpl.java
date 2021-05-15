@@ -1,5 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -331,7 +332,7 @@ public class CounselingServiceImpl implements CounselingService {
 		List<Counseling>frontList = new ArrayList<Counseling>();
 		User user = (Pharmacist)userService.findByUidn(uidn);
 		for (Counseling counseling : counsList) {
-			if(counseling.getPharmacist().getUidn().equals(user.getUidn()) && counseling.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
+			if(counseling.getPharmacist().getUidn().equals(user.getUidn()) && counseling.getDateRange().getStartDateTime().isAfter(LocalDateTime.now()) && counseling.getDateRange().getEndDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
 				frontList.add(counseling);
 			}
 		}
@@ -344,7 +345,7 @@ public class CounselingServiceImpl implements CounselingService {
 		List<Exam>frontList = new ArrayList<Exam>();
 		User user = (Dermatologist)userService.findByUidn(uidn);
 		for (Exam exam : examsList) {
-			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && exam.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
+			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && exam.getDateRange().getStartDateTime().isAfter(LocalDateTime.now()) && exam.getDateRange().getEndDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
 				frontList.add(exam);
 			}
 		}
@@ -373,5 +374,19 @@ public class CounselingServiceImpl implements CounselingService {
 		}
 		
 		return counseling;
+	}
+
+	@Override
+	public List<Patient> findCheckedPatients(String uidn) {
+		List<Counseling> counsList = counselingRepository.findAll();
+		Pharmacist pharm = (Pharmacist) userService.findByUidn(uidn);
+		List<Patient> frontList = new ArrayList<Patient>();
+		for (Counseling counseling : counsList) {
+			if(counseling.getAppointmentStatus().equals(AppointmentStatus.FINISHED) && pharm.getId().equals(counseling.getPharmacist().getId())) {
+				
+				frontList.add(counseling.getPatient());
+			}
+		}
+		return frontList;
 	}
 }

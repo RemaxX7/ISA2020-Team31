@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.controller.EmployeeController"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.PatientService"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.PatientRepository"/>
     <fullyQualifiedTypeName name="javax.websocket.server.ServerEndpoint"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.ExamRepository"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Patient"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem"/>
     <fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
@@ -29,16 +27,12 @@
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.dto.PasswordChangeDTO"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.UserService"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
-    <fullyQualifiedTypeName name="java.util.Collection"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.ExamService"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.DermatologistServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.DermatologistService"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.AppointmentServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.User"/>
-    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl"/>
-    <fullyQualifiedTypeName name="java.sql.Date"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.util.DateRange"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.CounselingService"/>
@@ -49,15 +43,21 @@
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.MedicineServiceImpl"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Appointment"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Counseling"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.InventoryItemServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.InventoryItemService"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.EmailServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.EmailService"/>
+    <fullyQualifiedTypeName name="java.util.Collection"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Counseling"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.PharmacistServiceImpl"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Patient"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist"/>
 </qualifiedTypeNameHistroy>

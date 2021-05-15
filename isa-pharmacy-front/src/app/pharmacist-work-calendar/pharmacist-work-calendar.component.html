@@ -19,14 +19,15 @@
   <body>
     <div class="profilediv">
         <div class="sidemenu">
-            <a href="" routerLink="/pharmacist-profile">Lični podaci</a>
-            <a href="" routerLink="/pharmacist-password-change">Promena lozinke</a>
-            <a href="" routerLink="/pharmacist-work-cal">Radni kalendar</a>
+            <a href="" routerLink="/pharmacist-profile">Personal data</a>
+            <a href="" routerLink="/pharmacist-password-change">Change password</a>
+            <a href="" routerLink="/pharmacist-work-cal">Work calendar</a>
         </div>
         <div class="userinfo">
-          <button (click)="FillConsultations(7)">Nedeljno</button>
-          <button (click)="FillConsultations(30)">Mesecno</button>
-          <button (click)="FillConsultations(365)">Godisnje</button>
+          <label>Choose time period filter</label><br>
+          <button (click)="FillConsultations(7)">Weekly</button>
+          <button (click)="FillConsultations(30)">Monthly</button>
+          <button (click)="FillConsultations(365)">Yearly</button>
           <div class="founddiv">
             <table id="myTable">
                 <tr>

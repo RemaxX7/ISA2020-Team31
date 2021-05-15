@@ -10,7 +10,7 @@
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
             <li><a href="" routerLink="/pharmacist">Schedule leave</a></li>
             <li><a href="" routerLink="/pharmacist">Schedule appointment</a></li>
-            <li><a href="" routerLink="pharmacist-profile">Profile</a></li>
+            <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
             <li id="log"><a href="" routerLink="/login">Log out</a></li>
         </ul>
       </nav>
@@ -24,15 +24,18 @@
             <a href="" routerLink="/pharmacist-work-cal">Radni kalendar</a>
         </div>
         <div class="userinfo">
-          <form [formGroup]="myForm">
-            <table>
-            <tr><td><textarea name="" id="username" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.email}}" formControlName="email" required></textarea></td></tr>
-            <tr><td><textarea name="" id="name" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.name}}" formControlName="name" required></textarea></td></tr>
-            <tr><td><textarea name="" id="surname" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.surname}}" formControlName="surname" required></textarea></td></tr>
-            <tr><td><textarea name="" id="pharmID" cols="60" rows="3.5" style="resize: none;" placeholder="{{pharmacist.uidn}}" formControlName="uidn" readonly></textarea></td></tr>
-            <tr><td> <button (click)="EditProfile()">Confirm edit</button></td></tr>
-          </table>
-          </form>
+          <button (click)="Toggle()" id="toggle">Edit</button><br>
+          <form [formGroup]="myForm" autocomplete="off">
+            <label>Users e-mail</label>
+            <input placeholder="Email" formControlName="email"><br>
+            <label>Users first name</label>
+            <input placeholder="Name" formControlName="name"><br>
+            <label>Users surname</label>
+            <input placeholder="Surname" formControlName="surname"><br>
+            <label>Users UIDN(Not changable)</label>
+            <textarea readonly placeholder="Uidn" formControlName="uidn"></textarea><br>
+            <button [disabled]="!myForm.valid" (click)="SaveChanges()">Save changes</button>
+        </form>
         </div>
     </div>
   </body>

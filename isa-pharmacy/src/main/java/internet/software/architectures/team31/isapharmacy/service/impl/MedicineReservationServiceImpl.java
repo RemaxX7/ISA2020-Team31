@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,16 +131,17 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 	}
 
 	@Override
-	public Collection<MedicineReservation> findById(String id,String uidn) {
-		ArrayList<MedicineReservation> reservList = (ArrayList<MedicineReservation>) medicineReservationRepository.findAll();
+	public Collection<MedicineReservation> findById(String id,String uidn) throws CancelMedicineReservationException {
+		MedicineReservation reserv = findByCode(id);
 		Pharmacist user = (Pharmacist) userService.findByUidn(uidn);
-		ArrayList<MedicineReservation> frontList = new ArrayList<MedicineReservation>();
-		for (MedicineReservation medicineReservation : reservList) {
-			if(medicineReservation.getCode().equals(id) && medicineReservation.getMedicineReservationStatus()==MedicineReservationStatus.CREATED && medicineReservation.getPharmacy().getId().equals(user.getPharmacy().getId())) {
-				frontList.add(medicineReservation);
-			}
+		LocalDate currentDate = LocalDate.now();
+		List<MedicineReservation> medList = new ArrayList<MedicineReservation>();
+		if(reserv.getCode().equals(id) && reserv.getMedicineReservationStatus()==MedicineReservationStatus.CREATED && reserv.getPharmacy().getId().equals(user.getPharmacy().getId()) && currentDate.plusDays(1).isBefore(reserv.getPickUpDate())) {
+			medList.add(reserv);
+			return medList;
+		}else{
+			throw new CancelMedicineReservationException("Medicine reservation expired or could not be found.");
 		}
-		return frontList;
 	}
 
 	@Override
@@ -148,7 +150,7 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 		
 		LocalDate currentDate = LocalDate.now();
 		if(!currentDate.plusDays(1).isBefore(reservation.getPickUpDate())) {
-			throw new CancelMedicineReservationException("Medicine reservation cannot be cancelled 24 hours before pick-up date.");
+			throw new CancelMedicineReservationException("Medicine reservation expired or could not be found.");
 		}
 		reservation.setMedicineReservationStatus(MedicineReservationStatus.FINISHED);
 		emailService.sendEmail(reservation.getPatient().getEmail(), "Medicine was picked up", "Thank you for your patronage.");

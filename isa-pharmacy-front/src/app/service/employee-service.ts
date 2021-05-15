@@ -21,6 +21,20 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/patients/all",options).toPromise();
     }
+    findCheckedPatients(uidn):Promise<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    }) 
+    let options = { headers: headers };
+      return this._http.get("http://localhost:8080/api/search/employee/finishedpatients/" + uidn,options).toPromise();
+    }
+    findCheckedPatientsDermatologist(uidn):Promise<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    }) 
+    let options = { headers: headers };
+      return this._http.get("http://localhost:8080/api/search/employee/finishedpatientsdermatologist/" + uidn,options).toPromise();
+    }
     fillExams(): Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')

@@ -10,11 +10,11 @@ import { Dermatologist } from '../model/dermatologist.model';
 })
 export class DermatologistPatientSearchComponent implements OnInit {
 
-  users:Dermatologist[]=[]
+  users:any
   constructor(private service:EmployeeService ) {}
 
   ngOnInit(): void {
-    this.FillPatients();
+    this.FindCheckedPatients();
 
   }
   async FillPatients(){
@@ -23,6 +23,12 @@ export class DermatologistPatientSearchComponent implements OnInit {
       
     )
     console.log(this.users);
+  }
+  async FindCheckedPatients(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    await this.service.findCheckedPatientsDermatologist(user.uidn).then(
+      data=>this.users=data
+    )
   }
   PenalizePatient(uidn){
     this.service.penalizePatient(uidn);

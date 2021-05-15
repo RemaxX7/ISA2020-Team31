@@ -23,12 +23,10 @@
         <div class="founddiv">
             <table id="myTable">
                 <tr>
-                    <th (click)="sortTable(1)">Name</th>
-                    <th (click)="sortTable(2)">Surname</th>
-                    <th (click)="sortTable(3)">Uidn</th>
-                    <th (click)="sortTable(4)">Username</th>
-                    <th></th>
-                    <th></th>
+                    <th><button (click)="sortTable(1)">Name</button></th>
+                    <th><button (click)="sortTable(2)">Surname</button></th>
+                    <th><button (click)="sortTable(3)">Uidn</button></th>
+                    <th><button (click)="sortTable(4)">Username</button></th>
                 </tr>
                 <tbody id="tableinfo">
                     <tr *ngFor="let u of users">

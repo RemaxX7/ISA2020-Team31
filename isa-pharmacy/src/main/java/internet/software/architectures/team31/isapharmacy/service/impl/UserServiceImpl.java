@@ -107,7 +107,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByUidn(String uidn) {
-		return userRepository.findByUidn(uidn);
+		User user = userRepository.findByUidn(uidn);
+		return user;
 	}
 
 	@Override

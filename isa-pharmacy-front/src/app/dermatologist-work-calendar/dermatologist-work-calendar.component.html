@@ -18,14 +18,15 @@
   <body>
     <div class="profilediv">
         <div class="sidemenu">
-            <a href="" routerLink="/dermatologist-profile">Lični podaci</a>
-            <a href="" routerLink="/employee-password-change">Promena lozinke</a>
-            <a href="" routerLink="/dermatologist-work-cal">Radni kalendar</a>
+            <a href="" routerLink="/dermatologist-profile">Personal data</a>
+            <a href="" routerLink="/employee-password-change">Change password</a>
+            <a href="" routerLink="/dermatologist-work-cal">Work calendar</a>
         </div>
         <div class="userinfo">
-          <button (click)="FillExams(7)">Nedeljno</button>
-          <button (click)="FillExams(30)">Mesecno</button>
-          <button (click)="FillExams(365)">Godisnje</button>
+          <label>Choose time period filter</label><br>
+          <button (click)="FillExams(7)">Weekly</button>
+          <button (click)="FillExams(30)">Monthly</button>
+          <button (click)="FillExams(365)">Yearly</button>
           <div class="founddiv">
             <table id="myTable">
                 <tr>

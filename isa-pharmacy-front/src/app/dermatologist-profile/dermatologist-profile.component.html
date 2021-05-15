@@ -22,15 +22,18 @@
             <a href="" routerLink="/employee-password-change">Promena lozinke</a>
             <a href="" routerLink="/dermatologist-work-cal">Radni kalendar</a>
         </div>
-        <div class="userinfo">
-        <form [formGroup]="myForm">
-          <table>
-          <tr><td><textarea name="" id="username" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.email}}" formControlName="email" required></textarea></td></tr>
-          <tr><td><textarea name="" id="name" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.name}}" formControlName="name" required></textarea></td></tr>
-          <tr><td><textarea name="" id="surname" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.surname}}" formControlName="surname" required></textarea></td></tr>
-          <tr><td><textarea name="" id="pharmID" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.uidn}}" formControlName="uidn" readonly></textarea></td></tr>
-          <tr><td> <button (click)="EditProfile()">Confirm edit</button></td></tr>
-        </table>
+        <div class="userinfo" *ngIf="loaded" >
+          <button (click)="Toggle()" id="toggle">Edit</button><br>
+          <form [formGroup]="myForm" autocomplete="off">
+            <label>Users e-mail</label>
+            <input placeholder="Email" formControlName="email"><br>
+            <label>Users first name</label>
+            <input placeholder="Name" formControlName="name"><br>
+            <label>Users surname</label>
+            <input placeholder="Surname" formControlName="surname"><br>
+            <label>Users UIDN(Not changable)</label>
+            <textarea readonly placeholder="Uidn" formControlName="uidn"></textarea><br>
+            <button [disabled]="!myForm.valid" (click)="SaveChanges()">Save changes</button>
         </form>
       </div>
     </div>

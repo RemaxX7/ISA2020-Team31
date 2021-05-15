@@ -9,12 +9,12 @@ import { EmployeeService } from '../service/employee-service';
 })
 export class PharmacistPatientSearchComponent implements OnInit {
 
-  users:Pharmacist[]=[]
+  users:any
   constructor(private service:EmployeeService) { }
 
   ngOnInit(): void {
     
-    this.FillPatients();
+    this.FindCheckedPatients();
   }
   async FillPatients(){
     await this.service.getAllUsers().then(
@@ -22,6 +22,12 @@ export class PharmacistPatientSearchComponent implements OnInit {
       
     )
     console.log(this.users);
+  }
+  async FindCheckedPatients(){
+    let user = JSON.parse(localStorage.getItem("user"));
+    await this.service.findCheckedPatients(user.uidn).then(
+      data=>this.users=data
+    )
   }
   PenalizePatient(uidn){
     this.service.penalizePatientPharmacist(uidn);
@@ -34,7 +40,7 @@ export class PharmacistPatientSearchComponent implements OnInit {
     filter = input.value.toUpperCase();
     let novi:string = filter;
     if(novi==''){
-      this.Reload();
+      this.FillPatients();
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");

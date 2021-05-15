@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
@@ -35,4 +36,5 @@ public interface ExamService {
 	Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto);
 	List<String> findTerminsByUidns(String patuidn,String empuidn);
 	Exam updatePoints(Long examId, Integer points);
+	List<Patient> findCheckedPatientsDermatologist(String uidn);
 }
