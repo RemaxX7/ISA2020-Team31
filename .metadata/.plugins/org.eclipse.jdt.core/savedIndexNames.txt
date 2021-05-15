@@ -37,8 +37,8 @@ INDEX VERSION 1.131+D:\Users\marko\Desktop\ISA2020-Team31\.metadata\.plugins\org
 1769155315.index
 1193026116.index
 17803570.index
-3509113774.index
 565346316.index
+3509113774.index
 2782391131.index
 5793966.index
 204559623.index
@@ -49,9 +49,9 @@ INDEX VERSION 1.131+D:\Users\marko\Desktop\ISA2020-Team31\.metadata\.plugins\org
 2207240135.index
 1169730717.index
 1491576390.index
-3312872575.index
-1642632131.index
 4082458446.index
+1642632131.index
+3312872575.index
 3169056266.index
 1266461348.index
 3538642127.index

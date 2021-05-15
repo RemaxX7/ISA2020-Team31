@@ -5,8 +5,8 @@ export class Appointment {
     patientName:string;
     patientSurname:string;
     duration:number;
-    date:string;
     uidn:string;
+    dateRange:any;
     report:string;
     status:number;
     medicine:string;

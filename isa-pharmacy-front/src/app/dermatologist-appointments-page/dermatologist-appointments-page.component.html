@@ -24,6 +24,7 @@
                     <th >Surname</th>
                     <th >Uidn</th>
                     <th >Username</th>
+                    <th>Exam start time</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -33,6 +34,7 @@
                         <td>{{u.patient.surname}}</td>
                         <td>{{u.patient.uidn}}</td>
                         <td>{{u.patient.email}}</td>
+                        <td>{{u.dateRange.startDateTime[0]}}.{{u.dateRange.startDateTime[1]}}.{{u.dateRange.startDateTime[2]}} {{u.dateRange.startDateTime[3]}}:{{u.dateRange.startDateTime[4]}}</td>
                         <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.id,u.patient.uidn]" >Start appointment</a></td>
                         <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.patient.uidn)">Penalize </a></td>
                     </tr>

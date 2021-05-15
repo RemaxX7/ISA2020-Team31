@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,7 @@ public class EmployeeController {
 	public ResponseEntity<User> findByID(@PathVariable String uidn) {
 		return new ResponseEntity<>(employedService.findByUidn(uidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping("/reservation/{id}/{uidn}")
 	public ResponseEntity<Collection<MedicineReservation>> findReservationByID(@PathVariable String id,@PathVariable String uidn) throws CancelMedicineReservationException {
 		return new ResponseEntity<>(medicineService.findById(id,uidn), HttpStatus.OK);
