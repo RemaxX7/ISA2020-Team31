@@ -20,7 +20,7 @@
     <div class="userinfo">
         <table >
         <tr><td >Unesite podatke o pregledu za uidn: {{pat.uidn}}</td><td></td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
-        <tr ><td>Izaberite lek i kolicinu</td><td></td><td ><mat-form-field >
+        <tr ><td>Pick medicine and quantity for therapy*(mandatory)</td><td></td><td ><mat-form-field >
           <mat-select name="" id="" #mySelect [(value)]="medicineSelect">
             <mat-option *ngFor="let med of medicine" [value]="med.name" >{{med.name}}</mat-option>
         </mat-select></mat-form-field></td><td><input type="text" formControlName="quantity" #quantSelect></td>

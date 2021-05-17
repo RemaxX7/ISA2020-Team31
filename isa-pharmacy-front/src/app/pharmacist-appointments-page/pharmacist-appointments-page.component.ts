@@ -32,10 +32,12 @@ export class PharmacistAppointmentsPageComponent implements OnInit {
     )
     console.log(this.users);
   }
-  PenalizePatient(uidn){
-    this.service.penalizePatientPharmacist(uidn);
-    alert("Korisnik je kaznjen jednim negativnim bodom");
-    //this.Reload();
+  PenalizePatient(uidn,dateRange){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.service.penalizePatientPharmacist(uidn,dateRange.startDateTime[0]+"-"+dateRange.startDateTime[1]+"-"+dateRange.startDateTime[2]+"T"+dateRange.startDateTime[3]+":"+dateRange.startDateTime[4],user.uidn).then(()=>{
+      alert("User has been punished with 1 negative point.");
+      this.Reload();
+    });
   }
   MyFunction(){
     var input, filter, table, tr, td, i,td1;

@@ -58,6 +58,7 @@ INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 4
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5, 5, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);
 
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (100,3,5);
 
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
 						('Exam', 3, '2021-01-12 16:30:00', '2021-02-12 16:05:00', 105, 'Report', 5, 1, 3);

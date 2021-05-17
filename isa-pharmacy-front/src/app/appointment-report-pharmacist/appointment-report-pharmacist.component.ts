@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Medicine } from '../model/medicine.model';
@@ -16,7 +16,7 @@ import { MedicineService } from '../service/medicine-service';
 })
 export class AppointmentReportPharmacistComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService) { }
+  constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService,private router:Router) { }
   pat:Patient = new Patient();
   pharm:Pharmacist = new Pharmacist();
   medicine:Medicine[]=[];
@@ -54,11 +54,13 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     this.appointment.medicine = medicine
     this.service.sendAppointmentDTOPharmacist(this.appointment,this.myForm.get('quantity').value).subscribe(res=>{
       console.log(res);
-      alert("Uspesno zavrsen pregled"),
+      alert("Uspesno zavrsen pregled");
+      this.router.navigate(['pharmacist']);
+    },
       err =>{
-        alert(err.error);
+        alert("Not enough medicine in stock.");
       }
-     } );
+     );
   }
   async GetAppointment(){
     await this.service.getByCounselingId(this.examid).then(

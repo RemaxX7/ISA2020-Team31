@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { extname } from 'path';
 import { isExternalModuleNameRelative, NumberLiteralType } from 'typescript';
 import { Appointment } from '../model/appointment.model';
@@ -17,7 +17,7 @@ import { MedicineService } from '../service/medicine-service';
 })
 export class AppointmentReportComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService) { }
+  constructor(private fb:FormBuilder, private route:ActivatedRoute, private service:EmployeeService,private medicineService:MedicineService, private router: Router) { }
   pat:Patient = new Patient();
   derm:Dermatologist = new Dermatologist();
   medicine:Medicine[]=[];
@@ -57,11 +57,13 @@ export class AppointmentReportComponent implements OnInit {
     this.appointment.medicine = medicine;
     this.service.sendAppointmentDTO(this.appointment,this.myForm.get('quantity').value).subscribe(res=>{
       console.log(res);
-      alert("Uspesno zavrsen pregled"),
+      alert("Uspesno zavrsen pregled");
+      this.router.navigate(['dermatologist']);
+    },
       err =>{
-        alert(err.error);
+        alert("Not enough medicine in stock.");
       }
-     } );
+     );
   }
   ScheduleAdditionalExam(){
     let user = JSON.parse(localStorage.getItem("user"));

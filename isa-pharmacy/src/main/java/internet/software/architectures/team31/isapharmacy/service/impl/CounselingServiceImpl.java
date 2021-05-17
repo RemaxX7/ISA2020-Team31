@@ -20,6 +20,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Employee;
@@ -35,6 +36,7 @@ import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
@@ -71,6 +73,8 @@ public class CounselingServiceImpl implements CounselingService {
 	private ExamService examService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private InventoryItemServiceImpl inventoryService;
 
 	@Override
 	public Counseling save(CounselingCreateDTO dto) throws PenaltyException, CounselingAlreadyScheduledException {
@@ -174,15 +178,21 @@ public class CounselingServiceImpl implements CounselingService {
 	}
 
 	@Override
-	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) {
+	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException{
 		List<Counseling> counseling = (List<Counseling>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
 		List<Medicine>medicineList = new ArrayList<Medicine>();
+		List<InventoryItem>inventoryItemList = inventoryService.findAll();
 		medicineList.add(medicineService.findByName(dto.getMedicine()));
 		for (Counseling couns : counseling) {
 			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
 				for (Medicine medicine : medicineList) {
-					itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
+					for (InventoryItem inventoryItem : inventoryItemList) {
+						if(inventoryItem.getMedicine().getId().equals(medicine.getId()) && inventoryItem.getQuantity() > Integer.parseInt(quant))
+							itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
+						else
+							throw new InvalidInputException("Not enough medicine in stock.");
+					}
 				}
 				couns.setAppointmentStatus(AppointmentStatus.FINISHED);
 				couns.setReport(dto.getReport());

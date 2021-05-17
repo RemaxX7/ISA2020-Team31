@@ -91,12 +91,12 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/appointments/exams/penalize/" + uidn +"/"+dateRange+"/"+dermUidn,options).toPromise();
     }
-    penalizePatientPharmacist(uidn):Promise<any>{
+    penalizePatientPharmacist(uidn,dateRange,pharmuidn):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/counselings/pharmacistpenalize/" + uidn,options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/counselings/pharmacistpenalize/" + uidn + "/" + dateRange + "/" + pharmuidn,options).toPromise();
     }
     sendAppointmentDTO(val:Appointment,quant):Observable<any>{
       let headers = new HttpHeaders({

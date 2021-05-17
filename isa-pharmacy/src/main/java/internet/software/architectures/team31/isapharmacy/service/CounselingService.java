@@ -20,6 +20,7 @@ import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 
 public interface CounselingService {
@@ -39,7 +40,7 @@ public interface CounselingService {
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId);
 	boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime);
-	Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant);
+	Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException;
 	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);

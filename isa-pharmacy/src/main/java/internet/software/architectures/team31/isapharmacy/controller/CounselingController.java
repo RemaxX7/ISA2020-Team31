@@ -26,6 +26,7 @@ import internet.software.architectures.team31.isapharmacy.dto.FindAvailablePharm
 import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
@@ -89,14 +90,14 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/pharmacistpenalize/{id}")
-	public ResponseEntity<Counseling>penalize(@PathVariable String id){
-		return new ResponseEntity<>(patientService.pharmacistPenalize(id),HttpStatus.OK);
+	@GetMapping(value = "/pharmacistpenalize/{id}/{date}/{pharmuidn}")
+	public ResponseEntity<Counseling>penalize(@PathVariable String id,@PathVariable String date,@PathVariable String pharmuidn){
+		return new ResponseEntity<>(patientService.pharmacistPenalize(id,date,pharmuidn),HttpStatus.OK);
 	}
 	
 
 	@PostMapping(value = "/finalizeappointmentpharmacist/{quant}")
-	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
+	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant) throws InvalidInputException{
 		return new ResponseEntity<>(counselingService.finalizeExam(dto,quant),HttpStatus.OK);
 	}
 	

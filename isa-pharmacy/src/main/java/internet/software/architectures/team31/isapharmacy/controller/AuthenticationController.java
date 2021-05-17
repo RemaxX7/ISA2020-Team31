@@ -60,9 +60,9 @@ public class AuthenticationController {
 		User user = userService.findByEmail(authenticationRequest.getUsername());
 		UserDetailsDTO userDetails = new UserDetailsDTO(user);
 		String jwt = tokenUtils.generateToken(user.getUsername());
-		int expiresIn = tokenUtils.getExpiredIn();
-		
-		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, userDetails));
+		int expiresIn = tokenUtils.getExpiredIn()*100;
+		System.out.println(expiresIn);
+		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn*10, userDetails));
 	}
 	
 	@PostMapping("/logout")

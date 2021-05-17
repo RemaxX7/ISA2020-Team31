@@ -25,6 +25,7 @@ import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
@@ -104,7 +105,7 @@ public class ExamController {
 		return new ResponseEntity<>(patientService.penalize(id,date,dermuidn),HttpStatus.OK);
 	}
 	@PostMapping(value = "/finalizeappointment/{quant}")
-	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
+	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant) throws InvalidInputException{
 		return new ResponseEntity<>(examService.finalizeExam(dto,quant),HttpStatus.OK);
 	}
 	@PostMapping(value = "/schedulenewexam")

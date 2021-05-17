@@ -19,6 +19,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
@@ -31,6 +32,7 @@ import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
@@ -60,6 +62,8 @@ public class ExamServiceImpl implements ExamService {
 	private AppointmentService appointmentService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private InventoryItemServiceImpl inventoryService;
 
 	@Override
 	public Exam save(ExamCreateDTO dto) {
@@ -147,15 +151,21 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Exam finalizeExam(AppointmentFinalizationDTO dto,String quant) {
+	public Exam finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException{
 		List<Exam> exam = (List<Exam>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
 		List<Medicine>medicineList = new ArrayList<Medicine>();
+		List<InventoryItem>inventoryItemList = inventoryService.findAll();
 		medicineList.add(medicineService.findByName(dto.getMedicine()));
 		for (Exam ex : exam) {
 			if(ex.getPatient().getUidn().equals(dto.getUidn()) && ex.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
 				for (Medicine medicine : medicineList) {
-					itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
+					for (InventoryItem inventoryItem : inventoryItemList) {
+						if(inventoryItem.getMedicine().getId().equals(medicine.getId()) && inventoryItem.getQuantity() > Integer.parseInt(quant))
+							itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
+						else
+							throw new InvalidInputException("Not enough medicine in stock.");
+					}
 				}
 				ex.setAppointmentStatus(AppointmentStatus.FINISHED);
 				ex.setReport(dto.getReport());

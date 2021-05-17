@@ -90,10 +90,25 @@ public class PatientServiceImpl implements PatientService {
 		return patientRepository.findAll();
 	}
 	@Override
-	public Counseling pharmacistPenalize(String uidn) {
+	public Counseling pharmacistPenalize(String uidn,String date,String pharmuidn) {
 		List<Counseling> counseling = (List<Counseling>) counsService.findAll();
+		String newDate = "";
+		String mon = "0";
+		String day = "0";
+		if(date.endsWith(":0")) {
+			newDate = date.concat("0");
+		}
+		String[] lastDate = newDate.split("T");
+		String[] splits = lastDate[0].split("-");
+		if(splits[1].length()==1) {
+			splits[1]=mon.concat(splits[1]);;
+		}
+		if(splits[2].length()==1) {
+			splits[2]=day.concat(splits[2]);
+		}
+		String fullDate= splits[0]+"-"+splits[1]+"-"+splits[2]+"T"+lastDate[1];
 		for (Counseling coun : counseling) {
-			if(coun.getPatient().getUidn().equals(uidn)) {
+			if(coun.getPatient().getUidn().equals(uidn) && coun.getPharmacist().getUidn().equals(pharmuidn) && coun.getDateRange().getStartDateTime().toString().equals(fullDate)) {
 				coun.setAppointmentStatus(AppointmentStatus.UNATTENDED);
 				Patient patient = findByUidn(coun.getPatient().getUidn());
 				int penalty = patient.getPenalty();
