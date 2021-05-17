@@ -30,7 +30,7 @@ INSERT INTO USERS_PHARMACIES (dermatologist_id, pharmacies_id) values (3, 1), (3
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_USER');
 INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO AUTHORITY (id, name) VALUES (3,'ROLE_PHARMACIST');
-INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1),(44,1);
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_DERMATOLOGIST');
 INSERT INTO AUTHORITY (id, name) VALUES (5, 'ROLE_PHARMACY_ADMIN');
 

@@ -11,6 +11,7 @@ import { EmployeeService } from '../service/employee-service';
 })
 export class DermatologistAppointmentsPageComponent implements OnInit {
   users:Patient[]=[]
+  derm:any;
   appointments:Appointment[]=[]
   constructor(private service:EmployeeService ) {}
 
@@ -31,10 +32,12 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
     )
     console.log(this.appointments);
   }
-  PenalizePatient(uidn){
-    this.service.penalizePatient(uidn);
-    alert("Korisnik je kaznjen jednim negativnim bodom");
-    this.Reload();
+  PenalizePatient(uidn,dateRange){
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.service.penalizePatient(uidn,dateRange.startDateTime[0]+"-"+dateRange.startDateTime[1]+"-"+dateRange.startDateTime[2]+"T"+dateRange.startDateTime[3]+":"+dateRange.startDateTime[4],user.uidn).then(()=>{
+      alert("User has been punished with 1 negative point.");
+      this.Reload();
+    });
   }
   MyFunction(){
     var input, filter, table, tr, td, i,td1;

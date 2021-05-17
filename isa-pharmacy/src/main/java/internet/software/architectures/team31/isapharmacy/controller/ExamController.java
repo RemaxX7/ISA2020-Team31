@@ -99,9 +99,9 @@ public class ExamController {
 		dto.setPharmacyId(1L);
 		return new ResponseEntity<>(examService.save(dto), HttpStatus.OK);		
 	}
-	@GetMapping(value = "/penalize/{id}")
-	public ResponseEntity<Exam>penalize(@PathVariable String id){
-		return new ResponseEntity<>(patientService.penalize(id),HttpStatus.OK);
+	@GetMapping(value = "/penalize/{id}/{date}/{dermuidn}")
+	public ResponseEntity<Exam>penalize(@PathVariable String id,@PathVariable String date,@PathVariable String dermuidn){
+		return new ResponseEntity<>(patientService.penalize(id,date,dermuidn),HttpStatus.OK);
 	}
 	@PostMapping(value = "/finalizeappointment/{quant}")
 	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){

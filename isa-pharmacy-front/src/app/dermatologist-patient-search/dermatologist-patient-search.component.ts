@@ -31,7 +31,7 @@ export class DermatologistPatientSearchComponent implements OnInit {
     )
   }
   PenalizePatient(uidn){
-    this.service.penalizePatient(uidn);
+    //this.service.penalizePatient(uidn);
     alert("Korisnik je kaznjen jednim negativnim bodom");
     this.Reload();
   }

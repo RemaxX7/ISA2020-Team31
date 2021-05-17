@@ -53,10 +53,28 @@ public class PatientServiceImpl implements PatientService {
 		return patientRepository.findByUidn(uidn);
 	}
 	@Override
-	public Exam penalize(String uidn){
+	public Exam penalize(String uidn,String date,String dermuidn){
 		List<Exam> exam = (List<Exam>) examService.findAll();
+		String newDate = "";
+		String mon = "0";
+		String day = "0";
+		if(date.endsWith(":0")) {
+			newDate = date.concat("0");
+		}
+		String[] lastDate = newDate.split("T");
+		String[] splits = lastDate[0].split("-");
+		if(splits[1].length()==1) {
+			splits[1]=mon.concat(splits[1]);;
+		}
+		if(splits[2].length()==1) {
+			splits[2]=day.concat(splits[2]);
+		}
+		String fullDate= splits[0]+"-"+splits[1]+"-"+splits[2]+"T"+lastDate[1];
 		for (Exam ex : exam) {
-			if(ex.getPatient().getUidn().equals(uidn)) {
+			System.out.println(ex.getDateRange().getStartDateTime());
+			System.out.println(ex.getPatient().getUidn());
+			System.out.println(ex.getDermatologist().getUidn());
+			if(ex.getPatient().getUidn().equals(uidn) && ex.getDermatologist().getUidn().equals(dermuidn) && ex.getDateRange().getStartDateTime().toString().equals(fullDate)) {
 				ex.setAppointmentStatus(AppointmentStatus.UNATTENDED);
 				Patient patient = findByUidn(ex.getPatient().getUidn());
 				int penalty = patient.getPenalty();

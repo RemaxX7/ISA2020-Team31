@@ -36,7 +36,7 @@
                         <td>{{u.patient.email}}</td>
                         <td>{{u.dateRange.startDateTime[0]}}.{{u.dateRange.startDateTime[1]}}.{{u.dateRange.startDateTime[2]}} {{u.dateRange.startDateTime[3]}}:{{u.dateRange.startDateTime[4]}}</td>
                         <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.id,u.patient.uidn]" >Start appointment</a></td>
-                        <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.patient.uidn)">Penalize </a></td>
+                        <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.patient.uidn,u.dateRange)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

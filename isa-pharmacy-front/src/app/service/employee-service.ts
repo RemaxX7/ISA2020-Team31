@@ -84,12 +84,12 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/appointments/counselings/findbyid/" + examid,options).toPromise();
     }
-    penalizePatient(uidn):Promise<any>{
+    penalizePatient(uidn,dateRange,dermUidn):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/exams/penalize/" + uidn,options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/exams/penalize/" + uidn +"/"+dateRange+"/"+dermUidn,options).toPromise();
     }
     penalizePatientPharmacist(uidn):Promise<any>{
       let headers = new HttpHeaders({
