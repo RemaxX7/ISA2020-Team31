@@ -10,7 +10,7 @@ export class Appointment {
     dateRange:any;
     report:string;
     status:number;
-    medicine:string;
+    medicine:string[];
     employeeuidn:string;
     patient: Patient;
     id:any;

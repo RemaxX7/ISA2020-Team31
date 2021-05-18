@@ -51,6 +51,7 @@ public class CounselingController {
 	public ResponseEntity<Collection<Counseling>> findAll() {
 		return new ResponseEntity<>(counselingService.findAll(), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/allactive")
 	public ResponseEntity<Collection<Counseling>> findAllActive() {
 		return new ResponseEntity<>(counselingService.findAllActive(), HttpStatus.OK);
@@ -66,7 +67,7 @@ public class CounselingController {
 	public ResponseEntity<Page<AppointmentViewDTO>> findFinishedByPatient(@PathVariable Integer page, @PathVariable String sort) {
 		return new ResponseEntity<>(counselingService.findAllByPatientIdAndAppointmentStatus(AppointmentStatus.FINISHED, PageRequest.of(page, 5, Sort.by(sort))), HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/findbyid/{id}")
 	public ResponseEntity<Counseling> findById(@PathVariable Long id) {
 		return new ResponseEntity<>(counselingService.findById(id), HttpStatus.OK);
@@ -89,18 +90,18 @@ public class CounselingController {
 	public ResponseEntity<Boolean> cancel(@PathVariable Long id) throws CancelAppointmentException {
 		return new ResponseEntity<>(counselingService.cancel(id), HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/pharmacistpenalize/{id}/{date}/{pharmuidn}")
 	public ResponseEntity<Counseling>penalize(@PathVariable String id,@PathVariable String date,@PathVariable String pharmuidn){
 		return new ResponseEntity<>(patientService.pharmacistPenalize(id,date,pharmuidn),HttpStatus.OK);
 	}
 	
-
-	@PostMapping(value = "/finalizeappointmentpharmacist/{quant}")
-	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant) throws InvalidInputException{
-		return new ResponseEntity<>(counselingService.finalizeExam(dto,quant),HttpStatus.OK);
+	@PreAuthorize("hasRole('PHARMACIST')")
+	@PostMapping(value = "/finalizeappointmentpharmacist/{examid}/{quant}")
+	public ResponseEntity<Counseling> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String examid,@PathVariable String quant) throws InvalidInputException{
+		return new ResponseEntity<>(counselingService.finalizeExam(dto,examid,quant),HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@PostMapping(value = "/schedulenewcounseling")
 	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(counselingService.scheduleAdditionalConsultation(dto),HttpStatus.OK);

@@ -2,6 +2,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import {EmployeeService} from 'src/app/service/employee-service'
 import { Dermatologist } from '../model/dermatologist.model';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-dermatologist-patient-search',
@@ -11,13 +12,15 @@ import { Dermatologist } from '../model/dermatologist.model';
 export class DermatologistPatientSearchComponent implements OnInit {
 
   users:any
-  constructor(private service:EmployeeService ) {}
+  constructor(private service:EmployeeService,private userService:UserService ) {}
 
   ngOnInit(): void {
+    this.service.refreshJWTToken();
     this.FindCheckedPatients();
 
   }
   async FillPatients(){
+    this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
       data=>this.users=data
       
@@ -25,6 +28,7 @@ export class DermatologistPatientSearchComponent implements OnInit {
     console.log(this.users);
   }
   async FindCheckedPatients(){
+    this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
     await this.service.findCheckedPatientsDermatologist(user.uidn).then(
       data=>this.users=data
@@ -80,5 +84,11 @@ sortTable(colnum) {
   });
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
+}
+LogOut() {
+  this.userService.Logout().subscribe(data => {
+  },
+    err => console.log(err)
+  )
 }
 }

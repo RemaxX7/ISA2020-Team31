@@ -49,10 +49,12 @@ public class ExamController {
 	public ResponseEntity<Collection<Exam>> findAll() {
 		return new ResponseEntity<>(examService.findAll(), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/allactive")
 	public ResponseEntity<Collection<Exam>> findAllActive() {
 		return new ResponseEntity<>(examService.findAllActive(), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/findbyid/{id}")
 	public ResponseEntity<Exam> findById(@PathVariable Long id) {
 		return new ResponseEntity<>(examService.findById(id), HttpStatus.OK);
@@ -100,14 +102,17 @@ public class ExamController {
 		dto.setPharmacyId(1L);
 		return new ResponseEntity<>(examService.save(dto), HttpStatus.OK);		
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/penalize/{id}/{date}/{dermuidn}")
 	public ResponseEntity<Exam>penalize(@PathVariable String id,@PathVariable String date,@PathVariable String dermuidn){
 		return new ResponseEntity<>(patientService.penalize(id,date,dermuidn),HttpStatus.OK);
 	}
-	@PostMapping(value = "/finalizeappointment/{quant}")
-	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant) throws InvalidInputException{
-		return new ResponseEntity<>(examService.finalizeExam(dto,quant),HttpStatus.OK);
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
+	@PostMapping(value = "/finalizeappointment/{examid}/{quant}")
+	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String examid,@PathVariable String quant) throws InvalidInputException{
+		return new ResponseEntity<>(examService.finalizeExam(dto,examid,quant),HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@PostMapping(value = "/schedulenewexam")
 	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
 		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);

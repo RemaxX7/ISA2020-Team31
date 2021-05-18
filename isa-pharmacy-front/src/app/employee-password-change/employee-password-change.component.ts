@@ -17,12 +17,14 @@ export class EmployeePasswordChangeComponent implements OnInit {
   vari:Pharmacist = new Pharmacist();
   myForm:FormGroup;
   ngOnInit(): void {
+    this.service.refreshJWTToken();
     this.myForm=this.fb.group({
       pass:['',[Validators.required]],
       passconf:['',[Validators.required]]
     })
   }
   EditPassword(){
+    this.service.refreshJWTToken();
     if(this.myForm.get('pass').value != this.myForm.get('passconf').value){
       alert("New passwords do not match!");
     }else{
@@ -34,16 +36,14 @@ export class EmployeePasswordChangeComponent implements OnInit {
     }
   }
   LogOut() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('user');
-    this.router.navigate(['login']);
-
+    this.service.refreshJWTToken();
     this.userService.Logout().subscribe(data => {
     },
       err => console.log(err)
     )
   }
   async Check(number){
+    this.service.refreshJWTToken();
     await this.service.getById(JSON.parse(localStorage.getItem("user")).uidn).then(data=>this.vari=data);
     console.log(this.vari.password)
     //hash je 123

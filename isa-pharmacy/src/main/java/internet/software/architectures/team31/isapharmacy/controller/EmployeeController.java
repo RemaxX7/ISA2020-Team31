@@ -45,10 +45,12 @@ public class EmployeeController {
 	private MedicineService medService;
 	@Autowired
 	private CounselingService counService;
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping("/all")
 	public ResponseEntity<Collection<User>> findAll() {
 		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping("/getbyid/{uidn}")
 	public ResponseEntity<User> findByID(@PathVariable String uidn) {
 		return new ResponseEntity<>(employedService.findByUidn(uidn), HttpStatus.OK);
@@ -58,38 +60,47 @@ public class EmployeeController {
 	public ResponseEntity<Collection<MedicineReservation>> findReservationByID(@PathVariable String id,@PathVariable String uidn) throws CancelMedicineReservationException {
 		return new ResponseEntity<>(medicineService.findById(id,uidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@PostMapping(value = "/editprofile")
 	public ResponseEntity<User> editUserProfile(@RequestBody EmployeeProfileEditDTO dto){
 		return new ResponseEntity<>(employedService.employeeEditProfile(dto),HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@PostMapping(value = "/editpassword")
 	public ResponseEntity<User> editUserPassword(@RequestBody PasswordChangeDTO dto){
 		return new ResponseEntity<>(employedService.employeeEditPassword(dto),HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/freeterm/{patuidn}/{empuidn}")
 	public ResponseEntity<Collection<String>> findFreeTermins(@PathVariable String patuidn,@PathVariable String empuidn) {
 		return new ResponseEntity<>(examService.findTerminsByUidns(patuidn,empuidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/freetermpharm/{patuidn}/{empuidn}")
 	public ResponseEntity<Collection<String>> findFreeTerminsPharm(@PathVariable String patuidn,@PathVariable String empuidn) {
 		return new ResponseEntity<>(counService.findTerminsByUidnsPharm(patuidn,empuidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/counsforpharm/{uidn}/{days}")
 	public ResponseEntity<Collection<Counseling>> findCounsForPharm(@PathVariable String uidn,@PathVariable String days) {
 		return new ResponseEntity<>(counService.findCounsForPharm(uidn,days), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/finishedpatients/{uidn}")
 	public ResponseEntity<Collection<Patient>> findCheckedPatients(@PathVariable String uidn) {
 		return new ResponseEntity<>(counService.findCheckedPatients(uidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/finishedpatientsdermatologist/{uidn}")
 	public ResponseEntity<Collection<Patient>> findCheckedPatientsDermatologist(@PathVariable String uidn) {
 		return new ResponseEntity<>(examService.findCheckedPatientsDermatologist(uidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/examsforderm/{uidn}/{days}")
 	public ResponseEntity<Collection<Exam>> findExamsForDerm(@PathVariable String uidn,@PathVariable String days) {
 		return new ResponseEntity<>(counService.findExamsForDerm(uidn,days), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/medicineavailability/{name}/{id}")
 	public ResponseEntity<String> findAvailableMedicineCount(@PathVariable String name,@PathVariable String id) {
 		return new ResponseEntity<>(medService.findAvailableMedicineCount(name,id), HttpStatus.OK);

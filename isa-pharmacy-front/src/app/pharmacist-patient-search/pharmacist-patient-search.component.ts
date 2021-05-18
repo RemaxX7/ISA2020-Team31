@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pharmacist } from '../model/pharmacist.model';
 import { EmployeeService } from '../service/employee-service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-pharmacist-patient-search',
@@ -10,13 +11,14 @@ import { EmployeeService } from '../service/employee-service';
 export class PharmacistPatientSearchComponent implements OnInit {
 
   users:any
-  constructor(private service:EmployeeService) { }
+  constructor(private service:EmployeeService,private userService:UserService) { }
 
   ngOnInit(): void {
-    
+    this.service.refreshJWTToken();
     this.FindCheckedPatients();
   }
   async FillPatients(){
+    this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
       data=>this.users=data
       
@@ -24,6 +26,7 @@ export class PharmacistPatientSearchComponent implements OnInit {
     console.log(this.users);
   }
   async FindCheckedPatients(){
+    this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
     await this.service.findCheckedPatients(user.uidn).then(
       data=>this.users=data
@@ -73,5 +76,11 @@ sortTable(colnum) {
   });
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
+}
+LogOut() {
+  this.userService.Logout().subscribe(data => {
+  },
+    err => console.log(err)
+  )
 }
 }

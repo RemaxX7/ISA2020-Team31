@@ -24,7 +24,7 @@ import internet.software.architectures.team31.isapharmacy.service.PatientService
 public class PatientController {
 	@Autowired
 	private PatientService patientService;
-	
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping("/all")
 	public ResponseEntity<Collection<Patient>> findAll() {
 		return new ResponseEntity<>(patientService.findAll(), HttpStatus.OK);

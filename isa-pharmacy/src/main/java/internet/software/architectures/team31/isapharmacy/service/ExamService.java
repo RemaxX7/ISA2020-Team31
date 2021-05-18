@@ -33,7 +33,7 @@ public interface ExamService {
 	Page<AppointmentViewDTO> findAllByPatientIdAndAppointmentStatus(AppointmentStatus status, Pageable pageable);
 	Exam findById(Long id);
 	boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId);
-	Exam finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException;
+	Exam finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException;
 	Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto);
 	List<String> findTerminsByUidns(String patuidn,String empuidn);
 	Exam updatePoints(Long examId, Integer points);

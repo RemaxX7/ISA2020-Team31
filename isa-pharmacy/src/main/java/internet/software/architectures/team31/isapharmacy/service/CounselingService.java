@@ -40,7 +40,7 @@ public interface CounselingService {
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId);
 	boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime);
-	Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException;
+	Counseling finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException;
 	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);

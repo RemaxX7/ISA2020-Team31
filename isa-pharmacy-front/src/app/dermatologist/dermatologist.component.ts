@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeeService } from '../service/employee-service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-dermatologist',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DermatologistComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:EmployeeService,private userService:UserService) { }
 
   ngOnInit(): void {
+    this.service.refreshJWTToken();
   }
-
+  LogOut() {
+    this.userService.Logout().subscribe(data => {
+    },
+      err => console.log(err)
+    )
+  }
 }

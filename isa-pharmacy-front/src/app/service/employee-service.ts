@@ -14,6 +14,13 @@ import { Pharmacist } from '../model/pharmacist.model';
   
     constructor(private _http : HttpClient) { }
     
+    refreshJWTToken():Observable<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = {headers:headers};
+      return this._http.get("http://localhost:8080/auth/refresh",options);
+    }
     getAllUsers(): Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -98,19 +105,19 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/appointments/counselings/pharmacistpenalize/" + uidn + "/" + dateRange + "/" + pharmuidn,options).toPromise();
     }
-    sendAppointmentDTO(val:Appointment,quant):Observable<any>{
+    sendAppointmentDTO(val:Appointment,examid,quant):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.post("http://localhost:8080/api/appointments/exams/finalizeappointment/"+quant,val,options);
+      return this._http.post("http://localhost:8080/api/appointments/exams/finalizeappointment/"+examid+"/"+quant,val,options);
     }
-    sendAppointmentDTOPharmacist(val:Appointment,quant):Observable<any>{
+    sendAppointmentDTOPharmacist(val:Appointment,examid,quant):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.post("http://localhost:8080/api/appointments/counselings/finalizeappointmentpharmacist/"+quant,val,options);
+      return this._http.post("http://localhost:8080/api/appointments/counselings/finalizeappointmentpharmacist/"+examid+"/"+quant,val,options);
     }
     scheduleNewAppointmentDerm(val:Appointment):Observable<any>{
       let headers = new HttpHeaders({

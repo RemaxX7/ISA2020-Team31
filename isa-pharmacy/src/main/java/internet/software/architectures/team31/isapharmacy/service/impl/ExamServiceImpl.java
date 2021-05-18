@@ -151,19 +151,20 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Exam finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException{
+	public Exam finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException{
 		List<Exam> exam = (List<Exam>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
-		List<Medicine>medicineList = new ArrayList<Medicine>();
 		List<InventoryItem>inventoryItemList = inventoryService.findAll();
-		medicineList.add(medicineService.findByName(dto.getMedicine()));
 		for (Exam ex : exam) {
-			if(ex.getPatient().getUidn().equals(dto.getUidn()) && ex.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
-				for (Medicine medicine : medicineList) {
+			if(ex.getPatient().getUidn().equals(dto.getUidn()) && ex.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED) && ex.getId().equals(Long.parseLong(examid))) {
+				for (String item : dto.getMedicine()) {
+					Medicine med = medicineService.findByName(item.split(",")[0]);
 					for (InventoryItem inventoryItem : inventoryItemList) {
-						if(inventoryItem.getMedicine().getId().equals(medicine.getId()) && inventoryItem.getQuantity() > Integer.parseInt(quant))
-							itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
-						else
+						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() > Integer.parseInt(item.split(",")[1])) {
+							itemList.add(new AppointmentMedicineItem(med,Integer.parseInt(item.split(",")[1])));
+							break;
+						}
+						else if(inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
 							throw new InvalidInputException("Not enough medicine in stock.");
 					}
 				}
@@ -272,7 +273,7 @@ public class ExamServiceImpl implements ExamService {
 		List<Exam> examList = examRepository.findAll();
 		List<Exam> frontList = new ArrayList<Exam>();
 		for (Exam exam : examList) {
-			if(exam.getAppointmentStatus().equals(AppointmentStatus.FREE) || exam.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
+			if((exam.getAppointmentStatus().equals(AppointmentStatus.FREE) || exam.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && exam.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1))) {
 				frontList.add(exam);
 			}
 		}

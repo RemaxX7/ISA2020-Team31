@@ -178,19 +178,20 @@ public class CounselingServiceImpl implements CounselingService {
 	}
 
 	@Override
-	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) throws InvalidInputException{
+	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException{
 		List<Counseling> counseling = (List<Counseling>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
-		List<Medicine>medicineList = new ArrayList<Medicine>();
 		List<InventoryItem>inventoryItemList = inventoryService.findAll();
-		medicineList.add(medicineService.findByName(dto.getMedicine()));
 		for (Counseling couns : counseling) {
-			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
-				for (Medicine medicine : medicineList) {
+			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED) && couns.getId().equals(Long.parseLong(examid))) {
+				for (String item : dto.getMedicine()) {
+					Medicine med = medicineService.findByName(item.split(",")[0]);
 					for (InventoryItem inventoryItem : inventoryItemList) {
-						if(inventoryItem.getMedicine().getId().equals(medicine.getId()) && inventoryItem.getQuantity() > Integer.parseInt(quant))
-							itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
-						else
+						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() > Integer.parseInt(item.split(",")[1])) {
+							itemList.add(new AppointmentMedicineItem(med,Integer.parseInt(item.split(",")[1])));
+							break;
+						}
+						else if(inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
 							throw new InvalidInputException("Not enough medicine in stock.");
 					}
 				}
@@ -367,7 +368,7 @@ public class CounselingServiceImpl implements CounselingService {
 		List<Counseling> counsList = counselingRepository.findAll();
 		List<Counseling> frontList = new ArrayList<Counseling>();
 		for (Counseling couns : counsList) {
-			if(couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
+			if((couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && couns.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1))) {
 				frontList.add(couns);
 			}
 		}

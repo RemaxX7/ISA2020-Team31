@@ -17,6 +17,7 @@ export class PharmacistProfileComponent implements OnInit {
   pharmacist:any;
   myForm:FormGroup;
   ngOnInit(): void {
+    this.service.refreshJWTToken();
     this.myForm=this.fb.group({
       email:['',[Validators.required]],
       name:['',[Validators.required]],
@@ -38,6 +39,7 @@ export class PharmacistProfileComponent implements OnInit {
     }
   }
   async FillForm() {
+    this.service.refreshJWTToken();
     await this.service.getById(JSON.parse(localStorage.getItem("user")).uidn).then(data=>this.pharmacist = data);
     this.loaded = true;
     this.myForm.controls['name'].setValue(this.pharmacist.name);
@@ -46,6 +48,7 @@ export class PharmacistProfileComponent implements OnInit {
     this.myForm.controls['uidn'].setValue(this.pharmacist.uidn);
   }
   SaveChanges() {
+    this.service.refreshJWTToken();
     let profileUpdate = {
       uidn: this.pharmacist.uidn,
       name: this.myForm.controls['name'].value,
@@ -65,10 +68,6 @@ export class PharmacistProfileComponent implements OnInit {
     )
   }
   LogOut() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('user');
-    this.router.navigate(['login']);
-
     this.userService.Logout().subscribe(data => {
     },
       err => console.log(err)

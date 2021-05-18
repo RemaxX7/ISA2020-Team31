@@ -17,7 +17,7 @@ export class DermatologistProfileComponent implements OnInit {
   dermatologist:any;
   myForm: FormGroup;
   ngOnInit(): void {
-    
+    this.service.refreshJWTToken();
     this.myForm=this.fb.group({
       email:['',[Validators.required]],
       name:['',[Validators.required]],
@@ -39,6 +39,7 @@ export class DermatologistProfileComponent implements OnInit {
     }
   }
   async FillForm() {
+    this.service.refreshJWTToken();
     this.loaded = true;
     await this.service.getById(JSON.parse(localStorage.getItem("user")).uidn).then(data=>this.dermatologist = data);
     
@@ -49,6 +50,7 @@ export class DermatologistProfileComponent implements OnInit {
   }
 
   SaveChanges() {
+    this.service.refreshJWTToken();
     let profileUpdate = {
       uidn: this.dermatologist.uidn,
       name: this.myForm.controls['name'].value,
@@ -68,10 +70,6 @@ export class DermatologistProfileComponent implements OnInit {
     )
   }
   LogOut() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('user');
-    this.router.navigate(['login']);
-
     this.userService.Logout().subscribe(data => {
     },
       err => console.log(err)

@@ -3,6 +3,7 @@ import { Appointment } from '../model/appointment.model';
 import { Dermatologist } from '../model/dermatologist.model';
 import { Patient } from '../model/patient.model';
 import { EmployeeService } from '../service/employee-service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-dermatologist-appointments-page',
@@ -13,13 +14,15 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
   users:Patient[]=[]
   derm:any;
   appointments:Appointment[]=[]
-  constructor(private service:EmployeeService ) {}
+  constructor(private service:EmployeeService,private userService:UserService ) {}
 
   ngOnInit(): void {
+    this.service.refreshJWTToken();
     this.FillPatients();
     this.FillExams();
   }
   async FillPatients(){
+    this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
       data=>this.users=data
       
@@ -27,12 +30,14 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
     console.log(this.users);
   }
   async FillExams(){
+    this.service.refreshJWTToken();
     await this.service.fillExams().then(
       data=>this.appointments=data
     )
     console.log(this.appointments);
   }
   PenalizePatient(uidn,dateRange){
+    this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
     this.service.penalizePatient(uidn,dateRange.startDateTime[0]+"-"+dateRange.startDateTime[1]+"-"+dateRange.startDateTime[2]+"T"+dateRange.startDateTime[3]+":"+dateRange.startDateTime[4],user.uidn).then(()=>{
       alert("User has been punished with 1 negative point.");
@@ -81,5 +86,11 @@ sortTable(colnum) {
   });
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
+}
+LogOut() {
+  this.userService.Logout().subscribe(data => {
+  },
+    err => console.log(err)
+  )
 }
 }
