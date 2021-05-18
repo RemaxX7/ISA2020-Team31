@@ -55,13 +55,12 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public Exam penalize(String uidn,String date,String dermuidn){
 		List<Exam> exam = (List<Exam>) examService.findAll();
-		String newDate = "";
 		String mon = "0";
 		String day = "0";
 		if(date.endsWith(":0")) {
-			newDate = date.concat("0");
+			date = date.concat("0");
 		}
-		String[] lastDate = newDate.split("T");
+		String[] lastDate = date.split("T");
 		String[] splits = lastDate[0].split("-");
 		if(splits[1].length()==1) {
 			splits[1]=mon.concat(splits[1]);;
@@ -92,13 +91,12 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public Counseling pharmacistPenalize(String uidn,String date,String pharmuidn) {
 		List<Counseling> counseling = (List<Counseling>) counsService.findAll();
-		String newDate = "";
 		String mon = "0";
 		String day = "0";
 		if(date.endsWith(":0")) {
-			newDate = date.concat("0");
+			date = date.concat("0");
 		}
-		String[] lastDate = newDate.split("T");
+		String[] lastDate = date.split("T");
 		String[] splits = lastDate[0].split("-");
 		if(splits[1].length()==1) {
 			splits[1]=mon.concat(splits[1]);;
