@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -81,7 +82,7 @@ public class AuthenticationController {
 		userService.activate(token);
 		return new ResponseEntity<>("Account activated.", HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('DERMATOLOGIST') or hasRole('PHARMACIST')")
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
 
@@ -89,7 +90,7 @@ public class AuthenticationController {
 		String username = this.tokenUtils.getUsernameFromToken(token);
 		User user = userService.findByEmail(username);
 		UserDetailsDTO userDetails = new UserDetailsDTO(user);
-
+		System.out.println("USAO U REFRESH");
 		if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
 			String refreshedToken = tokenUtils.refreshToken(token);
 			int expiresIn = tokenUtils.getExpiredIn();

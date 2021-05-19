@@ -33,9 +33,9 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   freeTermins:any[]=[];
   selectedMed:string[]=[];
   medID:number;
+  jwt:string;
 
   ngOnInit(): void {
-    this.service.refreshJWTToken();
     this.examid=Number(this.route.snapshot.paramMap.get('id'));
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
     this.GetAppointment();

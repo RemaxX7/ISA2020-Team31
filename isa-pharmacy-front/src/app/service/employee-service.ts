@@ -14,12 +14,12 @@ import { Pharmacist } from '../model/pharmacist.model';
   
     constructor(private _http : HttpClient) { }
     
-    refreshJWTToken():Observable<any>{
-      let headers = new HttpHeaders({
+    refreshJWTToken(){
+      /*let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
-    let options = {headers:headers};
-      return this._http.get("http://localhost:8080/auth/refresh",options);
+    let options = {headers:headers};*/
+      return this._http.post("http://localhost:8080/auth/refresh",localStorage.getItem('userToken'));
     }
     getAllUsers(): Promise<any>{
       let headers = new HttpHeaders({
