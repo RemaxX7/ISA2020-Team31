@@ -22,6 +22,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CancelAppoin
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 
 public interface CounselingService {
 
@@ -41,7 +42,7 @@ public interface CounselingService {
 	boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId);
 	boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime);
 	Counseling finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException;
-	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
+	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception;
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);
 	List<Exam>findExamsForDerm(String uidn,String days);

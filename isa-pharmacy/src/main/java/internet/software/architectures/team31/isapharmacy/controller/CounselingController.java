@@ -28,6 +28,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CancelAppoin
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
@@ -103,7 +104,7 @@ public class CounselingController {
 	}
 	@PreAuthorize("hasRole('PHARMACIST')")
 	@PostMapping(value = "/schedulenewcounseling")
-	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto){
+	public ResponseEntity<Counseling> scheduleAdditionalConsultation(@RequestBody AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception{
 		return new ResponseEntity<>(counselingService.scheduleAdditionalConsultation(dto),HttpStatus.OK);
 	}
 	

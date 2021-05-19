@@ -16,4 +16,5 @@ public interface ShiftService {
 	List<Shift> findAllByIntervalAndEmployeeId(LocalDateTime startDateTime,LocalDateTime endDateTime,Long id);
 	Collection<Shift> findAllByDate(LocalDateTime dateTime);
 	Collection<Shift> findAllByDateAndPharmacyId(LocalDateTime dateTime, Long pharmacyId);
+	List<Shift> findAllByEmployeeUidn(String uidn);
 }

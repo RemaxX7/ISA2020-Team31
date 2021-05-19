@@ -13,6 +13,7 @@ import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 public interface ShiftRepository extends JpaRepository<Shift,Long> {
 	
 	List<Shift> findAllByEmployeeId(Long id);
+	List<Shift> findAllByEmployeeUidn(String uidn);
 	List<Shift> findAllByPharmacyId(Long id);
 	
 	@Query(value = "SELECT * FROM"

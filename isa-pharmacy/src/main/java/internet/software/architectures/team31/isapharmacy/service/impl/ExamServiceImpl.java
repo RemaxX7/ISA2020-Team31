@@ -21,6 +21,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Counsel
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
+import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
@@ -34,6 +35,7 @@ import internet.software.architectures.team31.isapharmacy.exception.AppointmentN
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
@@ -41,6 +43,7 @@ import internet.software.architectures.team31.isapharmacy.service.DermatologistS
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
+import internet.software.architectures.team31.isapharmacy.service.ShiftService;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
 
 @Service
@@ -64,7 +67,8 @@ public class ExamServiceImpl implements ExamService {
 	private EmailService emailService;
 	@Autowired
 	private InventoryItemServiceImpl inventoryService;
-
+	@Autowired
+	private ShiftService shiftService;
 	@Override
 	public Exam save(ExamCreateDTO dto) {
 		Exam exam = new Exam(dto);
@@ -191,23 +195,29 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto){
+	public Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception{
+		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		Patient patient = patientService.findByUidn(dto.getUidn());
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
-		DateRange range = new DateRange();
-		range.setStartDateTime(date);
-		range.setEndDateTime(date.plusMinutes(30));
-		Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
-		Exam examInProgress = findById(Long.parseLong(dto.getId()));
-		Exam exam = new Exam();
-		exam.setDermatologist(derm);
-		exam.setPharmacy(examInProgress.getPharmacy());
-		exam.setPatient(patient);
-		exam.setAppointmentStatus(AppointmentStatus.FREE);
-		exam.setDateRange(range);
-		sendExamEmail(exam);
-		return examRepository.save(exam);
+		for (Shift shift : shiftList) {
+			if(date.isAfter(shift.getInterval().getStartDateTime()) && date.isBefore(shift.getInterval().getEndDateTime())) {
+				DateRange range = new DateRange();
+				range.setStartDateTime(date);
+				range.setEndDateTime(date.plusMinutes(30));
+				Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
+				Exam examInProgress = findById(Long.parseLong(dto.getId()));
+				Exam exam = new Exam();
+				exam.setDermatologist(derm);
+				exam.setPharmacy(examInProgress.getPharmacy());
+				exam.setPatient(patient);
+				exam.setAppointmentStatus(AppointmentStatus.FREE);
+				exam.setDateRange(range);
+				sendExamEmail(exam);
+				return examRepository.save(exam);
+			}
+		}
+		throw new ShiftNotFreeEception("Termin not in your shift.");
 	}
 
 

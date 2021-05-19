@@ -38,6 +38,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CancelAppoin
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
@@ -75,7 +76,6 @@ public class CounselingServiceImpl implements CounselingService {
 	private EmailService emailService;
 	@Autowired
 	private InventoryItemServiceImpl inventoryService;
-
 	@Override
 	public Counseling save(CounselingCreateDTO dto) throws PenaltyException, CounselingAlreadyScheduledException {
 		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -218,22 +218,29 @@ public class CounselingServiceImpl implements CounselingService {
 	}
 
 	@Override
-	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) {
+	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception {
+		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		Patient patient = patientService.findByUidn(dto.getUidn());
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
-		DateRange range = new DateRange();
-		range.setStartDateTime(date);
-		range.setEndDateTime(date.plusMinutes(30));
-		Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
-		Counseling counseling = new Counseling();
-		counseling.setPharmacist(pharm);
-		counseling.setPharmacy(pharm.getPharmacy());
-		counseling.setPatient(patient);
-		counseling.setAppointmentStatus(AppointmentStatus.FREE);
-		counseling.setDateRange(range);
-		sendCounselingEmail(counseling);
-		return counselingRepository.save(counseling);
+		for (Shift shift : shiftList) {
+			if(date.isAfter(shift.getInterval().getStartDateTime()) && date.isBefore(shift.getInterval().getEndDateTime())) {
+				DateRange range = new DateRange();
+				range.setStartDateTime(date);
+				range.setEndDateTime(date.plusMinutes(30));
+				Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
+				Counseling counseling = new Counseling();
+				counseling.setPharmacist(pharm);
+				counseling.setPharmacy(pharm.getPharmacy());
+				counseling.setPatient(patient);
+				counseling.setAppointmentStatus(AppointmentStatus.FREE);
+				counseling.setDateRange(range);
+				sendCounselingEmail(counseling);
+				return counselingRepository.save(counseling);
+			}
+		}
+		throw new ShiftNotFreeEception("Termin not in your shift.");
+		
 	}
 
 	@Override

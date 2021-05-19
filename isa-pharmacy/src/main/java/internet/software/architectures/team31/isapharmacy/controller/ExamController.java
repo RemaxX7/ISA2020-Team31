@@ -27,6 +27,7 @@ import internet.software.architectures.team31.isapharmacy.exception.AppointmentN
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
@@ -114,7 +115,7 @@ public class ExamController {
 	}
 	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@PostMapping(value = "/schedulenewexam")
-	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
+	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception{
 		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
 	}
 	
