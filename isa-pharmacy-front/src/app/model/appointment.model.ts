@@ -1,5 +1,6 @@
 import { Medicine } from "./medicine.model";
 import { Patient } from "./patient.model";
+import { Pharmacy } from "./pharmacy.model";
 
 export class Appointment {
     patientName:string;
@@ -15,4 +16,5 @@ export class Appointment {
     patient: Patient;
     id:any;
 	medicineQuantity:string;
+    pharmacy:Pharmacy;
 }

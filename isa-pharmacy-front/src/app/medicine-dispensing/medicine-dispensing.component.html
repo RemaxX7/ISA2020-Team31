@@ -18,6 +18,7 @@
   </header>
   <div class="profilediv">
     <div class="userinfo">
+        <label>Please enter reservation code into the field below.</label>
         <input style="width: 100%;" id="myInput" type="text" #reservation (keyup.enter)="LoadMedicineReservation(reservation.value)" placeholder="Search active reservations here...">
         <div class="founddiv">
             <table id="myTable">

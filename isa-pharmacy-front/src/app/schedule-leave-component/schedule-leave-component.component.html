@@ -1,12 +1,12 @@
 <header>
     <div class="header">
-      <a href="" routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
       <nav>
         <ul>
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
          <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
-         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist">Schedule leave</a></li>
          <li><a href="" routerLink="/dermatologist">Schedule appointment</a></li>
          <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
          <button (click)="LogOut()"><li>Log out</li></button>
@@ -14,4 +14,8 @@
       </nav>
     </div>
   </header>
-  <router-outlet></router-outlet>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date">
+            <input matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-date-range-picker #picker></mat-date-range-picker>

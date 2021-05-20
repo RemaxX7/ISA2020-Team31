@@ -75,6 +75,8 @@ import { PricelistComponent } from './pricelist/pricelist.component';
 import { ChangePriceComponent } from './dialog/change-price/change-price.component';
 import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-inventory.component';
 import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inventory-item.component';
+import { ScheduleLeaveComponentComponent } from './schedule-leave-component/schedule-leave-component.component';
+import { ScheduleLeaveComponentPharmacistComponent } from './schedule-leave-component-pharmacist/schedule-leave-component-pharmacist.component';
 
 
 @NgModule({
@@ -127,7 +129,9 @@ import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inven
     PricelistComponent,
     ChangePriceComponent,
     PharmacyInventoryComponent,
-    AddInventoryItemComponent
+    AddInventoryItemComponent,
+    ScheduleLeaveComponentComponent,
+    ScheduleLeaveComponentPharmacistComponent
   ],
   imports: [
     BrowserModule,
