@@ -56,6 +56,13 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/appointments/counselings/allactive",options).toPromise();
     }
+    requestLeave(uidn,startDate:any): Observable<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.post("http://localhost:8080/api/leave/createLeaveRequest/"+uidn,startDate,options);
+    }
     loadReservation(reservation,uidn):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')

@@ -15,21 +15,19 @@ import internet.software.architectures.team31.isapharmacy.service.LeaveService;
 @Service
 public class LeaveServiceImpl implements LeaveService{
 	@Autowired
-	private LeaveServiceImpl leaveService;
-	@Autowired
 	private UserServiceImpl userService;
 	@Autowired
 	private LeaveRepository leaveRepository;
 	
 	@Override
-	public ScheduleLeave save(String employeeId, String startDate, String endDate) {
+	public ScheduleLeave save(String employeeId, String dateRange) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime leaveDateStart = LocalDateTime.parse(startDate,formatter);
-		LocalDateTime leaveDateEnd = LocalDateTime.parse(endDate,formatter);
+		String[] date = dateRange.split("-");
+		String start = date[0].substring(10)+"-"+date[1]+"-"+date[2].substring(0,2)+" "+date[2].substring(3,5)+":"+date[2].substring(6,8);
+		String end = date[2].substring(25,29)+"-"+date[3]+"-"+date[4].substring(0,2)+" "+date[4].substring(3,5)+":"+date[4].substring(6,8);
 		DateRange range = new DateRange();
-		range.setStartDateTime(leaveDateStart);
-		range.setEndDateTime(leaveDateEnd);
-		range.setStartDateTime(LocalDateTime.parse(startDate));
+		range.setStartDateTime(LocalDateTime.parse(start,formatter));
+		range.setEndDateTime(LocalDateTime.parse(end,formatter));
 		Employee employee = (Employee) userService.findByUidn(employeeId);
 		ScheduleLeave leave = new ScheduleLeave();
 		leave.setEmployee(employee);
