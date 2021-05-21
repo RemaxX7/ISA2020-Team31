@@ -19,6 +19,7 @@ export class DermatologistPatientSearchComponent implements OnInit {
     this.FindCheckedPatients();
 
   }
+
   async FillPatients(){
     this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
@@ -27,6 +28,7 @@ export class DermatologistPatientSearchComponent implements OnInit {
     )
     console.log(this.users);
   }
+
   async FindCheckedPatients(){
     this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
@@ -34,18 +36,14 @@ export class DermatologistPatientSearchComponent implements OnInit {
       data=>this.users=data
     )
   }
-  PenalizePatient(uidn){
-    //this.service.penalizePatient(uidn);
-    alert("Korisnik je kaznjen jednim negativnim bodom");
-    this.Reload();
-  }
+
   MyFunction(){
     var input, filter, table, tr, td, i,td1,th;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     let novi:string = filter;
     if(novi==''){
-      this.Reload();
+      this.FindCheckedPatients();
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
@@ -64,12 +62,14 @@ export class DermatologistPatientSearchComponent implements OnInit {
     }
   }
 }
+
   Reload(){
     window.location.reload();
   }
   CompareValues(a, b) {
     return (a<b) ? -1 : (a>b) ? 1 : 0;
   }
+  
 sortTable(colnum) {
   let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
 
@@ -85,6 +85,7 @@ sortTable(colnum) {
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
 }
+
 LogOut() {
   this.userService.Logout().subscribe(data => {
   },

@@ -27,7 +27,10 @@ export class PharmacistPasswordChangeComponent implements OnInit {
     this.service.refreshJWTToken();
     if(this.myForm.get('pass').value != this.myForm.get('passconf').value){
       alert("New passwords do not match!");
-    }else{
+    }else if((this.myForm.get('pass').value ==this.myForm.get('passconf').value) && this.myForm.get('pass').value == "123"){
+      alert("New password cannot be '123'.");
+    }
+    else{
       let user = JSON.parse(localStorage.getItem("user"));
       console.log(user.name)
       this.pharmacist.uidn = user.uidn;

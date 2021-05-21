@@ -23,7 +23,7 @@
             <a href="" routerLink="/dermatologist-work-cal">Work calendar</a>
         </div>
         <div class="userinfo">
-          <label>Choose time period filter</label><br>
+          <mat-label>Choose time period filter</mat-label><br>
           <button (click)="FillExams(7)">Weekly</button>
           <button (click)="FillExams(30)">Monthly</button>
           <button (click)="FillExams(365)">Yearly</button>
@@ -42,7 +42,7 @@
                         <td>{{c.patient.name}}</td>
                         <td>{{c.patient.surname}}</td>
                         <td>{{c.dateRange.startDateTime[0]}}.{{c.dateRange.startDateTime[1]}}.{{c.dateRange.startDateTime[2]}}</td>
-                        <td>{{c.dateRange.startDateTime[3]}}:{{c.dateRange.startDateTime[4]}}0</td>
+                        <td>{{c.dateRange.startDateTime[3]}}:{{c.dateRange.startDateTime[4]}}</td>
                         <td>30</td>
                         <td>{{c.pharmacy.name}}</td>
                     </tr>

@@ -17,6 +17,7 @@ export class PharmacistPatientSearchComponent implements OnInit {
     this.service.refreshJWTToken();
     this.FindCheckedPatients();
   }
+
   async FillPatients(){
     this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
@@ -25,6 +26,7 @@ export class PharmacistPatientSearchComponent implements OnInit {
     )
     console.log(this.users);
   }
+
   async FindCheckedPatients(){
     this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
@@ -32,13 +34,14 @@ export class PharmacistPatientSearchComponent implements OnInit {
       data=>this.users=data
     )
   }
+
   MyFunction(){
     var input, filter, table, tr, td, i,td1;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     let novi:string = filter;
     if(novi==''){
-      this.FillPatients();
+      this.FindCheckedPatients();
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
@@ -56,12 +59,14 @@ export class PharmacistPatientSearchComponent implements OnInit {
     }
   }
 }
+
   Reload(){
     window.location.reload();
   }
   CompareValues(a, b) {
     return (a<b) ? -1 : (a>b) ? 1 : 0;
   }
+
 sortTable(colnum) {
   let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
 
@@ -77,6 +82,7 @@ sortTable(colnum) {
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
 }
+
 LogOut() {
   this.userService.Logout().subscribe(data => {
   },
