@@ -19,19 +19,21 @@
   <div class="profilediv">
     <div class="userinfo">
         <table >
-          <tr><td >Unesite dijagnozu o pregledu(slobodna forma)za uidn: {{pat.uidn}}</td><td></td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
-          <tr ><td>Pick medicine and quantity for therapy*(mandatory)</td><td></td><td ><mat-form-field >
+          <tr><td ><mat-label>Enter diagnosis for patient with UIDN(Free form): {{pat.uidn}}</mat-label></td><td></td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
+          <tr ><td><mat-label>Pick medicine and quantity for therapy*(mandatory)</mat-label></td><td></td><td ><mat-form-field >
             <mat-select name="" id="" #mySelect [(value)]="medicineSelect">
               <mat-option *ngFor="let med of medicine" [value]="med.name" >{{med.name}}</mat-option>
-          </mat-select></mat-form-field></td><td><input type="text" formControlName="quantity" #quantSelect></td><td><button [disabled]="mySelect.empty" (click)="AddMedicine(mySelect.value,quantSelect.value)">Add</button></td>
-          <td><button (click)="CallComposition(mySelect.value)">Specifikacija</button></td><td><button (click)="MedicineAvailability(mySelect.value)">Dostupnost</button></td></tr>
-          <tr><td>Prescribed medicine: </td><td></td><td><p *ngFor="let therapyMed of selectedMed">{{therapyMed}}</p></td></tr>
-          <tr><td>Zakazite dodatan pregled</td><td></td>
+          </mat-select></mat-form-field></td><td><input type="text" placeholder="Enter numerical quantity here" formControlName="quantity" #quantSelect></td><td><button [disabled]="mySelect.empty" (click)="AddMedicine(mySelect.value,quantSelect.value)">Add</button></td>
+          <td><button [disabled]="mySelect.empty" (click)="CallComposition(mySelect.value)">Specification</button></td><td><button [disabled]="mySelect.empty" (click)="MedicineAvailability(mySelect.value)">Availability</button></td></tr>
+          <mat-divider></mat-divider>
+          <tr><td><mat-label>Prescribed medicine:</mat-label></td><td></td><td><p *ngFor="let therapyMed of selectedMed">{{therapyMed}}</p></td></tr>
+          <mat-divider></mat-divider>
+          <tr><td><mat-label>Schedule additional appointment</mat-label></td><td></td>
             <td><mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
               <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
           </mat-select></mat-form-field></td>
-            <td><button (click)="ScheduleAdditionalExam()">Dodatan termin</button></td></tr>
-            <td></td><td></td><button (click)="FinalizeDTO(selectedMed)">Zavrsi pregled</button>
+            <td><button [disabled]="newTerm.empty" (click)="ScheduleAdditionalExam()">Add additional termin</button></td></tr>
+            <td></td><td></td><button [disabled]="mySelect.empty" (click)="FinalizeDTO(selectedMed)">Finalize appointment</button>
     </table>
     </div>
 </div>

@@ -51,7 +51,7 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   async MedicineAvailability(name){
     this.service.refreshJWTToken();
     await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>this.availability=data)
-    alert("Dostupno je " + this.availability +" " + name);
+    alert("Available: " + this.availability +" " + name);
   }
   FinalizeDTOPharmacist(medicine){
     this.service.refreshJWTToken();
@@ -60,7 +60,7 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     this.appointment.medicine = medicine
     this.service.sendAppointmentDTOPharmacist(this.appointment,this.examid,this.myForm.get('quantity').value).subscribe(res=>{
       console.log(res);
-      alert("Uspesno zavrsen pregled");
+      alert("Appointment ended successfully.");
       this.router.navigate(['pharmacist']);
     },
       err =>{
@@ -86,7 +86,9 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     this.additionalExam.employeeuidn = user.uidn;
     this.additionalExam.id = this.examid;
     this.service.scheduleNewAppointmentPharm(this.additionalExam).subscribe((res)=>
-      alert("Uspesno zakazan novi pregled")
+      alert("Additional appointment scheduled."),err=>{
+        alert("Termin not in your work hours.");
+      }
     );
   }
   Reload(){
