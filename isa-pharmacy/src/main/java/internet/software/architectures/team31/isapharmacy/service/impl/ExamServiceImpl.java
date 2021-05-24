@@ -1,6 +1,5 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,14 +16,11 @@ import internet.software.architectures.team31.isapharmacy.domain.medicine.Medici
 import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentMedicineItem;
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
-import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
-import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
-import internet.software.architectures.team31.isapharmacy.domain.users.Pharmacist;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.domain.util.DateRange;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
@@ -38,8 +34,6 @@ import internet.software.architectures.team31.isapharmacy.exception.PenaltyExcep
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
-import internet.software.architectures.team31.isapharmacy.service.CounselingService;
-import internet.software.architectures.team31.isapharmacy.service.DermatologistService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.PharmacyService;
@@ -335,4 +329,23 @@ public class ExamServiceImpl implements ExamService {
 		}
 		return frontList;
 	}
+	
+	@Override
+	public List<Exam> findExamsForDerm(String uidn, String days) {
+		List<Exam> examsList = (List<Exam>) examService.findAllByOrderByStartDateTimeAsc();
+		List<Exam>frontList = new ArrayList<Exam>();
+		User user = (Dermatologist)userService.findByUidn(uidn);
+		for (Exam exam : examsList) {
+			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && !(exam.getAppointmentStatus().equals(AppointmentStatus.FINISHED) || exam.getAppointmentStatus().equals(AppointmentStatus.UNATTENDED)) && exam.getDateRange().getStartDateTime().isAfter(LocalDateTime.now()) && exam.getDateRange().getEndDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
+				frontList.add(exam);
+			}
+		}
+		return frontList;
+	}
+	
+	@Override
+	public List<Exam> findAllByOrderByStartDateTimeAsc() {
+		return examRepository.findAllByOrderByDateRangeAsc();
+	}
+
 }

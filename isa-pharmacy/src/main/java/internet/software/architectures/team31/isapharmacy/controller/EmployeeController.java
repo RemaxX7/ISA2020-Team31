@@ -98,7 +98,7 @@ public class EmployeeController {
 	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/examsforderm/{uidn}/{days}")
 	public ResponseEntity<Collection<Exam>> findExamsForDerm(@PathVariable String uidn,@PathVariable String days) {
-		return new ResponseEntity<>(counService.findExamsForDerm(uidn,days), HttpStatus.OK);
+		return new ResponseEntity<>(examService.findExamsForDerm(uidn,days), HttpStatus.OK);
 	}
 	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/medicineavailability/{name}/{id}")

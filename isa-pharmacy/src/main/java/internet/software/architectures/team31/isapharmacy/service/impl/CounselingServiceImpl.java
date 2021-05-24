@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -359,18 +360,7 @@ public class CounselingServiceImpl implements CounselingService {
 		return frontList;
 	}
 
-	@Override
-	public List<Exam> findExamsForDerm(String uidn, String days) {
-		List<Exam> examsList = (List<Exam>) examService.findAll();
-		List<Exam>frontList = new ArrayList<Exam>();
-		User user = (Dermatologist)userService.findByUidn(uidn);
-		for (Exam exam : examsList) {
-			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && !(exam.getAppointmentStatus().equals(AppointmentStatus.FINISHED) || exam.getAppointmentStatus().equals(AppointmentStatus.UNATTENDED)) && exam.getDateRange().getStartDateTime().isAfter(LocalDateTime.now()) && exam.getDateRange().getEndDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
-				frontList.add(exam);
-			}
-		}
-		return frontList;
-	}
+	
 
 	@Override
 	public Collection<Counseling> findAllActive() {

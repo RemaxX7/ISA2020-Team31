@@ -1,5 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,4 +40,6 @@ public interface ExamService {
 	List<String> findTerminsByUidns(String patuidn,String empuidn);
 	Exam updatePoints(Long examId, Integer points);
 	List<Patient> findCheckedPatientsDermatologist(String uidn);
+	List<Exam> findAllByOrderByStartDateTimeAsc();
+	List<Exam> findExamsForDerm(String uidn, String days);
 }

@@ -59,9 +59,9 @@ export class DermatologistPatientSearchComponent implements OnInit {
         } else {
             tr[i].style.display = "none";
         }
+      }
     }
   }
-}
 
   Reload(){
     window.location.reload();
@@ -70,26 +70,26 @@ export class DermatologistPatientSearchComponent implements OnInit {
     return (a<b) ? -1 : (a>b) ? 1 : 0;
   }
   
-sortTable(colnum) {
-  let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
+  sortTable(colnum) {
+    let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
 
-  rows = rows.slice(1);
-  let qs = `td:nth-child(${colnum}`;
+    rows = rows.slice(1);
+    let qs = `td:nth-child(${colnum}`;
 
-  rows.sort( (r1,r2) => {
-    let t1 = r1.querySelector(qs);
-    let t2 = r2.querySelector(qs);
+    rows.sort( (r1,r2) => {
+      let t1 = r1.querySelector(qs);
+      let t2 = r2.querySelector(qs);
 
-    return this.CompareValues(t1.textContent,t2.textContent);
-  });
+      return this.CompareValues(t1.textContent,t2.textContent);
+    });
 
-  rows.forEach(row => document.getElementById("myTable").appendChild(row));
-}
+    rows.forEach(row => document.getElementById("myTable").appendChild(row));
+  }
 
-LogOut() {
-  this.userService.Logout().subscribe(data => {
-  },
-    err => console.log(err)
-  )
-}
+  LogOut() {
+    this.userService.Logout().subscribe(data => {
+    },
+      err => console.log(err)
+    )
+  }
 }

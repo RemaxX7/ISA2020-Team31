@@ -45,7 +45,6 @@ public interface CounselingService {
 	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception;
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);
-	List<Exam>findExamsForDerm(String uidn,String days);
 	Counseling updatePoints(Long counselingId, Integer points);
 	List<Patient> findCheckedPatients(String uidn);
 }

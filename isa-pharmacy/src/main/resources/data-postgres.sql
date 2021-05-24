@@ -79,6 +79,10 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 						('Exam', 1, '2021-11-11 13:30:00', '2021-11-11 12:45:00', 190, 'Report', 5, 2, 3);	
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
 						('Exam', 1, '2021-05-16 13:30:00', '2021-05-16 12:45:00', 190, 'Report', 5, 2, 3);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
+						('Exam', 1, '2021-05-25 13:30:00', '2021-05-25 12:45:00', 190, 'Report', 5, 2, 3);	
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
+						('Exam', 1, '2021-05-26 13:30:00', '2021-05-26 12:45:00', 190, 'Report', 5, 2, 3);
 
 
 						
