@@ -63,7 +63,7 @@ export class EmployeePasswordChangeComponent implements OnInit {
           this.router.navigate(['dermatologist-work-cal']);
           break;
         case 4:
-          this.router.navigate(['dermatologist']);
+          this.router.navigate(['schedule-leave']);
           break;
         case 5:
           this.router.navigate(['dermatologist']);

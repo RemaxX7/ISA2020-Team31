@@ -8,7 +8,7 @@
             <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
-            <li><a href="" routerLink="/pharmacist">Schedule leave</a></li>
+            <li><a href="" routerLink="/schedule-leave-pharmacist">Schedule leave</a></li>
             <li><a href="" routerLink="/pharmacist">Schedule appointment</a></li>
             <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
             <button (click)="LogOut()"><li>Log out</li></button>
@@ -18,7 +18,7 @@
   </header>
   <div class="profilediv">
     <div class="userinfo">
-        <label>Please enter reservation code into the field below.</label>
+        <mat-label>Please enter reservation code into the field below.</mat-label>
         <input style="width: 100%;" id="myInput" type="text" #reservation (keyup.enter)="LoadMedicineReservation(reservation.value)" placeholder="Search active reservations here...">
         <div class="founddiv">
             <table id="myTable">
@@ -30,7 +30,7 @@
                     <td>{{m.code}}</td>
                     <td>{{m.price}} din.</td>
                     <td>
-                        <button (click)="FinalizeReservation(m.code)">Mark as picked-up</button>
+                        <button (click)="FinalizeReservation(m.code)">Mark as picked-up.</button>
                     </td>
                 </tr>
             </tbody>

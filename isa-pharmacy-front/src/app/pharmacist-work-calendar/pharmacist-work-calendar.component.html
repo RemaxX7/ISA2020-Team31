@@ -8,7 +8,7 @@
             <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
-            <li><a href="" routerLink="/pharmacist">Schedule leave</a></li>
+            <li><a href="" routerLink="/schedule-leave-pharmacist">Schedule leave</a></li>
             <li><a href="" routerLink="/pharmacist">Schedule appointment</a></li>
             <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
             <button (click)="LogOut()"><li>Log out</li></button>
@@ -24,7 +24,7 @@
             <a href="" routerLink="/pharmacist-work-cal">Work calendar</a>
         </div>
         <div class="userinfo">
-          <label>Choose time period filter</label><br>
+          <mat-label>Choose time period filter</mat-label><br>
           <button (click)="FillConsultations(7)">Weekly</button>
           <button (click)="FillConsultations(30)">Monthly</button>
           <button (click)="FillConsultations(365)">Yearly</button>

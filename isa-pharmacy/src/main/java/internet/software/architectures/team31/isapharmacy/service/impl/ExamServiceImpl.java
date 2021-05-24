@@ -166,6 +166,8 @@ public class ExamServiceImpl implements ExamService {
 					for (InventoryItem inventoryItem : inventoryItemList) {
 						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() > Integer.parseInt(item.split(",")[1])) {
 							itemList.add(new AppointmentMedicineItem(med,Integer.parseInt(item.split(",")[1])));
+							inventoryItem.setQuantity(inventoryItem.getQuantity()-Integer.parseInt(item.split(",")[1]));
+							inventoryService.save(inventoryItem);
 							break;
 						}
 						else if(inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
