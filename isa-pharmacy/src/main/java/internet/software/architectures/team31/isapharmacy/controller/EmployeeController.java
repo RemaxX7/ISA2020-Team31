@@ -51,10 +51,17 @@ public class EmployeeController {
 		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 	}
 	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
+	@GetMapping("/getbyidlock/{uidn}")
+	public ResponseEntity<User> findByIDLock(@PathVariable String uidn) {
+		return new ResponseEntity<>(employedService.findByUidnLock(uidn), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping("/getbyid/{uidn}")
 	public ResponseEntity<User> findByID(@PathVariable String uidn) {
 		return new ResponseEntity<>(employedService.findByUidn(uidn), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping("/reservation/{id}/{uidn}")
 	public ResponseEntity<Collection<MedicineReservation>> findReservationByID(@PathVariable String id,@PathVariable String uidn) throws CancelMedicineReservationException {

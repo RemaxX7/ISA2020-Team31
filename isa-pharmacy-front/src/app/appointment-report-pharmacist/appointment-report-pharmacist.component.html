@@ -33,7 +33,7 @@
           <td><mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
             <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
         </mat-select></mat-form-field></td>
-          <td><button [disabled]="newTerm.empty" (click)="ScheduleAdditionalConsultation()">Add additional termin</button></td></tr>
+          <td><button [disabled]="newTerm.empty" [disabled]="clicked" (click)="ScheduleAdditionalConsultation()">Add additional termin</button></td></tr>
           <td></td><td></td><button [disabled]="mySelect.empty" (click)="FinalizeDTOPharmacist(selectedMed)">Finalize appointment</button>
     </table>
     </div>

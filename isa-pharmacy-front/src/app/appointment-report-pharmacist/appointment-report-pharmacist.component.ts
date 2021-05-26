@@ -34,7 +34,8 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   selectedMed:string[]=[];
   medID:number;
   jwt:string;
-
+  clicked = false;
+  
   ngOnInit(): void {
     this.examid=Number(this.route.snapshot.paramMap.get('id'));
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
@@ -85,8 +86,8 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     this.additionalExam.date = this.newDate;
     this.additionalExam.employeeuidn = user.uidn;
     this.additionalExam.id = this.examid;
-    this.service.scheduleNewAppointmentPharm(this.additionalExam).subscribe((res)=>
-      alert("Additional appointment scheduled."),err=>{
+    this.service.scheduleNewAppointmentPharm(this.additionalExam).subscribe((res)=>{
+      alert("Additional appointment scheduled.");this.clicked=true},err=>{
         alert("Termin not in your work hours.");
       }
     );

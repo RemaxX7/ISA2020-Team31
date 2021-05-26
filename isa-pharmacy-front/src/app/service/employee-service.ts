@@ -84,6 +84,15 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get(this._APIUrl + '/getbyid/' + id,options).toPromise();
     }
+
+    getByIdLock(id): Promise<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.get(this._APIUrl + '/getbyidlock/' + id,options).toPromise();
+    }
+
     getByExamId(examid):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')

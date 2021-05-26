@@ -23,7 +23,9 @@ public interface UserService {
     Patient registerPatient(UserRegisterDTO dto) throws UsernameNotUniqueException;
     void activate(String token) throws AccountException;
     User findByUidn(String uidn);
+    User findByUidnLock(String uidn);
     User employeeEditProfile(EmployeeProfileEditDTO dto);
     User employeeEditPassword(PasswordChangeDTO dto);
     Collection<UserViewDTO> findAllEmployees();
+    
 }

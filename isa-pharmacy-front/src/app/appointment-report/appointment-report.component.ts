@@ -34,11 +34,13 @@ export class AppointmentReportComponent implements OnInit {
   freeTermins:any[]=[];
   selectedMed:string[]=[];
   medID:number;
+  clicked = false;
 
   ngOnInit(): void {
     this.service.refreshJWTToken();
     this.examid=Number(this.route.snapshot.paramMap.get('id'));
     this.userid=Number(this.route.snapshot.paramMap.get('uidn'));
+    
     
     this.GetAppointment();
     this.GetPatientForAppointment();
@@ -82,8 +84,8 @@ export class AppointmentReportComponent implements OnInit {
     this.additionalExam.date = this.newDate;
     this.additionalExam.employeeuidn = user.uidn;
     this.additionalExam.id = this.examid;
-    this.service.scheduleNewAppointmentDerm(this.additionalExam).subscribe((res)=>
-      alert("Additional appointment scheduled."),err=>{
+    this.service.scheduleNewAppointmentDerm(this.additionalExam).subscribe((res)=>{
+      alert("Additional appointment scheduled.");this.clicked=true},err=>{
         alert("Termin not in your work hours.");
       }
     );

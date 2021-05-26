@@ -224,7 +224,7 @@ public class CounselingServiceImpl implements CounselingService {
 	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception {
 		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		Patient patient = patientService.findByUidn(dto.getUidn());
+		Patient patient = (Patient) userService.findByUidn(dto.getUidn());
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
 		for (Shift shift : shiftList) {
 			if(date.isAfter(shift.getInterval().getStartDateTime()) && date.isBefore(shift.getInterval().getEndDateTime())) {
@@ -349,7 +349,7 @@ public class CounselingServiceImpl implements CounselingService {
 
 	@Override
 	public List<Counseling> findCounsForPharm(String uidn,String days) {
-		List<Counseling>counsList = (List<Counseling>) counselingService.findAll();
+		List<Counseling>counsList = (List<Counseling>) counselingService.findAllByOrderByStartDateTimeAsc();
 		List<Counseling>frontList = new ArrayList<Counseling>();
 		User user = (Pharmacist)userService.findByUidn(uidn);
 		for (Counseling counseling : counsList) {
@@ -398,5 +398,10 @@ public class CounselingServiceImpl implements CounselingService {
 			}
 		}
 		return frontList;
+	}
+
+	@Override
+	public List<Counseling> findAllByOrderByStartDateTimeAsc() {
+		return counselingRepository.findAllByOrderByDateRangeAsc();
 	}
 }

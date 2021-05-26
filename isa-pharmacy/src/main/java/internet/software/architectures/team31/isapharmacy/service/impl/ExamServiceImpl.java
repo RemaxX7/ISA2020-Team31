@@ -194,7 +194,7 @@ public class ExamServiceImpl implements ExamService {
 	public Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception{
 		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		Patient patient = patientService.findByUidn(dto.getUidn());
+		Patient patient = (Patient) userService.findByUidn(dto.getUidn());
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
 		for (Shift shift : shiftList) {
 			if(date.isAfter(shift.getInterval().getStartDateTime()) && date.isBefore(shift.getInterval().getEndDateTime())) {

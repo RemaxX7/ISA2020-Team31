@@ -154,6 +154,6 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 		}
 		reservation.setMedicineReservationStatus(MedicineReservationStatus.FINISHED);
 		emailService.sendEmail(reservation.getPatient().getEmail(), "Medicine was picked up", "Thank you for your patronage.");
-		return medicineReservationRepository.save(reservation);
+		return medicineReservationRepository.saveAndFlush(reservation);
 	}
 }

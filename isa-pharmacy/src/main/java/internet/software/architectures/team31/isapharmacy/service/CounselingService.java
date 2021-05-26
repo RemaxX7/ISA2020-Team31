@@ -47,4 +47,5 @@ public interface CounselingService {
 	List<Counseling>findCounsForPharm(String uidn,String days);
 	Counseling updatePoints(Long counselingId, Integer points);
 	List<Patient> findCheckedPatients(String uidn);
+	List<Counseling> findAllByOrderByStartDateTimeAsc();
 }

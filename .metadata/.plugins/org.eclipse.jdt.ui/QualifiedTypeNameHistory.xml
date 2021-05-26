@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.ExamService"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.DermatologistServiceImpl"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.DermatologistService"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.AppointmentServiceImpl"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.User"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.CounselingService"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.AppointmentService"/>
@@ -48,7 +42,6 @@
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.UserServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.pharmacy.LeaveStatus"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.LeaveRepository"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.LeaveServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.pharmacy.ScheduleLeave"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
@@ -60,4 +53,11 @@
     <fullyQualifiedTypeName name="org.springframework.data.jdbc.repository.query.Query"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Lock"/>
+    <fullyQualifiedTypeName name="javax.persistence.LockModeType"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.PatientRepository"/>
+    <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.QueryHints"/>
+    <fullyQualifiedTypeName name="javax.persistence.QueryHint"/>
 </qualifiedTypeNameHistroy>
