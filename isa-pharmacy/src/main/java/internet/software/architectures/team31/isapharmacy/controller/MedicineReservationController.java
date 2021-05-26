@@ -64,7 +64,7 @@ public class MedicineReservationController {
 	}
 	@PreAuthorize("hasRole('PHARMACIST')")
 	@GetMapping(value = "/pickedup/{code}")
-	public ResponseEntity<MedicineReservation> cancel(@PathVariable String code) throws CancelMedicineReservationException{
+	public ResponseEntity<MedicineReservation> finalize(@PathVariable String code) throws CancelMedicineReservationException{
 		return new ResponseEntity<>(medicineReservationService.closeRequest(code), HttpStatus.OK);
 	}
 }

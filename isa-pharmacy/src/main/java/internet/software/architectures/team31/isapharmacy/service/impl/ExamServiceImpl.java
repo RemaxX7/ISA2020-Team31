@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Appointment;
@@ -33,6 +36,7 @@ import internet.software.architectures.team31.isapharmacy.exception.InvalidInput
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.repository.ExamRepository;
+import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
@@ -45,6 +49,8 @@ public class ExamServiceImpl implements ExamService {
 
 	@Autowired
 	private ExamRepository examRepository;
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private ExamService examService;
 	@Autowired
@@ -189,11 +195,12 @@ public class ExamServiceImpl implements ExamService {
 		text.append("Date and time: " + exam.getDateRange().getStartDateTime() + " - " + exam.getDateRange().getEndDateTime() + "\r\n");
 		return text.toString();
 	}
-
+	@Transactional
 	@Override
 	public Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception{
 		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
 		Patient patient = (Patient) userService.findByUidn(dto.getUidn());
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
 		for (Shift shift : shiftList) {
@@ -201,7 +208,6 @@ public class ExamServiceImpl implements ExamService {
 				DateRange range = new DateRange();
 				range.setStartDateTime(date);
 				range.setEndDateTime(date.plusMinutes(30));
-				Dermatologist derm = (Dermatologist) userService.findByUidn(dto.getEmployeeuidn());
 				Exam examInProgress = findById(Long.parseLong(dto.getId()));
 				Exam exam = new Exam();
 				exam.setDermatologist(derm);
@@ -210,10 +216,11 @@ public class ExamServiceImpl implements ExamService {
 				exam.setAppointmentStatus(AppointmentStatus.FREE);
 				exam.setDateRange(range);
 				sendExamEmail(exam);
+				userRepository.save(derm);
 				return examRepository.save(exam);
 			}
 		}
-		throw new ShiftNotFreeEception("Termin not in your shift.");
+		throw new ShiftNotFreeEception("Termin not in your shift or already booked.");
 	}
 
 

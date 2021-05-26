@@ -41,6 +41,7 @@ import internet.software.architectures.team31.isapharmacy.exception.InvalidInput
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
+import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
@@ -55,6 +56,8 @@ public class CounselingServiceImpl implements CounselingService {
 
 	@Autowired
 	private CounselingRepository counselingRepository;
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private CounselingService counselingService;
 	@Autowired
@@ -224,6 +227,7 @@ public class CounselingServiceImpl implements CounselingService {
 	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception {
 		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
 		Patient patient = (Patient) userService.findByUidn(dto.getUidn());
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
 		for (Shift shift : shiftList) {
@@ -231,7 +235,6 @@ public class CounselingServiceImpl implements CounselingService {
 				DateRange range = new DateRange();
 				range.setStartDateTime(date);
 				range.setEndDateTime(date.plusMinutes(30));
-				Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
 				Counseling counseling = new Counseling();
 				counseling.setPharmacist(pharm);
 				counseling.setPharmacy(pharm.getPharmacy());
@@ -239,10 +242,11 @@ public class CounselingServiceImpl implements CounselingService {
 				counseling.setAppointmentStatus(AppointmentStatus.FREE);
 				counseling.setDateRange(range);
 				sendCounselingEmail(counseling);
+				userRepository.saveAndFlush(pharm);
 				return counselingRepository.save(counseling);
 			}
 		}
-		throw new ShiftNotFreeEception("Termin not in your shift.");
+		throw new ShiftNotFreeEception("Termin not in your shift or already booked.");
 		
 	}
 
