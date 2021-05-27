@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.CounselingServiceImpl"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.CounselingService"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.AppointmentService"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.MedicineService"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy"/>
@@ -55,9 +52,12 @@
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Lock"/>
     <fullyQualifiedTypeName name="javax.persistence.LockModeType"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.PatientRepository"/>
-    <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.QueryHints"/>
     <fullyQualifiedTypeName name="javax.persistence.QueryHint"/>
+    <fullyQualifiedTypeName name="javax.persistence.Version"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.UserRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.transaction.event.TransactionalEventListener"/>
+    <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
 </qualifiedTypeNameHistroy>

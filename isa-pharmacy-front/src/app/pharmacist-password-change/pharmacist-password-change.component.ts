@@ -71,7 +71,7 @@ export class PharmacistPasswordChangeComponent implements OnInit {
           this.router.navigate(['schedule-leave-pharmacist']);
           break;
         case 6:
-          this.router.navigate(['pharmacist']);
+          this.router.navigate(['pharmacist-scheduler']);
           break;
         case 7:
           this.router.navigate(['pharmacist-profile']);

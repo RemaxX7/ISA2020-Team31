@@ -15,20 +15,18 @@
       </nav>
     </div>
   </header>
+  <form [formGroup]="myForm">
   <div class="profilediv">
     <div class="userinfo">
-        <mat-label >Please enter your wanted leave date period:</mat-label>
+        <mat-label>Enter patient UIDN to find free termins(enter to confirm):</mat-label>
         <mat-divider></mat-divider>
-         <mat-form-field appearance="fill">
-            <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [formGroup]="range" #input [rangePicker]="picker">
-                <input matStartDate formControlName="start" placeholder="Start date">
-                <input matEndDate formControlName="end" placeholder="End date">
-                </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
+        <input type="text" formControlName="patientid" #patidselect (keyup.enter)="GetFreeTermins(patidselect.value)">
         <mat-divider></mat-divider>
-        <button (click)="PlaceRequest(input.value)">Place leave request</button>
+        <mat-label>Termins list:   </mat-label><mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
+            <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
+        </mat-select></mat-form-field>
+        <mat-divider></mat-divider>
+        <button [disabled]="newTerm.empty || patidselect.empty" (click)="ScheduleConsultation(patidselect.value)">Schedule new appointment</button>
+    </div>
   </div>
-  </div>
+</form>

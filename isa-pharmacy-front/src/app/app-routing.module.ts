@@ -49,6 +49,8 @@ import { PharmacistGuard } from './pharmacist.guard';
 import { DermatologistGuard } from './dermatologist.guard';
 import { ScheduleLeaveComponentComponent } from './schedule-leave-component/schedule-leave-component.component';
 import { ScheduleLeaveComponentPharmacistComponent } from './schedule-leave-component-pharmacist/schedule-leave-component-pharmacist.component';
+import { PharmacistSchedulerComponent } from './pharmacist-scheduler/pharmacist-scheduler.component';
+import { DermatologistSchedulerComponent } from './dermatologist-scheduler/dermatologist-scheduler.component';
 
 const routes: Routes = [
   { path: 'dermatologist', component: DermatologistComponent,canActivate:[DermatologistGuard] },
@@ -74,6 +76,8 @@ const routes: Routes = [
   { path: 'schedule-leave',component:ScheduleLeaveComponentComponent,canActivate:[DermatologistGuard]},
   { path: 'schedule-leave-pharmacist',component:ScheduleLeaveComponentPharmacistComponent,canActivate:[PharmacistGuard]},
   { path: 'pharmacist-appointments', component: PharmacistAppointmentsPageComponent,canActivate:[PharmacistGuard] },
+  { path: 'pharmacist-scheduler', component: PharmacistSchedulerComponent,canActivate:[PharmacistGuard] },
+  { path: 'dermatologist-scheduler', component: DermatologistSchedulerComponent,canActivate:[DermatologistGuard] },
   {
     path: '', component: HomeComponent,
     children: [{ path: '', component: SignInComponent }]

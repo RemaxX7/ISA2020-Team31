@@ -77,6 +77,8 @@ import { PharmacyInventoryComponent } from './pharmacy-inventory/pharmacy-invent
 import { AddInventoryItemComponent } from './dialog/add-inventory-item/add-inventory-item.component';
 import { ScheduleLeaveComponentComponent } from './schedule-leave-component/schedule-leave-component.component';
 import { ScheduleLeaveComponentPharmacistComponent } from './schedule-leave-component-pharmacist/schedule-leave-component-pharmacist.component';
+import { PharmacistSchedulerComponent } from './pharmacist-scheduler/pharmacist-scheduler.component';
+import { DermatologistSchedulerComponent } from './dermatologist-scheduler/dermatologist-scheduler.component';
 
 
 @NgModule({
@@ -131,7 +133,9 @@ import { ScheduleLeaveComponentPharmacistComponent } from './schedule-leave-comp
     PharmacyInventoryComponent,
     AddInventoryItemComponent,
     ScheduleLeaveComponentComponent,
-    ScheduleLeaveComponentPharmacistComponent
+    ScheduleLeaveComponentPharmacistComponent,
+    PharmacistSchedulerComponent,
+    DermatologistSchedulerComponent
   ],
   imports: [
     BrowserModule,

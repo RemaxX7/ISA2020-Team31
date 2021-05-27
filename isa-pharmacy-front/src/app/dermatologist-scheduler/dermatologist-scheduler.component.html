@@ -1,0 +1,37 @@
+<header>
+    <div class="header">
+      <a href="" routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
+         <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
+         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist-scheduler">Schedule appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
+         <button (click)="LogOut()"><li>Log out</li></button>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <form [formGroup]="myForm">
+    <div class="profilediv">
+      <div class="userinfo">
+          <mat-label>Enter patient UIDN to find free termins(enter to confirm):</mat-label>
+          <mat-divider></mat-divider>
+          <input type="text" formControlName="patientid" #patidselect (keyup.enter)="GetFreeTermins(patidselect.value)">
+          <mat-divider></mat-divider>
+          <mat-label>Termins list:   </mat-label>
+          <mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
+                <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
+                        </mat-select>
+                </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-label>Enter id of pharmacy you want to schedule new exam in:</mat-label>
+            <mat-divider></mat-divider>
+            <input type="text" formControlName="pharmacyid" #pharmacyid placeholder="Enter id of pharmacy you want to schedule an appointment in..">
+          <mat-divider></mat-divider>
+          <button [disabled]="newTerm.empty || patidselect.empty || pharmacyid.empty" (click)="ScheduleExam(patidselect.value,pharmacyid.value)">Schedule new appointment</button>
+      </div>
+    </div>
+  </form>

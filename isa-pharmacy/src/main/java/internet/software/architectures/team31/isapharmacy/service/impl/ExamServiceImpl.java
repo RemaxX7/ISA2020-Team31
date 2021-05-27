@@ -216,7 +216,7 @@ public class ExamServiceImpl implements ExamService {
 				exam.setAppointmentStatus(AppointmentStatus.FREE);
 				exam.setDateRange(range);
 				sendExamEmail(exam);
-				userRepository.save(derm);
+				userRepository.saveAndFlush(derm);
 				return examRepository.save(exam);
 			}
 		}

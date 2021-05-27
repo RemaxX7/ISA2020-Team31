@@ -92,14 +92,17 @@ export class AppointmentReportPharmacistComponent implements OnInit {
       }
     );
   }
+
   Reload(){
     window.location.reload();
   }
+
   async CallComposition(name){
     this.service.refreshJWTToken();
     await this.medicineService.getCompositionForMedicine(name.toLowerCase()).then(data=>this.medicineSpecification=data)
     alert(this.medicineSpecification.composition);
   }
+  
   async GetPatientForAppointment(){
     this.service.refreshJWTToken();
     await this.service.getById(this.userid).then(
@@ -107,18 +110,21 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     )
     console.log(this.pat);
   }
+
   async GetAllMedicineForPatient(userid){
     this.service.refreshJWTToken();
     await this.medicineService.getAllMedicineForPatient(userid).then(
       data=>this.medicine=data
     )
   }
+
   GetFreeTermins(){
     this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
     this.pharm.uidn = user.uidn;
     this.service.getFreeTerminsPharm(this.userid,this.pharm.uidn).subscribe(data=>this.freeTermins=data);
   }
+
   LogOut() {
     this.userService.Logout().subscribe(data => {
     },
