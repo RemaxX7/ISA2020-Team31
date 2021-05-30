@@ -35,6 +35,7 @@ export class AppointmentReportComponent implements OnInit {
   selectedMed:string[]=[];
   medID:number;
   clicked = false;
+  fromExam = true;
 
   ngOnInit(): void {
     this.service.refreshJWTToken();
@@ -84,7 +85,7 @@ export class AppointmentReportComponent implements OnInit {
     this.additionalExam.date = this.newDate;
     this.additionalExam.employeeuidn = user.uidn;
     this.additionalExam.id = this.examid;
-    this.service.scheduleNewAppointmentDerm(this.additionalExam).subscribe((res)=>{
+    this.service.scheduleNewAppointmentDerm(this.additionalExam,true).subscribe((res)=>{
       alert("Additional appointment scheduled.");this.clicked=true},err=>{
         alert("Termin not in your work hours.");
       }

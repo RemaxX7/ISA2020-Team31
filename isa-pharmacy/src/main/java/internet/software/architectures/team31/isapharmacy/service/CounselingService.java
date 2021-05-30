@@ -23,6 +23,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CounselingAl
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
+import internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException;
 
 public interface CounselingService {
 
@@ -42,7 +43,7 @@ public interface CounselingService {
 	boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId);
 	boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime);
 	Counseling finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException;
-	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception;
+	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception, UserNotTypePatientException;
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);
 	Counseling updatePoints(Long counselingId, Integer points);

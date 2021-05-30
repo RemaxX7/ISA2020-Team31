@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +42,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CounselingAl
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
+import internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
@@ -222,13 +225,16 @@ public class CounselingServiceImpl implements CounselingService {
 		text.append("Date and time: " + counseling.getDateRange().getStartDateTime() + " - " + counseling.getDateRange().getEndDateTime() + "\r\n");
 		return text.toString();
 	}
-
+	@Transactional
 	@Override
-	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception {
+	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception, UserNotTypePatientException {
 		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
-		Patient patient = (Patient) userService.findByUidn(dto.getUidn());
+		User patient = userService.findByUidn(dto.getUidn());
+		if(patient.getUidn().equals(dto.getEmployeeuidn())) {
+			throw new UserNotTypePatientException("You cannot schedule an appointment for yourself.");
+		}
 		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
 		for (Shift shift : shiftList) {
 			if(date.isAfter(shift.getInterval().getStartDateTime()) && date.isBefore(shift.getInterval().getEndDateTime())) {
@@ -238,7 +244,11 @@ public class CounselingServiceImpl implements CounselingService {
 				Counseling counseling = new Counseling();
 				counseling.setPharmacist(pharm);
 				counseling.setPharmacy(pharm.getPharmacy());
-				counseling.setPatient(patient);
+				try {
+					counseling.setPatient((Patient) patient);
+				}catch(Exception e){
+					throw new UserNotTypePatientException("You cannot schedule an appointment for employees.");
+				}
 				counseling.setAppointmentStatus(AppointmentStatus.FREE);
 				counseling.setDateRange(range);
 				sendCounselingEmail(counseling);
@@ -281,6 +291,7 @@ public class CounselingServiceImpl implements CounselingService {
 		User employee = userService.findByUidn(empuidn);
 		User patient = userService.findByUidn(patuidn);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(empuidn);
 		DateRange range = new DateRange();
 		DateRange range2 = new DateRange();
 		DateRange range3 = new DateRange();
@@ -347,6 +358,14 @@ public class CounselingServiceImpl implements CounselingService {
 				}
 			}
 		}
+			for (DateRange dr : dateList) {
+				for (Shift  shift : shiftList) {
+					if(dr.getStartDateTime().isBefore(shift.getInterval().getStartDateTime()) || dr.getStartDateTime().isAfter(shift.getInterval().getEndDateTime())){
+						String[] comb = dr.getStartDateTime().toString().split("T");
+						backList.add(comb[0]+" "+comb[1]);
+					}
+				}
+			}
 		frontList.removeAll(backList);
 		return frontList;
 	}

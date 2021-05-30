@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.patient.MedicineReservation;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
@@ -28,6 +29,8 @@ import internet.software.architectures.team31.isapharmacy.service.MedicineReserv
 import internet.software.architectures.team31.isapharmacy.service.MedicineService;
 import internet.software.architectures.team31.isapharmacy.service.UserDetailsServiceImpl;
 import internet.software.architectures.team31.isapharmacy.service.UserService;
+import internet.software.architectures.team31.isapharmacy.service.impl.DermatologistServiceImpl;
+import internet.software.architectures.team31.isapharmacy.service.impl.PharmacyServiceImpl;
 
 @RestController
 @RequestMapping(value = "api/search/employee")
@@ -45,6 +48,9 @@ public class EmployeeController {
 	private MedicineService medService;
 	@Autowired
 	private CounselingService counService;
+	@Autowired
+	private PharmacyServiceImpl pharmacyService;
+	
 	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping("/all")
 	public ResponseEntity<Collection<User>> findAll() {
@@ -60,6 +66,12 @@ public class EmployeeController {
 	@GetMapping("/getbyid/{uidn}")
 	public ResponseEntity<User> findByID(@PathVariable String uidn) {
 		return new ResponseEntity<>(employedService.findByUidn(uidn), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
+	@GetMapping("/dermatologistemployedpharmacies")
+	public ResponseEntity<Collection<String>> findDermatologistEmployedPharmacies() {
+		return new ResponseEntity<>(pharmacyService.getPharmaciesIDs(), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('PHARMACIST')")

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.repository.DermatologistRepository;
 import internet.software.architectures.team31.isapharmacy.service.DermatologistService;
@@ -14,7 +15,8 @@ public class DermatologistServiceImpl implements DermatologistService {
 
 	@Autowired
 	private DermatologistRepository dermatologistRepository;
-	
+	@Autowired
+	private UserServiceImpl userService;
 	
 	@Override
 	public List<Dermatologist> findAllByPharmacy(Long id) {
@@ -35,4 +37,5 @@ public class DermatologistServiceImpl implements DermatologistService {
 	public List<Dermatologist> search(String query) {
 		return this.dermatologistRepository.search(query);
 	}
+	
 }

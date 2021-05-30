@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { error } from 'console';
 import { Appointment } from '../model/appointment.model';
 import { Pharmacist } from '../model/pharmacist.model';
 import { EmployeeService } from '../service/employee-service';
@@ -12,7 +14,7 @@ import { UserService } from '../shared/user.service';
 })
 export class PharmacistSchedulerComponent implements OnInit {
 
-  constructor(private service:EmployeeService,private fb:FormBuilder,private userService:UserService) { }
+  constructor(private service:EmployeeService,private fb:FormBuilder,private userService:UserService,private router:Router) { }
 
   newDate:string;
   pharm:Pharmacist = new Pharmacist();
@@ -40,9 +42,12 @@ export class PharmacistSchedulerComponent implements OnInit {
     this.appointment.date = this.newDate;
     this.appointment.employeeuidn = user.uidn;
     this.service.scheduleNewAppointmentPharm(this.appointment).subscribe((res)=>{
-      alert("New appointment scheduled.");},err=>{
-        alert("An error has occured.Please double check your input data.");
-      }
+      alert("New appointment scheduled.");
+      this.router.navigate(['pharmacist']);
+    },
+      err=>{alert("An error has occured. Please check input data.It's only possible to schedule appointments for patients.")
+      window.location.reload();
+    }
     );
   }
 

@@ -3,6 +3,7 @@ package internet.software.architectures.team31.isapharmacy.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,7 +49,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 	@Override
 	public Collection<Pharmacy> findAll() {
-		return pharmacyRepository.findAll(Sort.by("name"));
+		return pharmacyRepository.findAll(Sort.by("id"));
 	}
 
 	@Override
@@ -87,5 +88,15 @@ public class PharmacyServiceImpl implements PharmacyService {
 		Pharmacy pharmacy= this.findById(dto.getPharmacyId());
 		pharmacy.getInventory().add(this.inventoryItemService.addNewItem(dto));
 		return this.save(pharmacy);
+	}
+
+	@Override
+	public List<String> getPharmaciesIDs() {
+		List<Pharmacy> pharmacyList = pharmacyRepository.findAll(Sort.by("id"));
+		List<String> frontList = new ArrayList<String>();
+		for (Pharmacy pharmacy : pharmacyList) {
+			frontList.add(pharmacy.getId().toString());
+		}
+		return frontList;
 	}
 }

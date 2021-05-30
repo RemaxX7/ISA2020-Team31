@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { AppointmentReportPharmacistComponent } from '../appointment-report-pharmacist/appointment-report-pharmacist.component';
 import { Appointment } from '../model/appointment.model';
 import { PharmacistAppointmentsPageComponent } from '../pharmacist-appointments-page/pharmacist-appointments-page.component';
@@ -135,12 +135,12 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.post("http://localhost:8080/api/appointments/counselings/finalizeappointmentpharmacist/"+examid+"/"+quant,val,options);
     }
-    scheduleNewAppointmentDerm(val:Appointment):Observable<any>{
+    scheduleNewAppointmentDerm(val:Appointment,fromExam):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.post("http://localhost:8080/api/appointments/exams/schedulenewexam",val,options);
+      return this._http.post("http://localhost:8080/api/appointments/exams/schedulenewexam/"+fromExam,val,options);
     }
     scheduleNewAppointmentPharm(val:Appointment):Observable<any>{
       let headers = new HttpHeaders({
@@ -170,6 +170,15 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/search/employee/freeterm/" + patiudn + "/" + empuidn,options);
     }
+    
+    findpharmaciesfordermatologist():Observable<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.get("http://localhost:8080/api/search/employee/dermatologistemployedpharmacies",options);
+    }
+
     getFreeTerminsPharm(patiudn,empuidn):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')

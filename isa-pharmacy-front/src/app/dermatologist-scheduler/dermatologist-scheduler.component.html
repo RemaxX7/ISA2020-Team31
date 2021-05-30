@@ -27,11 +27,14 @@
                         </mat-select>
                 </mat-form-field>
             <mat-divider></mat-divider>
-            <mat-label>Enter id of pharmacy you want to schedule new exam in:</mat-label>
+            <mat-label>Select id of pharmacy you want to schedule new exam in:</mat-label>
             <mat-divider></mat-divider>
-            <input type="text" formControlName="pharmacyid" #pharmacyid placeholder="Enter id of pharmacy you want to schedule an appointment in..">
+            <mat-form-field ><mat-select name="" id="" #pharmaciesid [(value)]="pharmID">
+              <mat-option *ngFor="let pharm of pharmacies" [value]="pharm">{{pharm}}</mat-option>
+            </mat-select>
+          </mat-form-field>
           <mat-divider></mat-divider>
-          <button [disabled]="newTerm.empty || patidselect.empty || pharmacyid.empty" (click)="ScheduleExam(patidselect.value,pharmacyid.value)">Schedule new appointment</button>
+          <button [disabled]="newTerm.empty || patidselect.empty || pharmaciesid.empty" (click)="ScheduleExam(patidselect.value)">Schedule new appointment</button>
       </div>
     </div>
   </form>

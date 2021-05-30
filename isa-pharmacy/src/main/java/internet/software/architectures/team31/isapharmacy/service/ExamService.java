@@ -19,6 +19,7 @@ import internet.software.architectures.team31.isapharmacy.exception.CancelAppoin
 import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
 import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
+import internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException;
 
 public interface ExamService {
 
@@ -36,7 +37,7 @@ public interface ExamService {
 	Exam findById(Long id);
 	boolean hasPatientVisitedDermatologist(Long patientId, Long dermatologistId);
 	Exam finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException;
-	Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception;
+	Exam scheduleAdditionalExam(AdditionalExamSchedulingDTO dto,Boolean fromExam) throws ShiftNotFreeEception, UserNotTypePatientException;
 	List<String> findTerminsByUidns(String patuidn,String empuidn);
 	Exam updatePoints(Long examId, Integer points);
 	List<Patient> findCheckedPatientsDermatologist(String uidn);

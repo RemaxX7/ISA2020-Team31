@@ -142,5 +142,6 @@ public class UserServiceImpl implements UserService {
 	public Collection<UserViewDTO> findAllEmployees() {
 		return employeeRepository.findAll().stream().map(employee -> new UserViewDTO(employee)).collect(Collectors.toList());
 	}
+
 	
 }
