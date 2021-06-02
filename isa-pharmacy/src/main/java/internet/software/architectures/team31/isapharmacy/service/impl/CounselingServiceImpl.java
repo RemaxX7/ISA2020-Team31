@@ -386,11 +386,12 @@ public class CounselingServiceImpl implements CounselingService {
 	
 
 	@Override
-	public Collection<Counseling> findAllActive() {
-		List<Counseling> counsList = counselingRepository.findAll();
+	public Collection<Counseling> findAllActive(String uidn) {
+		List<Counseling> counsList = counselingRepository.findAllByOrderByDateRangeAsc();
 		List<Counseling> frontList = new ArrayList<Counseling>();
+		Pharmacist pharm = (Pharmacist) userService.findByUidn(uidn);
 		for (Counseling couns : counsList) {
-			if((couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && couns.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1))) {
+			if((couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && couns.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1))&& couns.getPharmacist().getUidn().equals(pharm.getUidn())) {
 				frontList.add(couns);
 			}
 		}

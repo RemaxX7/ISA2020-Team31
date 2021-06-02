@@ -32,10 +32,8 @@ export class PharmacistPasswordChangeComponent implements OnInit {
     }
     else{
       let user = JSON.parse(localStorage.getItem("user"));
-      console.log(user.name)
       this.pharmacist.uidn = user.uidn;
       this.pharmacist.password = this.myForm.get('pass').value;
-      console.log(this.pharmacist.uidn);
       this.service.editPassword(this.pharmacist).subscribe(()=>alert("Password changed"))
       this.LogOut();
     }
@@ -49,12 +47,14 @@ export class PharmacistPasswordChangeComponent implements OnInit {
   async Check(number){
     this.service.refreshJWTToken();
     await this.service.getById(JSON.parse(localStorage.getItem("user")).uidn).then(data=>this.vari=data);
-    console.log(this.vari.password)
     //hash je 123
     if(this.vari.password=="$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra"){
       alert("You have to change your password before continuing.Password cannot be '123'");
     }else{
       switch(number){
+        case 0:
+          this.router.navigate(['pharmacist']);
+          break;
         case 1:
           this.router.navigate(['pharmacist-patient-search']);
           break;

@@ -47,12 +47,14 @@ export class EmployeePasswordChangeComponent implements OnInit {
   async Check(number){
     this.service.refreshJWTToken();
     await this.service.getById(JSON.parse(localStorage.getItem("user")).uidn).then(data=>this.vari=data);
-    console.log(this.vari.password)
     //hash je 123
     if(this.vari.password=="$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra"){
       alert("You have to change your password before continuing.Password cannot be '123'");
     }else{
       switch(number){
+        case 0:
+          this.router.navigate(['dermatologist']);
+          break;
         case 1:
           this.router.navigate(['dermatologist-patient-search']);
           break;
@@ -66,7 +68,7 @@ export class EmployeePasswordChangeComponent implements OnInit {
           this.router.navigate(['schedule-leave']);
           break;
         case 5:
-          this.router.navigate(['dermatologist']);
+          this.router.navigate(['dermatologist-scheduler']);
           break;
         case 6:
           this.router.navigate(['dermatologist-profile']);

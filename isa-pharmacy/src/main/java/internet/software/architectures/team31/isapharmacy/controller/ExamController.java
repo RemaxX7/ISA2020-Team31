@@ -52,9 +52,9 @@ public class ExamController {
 		return new ResponseEntity<>(examService.findAll(), HttpStatus.OK);
 	}
 	@PreAuthorize("hasRole('DERMATOLOGIST')")
-	@GetMapping(value = "/allactive")
-	public ResponseEntity<Collection<Exam>> findAllActive() {
-		return new ResponseEntity<>(examService.findAllActive(), HttpStatus.OK);
+	@GetMapping(value = "/allactive/{uidn}")
+	public ResponseEntity<Collection<Exam>> findAllActive(@PathVariable String uidn) {
+		return new ResponseEntity<>(examService.findAllActive(uidn), HttpStatus.OK);
 	}
 	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/findbyid/{id}")

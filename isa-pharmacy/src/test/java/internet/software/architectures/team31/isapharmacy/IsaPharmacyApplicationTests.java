@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -25,11 +26,13 @@ class IsaPharmacyApplicationTests {
 	private static final int TOTAL_EXAMS_WITH_DERMATOLOGIST_ID3 = 11;
 	private static final String RESERVATION_STATUS_QUANT = "2";
 	
-	@Autowired
+	@Mock
 	private UserService userService;
-	@Autowired
+	
+	@Mock
 	private ExamService examService;
-	@Autowired
+	
+	@Mock
 	private MedicineReservationService medicineReservationService;
 	
 	@Test

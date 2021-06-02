@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.Collection"/>
-    <fullyQualifiedTypeName name="java.sql.Date"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.patient.Counseling"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.PharmacistServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist"/>
     <fullyQualifiedTypeName name="org.springframework.security.access.annotation.Secured"/>
@@ -30,7 +27,6 @@
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.LeaveRepository"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.LeaveServiceImpl"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.pharmacy.ScheduleLeave"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
@@ -45,7 +41,6 @@
     <fullyQualifiedTypeName name="javax.persistence.QueryHint"/>
     <fullyQualifiedTypeName name="javax.persistence.Version"/>
     <fullyQualifiedTypeName name="org.springframework.transaction.event.TransactionalEventListener"/>
-    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.UserRepository"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.domain.users.User"/>
     <fullyQualifiedTypeName name="java.util.List"/>
@@ -60,4 +55,9 @@
     <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
     <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.repository.UserRepository"/>
+    <fullyQualifiedTypeName name="com.sun.el.stream.Optional"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="internet.software.architectures.team31.isapharmacy.service.impl.ExamServiceImpl"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
 </qualifiedTypeNameHistroy>

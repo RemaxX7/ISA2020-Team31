@@ -54,9 +54,9 @@ public class CounselingController {
 		return new ResponseEntity<>(counselingService.findAll(), HttpStatus.OK);
 	}
 	@PreAuthorize("hasRole('PHARMACIST')")
-	@GetMapping(value = "/allactive")
-	public ResponseEntity<Collection<Counseling>> findAllActive() {
-		return new ResponseEntity<>(counselingService.findAllActive(), HttpStatus.OK);
+	@GetMapping(value = "/allactive/{uidn}")
+	public ResponseEntity<Collection<Counseling>> findAllActive(@PathVariable String uidn) {
+		return new ResponseEntity<>(counselingService.findAllActive(uidn), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/free")

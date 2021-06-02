@@ -21,21 +21,23 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
     this.FillPatients();
     this.FillExams();
   }
+
   async FillPatients(){
     this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
       data=>this.users=data
       
     )
-    console.log(this.users);
   }
+
   async FillExams(){
     this.service.refreshJWTToken();
-    await this.service.fillExams().then(
+    let user = JSON.parse(localStorage.getItem("user"));
+    await this.service.fillExams(user.uidn).then(
       data=>this.appointments=data
     )
-    console.log(this.appointments);
   }
+
   PenalizePatient(uidn,dateRange){
     this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
@@ -44,6 +46,23 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
       this.Reload();
     });
   }
+
+  sortTableByDate() {
+    let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
+
+    rows = rows.slice(1);
+    let qs = `td:nth-child(${6}`;
+
+    rows.sort( (r1,r2) => {
+      let t1 = r1.querySelector(qs);
+      let t2 = r2.querySelector(qs);
+
+      return this.CompareValues(t1.textContent,t2.textContent);
+    });
+
+    rows.forEach(row => document.getElementById("myTable").appendChild(row));
+  }
+
   MyFunction(){
     var input, filter, table, tr, td, i,td1;
     input = document.getElementById("myInput");
@@ -63,15 +82,18 @@ export class DermatologistAppointmentsPageComponent implements OnInit {
         } else {
             tr[i].style.display = "none";
         }
+      }
     }
   }
-}
+
   Reload(){
     window.location.reload();
   }
+  
   CompareValues(a, b) {
     return (a<b) ? -1 : (a>b) ? 1 : 0;
   }
+
 sortTable(colnum) {
   let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
 
@@ -87,6 +109,7 @@ sortTable(colnum) {
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
 }
+
 LogOut() {
   this.userService.Logout().subscribe(data => {
   },

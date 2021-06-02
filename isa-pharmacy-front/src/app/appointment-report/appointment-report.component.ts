@@ -66,7 +66,6 @@ export class AppointmentReportComponent implements OnInit {
     this.appointment.uidn=this.pat.uidn;
     this.appointment.medicine = medicine;
     this.service.sendAppointmentDTO(this.appointment,this.examid,this.myForm.get('quantity').value).subscribe(res=>{
-      console.log(res);
       alert("Appointment ended successfully.");
       this.router.navigate(['dermatologist']);
     },
@@ -108,7 +107,6 @@ export class AppointmentReportComponent implements OnInit {
     await this.service.getByExamId(this.examid).then(
       data=>this.appointment=data
     )
-    console.log(this.appointment);
   }
   async GetAllMedicineForPatient(userid){
     this.service.refreshJWTToken();

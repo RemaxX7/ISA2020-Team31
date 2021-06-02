@@ -60,12 +60,12 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     this.appointment.uidn=this.pat.uidn;
     this.appointment.medicine = medicine
     this.service.sendAppointmentDTOPharmacist(this.appointment,this.examid,this.myForm.get('quantity').value).subscribe(res=>{
-      console.log(res);
       alert("Appointment ended successfully.");
       this.router.navigate(['pharmacist']);
     },
       err =>{
         alert("Not enough medicine in stock.");
+        this.selectedMed=[];
       }
      );
   }
@@ -77,7 +77,6 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     await this.service.getByCounselingId(this.examid).then(
       data=>this.appointment=data
     )
-    console.log(this.appointment);
   }
   ScheduleAdditionalConsultation(){
     this.service.refreshJWTToken();
@@ -108,7 +107,6 @@ export class AppointmentReportPharmacistComponent implements OnInit {
     await this.service.getById(this.userid).then(
       data=>this.pat=data
     )
-    console.log(this.pat);
   }
 
   async GetAllMedicineForPatient(userid){

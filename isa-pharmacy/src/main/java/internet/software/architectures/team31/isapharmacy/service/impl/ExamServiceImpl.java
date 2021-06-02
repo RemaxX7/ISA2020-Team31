@@ -323,11 +323,12 @@ public class ExamServiceImpl implements ExamService {
 }
 
 	@Override
-	public Collection<Exam> findAllActive() {
-		List<Exam> examList = examRepository.findAll();
+	public Collection<Exam> findAllActive(String uidn) {
+		List<Exam> examList = examRepository.findAllByOrderByDateRangeAsc();
 		List<Exam> frontList = new ArrayList<Exam>();
+		Dermatologist derm = (Dermatologist)userService.findByUidn(uidn);
 		for (Exam exam : examList) {
-			if((exam.getAppointmentStatus().equals(AppointmentStatus.FREE) || exam.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && exam.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1))) {
+			if((exam.getAppointmentStatus().equals(AppointmentStatus.FREE) || exam.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && exam.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1)) && exam.getDermatologist().getUidn().equals(derm.getUidn())) {
 				frontList.add(exam);
 			}
 		}

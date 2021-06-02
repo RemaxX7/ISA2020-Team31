@@ -27,7 +27,7 @@ public interface ExamService {
 	AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException;
 	AppointmentViewDTO cancel(Long id) throws CancelAppointmentException;
 	Collection<Exam> findAll();
-	Collection<Exam> findAllActive();
+	Collection<Exam> findAllActive(String uidn);
 	Collection<Exam> findAllByPatientId(Long id);
 	Collection<Exam> findAllByDermatologistId(Long id);
 	Collection<Exam> findAllByAppointmentStatus(AppointmentStatus status);

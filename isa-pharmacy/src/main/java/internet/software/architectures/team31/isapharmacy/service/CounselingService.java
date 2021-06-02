@@ -31,7 +31,7 @@ public interface CounselingService {
 	AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException, CounselingAlreadyScheduledException;
 	Boolean cancel(Long id) throws CancelAppointmentException;
 	Collection<Counseling> findAll();
-	Collection<Counseling> findAllActive();
+	Collection<Counseling> findAllActive(String uidn);
 	Collection<Counseling> findAllByPatientId(Long id);
 	Collection<Counseling> findAllByPharmacistId(Long id);
 	Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status);

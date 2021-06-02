@@ -22,10 +22,10 @@ export class PharmacistAppointmentsPageComponent implements OnInit {
   }
   async FillConsultations(){
     this.service.refreshJWTToken();
-    await this.service.fillCounselings().then(
+    let user = JSON.parse(localStorage.getItem("user"));
+    await this.service.fillCounselings(user.uidn).then(
       data=>this.appointments=data
     )
-    console.log(this.appointments);
   }
   async FillPatients(){
     this.service.refreshJWTToken();
@@ -33,7 +33,6 @@ export class PharmacistAppointmentsPageComponent implements OnInit {
       data=>this.users=data
       
     )
-    console.log(this.users);
   }
   PenalizePatient(uidn,dateRange){
     this.service.refreshJWTToken();

@@ -42,19 +42,19 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/search/employee/finishedpatientsdermatologist/" + uidn,options).toPromise();
     }
-    fillExams(): Promise<any>{
+    fillExams(uidn): Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/exams/allactive",options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/exams/allactive/"+uidn,options).toPromise();
     }
-    fillCounselings(): Promise<any>{
+    fillCounselings(uidn): Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/counselings/allactive",options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/counselings/allactive/"+uidn,options).toPromise();
     }
     requestLeave(uidn,startDate:any): Observable<any>{
       let headers = new HttpHeaders({
