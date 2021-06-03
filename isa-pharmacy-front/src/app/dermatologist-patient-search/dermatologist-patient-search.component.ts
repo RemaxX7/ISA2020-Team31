@@ -2,6 +2,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import {EmployeeService} from 'src/app/service/employee-service'
 import { Dermatologist } from '../model/dermatologist.model';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-dermatologist-patient-search',
@@ -10,32 +11,39 @@ import { Dermatologist } from '../model/dermatologist.model';
 })
 export class DermatologistPatientSearchComponent implements OnInit {
 
-  users:Dermatologist[]=[]
-  constructor(private service:EmployeeService ) {}
+  users:any
+  constructor(private service:EmployeeService,private userService:UserService ) {}
 
   ngOnInit(): void {
-    this.FillPatients();
+    this.service.refreshJWTToken();
+    this.FindCheckedPatients();
 
   }
+
   async FillPatients(){
+    this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
       data=>this.users=data
       
     )
     console.log(this.users);
   }
-  PenalizePatient(uidn){
-    this.service.penalizePatient(uidn);
-    alert("Korisnik je kaznjen jednim negativnim bodom");
-    this.Reload();
+
+  async FindCheckedPatients(){
+    this.service.refreshJWTToken();
+    let user = JSON.parse(localStorage.getItem("user"));
+    await this.service.findCheckedPatientsDermatologist(user.uidn).then(
+      data=>this.users=data
+    )
   }
+
   MyFunction(){
     var input, filter, table, tr, td, i,td1,th;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     let novi:string = filter;
     if(novi==''){
-      this.Reload();
+      this.FindCheckedPatients();
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
@@ -51,28 +59,37 @@ export class DermatologistPatientSearchComponent implements OnInit {
         } else {
             tr[i].style.display = "none";
         }
+      }
     }
   }
-}
+
   Reload(){
     window.location.reload();
   }
   CompareValues(a, b) {
     return (a<b) ? -1 : (a>b) ? 1 : 0;
   }
-sortTable(colnum) {
-  let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
+  
+  sortTable(colnum) {
+    let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
 
-  rows = rows.slice(1);
-  let qs = `td:nth-child(${colnum}`;
+    rows = rows.slice(1);
+    let qs = `td:nth-child(${colnum}`;
 
-  rows.sort( (r1,r2) => {
-    let t1 = r1.querySelector(qs);
-    let t2 = r2.querySelector(qs);
+    rows.sort( (r1,r2) => {
+      let t1 = r1.querySelector(qs);
+      let t2 = r2.querySelector(qs);
 
-    return this.CompareValues(t1.textContent,t2.textContent);
-  });
+      return this.CompareValues(t1.textContent,t2.textContent);
+    });
 
-  rows.forEach(row => document.getElementById("myTable").appendChild(row));
-}
+    rows.forEach(row => document.getElementById("myTable").appendChild(row));
+  }
+
+  LogOut() {
+    this.userService.Logout().subscribe(data => {
+    },
+      err => console.log(err)
+    )
+  }
 }

@@ -1,16 +1,15 @@
 <header>
     <div class="header">
-      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <a href="" routerLink="/dermatologist" class="logo">Pharmacy</a>
       <nav>
         <ul>
-         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
          <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule leave</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule appointment</a></li>
+         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist-scheduler">Schedule appointment</a></li>
          <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
-         <li id="log"><a href="" routerLink="/login">Log out</a></li>
+         <button (click)="LogOut()"><li>Log out</li></button>
         </ul>
       </nav>
     </div>

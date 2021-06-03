@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MedicineReservation } from '../model/medicineReservation.model';
 import { EmployeeService } from '../service/employee-service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-medicine-dispensing',
@@ -9,21 +10,28 @@ import { EmployeeService } from '../service/employee-service';
 })
 export class MedicineDispensingComponent implements OnInit {
 
-  constructor(private service:EmployeeService) { }
+  constructor(private service:EmployeeService,private userService:UserService) { }
   patientReservation:MedicineReservation[]=[];
   ngOnInit(): void {
+    this.service.refreshJWTToken();
     //this.HideTable();
   }
   LoadMedicineReservation(reservation){
+    this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
+    if(reservation!=""){
     this.service.loadReservation(reservation,user.uidn).subscribe(data=>this.patientReservation=data,err => {
-      alert("Reservation not found or expired.");
+      alert("Reservation not found,expired or already picked up.");
+      window.location.reload();
     } )
-  
+  }
   }
   FinalizeReservation(code){
-    this.service.finalizeReservation(code).subscribe(()=>alert("Reservation picked up."))
-    window.location.reload();
+    this.service.refreshJWTToken();
+    this.service.finalizeReservation(code).subscribe(()=>{alert("Reservation picked up.");window.location.reload();},err=>{
+      alert('An error has occured.Please consult your superior.');
+      window.location.reload();
+    })
   }
   HideTable(){
     var table = document.getElementById("myTable");
@@ -55,5 +63,11 @@ export class MedicineDispensingComponent implements OnInit {
         } 
     }
   }
+}
+LogOut() {
+  this.userService.Logout().subscribe(data => {
+  },
+    err => console.log(err)
+  )
 }
 }

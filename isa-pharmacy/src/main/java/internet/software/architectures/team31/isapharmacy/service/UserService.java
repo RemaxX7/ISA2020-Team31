@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.security.auth.login.AccountException;
 
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
 import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.domain.users.User;
 import internet.software.architectures.team31.isapharmacy.dto.EmployeeProfileEditDTO;
@@ -23,7 +24,10 @@ public interface UserService {
     Patient registerPatient(UserRegisterDTO dto) throws UsernameNotUniqueException;
     void activate(String token) throws AccountException;
     User findByUidn(String uidn);
+    User findByUidnLock(String uidn);
     User employeeEditProfile(EmployeeProfileEditDTO dto);
     User employeeEditPassword(PasswordChangeDTO dto);
     Collection<UserViewDTO> findAllEmployees();
+	
+    
 }

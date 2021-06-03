@@ -35,8 +35,11 @@ public class ShiftServiceImpl implements ShiftService {
 	public List<Shift> findAllByEmployeeId(Long id) {
 		return shiftRepository.findAllByEmployeeId(id);
 	}
-
-
+	@Override
+	public List<Shift> findAllByEmployeeUidn(String uidn) {
+		return shiftRepository.findAllByEmployeeUidn(uidn);
+	}
+	
 	@Override
 	public List<Shift> findAllByPharmacyId(Long id) {
 		return shiftRepository.findAllByPharmacyId(id);

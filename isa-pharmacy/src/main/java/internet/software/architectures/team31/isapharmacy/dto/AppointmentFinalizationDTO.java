@@ -4,14 +4,14 @@ import java.util.List;
 
 public class AppointmentFinalizationDTO {
 	private String reportt;
-	private String medicine;
+	private String[] medicine;
 	private String uidn;
 	private String medicineQuantity;
 	
 	public AppointmentFinalizationDTO() {
 		super();
 	}
-	public AppointmentFinalizationDTO(String report, String medicine,String uidn,String medicineQuantity) {
+	public AppointmentFinalizationDTO(String report, String[] medicine,String uidn,String medicineQuantity) {
 		super();
 		this.reportt = report;
 		this.medicine = medicine;
@@ -24,10 +24,10 @@ public class AppointmentFinalizationDTO {
 	public void setReport(String report) {
 		this.reportt = report;
 	}
-	public String getMedicine() {
+	public String[] getMedicine() {
 		return medicine;
 	}
-	public void setMedicine(String medicine) {
+	public void setMedicine(String[] medicine) {
 		this.medicine = medicine;
 	}
 	public String getUidn() {

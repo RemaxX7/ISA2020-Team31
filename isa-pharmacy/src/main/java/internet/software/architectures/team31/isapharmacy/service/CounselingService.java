@@ -11,6 +11,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
+import internet.software.architectures.team31.isapharmacy.domain.users.Patient;
 import internet.software.architectures.team31.isapharmacy.dto.AdditionalExamSchedulingDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentFinalizationDTO;
 import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO;
@@ -19,7 +20,10 @@ import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
+import internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException;
 
 public interface CounselingService {
 
@@ -27,7 +31,7 @@ public interface CounselingService {
 	AppointmentViewDTO schedule(Long id) throws PenaltyException, AppointmentNotFreeException, CounselingAlreadyScheduledException;
 	Boolean cancel(Long id) throws CancelAppointmentException;
 	Collection<Counseling> findAll();
-	Collection<Counseling> findAllActive();
+	Collection<Counseling> findAllActive(String uidn);
 	Collection<Counseling> findAllByPatientId(Long id);
 	Collection<Counseling> findAllByPharmacistId(Long id);
 	Collection<Counseling> findAllByAppointmentStatus(AppointmentStatus status);
@@ -38,10 +42,11 @@ public interface CounselingService {
 	boolean hasPatientVisitedPharmacist(Long patientId, Long pharmacistId);
 	boolean hasPatientAlreadyScheduledCounseling(Long patientId, Long pharmacistId);
 	boolean areThereAvailablePharmacists(Shift shift, LocalDateTime dateTime);
-	Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant);
-	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto);
+	Counseling finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException;
+	Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception, UserNotTypePatientException;
 	List<String> findTerminsByUidnsPharm(String patuidn,String empuidn);
 	List<Counseling>findCounsForPharm(String uidn,String days);
-	List<Exam>findExamsForDerm(String uidn,String days);
 	Counseling updatePoints(Long counselingId, Integer points);
+	List<Patient> findCheckedPatients(String uidn);
+	List<Counseling> findAllByOrderByStartDateTimeAsc();
 }

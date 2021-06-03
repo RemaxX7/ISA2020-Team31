@@ -108,8 +108,8 @@ public class MedicineServiceImpl implements MedicineService {
 		for (InventoryItem inventoryItem : item) {
 			if(inventoryItem.getMedicine().getName().toLowerCase().equals(name.toLowerCase())) {
 				broj = inventoryItem.getQuantity().toString();
-				if(Integer.parseInt(broj)==0) {
-					//emailService.sendEmail(adminu apoteke, "Nedostatak lekova", "Na stanju je 0 "+ med);
+				if(Double.parseDouble(broj)==0) {
+					//emailService.sendEmail(admin apoteke, "Nedostatak lekova", "Na stanju je 0 "+ med);
 				}
 			}
 		}

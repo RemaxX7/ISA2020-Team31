@@ -3,14 +3,13 @@
       <a routerLink="/dermatologist" class="logo">Pharmacy</a>
       <nav>
         <ul>
-         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
          <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule leave</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule appointment</a></li>
+         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist-scheduler">Schedule appointment</a></li>
          <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
-         <li id="log"><a href="" routerLink="/login">Log out</a></li>
+         <button (click)="LogOut()"><li>Log out</li></button>
         </ul>
       </nav>
     </div>
@@ -24,6 +23,8 @@
                     <th >Surname</th>
                     <th >Uidn</th>
                     <th >Username</th>
+                    <th> Pharmacy ID</th>
+                    <th>Exam start time</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -33,8 +34,10 @@
                         <td>{{u.patient.surname}}</td>
                         <td>{{u.patient.uidn}}</td>
                         <td>{{u.patient.email}}</td>
+                        <td>{{u.pharmacy.id}}</td>
+                        <td>{{u.dateRange.startDateTime[0]}}.{{u.dateRange.startDateTime[1]}}.{{u.dateRange.startDateTime[2]}} {{u.dateRange.startDateTime[3]}}:{{u.dateRange.startDateTime[4]}}</td>
                         <td><a href="#" [routerLink]="['/dermatologist-appointment-report',u.id,u.patient.uidn]" >Start appointment</a></td>
-                        <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.patient.uidn)">Penalize </a></td>
+                        <td><a href="#" [routerLink]="['/dermatologist-appointments']" (click)="PenalizePatient(u.patient.uidn,u.dateRange)">Penalize </a></td>
                     </tr>
                 </tbody>
             </table>

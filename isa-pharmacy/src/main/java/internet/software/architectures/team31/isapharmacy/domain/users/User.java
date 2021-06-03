@@ -21,8 +21,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +38,8 @@ import internet.software.architectures.team31.isapharmacy.domain.location.Addres
 public abstract class User implements UserDetails {
 
 	private static final long serialVersionUID = 5945991923463644114L;
-
+	@Version
+	private Long version;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", unique=true, nullable=false)
@@ -88,6 +89,10 @@ public abstract class User implements UserDetails {
     protected List<Authority> authorities;
 	
 	public User() {
+	}
+	
+	public Long getVersion() {
+		return version;
 	}
 
 	public Long getId() {

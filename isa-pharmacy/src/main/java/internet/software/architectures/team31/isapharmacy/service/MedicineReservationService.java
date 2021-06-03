@@ -22,6 +22,6 @@ public interface MedicineReservationService {
 	MedicineReservation findById(Long id);
 	boolean hasPatientPurchasedMedicineFromPharmacy(Long patientId, Long pharmacyId);
 	boolean hasPatientPurchasedMedicine(Long patientId, Long medicineId);
-	Collection<MedicineReservation> findById(String id,String uidn);
+	Collection<MedicineReservation> findById(String id,String uidn) throws CancelMedicineReservationException;
 	MedicineReservation closeRequest(String code) throws CancelMedicineReservationException;
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Pharmacist } from '../model/pharmacist.model';
 import { EmployeeService } from '../service/employee-service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-pharmacist-profile',
@@ -10,11 +12,12 @@ import { EmployeeService } from '../service/employee-service';
 })
 export class PharmacistProfileComponent implements OnInit {
   
-  constructor(private fb:FormBuilder,private service:EmployeeService) { }
-  pharmacist:Pharmacist = new Pharmacist();
+  constructor(private fb:FormBuilder,private service:EmployeeService,private router:Router,private userService:UserService) { }
+  public loaded: boolean = false;
+  pharmacist:any;
   myForm:FormGroup;
   ngOnInit(): void {
-    this.LoadUser();
+    this.service.refreshJWTToken();
     this.myForm=this.fb.group({
       email:['',[Validators.required]],
       name:['',[Validators.required]],
@@ -22,19 +25,52 @@ export class PharmacistProfileComponent implements OnInit {
       uidn:['',[Validators.required]]
       
     })
+    this.FillForm();
+    this.myForm.disable();
   }
-  EditProfile(){
-    this.pharmacist.email=this.myForm.get('email').value;
-    this.pharmacist.name=this.myForm.get('name').value;
-    this.pharmacist.surname=this.myForm.get('surname').value;
-    this.pharmacist.uidn=this.pharmacist.uidn;
-    this.service.editProfile(this.pharmacist).subscribe(()=>alert("Uspesno promenjeni podaci"))
+  Toggle(){
+    if (this.myForm.disabled) {
+      this.myForm.enable();
+      document.getElementById('toggle').innerHTML = 'Cancel';
+    } else {
+      this.myForm.disable();
+      document.getElementById('toggle').innerHTML = 'Edit';
+      this.FillForm();
+    }
   }
-  LoadUser(){
-    let user = JSON.parse(localStorage.getItem("user"));
-    this.pharmacist.name = user.name;
-    this.pharmacist.email = user.email;
-    this.pharmacist.surname = user.surname;
-    this.pharmacist.uidn = user.uidn;
+  async FillForm() {
+    this.service.refreshJWTToken();
+    await this.service.getById(JSON.parse(localStorage.getItem("user")).uidn).then(data=>this.pharmacist = data);
+    this.loaded = true;
+    this.myForm.controls['name'].setValue(this.pharmacist.name);
+    this.myForm.controls['surname'].setValue(this.pharmacist.surname);
+    this.myForm.controls['email'].setValue(this.pharmacist.email);
+    this.myForm.controls['uidn'].setValue(this.pharmacist.uidn);
+  }
+  SaveChanges() {
+    this.service.refreshJWTToken();
+    let profileUpdate = {
+      uidn: this.pharmacist.uidn,
+      name: this.myForm.controls['name'].value,
+      surname: this.myForm.controls['surname'].value,
+      email: this.myForm.controls['email'].value
+    }
+
+    this.service.editProfile(profileUpdate).subscribe(data => {
+      this.Toggle();
+      this.pharmacist = profileUpdate;
+      alert("Data changed,you will be logged out shortly.");
+      this.LogOut();
+    },
+      err => {
+        
+      }
+    )
+  }
+  LogOut() {
+    this.userService.Logout().subscribe(data => {
+    },
+      err => console.log(err)
+    )
   }
 }

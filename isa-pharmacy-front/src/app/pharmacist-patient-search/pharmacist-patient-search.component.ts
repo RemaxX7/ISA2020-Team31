@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pharmacist } from '../model/pharmacist.model';
 import { EmployeeService } from '../service/employee-service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-pharmacist-patient-search',
@@ -9,32 +10,38 @@ import { EmployeeService } from '../service/employee-service';
 })
 export class PharmacistPatientSearchComponent implements OnInit {
 
-  users:Pharmacist[]=[]
-  constructor(private service:EmployeeService) { }
+  users:any
+  constructor(private service:EmployeeService,private userService:UserService) { }
 
   ngOnInit(): void {
-    
-    this.FillPatients();
+    this.service.refreshJWTToken();
+    this.FindCheckedPatients();
   }
+
   async FillPatients(){
+    this.service.refreshJWTToken();
     await this.service.getAllUsers().then(
       data=>this.users=data
       
     )
     console.log(this.users);
   }
-  PenalizePatient(uidn){
-    this.service.penalizePatientPharmacist(uidn);
-    alert("Korisnik je kaznjen jednim negativnim bodom");
-    //this.Reload();
+
+  async FindCheckedPatients(){
+    this.service.refreshJWTToken();
+    let user = JSON.parse(localStorage.getItem("user"));
+    await this.service.findCheckedPatients(user.uidn).then(
+      data=>this.users=data
+    )
   }
+
   MyFunction(){
     var input, filter, table, tr, td, i,td1;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     let novi:string = filter;
     if(novi==''){
-      this.Reload();
+      this.FindCheckedPatients();
     }
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
@@ -52,12 +59,14 @@ export class PharmacistPatientSearchComponent implements OnInit {
     }
   }
 }
+
   Reload(){
     window.location.reload();
   }
   CompareValues(a, b) {
     return (a<b) ? -1 : (a>b) ? 1 : 0;
   }
+
 sortTable(colnum) {
   let rows = Array.from(document.getElementById("myTable").querySelectorAll('tr'));
 
@@ -72,5 +81,12 @@ sortTable(colnum) {
   });
 
   rows.forEach(row => document.getElementById("myTable").appendChild(row));
+}
+
+LogOut() {
+  this.userService.Logout().subscribe(data => {
+  },
+    err => console.log(err)
+  )
 }
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.security.auth.login.AccountException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import internet.software.architectures.team31.isapharmacy.dto.UserRegisterDTO;
 import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.UsernameNotUniqueException;
 import internet.software.architectures.team31.isapharmacy.repository.EmployeeRepository;
+import internet.software.architectures.team31.isapharmacy.repository.PatientRepository;
 import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AuthorityService;
 import internet.software.architectures.team31.isapharmacy.service.CityService;
@@ -43,6 +45,8 @@ public class UserServiceImpl implements UserService {
 	private DermatologistService dermService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	@Autowired
+	private PatientRepository patientRepository;
 	
 	@Override
 	public User save(User user) {
@@ -107,7 +111,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByUidn(String uidn) {
-		return userRepository.findByUidn(uidn);
+		User user = userRepository.findByUidn(uidn);
+		return user;
+	}
+	
+	@Override
+	@Transactional
+	public User findByUidnLock(String uidn) {
+		User user = patientRepository.findByUidn(uidn);
+		return user;
 	}
 
 	@Override
@@ -130,5 +142,6 @@ public class UserServiceImpl implements UserService {
 	public Collection<UserViewDTO> findAllEmployees() {
 		return employeeRepository.findAll().stream().map(employee -> new UserViewDTO(employee)).collect(Collectors.toList());
 	}
+
 	
 }

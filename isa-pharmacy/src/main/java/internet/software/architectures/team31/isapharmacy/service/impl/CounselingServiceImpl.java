@@ -1,5 +1,6 @@
 package internet.software.architectures.team31.isapharmacy.service.impl;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -7,9 +8,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,7 @@ import internet.software.architectures.team31.isapharmacy.domain.patient.Appoint
 import internet.software.architectures.team31.isapharmacy.domain.patient.AppointmentStatus;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Counseling;
 import internet.software.architectures.team31.isapharmacy.domain.patient.Exam;
+import internet.software.architectures.team31.isapharmacy.domain.pharmacy.InventoryItem;
 import internet.software.architectures.team31.isapharmacy.domain.schedule.Shift;
 import internet.software.architectures.team31.isapharmacy.domain.users.Dermatologist;
 import internet.software.architectures.team31.isapharmacy.domain.users.Employee;
@@ -34,8 +39,12 @@ import internet.software.architectures.team31.isapharmacy.dto.UserViewDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
 import internet.software.architectures.team31.isapharmacy.exception.CounselingAlreadyScheduledException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
+import internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException;
 import internet.software.architectures.team31.isapharmacy.repository.CounselingRepository;
+import internet.software.architectures.team31.isapharmacy.repository.UserRepository;
 import internet.software.architectures.team31.isapharmacy.service.AppointmentService;
 import internet.software.architectures.team31.isapharmacy.service.CounselingService;
 import internet.software.architectures.team31.isapharmacy.service.EmailService;
@@ -50,6 +59,8 @@ public class CounselingServiceImpl implements CounselingService {
 
 	@Autowired
 	private CounselingRepository counselingRepository;
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private CounselingService counselingService;
 	@Autowired
@@ -70,7 +81,8 @@ public class CounselingServiceImpl implements CounselingService {
 	private ExamService examService;
 	@Autowired
 	private EmailService emailService;
-
+	@Autowired
+	private InventoryItemServiceImpl inventoryService;
 	@Override
 	public Counseling save(CounselingCreateDTO dto) throws PenaltyException, CounselingAlreadyScheduledException {
 		Patient patient = (Patient) userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -173,15 +185,24 @@ public class CounselingServiceImpl implements CounselingService {
 	}
 
 	@Override
-	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String quant) {
+	public Counseling finalizeExam(AppointmentFinalizationDTO dto,String examid,String quant) throws InvalidInputException{
 		List<Counseling> counseling = (List<Counseling>) findAll();
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
-		List<Medicine>medicineList = new ArrayList<Medicine>();
-		medicineList.add(medicineService.findByName(dto.getMedicine()));
+		List<InventoryItem>inventoryItemList = inventoryService.findAll();
 		for (Counseling couns : counseling) {
-			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
-				for (Medicine medicine : medicineList) {
-					itemList.add(new AppointmentMedicineItem(medicine,Integer.parseInt(quant)));
+			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED) && couns.getId().equals(Long.parseLong(examid))) {
+				for (String item : dto.getMedicine()) {
+					Medicine med = medicineService.findByName(item.split(",")[0]);
+					for (InventoryItem inventoryItem : inventoryItemList) {
+						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() > Integer.parseInt(item.split(",")[1])) {
+							itemList.add(new AppointmentMedicineItem(med,Integer.parseInt(item.split(",")[1])));
+							inventoryItem.setQuantity(inventoryItem.getQuantity()-Integer.parseInt(item.split(",")[1]));
+							inventoryService.save(inventoryItem);
+							break;
+						}
+						else if(inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
+							throw new InvalidInputException("Not enough medicine in stock.");
+					}
 				}
 				couns.setAppointmentStatus(AppointmentStatus.FINISHED);
 				couns.setReport(dto.getReport());
@@ -204,24 +225,39 @@ public class CounselingServiceImpl implements CounselingService {
 		text.append("Date and time: " + counseling.getDateRange().getStartDateTime() + " - " + counseling.getDateRange().getEndDateTime() + "\r\n");
 		return text.toString();
 	}
-
+	@Transactional
 	@Override
-	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) {
+	public Counseling scheduleAdditionalConsultation(AdditionalExamSchedulingDTO dto) throws ShiftNotFreeEception, UserNotTypePatientException {
+		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(dto.getEmployeeuidn());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		Patient patient = patientService.findByUidn(dto.getUidn());
-		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
-		DateRange range = new DateRange();
-		range.setStartDateTime(date);
-		range.setEndDateTime(date.plusMinutes(30));
 		Pharmacist pharm = (Pharmacist) userService.findByUidn(dto.getEmployeeuidn());
-		Counseling counseling = new Counseling();
-		counseling.setPharmacist(pharm);
-		counseling.setPharmacy(pharm.getPharmacy());
-		counseling.setPatient(patient);
-		counseling.setAppointmentStatus(AppointmentStatus.FREE);
-		counseling.setDateRange(range);
-		sendCounselingEmail(counseling);
-		return counselingRepository.save(counseling);
+		User patient = userService.findByUidn(dto.getUidn());
+		if(patient.getUidn().equals(dto.getEmployeeuidn())) {
+			throw new UserNotTypePatientException("You cannot schedule an appointment for yourself.");
+		}
+		LocalDateTime date = LocalDateTime.parse(dto.getDate(),formatter);
+		for (Shift shift : shiftList) {
+			if(date.isAfter(shift.getInterval().getStartDateTime()) && date.isBefore(shift.getInterval().getEndDateTime())) {
+				DateRange range = new DateRange();
+				range.setStartDateTime(date);
+				range.setEndDateTime(date.plusMinutes(30));
+				Counseling counseling = new Counseling();
+				counseling.setPharmacist(pharm);
+				counseling.setPharmacy(pharm.getPharmacy());
+				try {
+					counseling.setPatient((Patient) patient);
+				}catch(Exception e){
+					throw new UserNotTypePatientException("You cannot schedule an appointment for employees.");
+				}
+				counseling.setAppointmentStatus(AppointmentStatus.FREE);
+				counseling.setDateRange(range);
+				sendCounselingEmail(counseling);
+				userRepository.saveAndFlush(pharm);
+				return counselingRepository.save(counseling);
+			}
+		}
+		throw new ShiftNotFreeEception("Termin not in your shift or already booked.");
+		
 	}
 
 	@Override
@@ -255,6 +291,7 @@ public class CounselingServiceImpl implements CounselingService {
 		User employee = userService.findByUidn(empuidn);
 		User patient = userService.findByUidn(patuidn);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		List<Shift> shiftList = shiftService.findAllByEmployeeUidn(empuidn);
 		DateRange range = new DateRange();
 		DateRange range2 = new DateRange();
 		DateRange range3 = new DateRange();
@@ -262,12 +299,12 @@ public class CounselingServiceImpl implements CounselingService {
 		DateRange range5 = new DateRange();
 		DateRange range6 = new DateRange();
 
-		String date2 = "2021-03-02 13:00";
-		String date1 = "2020-03-02 13:00";
-		String date3 = "2022-03-02 13:00";
-		String date4 = "2021-07-02 14:00";
-		String date5 = "2020-07-02 15:00";
-		String date6 = "2022-07-02 16:00";
+		String date2 = "2024-03-02 13:00";
+		String date1 = "2022-03-02 13:00";
+		String date3 = "2023-03-02 13:00";
+		String date4 = "2022-07-02 14:00";
+		String date5 = "2023-07-02 15:00";
+		String date6 = "2024-07-02 16:00";
 		LocalDateTime date11 = LocalDateTime.parse(date1,formatter);
 		LocalDateTime date12 = LocalDateTime.parse(date2,formatter);
 		LocalDateTime date13 = LocalDateTime.parse(date3,formatter);
@@ -321,42 +358,40 @@ public class CounselingServiceImpl implements CounselingService {
 				}
 			}
 		}
+			for (DateRange dr : dateList) {
+				for (Shift  shift : shiftList) {
+					if(dr.getStartDateTime().isBefore(shift.getInterval().getStartDateTime()) || dr.getStartDateTime().isAfter(shift.getInterval().getEndDateTime())){
+						String[] comb = dr.getStartDateTime().toString().split("T");
+						backList.add(comb[0]+" "+comb[1]);
+					}
+				}
+			}
 		frontList.removeAll(backList);
 		return frontList;
 	}
 
 	@Override
 	public List<Counseling> findCounsForPharm(String uidn,String days) {
-		List<Counseling>counsList = (List<Counseling>) counselingService.findAll();
+		List<Counseling>counsList = (List<Counseling>) counselingService.findAllByOrderByStartDateTimeAsc();
 		List<Counseling>frontList = new ArrayList<Counseling>();
 		User user = (Pharmacist)userService.findByUidn(uidn);
 		for (Counseling counseling : counsList) {
-			if(counseling.getPharmacist().getUidn().equals(user.getUidn()) && counseling.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
+			if(counseling.getPharmacist().getUidn().equals(user.getUidn()) && !(counseling.getAppointmentStatus().equals(AppointmentStatus.FINISHED) || counseling.getAppointmentStatus().equals(AppointmentStatus.UNATTENDED)) && counseling.getDateRange().getStartDateTime().isAfter(LocalDateTime.now()) && counseling.getDateRange().getEndDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
 				frontList.add(counseling);
 			}
 		}
 		return frontList;
 	}
 
-	@Override
-	public List<Exam> findExamsForDerm(String uidn, String days) {
-		List<Exam> examsList = (List<Exam>) examService.findAll();
-		List<Exam>frontList = new ArrayList<Exam>();
-		User user = (Dermatologist)userService.findByUidn(uidn);
-		for (Exam exam : examsList) {
-			if(exam.getDermatologist().getUidn().equals(user.getUidn()) && exam.getDateRange().getStartDateTime().isBefore(LocalDateTime.now().plusDays(Long.parseLong(days)))) {
-				frontList.add(exam);
-			}
-		}
-		return frontList;
-	}
+	
 
 	@Override
-	public Collection<Counseling> findAllActive() {
-		List<Counseling> counsList = counselingRepository.findAll();
+	public Collection<Counseling> findAllActive(String uidn) {
+		List<Counseling> counsList = counselingRepository.findAllByOrderByDateRangeAsc();
 		List<Counseling> frontList = new ArrayList<Counseling>();
+		Pharmacist pharm = (Pharmacist) userService.findByUidn(uidn);
 		for (Counseling couns : counsList) {
-			if(couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) {
+			if((couns.getAppointmentStatus().equals(AppointmentStatus.FREE) || couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED)) && couns.getDateRange().getStartDateTime().isAfter(LocalDateTime.now().minusHours(1))&& couns.getPharmacist().getUidn().equals(pharm.getUidn())) {
 				frontList.add(couns);
 			}
 		}
@@ -373,5 +408,24 @@ public class CounselingServiceImpl implements CounselingService {
 		}
 		
 		return counseling;
+	}
+
+	@Override
+	public List<Patient> findCheckedPatients(String uidn) {
+		List<Counseling> counsList = counselingRepository.findAll();
+		Pharmacist pharm = (Pharmacist) userService.findByUidn(uidn);
+		List<Patient> frontList = new ArrayList<Patient>();
+		for (Counseling counseling : counsList) {
+			if(counseling.getAppointmentStatus().equals(AppointmentStatus.FINISHED) && pharm.getId().equals(counseling.getPharmacist().getId())) {
+				
+				frontList.add(counseling.getPatient());
+			}
+		}
+		return frontList;
+	}
+
+	@Override
+	public List<Counseling> findAllByOrderByStartDateTimeAsc() {
+		return counselingRepository.findAllByOrderByDateRangeAsc();
 	}
 }

@@ -25,7 +25,10 @@ import internet.software.architectures.team31.isapharmacy.dto.AppointmentViewDTO
 import internet.software.architectures.team31.isapharmacy.dto.ExamCreateDTO;
 import internet.software.architectures.team31.isapharmacy.exception.AppointmentNotFreeException;
 import internet.software.architectures.team31.isapharmacy.exception.CancelAppointmentException;
+import internet.software.architectures.team31.isapharmacy.exception.InvalidInputException;
 import internet.software.architectures.team31.isapharmacy.exception.PenaltyException;
+import internet.software.architectures.team31.isapharmacy.exception.ShiftNotFreeEception;
+import internet.software.architectures.team31.isapharmacy.exception.UserNotTypePatientException;
 import internet.software.architectures.team31.isapharmacy.service.ExamService;
 import internet.software.architectures.team31.isapharmacy.service.impl.PatientServiceImpl;
 
@@ -48,10 +51,12 @@ public class ExamController {
 	public ResponseEntity<Collection<Exam>> findAll() {
 		return new ResponseEntity<>(examService.findAll(), HttpStatus.OK);
 	}
-	@GetMapping(value = "/allactive")
-	public ResponseEntity<Collection<Exam>> findAllActive() {
-		return new ResponseEntity<>(examService.findAllActive(), HttpStatus.OK);
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
+	@GetMapping(value = "/allactive/{uidn}")
+	public ResponseEntity<Collection<Exam>> findAllActive(@PathVariable String uidn) {
+		return new ResponseEntity<>(examService.findAllActive(uidn), HttpStatus.OK);
 	}
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/findbyid/{id}")
 	public ResponseEntity<Exam> findById(@PathVariable Long id) {
 		return new ResponseEntity<>(examService.findById(id), HttpStatus.OK);
@@ -99,17 +104,20 @@ public class ExamController {
 		dto.setPharmacyId(1L);
 		return new ResponseEntity<>(examService.save(dto), HttpStatus.OK);		
 	}
-	@GetMapping(value = "/penalize/{id}")
-	public ResponseEntity<Exam>penalize(@PathVariable String id){
-		return new ResponseEntity<>(patientService.penalize(id),HttpStatus.OK);
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
+	@GetMapping(value = "/penalize/{id}/{date}/{dermuidn}")
+	public ResponseEntity<Exam>penalize(@PathVariable String id,@PathVariable String date,@PathVariable String dermuidn){
+		return new ResponseEntity<>(patientService.penalize(id,date,dermuidn),HttpStatus.OK);
 	}
-	@PostMapping(value = "/finalizeappointment/{quant}")
-	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String quant){
-		return new ResponseEntity<>(examService.finalizeExam(dto,quant),HttpStatus.OK);
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
+	@PostMapping(value = "/finalizeappointment/{examid}/{quant}")
+	public ResponseEntity<Exam> updateFinishedExam(@RequestBody AppointmentFinalizationDTO dto,@PathVariable String examid,@PathVariable String quant) throws InvalidInputException{
+		return new ResponseEntity<>(examService.finalizeExam(dto,examid,quant),HttpStatus.OK);
 	}
-	@PostMapping(value = "/schedulenewexam")
-	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto){
-		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto),HttpStatus.OK);
+	@PreAuthorize("hasRole('DERMATOLOGIST')")
+	@PostMapping(value = "/schedulenewexam/{fromexam}")
+	public ResponseEntity<Exam> scheduleAdditionalExam(@RequestBody AdditionalExamSchedulingDTO dto,@PathVariable Boolean fromexam) throws ShiftNotFreeEception, UserNotTypePatientException{
+		return new ResponseEntity<>(examService.scheduleAdditionalExam(dto,fromexam),HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/update/points/{examId}/{points}")

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { AppointmentReportPharmacistComponent } from '../appointment-report-pharmacist/appointment-report-pharmacist.component';
 import { Appointment } from '../model/appointment.model';
 import { PharmacistAppointmentsPageComponent } from '../pharmacist-appointments-page/pharmacist-appointments-page.component';
@@ -14,6 +14,13 @@ import { Pharmacist } from '../model/pharmacist.model';
   
     constructor(private _http : HttpClient) { }
     
+    refreshJWTToken(){
+      /*let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = {headers:headers};*/
+      return this._http.post("http://localhost:8080/auth/refresh",localStorage.getItem('userToken'));
+    }
     getAllUsers(): Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -21,19 +28,40 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/patients/all",options).toPromise();
     }
-    fillExams(): Promise<any>{
+    findCheckedPatients(uidn):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-    })
+    }) 
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/exams/allactive",options).toPromise();
+      return this._http.get("http://localhost:8080/api/search/employee/finishedpatients/" + uidn,options).toPromise();
     }
-    fillCounselings(): Promise<any>{
+    findCheckedPatientsDermatologist(uidn):Promise<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    }) 
+    let options = { headers: headers };
+      return this._http.get("http://localhost:8080/api/search/employee/finishedpatientsdermatologist/" + uidn,options).toPromise();
+    }
+    fillExams(uidn): Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/counselings/allactive",options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/exams/allactive/"+uidn,options).toPromise();
+    }
+    fillCounselings(uidn): Promise<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.get("http://localhost:8080/api/appointments/counselings/allactive/"+uidn,options).toPromise();
+    }
+    requestLeave(uidn,startDate:any): Observable<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.post("http://localhost:8080/api/leave/createLeaveRequest/"+uidn,startDate,options);
     }
     loadReservation(reservation,uidn):Observable<any>{
       let headers = new HttpHeaders({
@@ -56,6 +84,15 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get(this._APIUrl + '/getbyid/' + id,options).toPromise();
     }
+
+    getByIdLock(id): Promise<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.get(this._APIUrl + '/getbyidlock/' + id,options).toPromise();
+    }
+
     getByExamId(examid):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -70,40 +107,40 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/appointments/counselings/findbyid/" + examid,options).toPromise();
     }
-    penalizePatient(uidn):Promise<any>{
+    penalizePatient(uidn,dateRange,dermUidn):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/exams/penalize/" + uidn,options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/exams/penalize/" + uidn +"/"+dateRange+"/"+dermUidn,options).toPromise();
     }
-    penalizePatientPharmacist(uidn):Promise<any>{
+    penalizePatientPharmacist(uidn,dateRange,pharmuidn):Promise<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.get("http://localhost:8080/api/appointments/counselings/pharmacistpenalize/" + uidn,options).toPromise();
+      return this._http.get("http://localhost:8080/api/appointments/counselings/pharmacistpenalize/" + uidn + "/" + dateRange + "/" + pharmuidn,options).toPromise();
     }
-    sendAppointmentDTO(val:Appointment,quant):Observable<any>{
+    sendAppointmentDTO(val:Appointment,examid,quant):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.post("http://localhost:8080/api/appointments/exams/finalizeappointment/"+quant,val,options);
+      return this._http.post("http://localhost:8080/api/appointments/exams/finalizeappointment/"+examid+"/"+quant,val,options);
     }
-    sendAppointmentDTOPharmacist(val:Appointment,quant):Observable<any>{
+    sendAppointmentDTOPharmacist(val:Appointment,examid,quant):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.post("http://localhost:8080/api/appointments/counselings/finalizeappointmentpharmacist/"+quant,val,options);
+      return this._http.post("http://localhost:8080/api/appointments/counselings/finalizeappointmentpharmacist/"+examid+"/"+quant,val,options);
     }
-    scheduleNewAppointmentDerm(val:Appointment):Observable<any>{
+    scheduleNewAppointmentDerm(val:Appointment,fromExam):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
     })
     let options = { headers: headers };
-      return this._http.post("http://localhost:8080/api/appointments/exams/schedulenewexam",val,options);
+      return this._http.post("http://localhost:8080/api/appointments/exams/schedulenewexam/"+fromExam,val,options);
     }
     scheduleNewAppointmentPharm(val:Appointment):Observable<any>{
       let headers = new HttpHeaders({
@@ -133,6 +170,15 @@ import { Pharmacist } from '../model/pharmacist.model';
     let options = { headers: headers };
       return this._http.get("http://localhost:8080/api/search/employee/freeterm/" + patiudn + "/" + empuidn,options);
     }
+    
+    findpharmaciesfordermatologist():Observable<any>{
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+    })
+    let options = { headers: headers };
+      return this._http.get("http://localhost:8080/api/search/employee/dermatologistemployedpharmacies",options);
+    }
+
     getFreeTerminsPharm(patiudn,empuidn):Observable<any>{
       let headers = new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')

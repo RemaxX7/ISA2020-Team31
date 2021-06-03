@@ -1,0 +1,33 @@
+<header>
+    <div class="header">
+      <a routerLink="/dermatologist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
+         <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
+         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist-scheduler">Schedule appointment</a></li>
+         <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
+         <button (click)="LogOut()"><li>Log out</li></button>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="profilediv">
+    <div class="userinfo">
+        <mat-label >Please enter your wanted leave date period:</mat-label>
+        <mat-divider></mat-divider>
+         <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="range" #input [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Start date">
+                <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <button (click)="PlaceRequest(input.value)">Place leave request</button>
+  </div>
+  </div>

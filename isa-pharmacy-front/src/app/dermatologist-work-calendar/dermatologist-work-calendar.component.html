@@ -7,10 +7,10 @@
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
          <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule leave</a></li>
+         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
          <li><a href="" routerLink="/dermatologist">Schedule appointment</a></li>
          <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
-         <li id="log"><a href="" routerLink="/login">Log out</a></li>
+         <button (click)="LogOut()"><li>Log out</li></button>
         </ul>
       </nav>
     </div>
@@ -18,14 +18,15 @@
   <body>
     <div class="profilediv">
         <div class="sidemenu">
-            <a href="" routerLink="/dermatologist-profile">Lični podaci</a>
-            <a href="" routerLink="/employee-password-change">Promena lozinke</a>
-            <a href="" routerLink="/dermatologist-work-cal">Radni kalendar</a>
+            <a href="" routerLink="/dermatologist-profile">Personal data</a>
+            <a href="" routerLink="/employee-password-change">Change password</a>
+            <a href="" routerLink="/dermatologist-work-cal">Work calendar</a>
         </div>
         <div class="userinfo">
-          <button (click)="FillExams(7)">Nedeljno</button>
-          <button (click)="FillExams(30)">Mesecno</button>
-          <button (click)="FillExams(365)">Godisnje</button>
+          <mat-label>Choose time period filter</mat-label><br>
+          <button (click)="FillExams(7)">Weekly</button>
+          <button (click)="FillExams(30)">Monthly</button>
+          <button (click)="FillExams(365)">Yearly</button>
           <div class="founddiv">
             <table id="myTable">
                 <tr>
@@ -41,7 +42,7 @@
                         <td>{{c.patient.name}}</td>
                         <td>{{c.patient.surname}}</td>
                         <td>{{c.dateRange.startDateTime[0]}}.{{c.dateRange.startDateTime[1]}}.{{c.dateRange.startDateTime[2]}}</td>
-                        <td>{{c.dateRange.startDateTime[3]}}:{{c.dateRange.startDateTime[4]}}0</td>
+                        <td>{{c.dateRange.startDateTime[3]}}:{{c.dateRange.startDateTime[4]}}</td>
                         <td>30</td>
                         <td>{{c.pharmacy.name}}</td>
                     </tr>

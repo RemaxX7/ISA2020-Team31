@@ -3,15 +3,14 @@
       <a routerLink="/pharmacist" class="logo">Pharmacy</a>
       <nav>
         <ul>
-         <!--<li><a href="#" routerLink="/">Log in</a></li>-->
-         <li><a href="" routerLink="/pharmacist-patient-search" (click)="Reload()">Patient list</a></li>
+         <li><a href="" routerLink="/pharmacist-patient-search">Patient list</a></li>
             <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
             <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
             <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
-            <li><a href="" routerLink="/pharmacist">Schedule leave</a></li>
-            <li><a href="" routerLink="/pharmacist">Schedule appointment</a></li>
+            <li><a href="" routerLink="/schedule-leave-pharmacist">Schedule leave</a></li>
+            <li><a href="" routerLink="/pharmacist-scheduler">Schedule appointment</a></li>
             <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
-            <li id="log"><a href="" routerLink="/login">Log out</a></li>
+            <button (click)="LogOut()"><li>Log out</li></button>
         </ul>
       </nav>
     </div>
@@ -20,18 +19,21 @@
   <div class="profilediv">
     <div class="userinfo">
         <table >
-        <tr><td >Unesite podatke o pregledu za uidn: {{pat.uidn}}</td><td></td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
-        <tr ><td>Izaberite terapiju</td><td></td><td ><mat-form-field >
+        <tr><td ><mat-label>Enter diagnosis for patient UIDN(Free form): {{pat.uidn}}</mat-label></td><td></td><td><textarea name="report" id="area" cols="60" rows="10" formControlName="area" ></textarea></td></tr>
+        <tr ><td><mat-label>Pick medicine and quantity for therapy*(mandatory)</mat-label></td><td></td><td ><mat-form-field >
           <mat-select name="" id="" #mySelect [(value)]="medicineSelect">
             <mat-option *ngFor="let med of medicine" [value]="med.name" >{{med.name}}</mat-option>
-        </mat-select></mat-form-field></td><td><input type="text" formControlName="quantity" #quantSelect></td>
-        <td><button (click)="CallComposition(mySelect.value)">Specifikacija</button></td><td><button (click)="MedicineAvailability(mySelect.value)">Dostupnost</button></td></tr>
-        <tr><td>Zakazite dodatan pregled</td><td></td>
+        </mat-select></mat-form-field></td><td><input type="text" formControlName="quantity" #quantSelect></td><td><button [disabled]="mySelect.empty" (click)="AddMedicine(mySelect.value,quantSelect.value)">Add</button></td>
+        <td><button [disabled]="mySelect.empty" (click)="CallComposition(mySelect.value)">Specification</button></td><td><button [disabled]="mySelect.empty" (click)="MedicineAvailability(mySelect.value)">Availability</button></td></tr>
+        <mat-divider></mat-divider>
+        <tr><td><mat-label>Prescribed medicine:</mat-label></td><td></td><td><p *ngFor="let therapyMed of selectedMed">{{therapyMed}}</p></td></tr>
+        <mat-divider></mat-divider>
+        <tr><td><mat-label>Schedule additional appointment</mat-label></td><td></td>
           <td><mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
             <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
         </mat-select></mat-form-field></td>
-          <td><button (click)="ScheduleAdditionalConsultation()">Dodatan termin</button></td></tr>
-          <td></td><td></td><button (click)="FinalizeDTOPharmacist(mySelect.value)">Zavrsi pregled</button>
+          <td><button [disabled]="newTerm.empty || clicked"  (click)="ScheduleAdditionalConsultation()">Add additional termin</button></td></tr>
+          <td></td><td></td><button [disabled]="mySelect.empty" (click)="FinalizeDTOPharmacist(selectedMed)">Finalize appointment</button>
     </table>
     </div>
 </div>

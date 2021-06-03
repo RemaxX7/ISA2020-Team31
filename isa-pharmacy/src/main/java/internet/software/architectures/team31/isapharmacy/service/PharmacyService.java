@@ -2,6 +2,7 @@ package internet.software.architectures.team31.isapharmacy.service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,5 @@ public interface PharmacyService {
 	Pharmacy findById(Long id);
 	Collection<PharmacyViewDTO> findAllAvailableForCounseling(LocalDateTime dateTime);
 	Pharmacy addNewItem(InventoryItemCreateDTO dto);
+	List<String> getPharmaciesIDs();
 }

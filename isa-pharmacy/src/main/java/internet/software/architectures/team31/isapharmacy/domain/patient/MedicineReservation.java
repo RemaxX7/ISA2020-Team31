@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import internet.software.architectures.team31.isapharmacy.domain.medicine.Medicine;
 import internet.software.architectures.team31.isapharmacy.domain.pharmacy.Pharmacy;
@@ -20,6 +21,9 @@ import internet.software.architectures.team31.isapharmacy.dto.MedicineReservatio
 @Entity
 @Table(name = "medicine_reservations")
 public class MedicineReservation {
+	
+	@Version
+	private Long version;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +59,14 @@ public class MedicineReservation {
 		this.pickUpDate = pickUpDate;
 		this.medicine = medicine;
 		this.price = price;
+	}
+	
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 	public MedicineReservation(MedicineReservationCreateDTO dto) {

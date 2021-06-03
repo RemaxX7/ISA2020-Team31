@@ -1,0 +1,32 @@
+<header>
+    <div class="header">
+      <a routerLink="/pharmacist" class="logo">Pharmacy</a>
+      <nav>
+        <ul>
+         <li><a href="" routerLink="/pharmacist-patient-search">Patient list</a></li>
+            <li><a href="" routerLink="/pharmacist-appointments">Start appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-work-cal">Work calendar</a></li>
+            <li><a href="" routerLink="/medicine-dispensing">Medicine dispensing</a></li>
+            <li><a href="" routerLink="/schedule-leave-pharmacist">Schedule leave</a></li>
+            <li><a href="" routerLink="/pharmacist-scheduler">Schedule appointment</a></li>
+            <li><a href="" routerLink="/pharmacist-profile">Profile</a></li>
+            <button (click)="LogOut()"><li>Log out</li></button>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <form [formGroup]="myForm">
+  <div class="profilediv">
+    <div class="userinfo">
+        <mat-label>Enter patient UIDN to find free termins(enter to confirm):</mat-label>
+        <mat-divider></mat-divider>
+        <input type="text" formControlName="patientid" #patidselect (keyup.enter)="GetFreeTermins(patidselect.value)">
+        <mat-divider></mat-divider>
+        <mat-label>Termins list:   </mat-label><mat-form-field ><mat-select name="" id="" #newTerm [(value)]="newDate">
+            <mat-option *ngFor="let term of freeTermins" [value]="term">{{term}}</mat-option>
+        </mat-select></mat-form-field>
+        <mat-divider></mat-divider>
+        <button [disabled]="newTerm.empty || patidselect.empty" (click)="ScheduleConsultation(patidselect.value)">Schedule new appointment</button>
+    </div>
+  </div>
+</form>

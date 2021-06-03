@@ -13,9 +13,9 @@ import internet.software.architectures.team31.isapharmacy.exception.PasswordCont
 
 public interface PatientService {
 	Patient findByUidn(String uidn);
-	Exam penalize(String uidn);
+	Exam penalize(String uidn,String date,String dermuidn);
 	List<Patient> findAll();
-	Counseling pharmacistPenalize(String uidn);
+	Counseling pharmacistPenalize(String uidn,String date,String pharmuidn);
 	PatientProfileDTO getPatientProfile();
 	AllergiesDTO getPatientAllergies();
 	PatientProfileDTO updatePatientProfile(PatientProfileDTO dto);

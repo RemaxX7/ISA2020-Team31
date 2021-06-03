@@ -7,10 +7,10 @@
          <li><a href="" routerLink="/dermatologist-patient-search">Patient list</a></li>
          <li><a href="" routerLink="/dermatologist-appointments">Start appointment</a></li>
          <li><a href="" routerLink="/dermatologist-work-cal">Work calendar</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule leave</a></li>
-         <li><a href="" routerLink="/dermatologist">Schedule appointment</a></li>
+         <li><a href="" routerLink="/schedule-leave">Schedule leave</a></li>
+         <li><a href="" routerLink="/dermatologist-scheduler">Schedule appointment</a></li>
          <li><a href="" routerLink="/dermatologist-profile">Profile</a></li>
-         <li id="log"><a href="" routerLink="/login">Log out</a></li>
+         <button (click)="LogOut()"><li>Log out</li></button>
         </ul>
       </nav>
     </div>
@@ -18,19 +18,26 @@
   <body>
     <div class="profilediv">
         <div class="sidemenu">
-            <a href="" routerLink="/dermatologist-profile">Lični podaci</a>
-            <a href="" routerLink="/employee-password-change">Promena lozinke</a>
-            <a href="" routerLink="/dermatologist-work-cal">Radni kalendar</a>
+            <a href="" routerLink="/dermatologist-profile">Personal data</a>
+            <a href="" routerLink="/employee-password-change">Password change</a>
+            <a href="" routerLink="/dermatologist-work-cal">Work calendar</a>
         </div>
-        <div class="userinfo">
-        <form [formGroup]="myForm">
-          <table>
-          <tr><td><textarea name="" id="username" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.email}}" formControlName="email" required></textarea></td></tr>
-          <tr><td><textarea name="" id="name" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.name}}" formControlName="name" required></textarea></td></tr>
-          <tr><td><textarea name="" id="surname" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.surname}}" formControlName="surname" required></textarea></td></tr>
-          <tr><td><textarea name="" id="pharmID" cols="60" rows="3.5" style="resize: none;" placeholder="{{dermatologist.uidn}}" formControlName="uidn" readonly></textarea></td></tr>
-          <tr><td> <button (click)="EditProfile()">Confirm edit</button></td></tr>
-        </table>
+        <div class="userinfo" *ngIf="loaded" >
+          <button (click)="Toggle()" id="toggle">Edit</button><br>
+          <form [formGroup]="myForm" autocomplete="off">
+            <mat-label>Users e-mail</mat-label>
+            <mat-divider></mat-divider>
+            <input placeholder="Email" formControlName="email"><br>
+            <mat-label>Users first name</mat-label>
+            <mat-divider></mat-divider>
+            <input placeholder="Name" formControlName="name"><br>
+            <mat-label>Users surname</mat-label>
+            <mat-divider></mat-divider>
+            <input placeholder="Surname" formControlName="surname"><br>
+            <mat-label>Users UIDN(Not changable)</mat-label>
+            <mat-divider></mat-divider>
+            <textarea readonly placeholder="Uidn" formControlName="uidn"></textarea><br>
+            <button [disabled]="!myForm.valid" (click)="SaveChanges()">Save changes</button>
         </form>
       </div>
     </div>
