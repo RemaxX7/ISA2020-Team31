@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -143,7 +145,7 @@ public class MedicineReservationServiceImpl implements MedicineReservationServic
 			throw new CancelMedicineReservationException("Medicine reservation expired or could not be found.");
 		}
 	}
-
+	@Transactional
 	@Override
 	public MedicineReservation closeRequest(String code) throws CancelMedicineReservationException {
 		MedicineReservation reservation = findByCode(code);

@@ -3,6 +3,7 @@
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
 			<item value="D:\Users\Marko\Desktop\ISA2020-Team31\isa-pharmacy"/>
+			<item value="D:\Users\Marko\Desktop\ISA2020-Team31"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>

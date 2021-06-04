@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import {MatDatepickerModule} from '@angular/material/datepicker'
 import { EmployeeService } from '../service/employee-service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-schedule-leave-component',
   templateUrl: './schedule-leave-component.component.html',
@@ -10,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ScheduleLeaveComponentComponent implements OnInit {
 
-  constructor(private userService:UserService,private service:EmployeeService) { }
+  constructor(private userService:UserService,private service:EmployeeService,private fb:FormBuilder) { }
   range= new FormGroup({
     start: new FormControl(),
     end: new FormControl()
@@ -18,6 +18,10 @@ export class ScheduleLeaveComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.refreshJWTToken();
+    this.range=this.fb.group({
+      start:['',[Validators.required]],
+      end:['',[Validators.required]]
+    })
 
   }
 

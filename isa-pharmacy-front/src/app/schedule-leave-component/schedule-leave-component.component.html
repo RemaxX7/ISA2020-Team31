@@ -28,6 +28,6 @@
             <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
         <mat-divider></mat-divider>
-        <button (click)="PlaceRequest(input.value)">Place leave request</button>
+        <button [disabled]="!range.valid" (click)="PlaceRequest(input.value)">Place leave request</button>
   </div>
   </div>

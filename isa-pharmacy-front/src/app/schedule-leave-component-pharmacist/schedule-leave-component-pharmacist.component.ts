@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../service/employee-service';
 import { UserService } from '../shared/user.service';
 
@@ -10,7 +10,7 @@ import { UserService } from '../shared/user.service';
 })
 export class ScheduleLeaveComponentPharmacistComponent implements OnInit {
 
-  constructor(private userService:UserService,private service:EmployeeService) { }
+  constructor(private userService:UserService,private service:EmployeeService,private fb:FormBuilder) { }
 
   range= new FormGroup({
     start: new FormControl(),
@@ -19,6 +19,10 @@ export class ScheduleLeaveComponentPharmacistComponent implements OnInit {
   
   ngOnInit(): void {
     this.service.refreshJWTToken();
+    this.range=this.fb.group({
+      start:['',[Validators.required]],
+      end:['',[Validators.required]]
+    })
   }
 
   PlaceRequest(startDate){

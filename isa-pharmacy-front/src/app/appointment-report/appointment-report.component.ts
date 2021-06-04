@@ -26,7 +26,7 @@ export class AppointmentReportComponent implements OnInit {
   examid:number;
   appointment:Appointment = new Appointment();
   additionalExam:Appointment = new Appointment();
-  medicineSpecification:Medicine=new Medicine;
+  medicineSpecification:Medicine=new Medicine();
   medicineSelect:string;
   newDate:string;
   availability:number;
@@ -51,14 +51,15 @@ export class AppointmentReportComponent implements OnInit {
       area:['',[Validators.required]],
       quantity:['',[Validators.required]]
     })
-    
-
   }
+
   async MedicineAvailability(name){
     this.service.refreshJWTToken();
-    await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>this.availability=data)
-    alert("Available: " + this.availability +" " + name);
+    await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>{this.availability=data;alert("Available: " + this.availability +" " + name);},err=>
+    alert("No medicine available at the moment. Pharmacy admin has been notified."))
+    
   }
+
   FinalizeDTO(medicine){
     this.service.refreshJWTToken();
     console.log(medicine)
@@ -74,9 +75,11 @@ export class AppointmentReportComponent implements OnInit {
       }
      );
   }
+
   AddMedicine(name,quant){
     this.selectedMed.push(name+","+quant);
   }
+
   ScheduleAdditionalExam(){
     this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
@@ -90,36 +93,41 @@ export class AppointmentReportComponent implements OnInit {
       }
     );
   }
+  
   async CallComposition(name){
     this.service.refreshJWTToken();
     await this.medicineService.getCompositionForMedicine(name.toLowerCase()).then(data=>this.medicineSpecification=data)
     alert(this.medicineSpecification.composition);
   }
+
   async GetPatientForAppointment(){
     this.service.refreshJWTToken();
     await this.service.getById(this.userid).then(
       data=>this.pat=data
     )
-    console.log(this.pat);
   }
+
   async GetAppointment(){
     this.service.refreshJWTToken();
     await this.service.getByExamId(this.examid).then(
       data=>this.appointment=data
     )
   }
+
   async GetAllMedicineForPatient(userid){
     this.service.refreshJWTToken();
     await this.medicineService.getAllMedicineForPatient(userid).then(
       data=>this.medicine=data
     )
   }
+
   GetFreeTermins(){
     this.service.refreshJWTToken();
     let user = JSON.parse(localStorage.getItem("user"));
     this.derm.uidn = user.uidn;
     this.service.getFreeTermins(this.userid,this.derm.uidn).subscribe(data=>this.freeTermins=data);
   }
+
   LogOut() {
     this.userService.Logout().subscribe(data => {
     },

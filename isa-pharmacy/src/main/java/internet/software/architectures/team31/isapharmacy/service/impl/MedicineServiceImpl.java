@@ -100,19 +100,20 @@ public class MedicineServiceImpl implements MedicineService {
 		return medicineRepository.findByMedicineIds(medicineIdList);
 	}
 	
-	public String findAvailableMedicineCount(String name, String id) {
+	public String findAvailableMedicineCount(String name, String id) throws Exception {
 		Medicine med = findByName(name);
-		String broj = "";
+		Double broj = (double) 0;
 		Pharmacy pharm = pharmacyService.findById(Long.parseLong(id));
 		List<InventoryItem> item = inventoryService.findAll();
 		for (InventoryItem inventoryItem : item) {
 			if(inventoryItem.getMedicine().getName().toLowerCase().equals(name.toLowerCase())) {
-				broj = inventoryItem.getQuantity().toString();
-				if(Double.parseDouble(broj)==0) {
-					//emailService.sendEmail(admin apoteke, "Nedostatak lekova", "Na stanju je 0 "+ med);
-				}
+				broj = inventoryItem.getQuantity();
 			}
 		}
-		return broj;
+		if(broj==0) {
+			//emailService.sendEmail(admin apoteke, "Nedostatak lekova", "Na stanju je 0 "+ med);
+			throw new Exception();
+		}
+		return broj.toString();
 	}
 }

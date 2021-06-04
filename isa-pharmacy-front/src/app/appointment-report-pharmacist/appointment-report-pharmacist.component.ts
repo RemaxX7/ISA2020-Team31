@@ -51,8 +51,9 @@ export class AppointmentReportPharmacistComponent implements OnInit {
   }
   async MedicineAvailability(name){
     this.service.refreshJWTToken();
-    await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>this.availability=data)
-    alert("Available: " + this.availability +" " + name);
+    await this.service.medicineAvailability(name.toLowerCase(),this.appointment.id).then(data=>{this.availability=data;alert("Available: " + this.availability +" " + name);},err=>
+    alert("No medicine available at the moment. Pharmacy admin has been notified."))
+    
   }
   FinalizeDTOPharmacist(medicine){
     this.service.refreshJWTToken();

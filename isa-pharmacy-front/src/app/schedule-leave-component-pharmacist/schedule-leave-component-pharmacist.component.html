@@ -20,8 +20,8 @@
         <mat-label >Please enter your wanted leave date period:</mat-label>
         <mat-divider></mat-divider>
          <mat-form-field appearance="fill">
-            <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [formGroup]="range" #input [rangePicker]="picker">
+            <mat-label>Enter date range</mat-label>
+                <mat-date-range-input [formGroup]="range" #inputt [rangePicker]="picker">
                 <input matStartDate formControlName="start" placeholder="Start date">
                 <input matEndDate formControlName="end" placeholder="End date">
                 </mat-date-range-input>
@@ -29,6 +29,6 @@
             <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
         <mat-divider></mat-divider>
-        <button (click)="PlaceRequest(input.value)">Place leave request</button>
+        <button [disabled]="!range.valid" (click)="PlaceRequest(inputt.value)">Place leave request</button>
   </div>
   </div>

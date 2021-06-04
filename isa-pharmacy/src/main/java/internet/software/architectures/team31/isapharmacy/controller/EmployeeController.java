@@ -121,7 +121,7 @@ public class EmployeeController {
 	}
 	@PreAuthorize("hasRole('PHARMACIST') or hasRole('DERMATOLOGIST')")
 	@GetMapping(value = "/medicineavailability/{name}/{id}")
-	public ResponseEntity<String> findAvailableMedicineCount(@PathVariable String name,@PathVariable String id) {
+	public ResponseEntity<String> findAvailableMedicineCount(@PathVariable String name,@PathVariable String id) throws Exception {
 		return new ResponseEntity<>(medService.findAvailableMedicineCount(name,id), HttpStatus.OK);
 	}
 	

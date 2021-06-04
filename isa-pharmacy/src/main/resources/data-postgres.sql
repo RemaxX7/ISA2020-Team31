@@ -10,7 +10,7 @@ INSERT INTO PHARMACIES (name, address_id, rate) values ('Jankovic', 2, 4.9);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type, address_id,version) VALUES (5, 'Nikola', 'Nikolic', '1234567891234', 'nikolaUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+nikolaUser@gmail.com', '555-555-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient', 3,1);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type, address_id,version) VALUES (4, 'Petar', 'Petrovic', '4234567891234', 'petarUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+petarUser@gmail.com', '333-333-555', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient', 3,1);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, penalty, enabled, last_password_reset_date, type, address_id,version) VALUES (44, 'Marko', 'Rak', '9812368798712', 'markoUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+markoUser@gmail.com', '333-333-951', 0,  true, '2017-10-01 21:58:58.508-07', 'Patient', 3,1);
-INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id,version) VALUES (2, 'Jovan', 'Jovanovic', '2234567891234', 'jovanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+userJovan@gmail.com', '555-333-555', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1,1);
+INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id,version) VALUES (2, 'Jovan', 'Jovanovic', '2234567891234', 'jovanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+userJovan@gmail.com', '555-333-555', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1,1); 
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id,version) VALUES (55, 'Misko', 'Milanovic', '7891623871231', 'miskoUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+userMisko@gmail.com', '555-333-123', true, '2017-10-01 21:58:58.508-07', 'Pharmacist', 1,1);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type, pharmacy_id,version) VALUES (6, 'Milos', 'Mirkovic', '1134567891234', 'milosUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'isa.pharmacy.31+milosUser@gmail.com', '555-333-555', true, '2017-10-01 21:58:58.508-07','PharmacyAdmin', 1,1);
 INSERT INTO USERS (id, name, surname, uidn, username, password, email, phone_number, enabled, last_password_reset_date, type,version) VALUES (3, 'Milan', 'Milanovic', '3234567891234', 'milanUser', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'usermilan@email.com', '555-333-333', true, '2017-10-01 21:58:58.508-07', 'Dermatologist',1);
@@ -47,8 +47,17 @@ INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 4
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5, 5, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);
 
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (500,7,1);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (500,9,2);
 INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (100,3,5);
-INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (200,5,8);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (200,5,7);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (300,5,8);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (400,6,9);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (500,6,10);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (600,5,11);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (700,5,12);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (800,5,13);
+
 
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
 						('Exam', 3, '2021-02-12 16:30:00', '2021-02-12 16:05:00', 105, 'Report', 5, 1, 3);
