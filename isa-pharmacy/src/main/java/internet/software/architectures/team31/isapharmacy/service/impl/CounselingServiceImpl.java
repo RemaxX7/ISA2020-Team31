@@ -194,13 +194,13 @@ public class CounselingServiceImpl implements CounselingService {
 				for (String item : dto.getMedicine()) {
 					Medicine med = medicineService.findByName(item.split(",")[0]);
 					for (InventoryItem inventoryItem : inventoryItemList) {
-						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() > Integer.parseInt(item.split(",")[1])) {
+						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() >= Integer.parseInt(item.split(",")[1])) {
 							itemList.add(new AppointmentMedicineItem(med,Integer.parseInt(item.split(",")[1])));
 							inventoryItem.setQuantity(inventoryItem.getQuantity()-Integer.parseInt(item.split(",")[1]));
 							inventoryService.save(inventoryItem);
 							break;
 						}
-						else if(inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
+						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
 							throw new InvalidInputException("Not enough medicine in stock.");
 					}
 				}

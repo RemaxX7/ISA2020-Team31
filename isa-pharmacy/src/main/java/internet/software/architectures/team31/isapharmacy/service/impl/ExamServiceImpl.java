@@ -171,7 +171,7 @@ public class ExamServiceImpl implements ExamService {
 							inventoryService.save(inventoryItem);
 							break;
 						}
-						else if(inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
+						if(inventoryItem.getMedicine().getId().equals(med.getId()) && inventoryItem.getQuantity() < Integer.parseInt(item.split(",")[1]))
 							throw new InvalidInputException("Not enough medicine in stock.");
 					}
 				}

@@ -72,6 +72,7 @@ export class AppointmentReportComponent implements OnInit {
     },
       err =>{
         alert("Not enough medicine in stock.");
+        this.selectedMed=[];
       }
      );
   }
