@@ -19,11 +19,10 @@ INSERT INTO USERS_PHARMACIES (dermatologist_id, pharmacies_id) values (3, 1), (3
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_USER');
 INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO AUTHORITY (id, name) VALUES (3,'ROLE_PHARMACIST');
-INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1),(44,1);
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_DERMATOLOGIST');
 INSERT INTO AUTHORITY (id, name) VALUES (5, 'ROLE_PHARMACY_ADMIN');
 
-INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1),(6,5);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) values (5, 1), (4, 1),(6,5),(44,1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) values (2, 3), (3, 4),(55,3);
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (1, 'Paracetamol', 0, 0, 'Composition of paracetamol', 'Dodatne informacije', 'Galenika', 0);
 INSERT INTO MEDICINE (id, name, shape, type, composition, additional_notes, manufacturer, issuing) values (15, 'Adderall', 0, 0, 'Composition of Adderall', 'Dodatne informacije', 'Galenika', 0);
@@ -47,8 +46,8 @@ INSERT INTO REVIEWS (type, score, patient_id, medicine_id) values ('Medicine', 4
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 5, 5, 1);
 INSERT INTO REVIEWS (type, score, patient_id, pharmacy_id) values ('Pharmacy', 0, 4, 1);
 
-INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (500,7,1);
-INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (500,9,2);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (900,7,1);
+INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (999,9,2);
 INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (100,3,5);
 INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (200,5,7);
 INSERT INTO INVENTORY_ITEM(id,quantity,medicine_id) values (300,5,8);
@@ -83,7 +82,8 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 						('Exam', 1, '2022-05-26 13:30:00', '2022-05-26 12:45:00', 190, 'Report', 5, 2, 3);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
 						('Exam', 1, '2021-07-07 13:30:00', '2021-07-07 12:45:00', 200, 'Report', 4, 1, 3);
-
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, dermatologist_id) values
+						('Exam', 1, '2021-06-12 15:30:00', '2021-06-12 14:45:00', 200, 'Report', 44, 2, 3);
 
 						
 INSERT INTO APPOINTMENT_MEDICINE_ITEMS (id, quantity, medicine_id) values (111, 2, 5);
@@ -104,6 +104,7 @@ INSERT INTO PATIENTS_ALLERGIES (patient_id, allergies_id) values (5, 1), (5, 2),
 
 INSERT INTO SHIFTS (end_date_time, start_date_time, employee_id, pharmacy_id) values ('2025-06-20 00:00:00', '2021-02-15 00:00:00', 2, 1);
 INSERT INTO SHIFTS (end_date_time, start_date_time, employee_id, pharmacy_id) values ('2022-06-20 00:00:00', '2021-02-15 00:00:00', 3, 1);
+INSERT INTO SHIFTS (end_date_time, start_date_time, employee_id, pharmacy_id) values ('2024-06-20 00:00:00', '2021-02-15 00:00:00', 55, 1);
 
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report, patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 3, '2020-01-01 13:30:00', '2020-01-01 13:00:00', 100, 'Report', 4, 1, 2);
@@ -117,6 +118,8 @@ INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_ti
 						('Counseling', 1, '2021-07-15 13:30:00', '2021-07-15 13:00:00', 100, 'Report',44, 1, 2);
 INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report,patient_id, pharmacy_id, pharmacist_id) values
 						('Counseling', 1, '2022-01-29 13:30:00', '2022-01-29 13:00:00', 100, 'Report',44, 1, 2);
+INSERT INTO APPOINTMENTS (type, appointment_status, end_date_time, start_date_time, price, report,patient_id, pharmacy_id, pharmacist_id) values
+						('Counseling', 1, '2021-06-10 13:30:00', '2022-06-10 13:00:00', 100, 'Report',5, 1, 2);
                         
 INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (0, 5);
 INSERT INTO LOYALTY_PROGRAM_DISCOUNT (loyalty_program_category, percentage) VALUES (1, 10);

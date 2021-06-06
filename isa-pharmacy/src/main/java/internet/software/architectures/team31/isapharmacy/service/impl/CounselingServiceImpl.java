@@ -190,7 +190,7 @@ public class CounselingServiceImpl implements CounselingService {
 		List<AppointmentMedicineItem> itemList = new ArrayList<AppointmentMedicineItem>();
 		List<InventoryItem>inventoryItemList = inventoryService.findAll();
 		for (Counseling couns : counseling) {
-			if(couns.getPatient().getUidn().equals(dto.getUidn()) && couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED) && couns.getId().equals(Long.parseLong(examid))) {
+			if(couns.getPatient().getUidn().equals(dto.getUidn()) && (couns.getAppointmentStatus().equals(AppointmentStatus.OCCUPIED) || couns.getAppointmentStatus().equals(AppointmentStatus.FREE)) && couns.getId().equals(Long.parseLong(examid))) {
 				for (String item : dto.getMedicine()) {
 					Medicine med = medicineService.findByName(item.split(",")[0]);
 					for (InventoryItem inventoryItem : inventoryItemList) {
@@ -298,19 +298,25 @@ public class CounselingServiceImpl implements CounselingService {
 		DateRange range4 = new DateRange();
 		DateRange range5 = new DateRange();
 		DateRange range6 = new DateRange();
+		DateRange range7 = new DateRange();
+		DateRange range8 = new DateRange();
 
-		String date2 = "2024-03-02 13:00";
-		String date1 = "2022-03-02 13:00";
-		String date3 = "2023-03-02 13:00";
+		String date7 = "2024-03-02 13:00";
+		String date3 = "2022-03-02 13:00";
+		String date5 = "2023-03-02 13:00";
 		String date4 = "2022-07-02 14:00";
-		String date5 = "2023-07-02 15:00";
-		String date6 = "2024-07-02 16:00";
+		String date6 = "2023-07-02 15:00";
+		String date8 = "2024-07-02 16:00";
+		String date1 = "2021-08-27 12:00";
+		String date2 = "2021-10-17 17:00";
 		LocalDateTime date11 = LocalDateTime.parse(date1,formatter);
 		LocalDateTime date12 = LocalDateTime.parse(date2,formatter);
 		LocalDateTime date13 = LocalDateTime.parse(date3,formatter);
 		LocalDateTime date14 = LocalDateTime.parse(date4,formatter);
 		LocalDateTime date15 = LocalDateTime.parse(date5,formatter);
 		LocalDateTime date16 = LocalDateTime.parse(date6,formatter);
+		LocalDateTime date17 = LocalDateTime.parse(date7,formatter);
+		LocalDateTime date18 = LocalDateTime.parse(date8,formatter);
 		range.setStartDateTime(date11);
 		range.setEndDateTime(date11.plusMinutes(30));
 		range2.setStartDateTime(date12);
@@ -320,9 +326,13 @@ public class CounselingServiceImpl implements CounselingService {
 		range4.setStartDateTime(date14);
 		range4.setEndDateTime(date14.plusMinutes(30));
 		range5.setStartDateTime(date15);
-		range6.setEndDateTime(date15.plusMinutes(30));
+		range5.setEndDateTime(date15.plusMinutes(30));
 		range6.setStartDateTime(date16);
 		range6.setEndDateTime(date16.plusMinutes(30));
+		range7.setStartDateTime(date17);
+		range7.setEndDateTime(date17.plusMinutes(30));
+		range8.setStartDateTime(date18);
+		range8.setEndDateTime(date18.plusMinutes(30));
 		ArrayList<DateRange> dateList = new ArrayList<DateRange>();
 		dateList.add(range);
 		dateList.add(range2);
@@ -330,6 +340,8 @@ public class CounselingServiceImpl implements CounselingService {
 		dateList.add(range4);
 		dateList.add(range5);
 		dateList.add(range6);
+		dateList.add(range7);
+		dateList.add(range8);
 		
 		List<Counseling> counsList = (List<Counseling>) counselingService.findAll();
 		List<String> backList = new ArrayList<String>();
